@@ -5,9 +5,10 @@ const OrderSchema = new mongoose.Schema({
   productList: [
     // 구매할 상품 리스트
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
+      // type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "Product",
+      // ref: "Product", // 주문 당시의 history를 저장하여야 함.
     },
   ],
   priceList: [
@@ -15,6 +16,7 @@ const OrderSchema = new mongoose.Schema({
     {
       type: Number,
       required: true,
+      // select: true,
     },
   ],
   totalPrice: {
@@ -25,19 +27,23 @@ const OrderSchema = new mongoose.Schema({
   //----------------주문자 정보----------------//
   buyer: {
     // 주문자 이름
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
+    // type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User", // 참조할 모델 명
+    // select: true,
+    // ref: "User", // 참조할 모델 명 --> 주문자이름을 변경할 수 있는 사이트도 있음.
   },
   buyerEmail: {
     // 주문자 이메일
     type: String,
     required: true,
+    // select: true,
   },
   buyerPhoneNumber: {
     // 주문자 연락처
     type: String,
     required: true,
+    // select: true,
   },
   //----------------수령자 정보----------------//
   recipientName: {

@@ -1,10 +1,14 @@
-const { orderModel } = require("../db/models/order-models");
+const orderModel = require("../db/models/order-models");
 
 class OrderService {
-  constructor(orderModel) {
+  constructor() {
     this.orderModel = orderModel;
   }
-  async findAllProduct() {}
+  async gogomao() {
+    const orders = await orderModel.gomao();
+    return orders;
+  }
 }
+const orderService = new OrderService(orderModel);
 
-module.exports = { OrderService };
+module.exports = { orderService };
