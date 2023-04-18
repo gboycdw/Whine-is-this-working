@@ -1,12 +1,11 @@
-const { Schema } = require("mongoose");
-// import {Schema} from "mongoose";
+const mongoose = require("mongoose");
 
-const OrderSchema = new Schema({
+const OrderSchema = new mongoose.Schema({
   //----------------주문 리스트----------------//
   productList: [
     // 구매할 상품 리스트
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Product",
     },
@@ -26,7 +25,7 @@ const OrderSchema = new Schema({
   //----------------주문자 정보----------------//
   buyer: {
     // 주문자 이름
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "User", // 참조할 모델 명
   },
@@ -37,7 +36,7 @@ const OrderSchema = new Schema({
   },
   buyerPhoneNumber: {
     // 주문자 연락처
-    bype: String,
+    type: String,
     required: true,
   },
   //----------------수령자 정보----------------//
@@ -74,4 +73,4 @@ const OrderSchema = new Schema({
   },
 });
 
-module.exports = OrderSchema;
+module.export = OrderSchema;
