@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { orderService } = require("../services/order-service");
 const orderRouter = Router();
 
+//------------server test module---------------//
 // const dbdata = orderService.gogomao();
 // console.log(dbdata);
 

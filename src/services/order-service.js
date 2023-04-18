@@ -4,10 +4,11 @@ class OrderService {
   constructor() {
     this.orderModel = orderModel;
   }
-  async gogomao() {
-    const orders = await orderModel.gomao();
-    return orders;
-  }
+  //--------------for server test-----------//
+  //   async gogomao() {
+  //     const orders = await orderModel.gomao();
+  //     return orders;
+  //   }
 }
 const orderService = new OrderService(orderModel);
 
