@@ -62,7 +62,7 @@ class OrderModel {
     // 배송 전 주문 수정 기능은 위의 changeOrder 활용
     try {
       // 해당 아이디의 주문정보를 찾고, 주문정보가 없는지 체크한다.
-      const orderToCancel = await Order.findOne({ id: buyerId });
+      const orderToCancel = await Order.findOne({ _id: buyerId });
       if (!orderToCancel) {
         throw new Error("주문 정보가 없습니다.");
       }
@@ -80,7 +80,7 @@ class OrderModel {
   async changeStatus(buyerId, status) {
     try {
       // 해당 아이디의 주문정보를 찾고, 주문정보가 없는지 체크한다.
-      const orderToChangeStatus = await Order.findOne({ id: buyerId });
+      const orderToChangeStatus = await Order.findOne({ _id: buyerId });
       if (!orderToChangeStatus) {
         throw new Error("주문 정보가 없습니다.");
       }
