@@ -1,5 +1,4 @@
 const app = require("./src/app");
-
 const PORT = 8080;
 
 function handle() {

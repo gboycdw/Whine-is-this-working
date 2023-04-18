@@ -1,25 +1,24 @@
 const { Router } = require("express");
-const Product = require("../db/schemas/product-schema");
-const ProductModel = require("../db/models/product-models");
+const { Product } = require("../db");
 
-const ProductRouter = Router();
+const router = Router();
 
 //상품 전체 조회
-ProductRouter.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   const products = await Product.find({});
   res.json(products);
 });
 
-//상품 개별 조회
-ProductRouter.get("/:name", async (req, res) => {});
+// //상품 개별 조회
+// router.get("/:name", async (req, res) => {});
 
-//상품 추가
-ProductRouter.post("/", async (req, res) => {});
+// //상품 추가
+// router.post("/", async (req, res) => {});
 
-//상품 수정
-ProductRouter.post("/:name", async (req, res) => {});
+// //상품 수정
+// router.post("/:name", async (req, res) => {});
 
-//상품 삭제
-ProductRouter.delete("/:name", async (req, res) => {});
+// //상품 삭제
+// router.delete("/:name", async (req, res) => {});
 
-module.exports = ProductRouter;
+module.exports = router;

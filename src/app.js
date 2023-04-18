@@ -3,14 +3,21 @@ const mongoose = require("mongoose");
 
 const productRouter = require("./routes/product-routes");
 
+mongoose.connect("mongodb://127.0.0.1:27017/testWhine");
+
+mongoose.connection.on('connected', () => {
+  console.log("MongoDB connected");
+})
+
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/product", productRouter);
 app.get("/", (req, res) => {
-  res.send("root page");
-});
+  return res.send("root page");
+})
+
+app.use("/product", productRouter);
 
 module.exports = app;
