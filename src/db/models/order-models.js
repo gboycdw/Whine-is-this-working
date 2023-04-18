@@ -18,18 +18,18 @@ class OrderModel {
 
 const orderModel = new OrderModel(); // exports 이름 변경
 
-// orderModel.gomao();
-// orderModel.gomao().then((result) => {
-//   const data = result;
-//   console.log(Object.values(data[1])[2].buyer);
-// });
-// orderModel.gomao().then((result) => {
-//   const data = result;
-//   console.log(Object.keys(data[0]));
-// });
-// orderModel.gomao().then((result) => {
-//   const data = result;
-//   console.log(data[0]);
-// });
+orderModel.gomao();
+orderModel.gomao().then((result) => {
+  const data = result;
+  console.log(Object.values(data[1])[2].buyer);
+});
+orderModel.gomao().then((result) => {
+  const data = result;
+  console.log(Object.keys(data[0]));
+});
+orderModel.gomao().then((result) => {
+  const data = result;
+  console.log(data[0]);
+});
 
 module.exports = orderModel; // OrderModel을 exports
