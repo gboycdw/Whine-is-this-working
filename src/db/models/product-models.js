@@ -3,7 +3,7 @@ const ProductSchema = require("../schemas/product-schema");
 
 const Product = mongoose.model("products", ProductSchema);
 
-export class ProductModel {
+class ProductModel {
   //와인 이름으로 상세 정보 조회
   async findByName(name) {
     const product = await Product.findOne({ name });
