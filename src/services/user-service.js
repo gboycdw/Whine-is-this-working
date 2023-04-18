@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { userModel } from "../db/index.js";
 
 class UserService {
-  //마지막에서 클래스 생성 시 userModel을 인자로 받아옴
+  //마지막 코드에서 클래스 생성 시 userModel을 인자로 받아옴
   constructor(userModel) {
     this.userModel = userModel;
   }
@@ -12,7 +12,7 @@ class UserService {
     const { name, email, password, address, postalCode, phoneNumber, role } =
       info;
 
-    //해시 함수를 10번 반복, 소금을 10번 뿌려 만든 해쉬포테이토라고 할까요?
+    //해시 함수를 10번 반복, 소금을 10번 뿌린 해쉬포테이토
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUserInfo = {
       name,
@@ -23,7 +23,7 @@ class UserService {
       phoneNumber,
       role,
     };
-    //db 에 create
+    //db 에 유저 정보생성
     const newUser = await this.userModel.createUser(newUserInfo);
 
     return newUser;
