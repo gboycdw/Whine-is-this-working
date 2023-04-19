@@ -1,6 +1,6 @@
-import Product from "../../components/UI/product/product";
+import Product from "../../components/product/product";
 import classes from "./product-list.module.css";
-import Pagination from "../../components/UI/product/pagination";
+import Pagination from "../../components/product/pagination";
 import { useState, useEffect } from "react";
 import Layout from "../../components/layout/layout";
 

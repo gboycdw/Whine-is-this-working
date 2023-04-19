@@ -36,18 +36,6 @@ const categoryBundle = [
     link: "/category/price",
     categories: [{ id: 1, name: "10000 ~ 30000", link: "/category/lowprice" }],
   },
-  {
-    id: 3,
-    title: "best",
-    link: "/category/best",
-    categories: [],
-  },
-  {
-    id: 4,
-    title: "category",
-    link: "/category/best",
-    categories: [],
-  },
 ];
 
 const Header = () => {
