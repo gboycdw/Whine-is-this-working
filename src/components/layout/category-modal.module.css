@@ -1,0 +1,12 @@
+.category_modal {
+  width: 100%;
+  position: absolute;
+  top: 70px;
+  background-color: white;
+  z-index: 99;
+}
+
+.category_modal_ul {
+  display: flex;
+  flex-direction: column;
+}
