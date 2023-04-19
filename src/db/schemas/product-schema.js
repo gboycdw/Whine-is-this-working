@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 //Product 스키마 작성
 const ProductSchema = new Schema({
@@ -28,4 +28,4 @@ const ProductSchema = new Schema({
   },
 });
 
-module.exports = ProductSchema;
+export { ProductSchema };

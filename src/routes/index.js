@@ -1,9 +1,1 @@
-const { Router } = require("express");
-
-const router = Router;
-
-router.get('/', (req, res) => {
-    res.redirect('/product');
-})
-
-module.exports = router;
+export * from "./product-routes";
