@@ -30,4 +30,13 @@ userRouter.post("/register", async (req, res, next) => {
   }
 });
 
+userRouter.post("/login", async (req, res, next) => {
+  console.log("로그인 시도 🌸");
+  const { email, password } = req.body;
+
+  const userToken = await userService.getUserToken(email, password);
+
+  res.status(200).json(userToken);
+});
+
 export { userRouter };
