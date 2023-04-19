@@ -1,0 +1,99 @@
+.product_detail_container{
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: aqua;
+    display: block;
+}
+.product_detail_wrap{
+    width:100%;
+    height:100%;
+    float: left;
+    position: relative;
+}
+.product_detail_left{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    float: left;
+    position: relative;
+    margin-bottom: 80px;
+    width: 550px;
+}
+.product_detail_wine_img{
+    height: 500px;
+    width: 500px;
+    position: relative;
+    display: inline-block;
+}
+.product_detail_right{
+    float: right;
+    width: 534px;
+    margin-top: 0;
+    padding-bottom: 80px;
+    margin-top: 60px;
+    background-color: red;
+}
+.product_detail_right_name{
+    display: block;
+    margin-top: 20px;
+}
+.product_detail_right_coutry{
+    display: block;
+    margin-top: 20px;
+}
+.product_detail_right_price{
+    display: block;
+    margin-top: 20px;
+}   
+.product_detail_right_alcohol_degree{
+    display: block;
+    margin-top: 20px;
+}
+.product_detail_right_button_input_container{
+    position: relative;
+    margin-top: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    float: right;
+    width: 534px;
+    margin-top: 0;
+    padding-bottom: 80px;
+    background-color: green;
+}
+.product_detail_right_button_input{
+
+}
+.product_detail_right_button_plus{
+
+}
+.product_detail_right_button_total_price{
+
+}
+.product_detail_right_button_container{
+    position: relative;
+    margin-top: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    float: right;
+    width: 534px;
+    margin-top: 0;
+    padding-bottom: 80px;
+    background-color: blue;
+}
+.product_detail_right_button_basket{
+
+}
+.product_detail_right_button_buy{
+
+}
+.product_detail_explain_h1{
+    display: inline-block; /* inline-block일때에만 가운데 정렬 가능 */
+    padding: 100px;border: 1px solid #dcdcdc;
+    width: 100%;
+}
+.product_detail_explain{
+    height: 500px;
+    background-color: wheat;
+}
