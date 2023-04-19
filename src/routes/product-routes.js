@@ -3,15 +3,6 @@ import { productService } from "../services/index.js";
 
 const productRouter = Router();
 
-const data = {
-  name: "Dom Pérignon",
-  price: 350000,
-  type: "sparkling",
-  country: "France",
-  alcohol: 12,
-  image: "Dom",
-};
-
 //상품 전체 조회
 productRouter.get("/", async (req, res, next) => {
   try {
@@ -36,7 +27,7 @@ productRouter.get("/:name", async (req, res, next) => {
 //상품 추가
 productRouter.post("/", async (req, res, next) => {
   try {
-    const { name, price, type, country, alcohol, image } = data;
+    const { name, price, type, country, alcohol, image } = req.body;
 
     const newProduct = await productService.createProduct({
       name,
@@ -54,10 +45,16 @@ productRouter.post("/", async (req, res, next) => {
 });
 
 //상품 수정
-productRouter.patch("/:name", async (req, res, next) => {
+productRouter.put("/:name", async (req, res, next) => {
   try {
     const update_name = req.params.name;
-    const { name, price, type, country, alcohol, image } = data;
+    const name = req.query.name;
+    const price = req.query.price;
+    const type = req.query.type;
+    const country = req.query.country;
+    const alcohol = req.query.alcohol;
+    const image = req.query.image;
+
     const updateProduct = await productService.updateProduct(update_name, {
       name,
       price,
