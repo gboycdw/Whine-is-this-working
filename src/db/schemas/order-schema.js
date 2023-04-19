@@ -35,13 +35,13 @@ const OrderSchema = new mongoose.Schema(
       // select: true,
       // ref: "User", // 참조할 모델 명 --> 주문자이름을 변경할 수 있는 사이트도 있음.
     },
-    buyerId: {
-      // 주문자 Id
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-      // id는 변경할 수 없는 값이므로 유저데이터 참조하는 것이 의미가 있음.
-    },
+    // buyerId: {
+    //   // 주문자 Id
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   required: true,
+    //   ref: "User",
+    //   // id는 변경할 수 없는 값이므로 유저데이터 참조하는 것이 의미가 있음.
+    // },
     buyerEmail: {
       // 주문자 이메일
       type: String,
@@ -71,15 +71,15 @@ const OrderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    shippingExtreAddress: {
-      // 배송 추가 주소 - 미리 작성함
-      type: String,
-      required: false,
-    },
+    // shippingExtreAddress: {
+    //   // 배송 추가 주소 - 미리 작성함
+    //   type: String,
+    //   required: false,
+    // },
     shippingPostalCode: {
       // 배송지 우편번호
       type: String,
-      required: true,
+      // required: true,
     },
     shippingRequest: {
       // 배송 요청사항 - 필수는 아님.
@@ -99,4 +99,4 @@ const OrderSchema = new mongoose.Schema(
   }
 );
 
-module.export = OrderSchema;
+module.exports = OrderSchema;
