@@ -1,6 +1,6 @@
-import Product from "../../components/UI/product/product";
+import Product from "../../components/product/product";
 import classes from "./product-list.module.css";
-import Pagination from "../../components/UI/product/pagination";
+import Pagination from "../../components/product/pagination";
 import { useState, useEffect } from "react";
 import Layout from "../../components/layout/layout";
 
@@ -14,112 +14,14 @@ const ProductList = () => {
         "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
       tags: ["미국", "화이트"],
       price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
-    },
-    {
-      name: "맛있는 와인",
-      nameEng: "delicious wine",
-      imgUrl:
-        "https://www.winenara.com/uploads/product/550/a560576f8ce8b659af5d6908b0d9b60f.png",
-      tags: ["미국", "화이트"],
-      price: "53,000원",
+      category: category,
     },
   ];
+  const category = "WHITE";
+  const filteredData = data.filter((data) => {
+    return data.filter === category;
+  });
+
   const categoryName = "WHITE";
   const [productData, setProductData] = useState(data);
   const [limit, setLimit] = useState(12);
@@ -134,7 +36,7 @@ const ProductList = () => {
             <h1 className={classes.categoryName}>{categoryName}</h1>
           </div>
           <ul>
-            {productData.slice(offset, offset + limit).map((product) => {
+            {filteredData.slice(offset, offset + limit).map((product) => {
               return <Product product={product} />;
             })}
           </ul>
