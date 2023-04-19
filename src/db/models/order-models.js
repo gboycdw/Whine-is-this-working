@@ -1,21 +1,30 @@
 const mongoose = require("mongoose");
 const OrderSchema = require("../schemas/order-schema");
-
+const ObjectId = mongoose.Types.ObjectId;
 const Order = mongoose.model("orders", OrderSchema);
 
 class OrderModel {
-  async findById(buyerId) {
-    // 주문자 id를 받아 주문한 모든 상품을 찾음.
-    // 사용자용? 관리자용? 둘다 사용 가능하긴 함.
-    const order = await Order.findOne({ _id: buyerId });
-    return order;
+  async findById() {
+    // const gogo = await Order.findOne({ buyer: "고마오" }).lean();
+    const gogo = await Order.findOne({ buyer: "최도원" });
+    const gogumao = await gogo.save();
+    return gogumao["_doc"];
   }
-  async createOrder(orderInfo) {
+  async findAllOrders() {
+    // 모든 사용자의 주문내역을 조회함
+    const allOrders = await Order.find({}).lean();
+    // let { _id, ...result } = gogogo;
+    // console.log("goguma :", goguma);
+    return allOrders;
+  }
+  async createOrder() {
     // orderInfo는 배열 혹은 객체 형태로 예상되고,
     // user정보와 주문한 product정보들을 저장함
     try {
       const newOrder = await Order.create(orderInfo);
-      return newOrder;
+      // console.log(newOrder);
+      let result = await newOrder.save();
+      return result;
     } catch (err) {
       console.log(err);
       throw new Error("주문 생성 실패");
@@ -51,7 +60,7 @@ class OrderModel {
   async deleteAll(buyerId) {
     // admin 기능, 유저 아이디를 검색하여 해당 유저의 주문내역을 전부 삭제
     try {
-      await Order.deleteMany({ id: buyerId });
+      await Order.deleteOne({ id: buyerId });
     } catch (err) {
       console.log(err);
       throw new Error("주문 정보 삭제 실패");
@@ -94,29 +103,8 @@ class OrderModel {
       throw new Error("배송 상태 변경 실패");
     }
   }
-  //-----------------server test fuction-----------------//
-  // async gomao() {
-  //   const gogo = await Order.find({});
-  //   console.log(gogo);
-
-  //   return gogo;
-  // }
+  // -----------------server test fuction-----------------//
 }
 
 const orderModel = new OrderModel(); // exports 이름 변경
-//-----------------server test module-----------------//
-// orderModel.gomao();
-// orderModel.gomao().then((result) => {
-//   const data = result;
-//   console.log(Object.values(data[1])[2].buyer);
-// });
-// orderModel.gomao().then((result) => {
-//   const data = result;
-//   console.log(Object.keys(data[0]));
-// });
-// orderModel.gomao().then((result) => {
-//   const data = result;
-//   console.log(data[0]);
-// });
-
 module.exports = orderModel; // OrderModel을 exports
