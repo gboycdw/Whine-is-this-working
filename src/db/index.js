@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 class dbAddress {
   constructor() {
     const cloudDB = "";
-    const localDB =
-      "mongodb+srv://gboycdw:278650@testserver.rgoyy7y.mongodb.net/test";
+    const localDB = process.env.DB_URL;
     this.server = localDB;
-    this.serverName = localDB.split("//")[1].split(":")[0];
+    this.serverName = process.env.DB_OWNER;
   }
 }
 const address = new dbAddress();
