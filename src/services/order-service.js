@@ -4,20 +4,48 @@ class OrderService {
   constructor() {
     this.orderModel = orderModel;
   }
-  // --------------for server test-----------//
-  async findUserOrder() {
-    const order = await orderModel.findById();
+  // 특정 사용자의 주문내역을 확인하는 기능
+  async findUserOrder(userName) {
+    const order = await orderModel.findById(userName);
     return order;
   }
+  // 모든 사용자의 주문내역을 확인하는 기능
   async findAllOrdersByAdmin() {
-    // 모든 사용자의 주문내역을 확인하는 함수
-    const asdf = [];
+    let result = [];
     const orders = await orderModel.findAllOrders();
     for (let i = 0; i < Object.values(orders).length; i++) {
-      asdf.push(orders[i]);
+      result.push(orders[i]);
     }
-    // console.log(asdf, "현재service파일에서 출력중..");
-    return asdf;
+    return result;
+  }
+  // 유저가 새로운 주문을 할 수 있는 기능
+  // 주문 시 제출 정보에 userName이 포함되기 때문에 parameter로 사용하지 않음.
+  async createNewOrder(orderInfo) {
+    const newOrders = await orderModel.createOrder(orderInfo);
+    return newOrders;
+  }
+  // 유저가 주문내역을 추가할 수 있는 기능
+  async changeUsersOrder(userId, updateInfo) {
+    const changeOrders = await orderModel.changeOrder(userId, updateInfo);
+    return changeOrders;
+  }
+  // 관리자가 특정 유저의 주문을 삭제하는 기능
+  async deleteOrderByAdmin(userName) {
+    const deleteOrder = await orderModel.deleteAll(userName);
+    return deleteOrder;
+  }
+  // 유저가 배송 시작 전의 자신의 주문을 취소하는 기능
+  async deleteOrderByUser(userName) {
+    const cancelOrder = await orderModel.cancelOrder(userName);
+    return cancelOrder;
+  }
+  // 관리자가 특정 유저의 배송 상태를 변경하는 기능
+  async changeStatusByAdmin(userName, status) {
+    const changeShippingStatus = await orderModel.changeStatus(
+      userName,
+      status
+    );
+    return changeShippingStatus;
   }
 }
 const orderService = new OrderService(orderModel);

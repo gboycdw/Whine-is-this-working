@@ -12,6 +12,7 @@ const OrderSchema = new mongoose.Schema(
         // ref: "Product", // 주문 당시의 history를 저장하여야 함.
       },
     ],
+
     priceList: [
       // 구매할 상품의 가격 리스트
       {
