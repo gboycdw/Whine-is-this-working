@@ -1,12 +1,14 @@
-import Header from "../../components/UI/header";
-import Footer from "../../components/UI/footer";
+import Layout from "../../components/layout/layout";
+import Banner from "../../assets/banner.jpeg";
 
 const MainPage = () => {
+  const bannerStyle = { width: "100vw", position: "absolute", left: 0 };
+
   return (
     <>
-      <Header />
-      <main>헬로2</main>
-      <Footer />
+      <Layout>
+        <img src={Banner} alt="banner" style={bannerStyle} />
+      </Layout>
     </>
   );
 };

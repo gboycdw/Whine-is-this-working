@@ -1,9 +1,8 @@
-import Header from "../../components/UI/header";
-import Footer from "../../components/UI/footer";
 import Product from "../../components/UI/product/product";
 import classes from "./product-list.module.css";
 import Pagination from "../../components/UI/product/pagination";
 import { useState, useEffect } from "react";
+import Layout from "../../components/layout/layout";
 
 const ProductList = () => {
   // 상품, 카테고리명 (ex. 화이트) 더미데이터 (추후 받아올 예정)
@@ -129,24 +128,26 @@ const ProductList = () => {
 
   return (
     <>
-      <div className={classes.container}>
-        <div>
-          <h1 className={classes.categoryName}>{categoryName}</h1>
+      <Layout>
+        <div className={classes.container}>
+          <div>
+            <h1 className={classes.categoryName}>{categoryName}</h1>
+          </div>
+          <ul>
+            {productData.slice(offset, offset + limit).map((product) => {
+              return <Product product={product} />;
+            })}
+          </ul>
+          <div>
+            <Pagination
+              total={productData.length}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+            />
+          </div>
         </div>
-        <ul>
-          {productData.slice(offset, offset + limit).map((product) => {
-            return <Product product={product} />;
-          })}
-        </ul>
-        <div>
-          <Pagination
-            total={productData.length}
-            limit={limit}
-            page={page}
-            setPage={setPage}
-          />
-        </div>
-      </div>
+      </Layout>
     </>
   );
 };
