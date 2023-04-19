@@ -8,10 +8,10 @@ export class ProductModel {
     const products = await Product.find();
     return products;
   }
-  
+
   //와인 이름으로 상세 정보 조회
-  async findByName(name) {
-    const product = await Product.findOne({ name });
+  async findByName(search_name) {
+    const product = await Product.findOne({ name: search_name });
     return product;
   }
 
@@ -29,13 +29,16 @@ export class ProductModel {
 
   //와인 정보 수정
   async productUpdate(name, productInfo) {
-    const updateProduct = await Product.updateOne({ name: name }, productInfo);
+    const filter = { name: name };
+    const option = { returnOriginal: false };
+    
+    const updateProduct = await Product.findOneAndUpdate(filter, productInfo, option);
     return updateProduct;
   }
 
   //와인 삭제
   async productDelete(name) {
-    const deleteProduct = await Product.deleteOne({ name });
+    const deleteProduct = await Product.deleteOne({ name: name });
     return deleteProduct;
   }
 }

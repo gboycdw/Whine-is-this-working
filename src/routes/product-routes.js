@@ -3,28 +3,40 @@ import { productService } from "../services/index.js";
 
 const productRouter = Router();
 
+const data = {
+  name: "Dom Pérignon",
+  price: 350000,
+  type: "sparkling",
+  country: "France",
+  alcohol: 12,
+  image: "Dom",
+};
+
 //상품 전체 조회
 productRouter.get("/", async (req, res, next) => {
   try {
-    const products = await productService.getProduct();
+    const products = await productService.getProducts();
     res.status(201).json(products);
   } catch (err) {
     next(err);
   }
 });
 
-// //상품 개별 조회
-// router.get("/:name", async (req, res) => {});
+//상품 개별 조회
+productRouter.get("/:name", async (req, res, next) => {
+  try {
+    const search_name = req.params.name;
+    const product = await productService.getProduct(search_name);
+    res.status(201).json(product);
+  } catch (err) {
+    next(err);
+  }
+});
 
 //상품 추가
-productRouter.post("/register", async (req, res, next) => {
+productRouter.post("/", async (req, res, next) => {
   try {
-    const name = req.body.name;
-    const price = req.body.price;
-    const type = req.body.type;
-    const country = req.body.country;
-    const alcohol = req.body.alcohol;
-    const image = req.body.image;
+    const { name, price, type, country, alcohol, image } = data;
 
     const newProduct = await productService.createProduct({
       name,
@@ -41,10 +53,35 @@ productRouter.post("/register", async (req, res, next) => {
   }
 });
 
-// //상품 수정
-// router.post("/:name", async (req, res) => {});
+//상품 수정
+productRouter.patch("/:name", async (req, res, next) => {
+  try {
+    const update_name = req.params.name;
+    const { name, price, type, country, alcohol, image } = data;
+    const updateProduct = await productService.updateProduct(update_name, {
+      name,
+      price,
+      type,
+      country,
+      alcohol,
+      image,
+    });
 
-// //상품 삭제
-// router.delete("/:name", async (req, res) => {});
+    res.status(201).json(updateProduct);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//상품 삭제
+productRouter.delete("/:name", async (req, res, next) => {
+  try {
+    const deleteName = req.params.name;
+    const result = await productService.deleteProduct(deleteName);
+    res.status(201).json(result);
+  } catch (err) {
+    next(err);
+  }
+});
 
 export { productRouter };

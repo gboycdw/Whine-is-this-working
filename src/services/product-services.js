@@ -21,9 +21,24 @@ class ProductService {
     return newProduct;
   }
 
-  async getProduct() {
+  async getProducts() {
     const products = await productModel.find();
     return products;
+  }
+
+  async getProduct(name) {
+    const product = await productModel.findByName(name);
+    return product;
+  }
+
+  async deleteProduct(name) {
+    const product = await productModel.productDelete(name);
+    return product;
+  }
+
+  async updateProduct(name, updateInfo) {
+    const product = await productModel.productUpdate(name, updateInfo);
+    return product;
   }
 }
 
