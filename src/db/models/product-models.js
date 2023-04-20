@@ -4,7 +4,7 @@ import { ProductSchema } from "../schemas/product-schema.js";
 const Product = model("Product", ProductSchema);
 
 export class ProductModel {
-  async find() {
+  async findAll() {
     const products = await Product.find();
     return products;
   }
@@ -21,6 +21,11 @@ export class ProductModel {
     return products;
   }
 
+  //와인 나라별로 조회
+  async findByCountry(country) {
+    const products = await Product.findAll({country: country});
+    return products;
+  }
   //와인 추가하기
   async productCreate(productInfo) {
     const newProduct = await Product.create(productInfo);

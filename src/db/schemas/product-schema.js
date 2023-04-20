@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-//Product 스키마 작성
+//상품 정보
 const ProductSchema = new Schema({
   name: {
     type: String,
@@ -26,6 +26,41 @@ const ProductSchema = new Schema({
     type: String,
     required: true,
   },
+}, {
+  timestamps: true,
 });
 
-export { ProductSchema };
+//카테고리 목록
+const CategorySchema = new Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  link: {
+    type: String,
+    required: true,
+  },
+  categories: [CategorylistSchema],
+});
+
+//카테고리 리스트
+const CategorylistSchema = new Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  link: {
+    type: String,
+    required: true,
+  },
+});
+
+export { ProductSchema, CategorySchema, CategorylistSchema };

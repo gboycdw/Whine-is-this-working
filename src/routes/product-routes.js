@@ -17,7 +17,7 @@ productRouter.get("/", async (req, res, next) => {
 productRouter.get("/:name", async (req, res, next) => {
   try {
     const search_name = req.params.name;
-    const product = await productService.getProduct(search_name);
+    const product = await productService.getProductByName(search_name);
     res.status(201).json(product);
   } catch (err) {
     next(err);

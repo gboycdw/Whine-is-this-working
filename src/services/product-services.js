@@ -22,15 +22,24 @@ class ProductService {
   }
 
   async getProducts() {
-    const products = await productModel.find();
+    const products = await productModel.findAll();
     return products;
   }
 
-  async getProduct(name) {
+  async getProductByName(name) {
     const product = await productModel.findByName(name);
     return product;
   }
 
+  async getProductsByType(type) {
+    const product = await productModel.findByType(type);
+    return product;
+  }
+
+  async getProductsByCountry(country) {
+    const product = await productModel.findByCountry(country);
+    return product;
+  }
   async deleteProduct(name) {
     const product = await productModel.productDelete(name);
     return product;
