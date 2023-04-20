@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import { Schema } from "mongoose";
 
-const OrderSchema = new mongoose.Schema(
+const OrderSchema = new Schema(
   {
     //----------------주문 리스트----------------//
     productList: [
@@ -100,4 +101,5 @@ const OrderSchema = new mongoose.Schema(
   }
 );
 
-module.exports = OrderSchema;
+// module.exports = OrderSchema;
+export default OrderSchema;

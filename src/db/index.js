@@ -1,5 +1,8 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
+// require("dotenv").config();
+import "dotenv/config";
+// import db
 class dbAddress {
   constructor() {
     const cloudDB = "";
@@ -17,3 +20,5 @@ db.on("connected", () =>
 db.on("error", (error) =>
   console.error("\nFailure Connecting MongoDB Server ToT\n" + "\n" + error)
 );
+
+export * from "./models/order-models.js";

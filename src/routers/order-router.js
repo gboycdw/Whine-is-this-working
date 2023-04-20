@@ -1,5 +1,7 @@
-const { Router } = require("express");
-const { orderService } = require("../services/order-service");
+// const { Router } = require("express");
+import { Router } from "express";
+// const { orderService } = require("../services/order-service");
+import { orderService } from "../services/index.js";
 const orderRouter = Router();
 
 //------------server test module---------------//
@@ -39,6 +41,7 @@ orderRouter.get("/order/admin", async (req, res) => {
 });
 //-----------------유저가 새로운 주문 추가하기-----------------//
 //현재 orderInfo를 받아올 루트가 없으므로 수동으로 정의해줌
+//나중에 post로 수정
 orderRouter.get("/order/add", async (req, res) => {
   try {
     const orderInfo = {
@@ -69,6 +72,7 @@ orderRouter.get("/order/add", async (req, res) => {
 });
 //-----------------유저 이름, 주문 수정하기-----------------//
 //현재 updateInfo를 받아올 루트가 없으므로 수동으로 정의해줌
+// 나중에 put으로 수정
 orderRouter.get("/order/user/:username/change", async (req, res) => {
   try {
     const updateInfo = {
@@ -101,7 +105,8 @@ orderRouter.get("/order/user/:username/change", async (req, res) => {
   }
 });
 //-----------------[Admin] 유저 주문 삭제하기 -----------------//
-orderRouter.get("/order/admin/:username/delete", async (req, res) => {
+// 나중에 delete로 수정
+orderRouter.get("/order/admin/delete/:username", async (req, res) => {
   try {
     const userName = req.params.username;
     console.log(userName, " 의 주문내역을 삭제하는 중...");
@@ -120,7 +125,8 @@ orderRouter.get("/order/admin/:username/delete", async (req, res) => {
   }
 });
 //-----------------유저가 본인의 주문 취소하기 -----------------//
-orderRouter.get("/order/user/:username/delete", async (req, res) => {
+// 나중에 delete로 수정
+orderRouter.get("/order/user/delete/:username", async (req, res) => {
   try {
     const userName = req.params.username;
     console.log(userName, " (나)의 주문을 취소하는 중...");
@@ -138,14 +144,16 @@ orderRouter.get("/order/user/:username/delete", async (req, res) => {
     console.log("해당 유저의 주문내역이 없거나, 배송이 시작되었습니다.");
   }
 });
-//-----------------[Admin] 유저 주문 삭제하기 -----------------//
-orderRouter.get("/order/admin/:username/changestatus", async (req, res) => {
+//-----------------[Admin] 배송 상태 변경하기 -----------------//
+// 나중에 put으로 수정
+orderRouter.get("/order/admin/:username/:changestatus", async (req, res) => {
   try {
     // 현재는 무조건 배송중으로 바꾸게 되어 있음
     // 배송 정보 수정요청을 어느 경로로 받을 지 결정하면 추가하면 됨.
     const userName = req.params.username;
+    const status = req.params.changestatus;
     console.log(userName, " 의 배송정보를 수정하는 중...");
-    const dbdata = await orderService.changeStatusByAdmin(userName, "배송중"); // 여기 수정해야함. 주소로 받거나, 다른 방법으로 받을 수 있음.
+    const dbdata = await orderService.changeStatusByAdmin(userName, status); // 여기 수정해야함. 주소로 받거나, 다른 방법으로 받을 수 있음.
     // const dbdata = req.body;
     res.json(dbdata);
     console.log(userName, " 의 배송정보 변경 완료.");
@@ -157,6 +165,9 @@ orderRouter.get("/order/admin/:username/changestatus", async (req, res) => {
     console.log("해당 유저의 주문내역이 없습니다!!");
   }
 });
+
+// module.exports = { orderRouter };
+export { orderRouter };
 
 // ------ Database 추가(수정)용 툴 ----- // for changeUsersOrder //
 
@@ -181,5 +192,3 @@ orderRouter.get("/order/admin/:username/changestatus", async (req, res) => {
 //     res.status(500).send("Internal server Error");
 //   }
 // });
-
-module.exports = { orderRouter };

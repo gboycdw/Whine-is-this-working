@@ -1,4 +1,6 @@
-const app = require("./src/app.js");
+// const app = require("./src/app.js");
+import "dotenv/config";
+import app from "./src/app.js";
 
 const port = 8080;
 

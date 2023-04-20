@@ -1,4 +1,5 @@
-const orderModel = require("../db/models/order-models");
+// const orderModel = require("../db/models/order-models");
+import { orderModel } from "../db/index.js";
 
 class OrderService {
   constructor() {
@@ -50,4 +51,5 @@ class OrderService {
 }
 const orderService = new OrderService(orderModel);
 
-module.exports = { orderService };
+// module.exports = { orderService };
+export { orderService };

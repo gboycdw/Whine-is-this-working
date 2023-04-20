@@ -1,6 +1,8 @@
-const mongoose = require("mongoose");
-const OrderSchema = require("../schemas/order-schema");
-const ObjectId = mongoose.Types.ObjectId;
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
+// const OrderSchema = require("../schemas/order-schema");
+import OrderSchema from "../schemas/order-schema.js";
+// const ObjectId = mongoose.Types.ObjectId; // 미사용
 const Order = mongoose.model("orders", OrderSchema);
 
 class OrderModel {
@@ -117,7 +119,8 @@ class OrderModel {
 }
 
 const orderModel = new OrderModel(); // exports 이름 변경
-
+// module.exports = orderModel; // OrderModel을 exports
+export { orderModel };
 // ---- Database 수동 추가용 툴 ---- //
 // const orderInfo = {
 //   _id: new ObjectId(),
@@ -140,5 +143,3 @@ const orderModel = new OrderModel(); // exports 이름 변경
 // orderModel.cancelOrder("주문취소테스트2");
 // orderModel.changeStatus("주문변경테스트", "배송안할건데?");
 // ------------------------------//
-
-module.exports = orderModel; // OrderModel을 exports
