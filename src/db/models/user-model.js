@@ -1,20 +1,49 @@
 import { model } from "mongoose";
 import { UserSchema } from "../schemas/user-shema.js";
 
-//UserSchema를 기준으로 User라는 모델 생성
+// UserSchema를 기준으로 User라는 모델 생성
 const User = model("User", UserSchema);
 
 export class UserModel {
-  //전달받은 email을 데이터 select후 user변수에 저장하여 리턴
+  // 로그인
   async findById(email) {
     const user = await User.findOne({ email });
     return user;
   }
 
-  // 전달받은 userInfo를 통해 DB에 사용자 추가
+  // 회원가입
   async createUser(userInfo) {
-    const newUser = await User.create(userInfo);
-    return newUser;
+    try {
+      const newUser = await User.create(userInfo);
+      return newUser;
+    } catch (err) {
+      throw new Error("유저 회원가입 중 에러가 발생했습니다. models");
+    }
+  }
+
+  // 탈퇴
+  async deleteUser(userId) {
+    try {
+      const deleteUserResult = await User.deleteOne({ email: userId });
+    } catch (err) {
+      throw new Error("유저 삭제 중 에러가 발생했습니다. models");
+    }
+  }
+
+  // 유저 정보 수정
+  async updateUser(userId, toUpdateInfo) {
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { email: userId },
+        toUpdateInfo,
+        {
+          returnOriginal: false,
+        }
+      );
+      return updatedUser;
+    } catch (err) {
+      throw new Error("유저 정보 업데이트 중 에러가 발생했습니다. models");
+    }
   }
 }
 

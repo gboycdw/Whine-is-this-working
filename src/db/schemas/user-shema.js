@@ -17,8 +17,13 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    //사용자 주소
-    address: {
+    //도로명 주소
+    address1: {
+      type: String,
+      required: true,
+    },
+    //상세 주소
+    address2: {
       type: String,
       required: true,
     },
