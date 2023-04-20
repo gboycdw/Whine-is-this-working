@@ -20,7 +20,7 @@ const CategoryModal = (props) => {
   const CategoryModalUl = styled.ul`
     display: flex;
     flex-direction: column;
-    ${categories.length > 0 ? "margin-bottom:15px;" : ""}
+    ${categories.length > 1 ? "margin-bottom:15px;" : ""}
   `;
 
   return (
