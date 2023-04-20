@@ -1,11 +1,11 @@
-import Product from "../../components/product/product";
+import Product from "../../../components/product/product";
 import classes from "./product-list.module.css";
-import Pagination from "../../components/product/pagination";
+import Pagination from "../../../components/product/pagination";
 import { useState } from "react";
-import Layout from "../../components/layout/layout";
+import Layout from "../../../components/layout/layout";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { getAllProduct } from "../../api/api-product";
+import { getAllProduct } from "../../../api/api-product";
 
 const ProductList = () => {
   const products = getAllProduct();

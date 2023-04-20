@@ -1,5 +1,6 @@
 import Layout from "../../components/layout/layout";
 import Banner from "../../assets/banner.jpeg";
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   const bannerStyle = {
@@ -10,9 +11,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Layout>
-        <img src={Banner} alt="banner" style={bannerStyle} />
-      </Layout>
+      <Layout></Layout>
     </>
   );
 };

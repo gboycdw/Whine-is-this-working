@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
-import ProductDetail from "../../components/product/product-detail";
-import Layout from "../../components/layout/layout";
-import { getAllProduct } from "../../api/api-product";
+import ProductDetail from "../../../components/product/product-detail";
+import Layout from "../../../components/layout/layout";
+import { getAllProduct } from "../../../api/api-product";
 
 const ProductDetailPage = () => {
   const products = getAllProduct();
