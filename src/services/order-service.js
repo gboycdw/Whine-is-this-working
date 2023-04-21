@@ -26,24 +26,24 @@ class OrderService {
     return newOrders;
   }
   // 유저가 주문내역을 추가할 수 있는 기능
-  async changeUsersOrder(userId, updateInfo) {
-    const changeOrders = await orderModel.changeOrder(userId, updateInfo);
+  async changeUsersOrder(orderIndex, updateInfo) {
+    const changeOrders = await orderModel.changeOrder(orderIndex, updateInfo);
     return changeOrders;
   }
   // 관리자가 특정 유저의 주문을 삭제하는 기능
-  async deleteOrderByAdmin(userName) {
-    const deleteOrder = await orderModel.deleteAll(userName);
+  async deleteOrderByAdmin(orderIndex) {
+    const deleteOrder = await orderModel.deleteAll(orderIndex);
     return deleteOrder;
   }
   // 유저가 배송 시작 전의 자신의 주문을 취소하는 기능
-  async deleteOrderByUser(userName) {
-    const cancelOrder = await orderModel.cancelOrder(userName);
+  async deleteOrderByUser(orderIndex) {
+    const cancelOrder = await orderModel.cancelOrder(orderIndex);
     return cancelOrder;
   }
   // 관리자가 특정 유저의 배송 상태를 변경하는 기능
-  async changeStatusByAdmin(userName, status) {
+  async changeStatusByAdmin(orderIndex, status) {
     const changeShippingStatus = await orderModel.changeStatus(
-      userName,
+      orderIndex,
       status
     );
     return changeShippingStatus;

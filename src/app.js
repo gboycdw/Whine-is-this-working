@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/", orderRouter);
+app.use("/order", orderRouter);
 
 app.use("/", viewsRouter);
 app.use(viewsRouter);

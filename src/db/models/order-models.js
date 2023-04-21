@@ -3,26 +3,34 @@ import mongoose from "mongoose";
 // const OrderSchema = require("../schemas/order-schema");
 import OrderSchema from "../schemas/order-schema.js";
 // const ObjectId = mongoose.Types.ObjectId; // 미사용
+import { nanoid } from "nanoid";
+
 const Order = mongoose.model("orders", OrderSchema);
 
 class OrderModel {
   // 이름으로 사용자의 주문내역을 검색하는 기능.
   async findById(userId) {
-    const findUserOrder = await Order.findOne({ buyer: userId });
-    const usersOrder = await findUserOrder.save();
-    return usersOrder["_doc"];
+    const userOrder = await Order.find({ buyerEmail: userId }).lean();
+    return userOrder;
   }
   // [Admin] 모든 사용자의 주문내역을 조회하는 기능.
   async findAllOrders() {
     const allOrders = await Order.find({}).lean();
     return allOrders;
   }
-  // 새 주문을 생성하는 기능.
-  // 나중에 회원기능과 연계하여 없는 회원이거나, 없는 상품 주문에 대한 예외처리 추가로 고민해야함.
+  // 새 주문을 생성하는 기능. // 저장할 때 orderinfo에 추가로 고유 식별자를 저장해야 함.
   async createOrder(orderInfo) {
     try {
       const newOrder = await Order.create(orderInfo);
-      // console.log(newOrder);
+      //----------------고유한 주문번호를 생성하는 부분---------------//
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      const currentDate = year + month + day;
+      const newIndex = nanoid(6);
+      newOrder.orderIndex = currentDate + newIndex;
+      //---------생성한 주문번호를 저장---------//
       const newOrderList = await newOrder.save();
       return newOrderList;
     } catch (err) {
@@ -30,10 +38,10 @@ class OrderModel {
       throw new Error("주문 생성 실패");
     }
   }
-  // 기존 주문을 변경하는 기능.
-  async changeOrder(userId, updateInfo) {
+  // 기존 주문을 변경하는 기능. - 주문 고유 정보로 찾아야함 ★★★★★★★★★★★★★★★★
+  async changeOrder(orderIndex, updateInfo) {
     try {
-      const searchingOrder = await Order.findOne({ buyer: userId });
+      const searchingOrder = await Order.findOne({ orderIndex: orderIndex });
 
       if (!searchingOrder) {
         throw new Error("주문 정보가 없습니다. 주문을 먼저 진행해 주세요.");
@@ -42,12 +50,13 @@ class OrderModel {
       if (searchingOrder.shippingStatus === "배송중") {
         throw new Error("이미 배송이 시작되어 주문 수정이 불가능합니다.");
       }
-
-      searchingOrder.productList.push(...updateInfo.productList);
-      searchingOrder.priceList.push(...updateInfo.priceList);
-      searchingOrder.totalPrice = searchingOrder.priceList.reduce(
-        (a, b) => a + b
-      );
+      //-------------배송시작 전 상품 추가기능 삭제------------//
+      // searchingOrder.productList.push(...updateInfo.productList);
+      // searchingOrder.priceList.push(...updateInfo.priceList);
+      // searchingOrder.totalPrice = searchingOrder.priceList.reduce(
+      // (a, b) => a + b
+      // );
+      //----------------------------------------------------//
       searchingOrder.shippingAddress = updateInfo.shippingAddress;
       searchingOrder.shippingRequest = updateInfo.shippingRequest;
       searchingOrder.buyerEmail = updateInfo.buyerEmail;
@@ -59,31 +68,29 @@ class OrderModel {
       return updatedOrderData;
     } catch (err) {
       console.log(err);
-      throw new Error("주문 추가 실패");
+      throw new Error("주문내용 수정 실패");
     }
   }
 
   // [Admin] 관리자가 특정 유저의 주문을 삭제하는 기능
-  async deleteAll(userName) {
-    // admin 기능, 유저 아이디를 검색하여 해당 유저의 주문내역을 전부 삭제
+  async deleteAll(orderIndex) {
+    // admin 기능, 주문번호를 확인하여 해당 주문 삭제
     try {
-      const orderToCancel = await Order.findOne({ buyer: userName });
+      const orderToCancel = await Order.findOne({ orderIndex: orderIndex });
       if (!orderToCancel) {
         throw new Error("주문 정보가 없습니다.");
       }
-      await Order.deleteOne({ buyer: userName });
+      await Order.deleteOne({ orderIndex: orderIndex });
     } catch (err) {
       console.log(err);
       throw new Error("주문 정보 삭제 실패");
     }
   }
   // 유저가 자신의 주문을 취소하는 기능
-  async cancelOrder(userName) {
-    // user 기능, 유저 아이디를 기반으로 본인의 주문내역을 확인하고 삭제
-    // 배송 전 주문 수정 기능은 위의 changeOrder 활용
+  async cancelOrder(orderIndex) {
     try {
-      // 해당 아이디의 주문정보를 찾고, 주문정보가 없는지 체크한다.
-      const orderToCancel = await Order.findOne({ buyer: userName });
+      // 본인의 주문을 주문번호로 검색하여 배송 전 취소하기.
+      const orderToCancel = await Order.findOne({ orderIndex: orderIndex });
       if (!orderToCancel) {
         throw new Error("주문 정보가 없습니다.");
       }
@@ -92,21 +99,21 @@ class OrderModel {
         throw new Error("배송 중인 주문을 취소가 불가능합니다.");
       }
       // 배송 시작 전이라면 취소가 가능하다.
-      await Order.deleteOne({ buyer: userName });
+      await Order.deleteOne({ orderIndex: orderIndex });
     } catch (err) {
       console.log(err);
       throw new Error("주문 취소 실패");
     }
   }
-  async changeStatus(userName, status) {
+  async changeStatus(orderIndex, status) {
     try {
-      // 해당 아이디의 주문정보를 찾고, 주문정보가 없는지 체크한다.
-      const orderToChangeStatus = await Order.findOne({ buyer: userName });
+      // 해당 주문정보를 찾고, 주문정보가 없는지 체크한다.
+      const orderToChangeStatus = await Order.findOne({
+        orderIndex: orderIndex,
+      });
       if (!orderToChangeStatus) {
         throw new Error("주문 정보가 없습니다.");
       }
-      // 배송완료시 DB에서 제거하는 것을 고려했으나,
-      // 환불 등을 고려하여 그대로 남겨 두는 것이 좋을 것 같음.
       orderToChangeStatus.shippingStatus = status;
       const updatedStatus = orderToChangeStatus.save();
       return updatedStatus;
@@ -125,6 +132,7 @@ export { orderModel };
 // const orderInfo = {
 //   _id: new ObjectId(),
 //   __v: 0,
+//   buyerId: "sfsfsf",
 //   buyer: "1",
 //   buyerEmail: "giveme@gmail.com",
 //   buyerPhoneNumber: "010-1234-5678",
@@ -136,6 +144,7 @@ export { orderModel };
 //   productList: ["레드와인1"],
 //   priceList: [30000],
 //   totalPrice: 30000,
+//   orderIndex: null,
 // };
 // orderModel.createOrder(orderInfo); // 추가 구현완료
 // orderModel.deleteAll("추가삭제테스트"); // 삭제 구현완료

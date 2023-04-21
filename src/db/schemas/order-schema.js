@@ -29,21 +29,15 @@ const OrderSchema = new Schema(
     },
 
     //----------------주문자 정보----------------//
+    orderIndex: {
+      type: String,
+      required: true,
+    },
     buyer: {
       // 주문자 이름
       type: String,
-      // type: mongoose.Schema.Types.ObjectId,
       required: true,
-      // select: true,
-      // ref: "User", // 참조할 모델 명 --> 주문자이름을 변경할 수 있는 사이트도 있음.
     },
-    // buyerId: {
-    //   // 주문자 Id
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: "User",
-    //   // id는 변경할 수 없는 값이므로 유저데이터 참조하는 것이 의미가 있음.
-    // },
     buyerEmail: {
       // 주문자 이메일
       type: String,
