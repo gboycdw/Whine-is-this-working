@@ -27,14 +27,16 @@ function App() {
               path="/product/:product_id"
               element={<ProductDetailPage />}
             />
-            <Route
-              path="/mypage"
-              element={<MyPage />}
-            > 
-              <Route path="order-infromation" element={<OrderInfomation />}/>       //마이페이지 네비게이션 중첩라우터
-              <Route path="order-cancel" element={<OrderCancelInfo />}/>
-              <Route path="personal-info-modify" element={<PersonalInfoModify />}/>
-              <Route path="cus-service-center" element={<CusServiceCenter />}/>
+            <Route path="/mypage" element={<MyPage />}>
+              <Route path="order-infromation" element={<OrderInfomation />} />
+              //마이페이지 네비게이션 중첩라우터
+              <Route path="" element={<OrderInfomation />} />
+              <Route path="order-cancel" element={<OrderCancelInfo />} />
+              <Route
+                path="personal-info-modify"
+                element={<PersonalInfoModify />}
+              />
+              <Route path="cus-service-center" element={<CusServiceCenter />} />
               <Route path="withdrawl" element={<Withdrawl />} />
             </Route>
           </Routes>
