@@ -24,7 +24,7 @@ export class UserModel {
   // 탈퇴
   async deleteUser(userId) {
     try {
-      const deleteUserResult = await User.deleteOne({ email: userId });
+      await User.findOneAndUpdate({ email: userId }, { status: 0 });
     } catch (err) {
       throw new Error("유저 삭제 중 에러가 발생했습니다. models");
     }
@@ -33,6 +33,7 @@ export class UserModel {
   // 유저 정보 수정
   async updateUser(userId, toUpdateInfo) {
     try {
+      // returnOriginal 옵션을 false로 설정되면 업데이트된 사용자 리턴
       const updatedUser = await User.findOneAndUpdate(
         { email: userId },
         toUpdateInfo,

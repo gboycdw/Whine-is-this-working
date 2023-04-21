@@ -48,6 +48,7 @@ userRouter.post("/login", async (req, res, next) => {
 userRouter.post("/deleteUser", loginRequired, async (req, res, next) => {
   const token = req.header("auth-token");
   // 토큰의 secret key와 발급할때의 secre_key 값 비교
+  console.log(req.userId);
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
   //토큰에서 추출한 유저 아이디
