@@ -1,19 +1,18 @@
-// const { orderRouter } = require("./routers/order-router");
-import { orderRouter } from "./routers/order-router.js";
-// const { viewsRouter } = require("./routers/view-router");
-import { viewsRouter } from "./routers/view-router.js";
-// const express = require("express");
 import express from "express";
-// import db from ".db";
+import { userRouter } from "./routers/user-router.js";
+import { orderRouter } from "./routers/order-router.js";
+import { viewsRouter } from "./routers/view-router.js";
 const app = express();
-// const db = require("./db");
 
+// Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/order", orderRouter);
+//app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
+// 라우터 등록
+app.use("/user", userRouter);
+app.use("/order", orderRouter);
 app.use("/", viewsRouter);
 app.use(viewsRouter);
 
-// module.exports = app;
-export default app;
+export { app };

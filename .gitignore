@@ -1,6 +1,12 @@
 # Dependencies
 node_modules
+<<<<<<< HEAD
 yarn.lock
 package-lock.json
 .env
 .DS_Store
+=======
+package-lock.json
+.env
+.DS_Store
+>>>>>>> feature#BE#user
