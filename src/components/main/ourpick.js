@@ -12,8 +12,8 @@ const OurPick = (props) => {
         <ul class="flex justify-between overflow-hidden">
           {products.slice(0, 3).map((item) => {
             return (
-              <Link to={`/product/${item.id}`}>
-                <li class="bg-main w-80 h-96 flex flex-col justify-between items-center rounded-3xl py-5 px-6">
+              <Link key={item.id} to={`/product/${item.id}`}>
+                <li class="bg-color2 w-80 h-96 flex flex-col justify-between items-center rounded-3xl py-5 px-6">
                   <div class="flex w-full">
                     <span>tag</span>
                   </div>

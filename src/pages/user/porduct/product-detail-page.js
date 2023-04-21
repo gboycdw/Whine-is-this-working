@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import ProductDetail from "../../../components/product/product-detail";
+import ProductDetail from "../../../components/user/product/product-detail";
 import Layout from "../../../components/layout/layout";
 import { getAllProduct } from "../../../api/api-product";
 
@@ -8,12 +8,12 @@ const ProductDetailPage = () => {
 
   const productID = +useParams().product_id;
 
-  const wine = products.find((product) => product.id === productID);
+  const product = products.find((product) => product.id === productID);
 
   return (
     <>
       <Layout>
-        <ProductDetail wine={wine} />
+        <ProductDetail product={product} />
       </Layout>
     </>
   );

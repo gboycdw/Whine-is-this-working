@@ -1,6 +1,6 @@
-import Product from "../../../components/product/product";
+import Product from "../../../components/user/product/product";
 import classes from "./product-list.module.css";
-import Pagination from "../../../components/product/pagination";
+import Pagination from "../../../components/user/product/pagination";
 import { useState } from "react";
 import Layout from "../../../components/layout/layout";
 import { useParams } from "react-router";
@@ -47,7 +47,7 @@ const ProductList = () => {
   return (
     <>
       <Layout>
-        <div className={classes.container}>
+        <div class="pt-16">
           <div>
             <h1 className={classes.categoryName}>
               {categoryName.toUpperCase()} WINE
