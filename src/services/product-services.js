@@ -5,48 +5,81 @@ class ProductService {
     this.productModel = productModel;
   }
 
+  //상품 생성
   async createProduct(productInfo) {
-    const { name, price, type, country, alcohol, image } = productInfo;
+    const {
+      name,
+      nameEng,
+      brand,
+      type,
+      country,
+      area,
+      price,
+      imgUrl,
+      info,
+      inventory,
+      tags,
+      features,
+    } = productInfo;
 
     const newInfo = {
       name,
-      price,
+      nameEng,
+      brand,
       type,
       country,
-      alcohol,
-      image,
+      area,
+      price,
+      imgUrl,
+      info,
+      inventory,
+      tags,
+      features,
     };
 
-    const newProduct = await productModel.productCreate(newInfo);
+    const newProduct = await productModel.createProduct(newInfo);
     return newProduct;
   }
 
+  //상품 조회
   async getProducts() {
-    const products = await productModel.findAll();
+    const products = await productModel.find();
     return products;
   }
 
+  //상품 ID로 조회
+  async getProductById(id) {
+    const product = await productModel.findById(id);
+    return product;
+  }
+
+  //상품 이름으로 조회
   async getProductByName(name) {
     const product = await productModel.findByName(name);
     return product;
   }
 
+  //상품 종류별로 조회
   async getProductsByType(type) {
     const product = await productModel.findByType(type);
     return product;
   }
 
+  //상품 나라별로 조회
   async getProductsByCountry(country) {
     const product = await productModel.findByCountry(country);
     return product;
   }
-  async deleteProduct(name) {
-    const product = await productModel.productDelete(name);
+
+  //상품 수정
+  async updateProduct(id, updateInfo) {
+    const product = await productModel.updateProduct(id, updateInfo);
     return product;
   }
 
-  async updateProduct(name, updateInfo) {
-    const product = await productModel.productUpdate(name, updateInfo);
+  //상품 삭제
+  async deleteProduct(id) {
+    const product = await productModel.deleteProduct(id);
     return product;
   }
 }

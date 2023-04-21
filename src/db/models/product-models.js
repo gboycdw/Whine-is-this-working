@@ -4,9 +4,15 @@ import { ProductSchema } from "../schemas/product-schema.js";
 const Product = model("Product", ProductSchema);
 
 export class ProductModel {
-  async findAll() {
-    const products = await Product.find();
+  async find() {
+    const products = await Product.find({});
     return products;
+  }
+
+  //와인 ID로 상세 정보 조회
+  async findById(id) {
+    const product = await Product.find({ _id: id });
+    return product;
   }
 
   //와인 이름으로 상세 정보 조회
@@ -23,27 +29,40 @@ export class ProductModel {
 
   //와인 나라별로 조회
   async findByCountry(country) {
-    const products = await Product.findAll({country: country});
+    const products = await Product.findAll({ country: country });
     return products;
   }
+
+  //와인 가격별로 조회
+  async findByPrice(lowerPrice, HigherPrice) {
+    const products = await Product.findAll({
+      $and: [{ price: { $gte: lowerPrice } }, { price: { $lte: HigherPrice } }],
+    });
+    return products;
+  }
+
   //와인 추가하기
-  async productCreate(productInfo) {
+  async createProduct(productInfo) {
     const newProduct = await Product.create(productInfo);
     return newProduct;
   }
 
   //와인 정보 수정
-  async productUpdate(name, productInfo) {
-    const filter = { name: name };
+  async updateProduct(id, productInfo) {
+    const filter = { _id: id };
     const option = { returnOriginal: false };
-    
-    const updateProduct = await Product.findOneAndUpdate(filter, productInfo, option);
+
+    const updateProduct = await Product.findOneAndUpdate(
+      filter,
+      productInfo,
+      option
+    );
     return updateProduct;
   }
 
   //와인 삭제
-  async productDelete(name) {
-    const deleteProduct = await Product.deleteOne({ name: name });
+  async deleteProduct(id) {
+    const deleteProduct = await Product.deleteOne({ _id: id });
     return deleteProduct;
   }
 }
