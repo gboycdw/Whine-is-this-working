@@ -4,7 +4,7 @@ import AdminMainContent from "../../components/admin/main/admin-main-content";
 const AdminPage = () => {
   return (
     <>
-      <AdminLayout>
+      <AdminLayout title={"메인"}>
         <AdminMainContent />
       </AdminLayout>
     </>

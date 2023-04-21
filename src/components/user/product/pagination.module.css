@@ -8,28 +8,26 @@
 
 .page_btn {
   border: none;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 4px;
+  padding: 4px 8px;
   margin: 0;
-  background: black;
-  color: white;
   font-size: 1rem;
 
   &:hover {
-    background: tomato;
+    color: rgb(150, 150, 150);
     cursor: pointer;
-    transform: translateY(-2px);
   }
 
   &[disabled] {
-    background: grey;
     cursor: revert;
     transform: revert;
+    color: #e5d1d1;
   }
 
   &[aria-current] {
-    background: deeppink;
     font-weight: bold;
+    background-color: #aa7373;
+    color: white;
     cursor: revert;
     transform: revert;
   }
