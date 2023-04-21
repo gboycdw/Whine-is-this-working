@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { app } from './src/app.js';
-const PORT = 8080;
+const PORT = process.env.PORT || 5000;
 
 function handle() {
   console.log(`Server Connected, http://localhost:${PORT}`);
