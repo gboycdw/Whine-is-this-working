@@ -94,7 +94,6 @@ productRouter.patch("/:id", async (req, res, next) => {
       tags: tags,
       features: features,
     });
-    
 
     res.status(201).json(updateProduct);
   } catch (err) {
