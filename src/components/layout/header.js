@@ -18,7 +18,7 @@ const categoryBundle = [
       { id: 1, name: "레드와인", link: "/product/category/red" },
       { id: 2, name: "화이트와인", link: "/product/category/white" },
       { id: 3, name: "로제와인", link: "/product/category/rose" },
-      { id: 3, name: "무알콜", link: "/product/category/nonealchol" },
+      { id: 4, name: "무알콜", link: "/product/category/nonealchol" },
     ],
   },
   {
@@ -59,6 +59,61 @@ const Header = () => {
     setCategoryIndex(null);
   }; // 카테고리 영역에서 마우스를 떼면 모달창 사라짐
 
+  const LoginUserNav = () => {
+    return (
+      <>
+        <li>
+          <Link
+            to="/login"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsLogin(true);
+            }}
+          >
+            로그인
+          </Link>
+        </li>
+        <li>
+          <Link to="/signup">회원가입</Link>
+        </li>
+        <li>|</li>
+        <li>
+          <Link to="/cart">장바구니</Link>
+        </li>
+        <li>
+          <Link to="/order">주문</Link>
+        </li>
+        <li>
+          <Link to="/cs">고객센터</Link>
+        </li>
+      </>
+    );
+  };
+
+  const LoginAdminNav = () => {
+    return (
+      <>
+        <li>
+          <Link to="/manage">관리자페이지</Link>
+        </li>
+        <li>
+          <Link to="/">admin님</Link>
+        </li>
+        <li>
+          <Link
+            to="/"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsLogin(false);
+            }}
+          >
+            로그아웃
+          </Link>
+        </li>
+      </>
+    );
+  };
+
   return (
     <div className={classes.header}>
       <div className={classes.logo_div}>
@@ -67,53 +122,7 @@ const Header = () => {
         </Link>
         <div className={classes.nav_top}>
           <ul className={classes.nav_top_ul}>
-            {!isLogin ? (
-              <>
-                <li>
-                  <Link
-                    to="/login"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsLogin(true);
-                    }}
-                  >
-                    로그인
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/signup">회원가입</Link>
-                </li>
-                <li>|</li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <Link
-                    to="/mypage"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsLogin(false);
-                    }}
-                  >
-                    shagrat님
-                  </Link>
-                </li>
-                <li>|</li>
-                <li>
-                  <Link to="#">알림</Link>
-                </li>
-              </>
-            )}
-
-            <li>
-              <Link to="/cart">장바구니</Link>
-            </li>
-            <li>
-              <Link to="/order">주문</Link>
-            </li>
-            <li>
-              <Link to="/cs">고객센터</Link>
-            </li>
+            {!isLogin ? <LoginUserNav /> : <LoginAdminNav />}
           </ul>
         </div>
         <div className={classes.nav_icon}>

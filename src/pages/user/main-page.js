@@ -1,17 +1,25 @@
+import { getAllProduct } from "../../api/api-product";
 import Layout from "../../components/layout/layout";
-import Banner from "../../assets/banner.jpeg";
-import { Link } from "react-router-dom";
+import MainArticle from "../../components/main/main-article";
+import MainItem from "../../components/main/main-item";
+import OurPick from "../../components/main/ourpick";
 
 const MainPage = () => {
-  const bannerStyle = {
-    width: "100vw",
-    position: "absolute",
-    left: 0,
-  };
+  const products = getAllProduct();
 
   return (
     <>
-      <Layout></Layout>
+      <Layout>
+        <img
+          class="max-w-none w-screen ml-[calc(-50vw+50%)]"
+          src="banner.jpeg"
+          alt="banner"
+        />
+        <OurPick products={products} />
+        <MainItem title={"BEST"} products={products} />
+        <MainItem title={"NEW ARRIVAL"} products={products} />
+        <MainArticle />
+      </Layout>
     </>
   );
 };
