@@ -3,9 +3,11 @@ import ManageProductList from "../../../components/admin/product/manage-product-
 
 const ManageProductListPage = (props) => {
   return (
-    <AdminLayout>
-      <ManageProductList />
-    </AdminLayout>
+    <>
+      <AdminLayout title={"상품 관리"}>
+        <ManageProductList />
+      </AdminLayout>
+    </>
   );
 };
 
