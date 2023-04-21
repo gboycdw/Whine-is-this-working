@@ -8,12 +8,12 @@ const ProductDetailPage = () => {
 
   const productID = +useParams().product_id;
 
-  const wine = products.find((product) => product.id === productID);
+  const product = products.find((product) => product.id === productID);
 
   return (
     <>
       <Layout>
-        <ProductDetail wine={wine} />
+        <ProductDetail product={product} />
       </Layout>
     </>
   );

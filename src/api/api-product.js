@@ -6,6 +6,7 @@ export const getAllProduct = () => {
       nameEng: "Cabernet Sauvignon 2020",
       brand: "Vinum Cellars",
       price: 53000,
+      discountPrice: 13000,
       imgUrl:
         "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png", // 이미지 여러개업로드 가능할경우 배열로저장 or 썸네일이미지 따로저장
       tags: ["미국", "레드"], // 관리자페이지에서 태그들을 추가해서 넣을수있음
@@ -31,6 +32,7 @@ export const getAllProduct = () => {
       nameEng: "Cabernet Sauvignon 2020",
       brand: "Vinum Cellars",
       price: 53000,
+      discountPrice: 13000,
       imgUrl:
         "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png", // 이미지 여러개업로드 가능할경우 배열로저장 or 썸네일이미지 따로저장
       tags: ["미국", "레드"], // 관리자페이지에서 태그들을 추가해서 넣을수있음
@@ -56,6 +58,7 @@ export const getAllProduct = () => {
       nameEng: "Cabernet Sauvignon 2020",
       brand: "Vinum Cellars",
       price: 53000,
+      discountPrice: 13000,
       imgUrl:
         "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png", // 이미지 여러개업로드 가능할경우 배열로저장 or 썸네일이미지 따로저장
       tags: ["미국", "레드"], // 관리자페이지에서 태그들을 추가해서 넣을수있음
@@ -81,6 +84,7 @@ export const getAllProduct = () => {
       nameEng: "Cabernet Sauvignon 2020",
       brand: "Vinum Cellars",
       price: 53000,
+      discountPrice: 13000,
       imgUrl:
         "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png", // 이미지 여러개업로드 가능할경우 배열로저장 or 썸네일이미지 따로저장
       tags: ["미국", "레드"], // 관리자페이지에서 태그들을 추가해서 넣을수있음
@@ -106,6 +110,7 @@ export const getAllProduct = () => {
       nameEng: "Cabernet Sauvignon 2020",
       brand: "Vinum Cellars",
       price: 53000,
+      discountPrice: 13000,
       imgUrl:
         "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png", // 이미지 여러개업로드 가능할경우 배열로저장 or 썸네일이미지 따로저장
       tags: ["미국", "레드"], // 관리자페이지에서 태그들을 추가해서 넣을수있음

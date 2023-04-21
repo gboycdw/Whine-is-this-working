@@ -4,6 +4,8 @@ import MainPage from "./pages/user/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CartContext from "./components/store/cart-context";
 import ProductList from "./pages/user/porduct/product-list";
+import AdminPage from "./pages/admin/admin-page";
+import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,11 @@ function App() {
             <Route
               path="/product/:product_id"
               element={<ProductDetailPage />}
+            />
+            <Route path="/manage" element={<AdminPage />} />
+            <Route
+              path="/manage/product_list"
+              element={<ManageProductListPage />}
             />
           </Routes>
         </QueryClientProvider>
