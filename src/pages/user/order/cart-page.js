@@ -7,20 +7,27 @@ import Layout from "../../../components/layout/layout";
 // 총 상품가격, 할인가격
 
 const Cart = (props) => {
-  const { cartData, setCartData } = useContext(cartCtx);
-  const [totalPriceArr, setTotalPriceArr] = useState([]);
+  const { cartData } = useContext(cartCtx);
 
-  const parentFunction = (arr) => {
-    console.log(arr);
-    setTotalPriceArr(arr);
-    console.log(totalPriceArr);
-  };
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
+
+  console.log(totalPrice, totalDiscountPrice);
 
   useEffect(() => {
-    parentFunction();
-  }, [totalPriceArr]);
+    let totalPrice = 0;
+    cartData.forEach((item) => {
+      totalPrice += item.price * item.amount;
+    });
 
-  console.log(totalPriceArr);
+    let totalDiscountPrice = 0;
+    cartData.forEach((item) => {
+      totalDiscountPrice += item.discountPrice * item.amount;
+    });
+
+    setTotalPrice(totalPrice);
+    setTotalDiscountPrice(totalDiscountPrice);
+  }, [cartData]);
 
   return (
     <>
@@ -35,13 +42,7 @@ const Cart = (props) => {
           {/* <컴포넌트 객체이름={데이터} /> */}
           {/* map 이용해서 배열 수만큼 li 렌더링 되어야 함 */}
           {cartData.map((item) => {
-            return (
-              <CartItem
-                cart={item}
-                cartCalcPrice={parentFunction}
-                totalPriceArr={totalPriceArr}
-              />
-            );
+            return <CartItem cart={item} />;
           })}
         </ul>
       </Layout>

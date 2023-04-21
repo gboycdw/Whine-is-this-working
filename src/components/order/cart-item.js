@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { cartCtx } from "../store/cart-context";
 const CartItem = (props) => {
   const { alcoholDegree, amount, country, id, name, price } = props.cart;
   const [cartAmount, setCartAmount] = useState(amount);
   const [totalPrice, setTotalPrice] = useState(price * cartAmount);
+  const { cartData, setCartData } = useContext(cartCtx);
   const discountPrice = totalPrice * 0.2;
 
   // dummy: 이미지 url
@@ -36,15 +38,15 @@ const CartItem = (props) => {
     let tempAmount = cartAmount;
     setCartAmount(++tempAmount);
   };
-  console.log(props.totalPriceArr);
-  useEffect(() => {
-    const priceData = { totalPrice, discountPrice };
 
-    let arr = [...props.totalPriceArr];
-    arr.push(priceData);
-    console.log(arr);
-    props.cartCalcPrice(arr);
-  }, [totalPrice, discountPrice, props.totalPriceArr]);
+  useEffect(() => {
+    let arr = [...cartData];
+    arr.map((item) =>
+      item.id === id ? { ...item, amount: cartAmount } : item
+    );
+
+    localStorage.setItem("cartData", JSON.stringify(arr));
+  }, [cartAmount]);
 
   return (
     <li key={id} className="flex justify-between w-[1200px] border-y py-[45px]">
