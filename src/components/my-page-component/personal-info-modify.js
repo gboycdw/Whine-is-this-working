@@ -1,4 +1,3 @@
-
 const PersonalInfoModify = () =>{
 
     return(

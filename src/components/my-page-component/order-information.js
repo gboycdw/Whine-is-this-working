@@ -1,13 +1,13 @@
 
-const MyPagePesonalInfo = () =>{
+const OrderInfomation = () =>{
 
     return(
         <>
             <div>
-            MyPagePesonalInfo
+            OrderInfomation
             </div>
         </>
     )
 }
 
-export default MyPagePesonalInfo;
+export default OrderInfomation;

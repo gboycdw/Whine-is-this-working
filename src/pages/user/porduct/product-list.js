@@ -8,14 +8,19 @@ import styled from "styled-components";
 import { getAllProduct } from "../../../api/api-product";
 
 const ProductList = () => {
-  const products = getAllProduct();
+  const products = getAllProduct(); //데이터 받아오는 함수 (백엔드 연결 전 임시용)
 
   // App.js에 정의한 라우터를 통해 받아온 url의 category 정보를 받음
   const categoryName = useParams().category;
 
   const filteredProducts = products.filter((data) => {
-    return data.category === categoryName;
-  });
+    if (Object.values(data.feature).indexOf(categoryName) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }); // url로 받아온 카테고리명을 특징으로 가지고 있는 데이터를 필터링
+
   // 전체 데이터인데 쓸 지는 미정
   // const [productData, setProductData] = useState(filteredData);
 
@@ -50,7 +55,7 @@ const ProductList = () => {
           </div>
           <ProductListUl>
             {filteredProducts.slice(offset, offset + limit).map((product) => {
-              return <Product product={product} />;
+              return <Product key={product.id} product={product} />;
             })}
           </ProductListUl>
           <div>
