@@ -1,8 +1,8 @@
-import { getAllProduct } from "../../api/api-product";
-import Layout from "../../components/layout/layout";
-import MainArticle from "../../components/main/main-article";
-import MainItem from "../../components/main/main-item";
-import OurPick from "../../components/main/ourpick";
+import { getAllProduct } from "../api/api-product";
+import Layout from "../components/user/layout/layout";
+import MainArticle from "../components/user/main/main-article";
+import MainItem from "../components/user/main/main-item";
+import OurPick from "../components/user/main/ourpick";
 
 const MainPage = () => {
   const products = getAllProduct();

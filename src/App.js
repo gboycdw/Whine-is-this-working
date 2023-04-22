@@ -1,17 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductDetailPage from "./pages/user/porduct/product-detail-page";
-import MainPage from "./pages/user/main-page";
+import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CartContext from "./components/store/cart-context";
 import ProductList from "./pages/user/porduct/product-list";
 import AdminPage from "./pages/admin/admin-page";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
 import MyPage from "./pages/user/my-page/my-page";
-import OrderInfomation from "./components/my-page-component/order-information";
-import CusServiceCenter from "./components/my-page-component/cus-service-center";
-import OrderCancelInfo from "./components/my-page-component/oreder-cancel-info";
-import PersonalInfoModify from "./components/my-page-component/personal-info-modify";
-import Withdrawl from "./components/my-page-component/withdrawal";
+import OrderInfomation from "./components/user/my-page-component/order-information";
+import CusServiceCenter from "./components/user/my-page-component/cus-service-center";
+import OrderCancelInfo from "./components/user/my-page-component/oreder-cancel-info";
+import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
+import Withdrawl from "./components/user/my-page-component/withdrawal";
 const queryClient = new QueryClient();
 
 function App() {
@@ -35,8 +35,8 @@ function App() {
               element={<ManageProductListPage />}
             />
             <Route path="/mypage" element={<MyPage />}>
+              {/* 마이페이지 중첩라우터 */}
               <Route path="order-infromation" element={<OrderInfomation />} />
-              //마이페이지 네비게이션 중첩라우터
               <Route path="" element={<OrderInfomation />} />
               <Route path="order-cancel" element={<OrderCancelInfo />} />
               <Route

@@ -1,5 +1,5 @@
-import Layout from "../../../components/layout/layout";
-import MyPageNav from "../../../components/my-page-component/my-page-nav";
+import Layout from "../../../components/user/layout/layout";
+import MyPageNav from "../../../components/user/my-page-component/my-page-nav";
 import { Outlet } from "react-router-dom";
 const MyPage = () => {
   return (

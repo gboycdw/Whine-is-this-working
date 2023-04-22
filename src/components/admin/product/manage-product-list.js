@@ -3,281 +3,42 @@ import { Link } from "react-router-dom";
 import Pagination from "../../user/product/pagination";
 import Button from "../../UI/button";
 import ManageProductListItem from "./manage-product-list-item";
+import axios from "axios";
 
-const products = [
-  {
-    id: 0,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 1,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 2,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 3,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 4,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 5,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 6,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 7,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 8,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 9,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 0,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 1,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 2,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 3,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 4,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 5,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 6,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 7,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 8,
-    no: 1,
-    name: "모노플 클라시코",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-  {
-    id: 9,
-    no: 1,
-    name: "와인",
-    imgUrl:
-      "https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png",
-    price: 52000,
-    category: "white",
-    state: "판매중",
-    inventory: 200,
-    registerDay: "2023.02.27",
-    editDay: "2023.03.03",
-  },
-];
+const ManageProductList = (props) => {
+  const products = props.products;
 
-const ManageProductList = () => {
-  const limit = 10;
-  const [page, setPage] = useState(1);
-  const offset = (page - 1) * limit;
+  const [checkedProductIds, setCheckedProductIds] = useState([]);
+
+  console.log(checkedProductIds);
+
+  const [page, setPage] = useState(1); // 페이징처리를 위한 현재 페이지
+  const limit = 10; // 페이징처리를 위한 한화면 게시글 리밋
+  const offset = (page - 1) * limit; // 페이징처리를위한 배열 슬라이스를 위한 오프셋
+
+  const deleteCheckedProductsHandler = () => {
+    axios.post(
+      "url주소",
+      {
+        checkedProductIds, // 체크된 상품들의 id 배열을 엑시오스로 넘겨줌
+      },
+      {
+        headers: {
+          "Content-type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+  };
 
   return (
     <div class="flex flex-col p-6">
       <div class="border-b">
-        <span>전체 10</span>
+        <span>전체 {products.length}</span>
         <span> | </span>
-        <span>판매중 8</span>
+        <span>
+          판매중 {products.filter((item) => item.saleState === "판매중").length}
+        </span>
         <span> | </span>
         <span>품절 0</span>
         <span> | </span>
@@ -285,7 +46,10 @@ const ManageProductList = () => {
       </div>
       <div class="py-4 flex gap-4">
         <div class="w-36 bg-[#ffffff] flex justify-center py-3 px-3">
-          카테고리 선택 | v
+          <select class="w-full">
+            <option value="카테고리선택">카테고리 선택</option>
+            <option value="white">white</option>
+          </select>
         </div>
         <input
           class="flex-grow py-3 px-3 "
@@ -301,23 +65,31 @@ const ManageProductList = () => {
           <li class=" flex text-center border-b w-full pt-2 pb-3 gap-3 text-sm font-bold">
             <input type="checkbox" />
             <span class="w-10 ">No</span>
-            <img src="" alt="" />
+            <span class="w-10"></span>
             <span class="grow ">상품명</span>
             <span class="w-24 ">판매가</span>
             <span class="w-20 ">카테고리</span>
-            <span class="w-20 ">상태</span>
+            <span class="w-16 ">상태</span>
             <span class="w-16 ">재고</span>
             <span class="w-32 ">등록일</span>
             <span class="w-32 ">수정일</span>
             <button class="w-20">수정하기</button>
           </li>
           {products.slice(offset, offset + limit).map((item) => {
-            console.log(item);
-            return <ManageProductListItem key={item.id} product={item} />;
+            return (
+              <ManageProductListItem
+                key={item.id}
+                product={item}
+                checkedProductIds={checkedProductIds}
+                setCheckedProductIds={setCheckedProductIds}
+              />
+            );
           })}
         </ul>
         <div class="relative flex justify-between items-center h-20">
-          <Button isConfirm={false}>선택 상품 삭제</Button>
+          <div onClick={deleteCheckedProductsHandler}>
+            <Button isConfirm={false}>선택 상품 삭제</Button>
+          </div>
           <div class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
             <Pagination
               total={products.length}

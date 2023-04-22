@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 const MyPageNav = () => {
   const linkRef1 = useRef();
@@ -13,7 +13,7 @@ const MyPageNav = () => {
     linkRef2.current.style.color = "#c9c9c9";
     linkRef3.current.style.color = "#c9c9c9";
     linkRef4.current.style.color = "#c9c9c9";
-    if (e.target != linkRef5.current) {
+    if (e.target !== linkRef5.current) {
       //회원탈퇴 요소가 아니면 검은색으로
       e.target.style.color = "#060606";
     }
@@ -24,7 +24,7 @@ const MyPageNav = () => {
       <div class="w-[15vh] flex flex-col  m-[10px] mb-[30px] h-[100vh] border-r-[1px] border-barColor justify-between">
         <ul class="relative left-0 flex flex-col ">
           <li class=" mb-[20px]">
-            <Link to="/" class={color}>
+            <Link to="/cart" class={color}>
               장바구니
             </Link>
           </li>
