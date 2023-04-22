@@ -29,7 +29,9 @@ const CategoryModal = (props) => {
         <div key={categories.id} className={classes.category_modal}>
           <CategoryModalUl>
             {categories.map((category) => {
-              return <CategoryModalList category={category} />;
+              return (
+                <CategoryModalList key={category.id} category={category} />
+              );
             })}
           </CategoryModalUl>
         </div>

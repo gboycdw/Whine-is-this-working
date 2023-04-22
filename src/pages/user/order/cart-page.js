@@ -12,8 +12,8 @@ const Cart = (props) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
 
-  console.log(totalPrice, totalDiscountPrice);
-
+  // 총 상품금액, 총 할인금액
+  // cartData가 변경될 때마다 총 상품금액, 총 할인금액 업데이트됨
   useEffect(() => {
     let totalPrice = 0;
     cartData.forEach((item) => {
@@ -22,6 +22,7 @@ const Cart = (props) => {
 
     let totalDiscountPrice = 0;
     cartData.forEach((item) => {
+      console.log(item.discountPrice);
       totalDiscountPrice += item.discountPrice * item.amount;
     });
 
@@ -33,7 +34,7 @@ const Cart = (props) => {
     <>
       <Layout>
         {/* 장바구니 Title */}
-        <div className="mb-12 ml-12">
+        <div className="mb-12 ml-12 mt-[50px]">
           <h1 className="text-3xl">장바구니</h1>
         </div>
 
@@ -45,6 +46,42 @@ const Cart = (props) => {
             return <CartItem cart={item} />;
           })}
         </ul>
+
+        {/* 총 상품금액 - 총 할인금액 = 총 결제금액 */}
+        <div>
+          <div
+            className="flex mb-[100px] mt-[55px] justify-center items-center
+           space-x-[70px] border-y py-[30px]"
+          >
+            {/* 총 상품금액 */}
+            <div className="flex flex-col items-center">
+              <span className="text-[18px]">상품금액</span>
+              <span className="text-[24px] font-[600]">{totalPrice}원</span>
+            </div>
+            {/* - */}
+            <div className="justify-center text-[28px]">
+              <span>-</span>
+            </div>
+            {/* 총 할인금액 */}
+            <div className="flex flex-col items-center">
+              <span className="text-[18px]">할인금액</span>
+              <span className="text-[24px] font-medium font-[600]">
+                {totalDiscountPrice}원
+              </span>
+            </div>
+            {/* = */}
+            <div className="justify-center text-[24px]">
+              <span>=</span>
+            </div>
+            {/* 총 결제금액 */}
+            <div className="flex flex-col items-center">
+              <span className="text-[18px]">총 결제금액</span>
+              <span className="text-[24px] font-medium font-[600]">
+                {totalPrice - totalDiscountPrice}원
+              </span>
+            </div>
+          </div>
+        </div>
       </Layout>
     </>
   );

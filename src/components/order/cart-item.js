@@ -2,18 +2,23 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { cartCtx } from "../store/cart-context";
 const CartItem = (props) => {
-  const { alcoholDegree, amount, country, id, name, price } = props.cart;
+  const {
+    alcoholDegree,
+    amount,
+    country,
+    id,
+    name,
+    price,
+    brand,
+    imgUrl,
+    discountPrice,
+  } = props.cart;
   const [cartAmount, setCartAmount] = useState(amount);
   const [totalPrice, setTotalPrice] = useState(price * cartAmount);
   const { cartData, setCartData } = useContext(cartCtx);
-  const discountPrice = totalPrice * 0.2;
-
-  // dummy: 이미지 url
-  const imgUrl =
-    "https://www.winenara.com/uploads/product/46d2a5aefc6cfe97bb88e1aed4bb0ce3.png";
-
-  // dummy : 브랜드명
-  const brand = "Wine Brand";
+  const [totalDiscountPrice, settotalDiscountPrice] = useState(
+    cartAmount * discountPrice
+  );
 
   // 수량에 변동이 있을 경우 전체 금액 업데이트
   useEffect(() => {
@@ -22,7 +27,7 @@ const CartItem = (props) => {
 
   // 수량 1개 감소 핸들러
   const wineCountMinusHandler = () => {
-    if (cartAmount >= 1) {
+    if (cartAmount > 1) {
       let tempAmount = cartAmount;
       setCartAmount(--tempAmount);
     }
@@ -39,6 +44,7 @@ const CartItem = (props) => {
     setCartAmount(++tempAmount);
   };
 
+  // 카트에 담긴 수량을 localStorage에 업데이트
   useEffect(() => {
     let arr = [...cartData];
     arr.map((item) =>
@@ -49,11 +55,16 @@ const CartItem = (props) => {
   }, [cartAmount]);
 
   return (
-    <li key={id} className="flex justify-between w-[1200px] border-y py-[45px]">
+    <li key={id} className="flex justify-between w-[1200px] py-[45px] border-b">
       <div className="flex w-[500px]">
         {/* 체크박스, 상품사진 */}
         <div className="flex">
-          <input type="checkbox" id="cart" name="scales" />
+          <input
+            type="checkbox"
+            id="cart"
+            name="scales"
+            className="mr-[20px]"
+          />
           <label for="cart">
             <picture>
               {/* [if IE 9]><video style="display: none;"><![endif] */}
@@ -61,7 +72,7 @@ const CartItem = (props) => {
               {/* pc 이미지 */}
               <source src={imgUrl} media="(min-width:768px)" />
               {/* mb 이미지 */}
-              <img className="w-[100px]" src={imgUrl} alt={name} />
+              <img className="h-[100px]" src={imgUrl} alt={name} />
             </picture>
           </label>
         </div>
@@ -120,12 +131,12 @@ const CartItem = (props) => {
         {/* 할인금액 */}
         <div className="flex flex-col items-center justify-center">
           <span>할인금액</span>
-          <span>{discountPrice}</span>
+          <span>{discountPrice * cartAmount}</span>
         </div>
         {/* 총 결제금액 */}
         <div className="flex flex-col items-center justify-center">
           <span>총 결제금액</span>
-          <span>{totalPrice - discountPrice}</span>
+          <span>{totalPrice - totalDiscountPrice}</span>
         </div>
       </div>
     </li>

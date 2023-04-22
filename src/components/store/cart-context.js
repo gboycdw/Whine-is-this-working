@@ -3,7 +3,6 @@ import { createContext, useState } from "react";
 export const storage = (props) => {
   if (typeof window !== "undefined") {
     const data = window.localStorage.getItem(props);
-    console.log(data);
     if (data === null) {
       return [];
     } else {
