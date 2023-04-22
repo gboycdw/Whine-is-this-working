@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { cartCtx } from "../store/cart-context";
+import { cartCtx } from "../../store/cart-context";
 const CartItem = (props) => {
   const {
     alcoholDegree,
