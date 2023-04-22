@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { cartCtx } from "../store/cart-context";
+import { cartCtx } from "../../store/cart-context";
 import classes from "./product-detail.module.css";
 
 //import imgA from 'https://pixabay.com/ko/vectors/%ec%99%80%ec%9d%b8-%eb%a7%88%ec%8b%9c%eb%8b%a4-%eb%b3%91-%ec%9d%8c%eb%a3%8c-%ec%88%a0-150955/';
@@ -55,7 +55,7 @@ const ProductDetail = (props) => {
   };
   return (
     <>
-      <div className={classes.product_detail_container}>
+      <div class="pt-16">
         {" "}
         {/*product-detail 전체 div*/}
         <div className={classes.product_detail_wrap}>

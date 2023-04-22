@@ -23,6 +23,7 @@ export const getAllProduct = () => {
       info: "제품 상세 설명", //상세페이지에 들어가는 설명
       inventory: 3, // 재고
       saleCount: 0, // 판매량
+      saleState: "판매중", // 판매상태(판매중,품절,숨김)
       isPicked: true, // 관리자 픽 여부
       isBest: false, // 베스트상품 여부
     },
@@ -49,6 +50,7 @@ export const getAllProduct = () => {
       info: "제품 상세 설명", //상세페이지에 들어가는 설명
       inventory: 3, // 재고
       saleCount: 0, // 판매량
+      saleState: "판매중", // 판매상태(판매중,품절,숨김)
       isPicked: true, // 관리자 픽 여부
       isBest: false, // 베스트상품 여부
     },
@@ -75,6 +77,7 @@ export const getAllProduct = () => {
       info: "제품 상세 설명", //상세페이지에 들어가는 설명
       inventory: 3, // 재고
       saleCount: 0, // 판매량
+      saleState: "판매중", // 판매상태(판매중,품절,숨김)
       isPicked: true, // 관리자 픽 여부
       isBest: false, // 베스트상품 여부
     },
@@ -101,6 +104,7 @@ export const getAllProduct = () => {
       info: "제품 상세 설명", //상세페이지에 들어가는 설명
       inventory: 3, // 재고
       saleCount: 0, // 판매량
+      saleState: "판매중", // 판매상태(판매중,품절,숨김)
       isPicked: true, // 관리자 픽 여부
       isBest: false, // 베스트상품 여부
     },
@@ -127,6 +131,7 @@ export const getAllProduct = () => {
       info: "제품 상세 설명", //상세페이지에 들어가는 설명
       inventory: 3, // 재고
       saleCount: 0, // 판매량
+      saleState: "판매중", // 판매상태(판매중,품절,숨김)
       isPicked: true, // 관리자 픽 여부
       isBest: false, // 베스트상품 여부
     },

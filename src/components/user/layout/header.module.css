@@ -18,6 +18,9 @@
 }
 
 .nav_top {
+  display: flex;
+  justify-content: end;
+  align-items: center;
   width: 1200px;
   height: 40px;
   margin: auto;
@@ -62,8 +65,8 @@
   justify-content: center;
   align-items: center;
   height: 60px;
-  border-top: 1px solid rgb(230, 230, 230);
-  border-bottom: 1px solid rgb(230, 230, 230);
+  border-top: 1px solid #e5d1d1;
+  border-bottom: 1px solid #e5d1d1;
 }
 
 .main_nav_li {
@@ -84,7 +87,15 @@
   height: 100%;
 }
 
-.main_nav_li span:hover {
+.main_nav_li:hover {
+  cursor: default;
+}
+
+.main_nav_li:hover > span {
+  color: rgb(180, 180, 180);
+}
+
+.main_nav_li a:hover {
   cursor: pointer;
   color: rgb(180, 180, 180);
 }

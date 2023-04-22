@@ -1,8 +1,8 @@
-import Product from "../../../components/product/product";
+import Product from "../../../components/user/product/product";
 import classes from "./product-list.module.css";
-import Pagination from "../../../components/product/pagination";
+import Pagination from "../../../components/user/product/pagination";
 import { useState } from "react";
-import Layout from "../../../components/layout/layout";
+import Layout from "../../../components/user/layout/layout";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import { getAllProduct } from "../../../api/api-product";
@@ -11,7 +11,14 @@ const ProductList = () => {
   const products = getAllProduct(); //데이터 받아오는 함수 (백엔드 연결 전 임시용)
 
   // App.js에 정의한 라우터를 통해 받아온 url의 category 정보를 받음
-  const categoryName = useParams().category;
+  const urlParams = useParams().category;
+  let categoryName = "";
+
+  if (urlParams === "usa") {
+    categoryName = "United States";
+  } else {
+    categoryName = urlParams;
+  }
 
   const filteredProducts = products.filter((data) => {
     if (Object.values(data.feature).indexOf(categoryName) !== -1) {
@@ -47,7 +54,7 @@ const ProductList = () => {
   return (
     <>
       <Layout>
-        <div className={classes.container}>
+        <div class="py-16">
           <div>
             <h1 className={classes.categoryName}>
               {categoryName.toUpperCase()} WINE

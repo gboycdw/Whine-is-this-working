@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
-import Logo from "../../assets/logo.png";
 import CategoryModal from "./category-modal";
 
 import classes from "./header.module.css";
@@ -28,6 +26,7 @@ const categoryBundle = [
     categories: [
       { id: 1, name: "스페인", link: "/product/category/spain" },
       { id: 2, name: "프랑스", link: "/product/category/france" },
+      { id: 3, name: "미국", link: "/product/category/usa" },
     ],
   },
   {
@@ -49,6 +48,7 @@ const categoryBundle = [
 const Header = () => {
   const [categoryIndex, setCategoryIndex] = useState();
   const [isLogin, setIsLogin] = useState("false");
+  const [isAdmin, setIsAdmin] = useState("false");
   // 메인네비게이션 카테고리 모달을 컨트롤하기 위한 state 관리
 
   const categoryOnMouseOverHandler = (e) => {
@@ -118,7 +118,7 @@ const Header = () => {
     <div className={classes.header}>
       <div className={classes.logo_div}>
         <Link to="/">
-          <img className={classes.logo} src={Logo} alt="logo" />
+          <img className={classes.logo} src="/logo.png" alt="logo" />
         </Link>
         <div className={classes.nav_top}>
           <ul className={classes.nav_top_ul}>

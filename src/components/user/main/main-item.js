@@ -12,7 +12,7 @@ const MainItem = (props) => {
         <ul class="flex justify-between p-1">
           {products.slice(0, 4).map((item) => {
             return (
-              <Link to={`/product/${item.id}`}>
+              <Link key={item.id} to={`/product/${item.id}`}>
                 <li class="w-56 h-[22rem] flex flex-col rounded-3xl py-5 px-6">
                   <div class="flex justify-center mb-5">
                     <img class="h-[200px]" src={item.imgUrl} alt={item.name} />
@@ -27,13 +27,13 @@ const MainItem = (props) => {
                     </span>
                   </div>
                   <div class="flex w-full">
-                    <div class="flex text-center mr-2 justify-center bg-main px-3 py-1 rounded-2xl">
+                    <div class="flex text-center mr-2 justify-center bg-color2 px-3 py-1 rounded-2xl">
                       <span class="text-sm">tag</span>
                     </div>
-                    <div class="flex text-center mr-2 justify-center bg-main px-3 py-1 rounded-2xl">
+                    <div class="flex text-center mr-2 justify-center bg-color2 px-3 py-1 rounded-2xl">
                       <span class="text-sm">tag</span>
                     </div>
-                    <div class="flex text-center mr-2 justify-center bg-main px-3 py-1 rounded-2xl">
+                    <div class="flex text-center mr-2 justify-center bg-color2 px-3 py-1 rounded-2xl">
                       <span class="text-sm">tag</span>
                     </div>
                   </div>
