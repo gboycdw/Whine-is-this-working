@@ -3,7 +3,7 @@ import ProductDetailPage from "./pages/user/porduct/product-detail-page";
 import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CartContext from "./components/store/cart-context";
-import ProductList from "./pages/user/porduct/product-list";
+import ProductList from "./pages/user/product/product-list-page";
 import AdminPage from "./pages/admin/admin-page";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
 import MyPage from "./pages/user/my-page/my-page";
