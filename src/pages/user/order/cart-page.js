@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import CartItem from "../../../components/order/cart-item";
 import { cartCtx } from "../../../components/store/cart-context";
-import Layout from "../../../components/layout/layout";
+import Layout from "../../../components/user/layout/layout";
 
 // 부모 컴포넌트에서 자식 컴포넌트 받기
 // 총 상품가격, 할인가격

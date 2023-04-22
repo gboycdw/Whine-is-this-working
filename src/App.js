@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ProductDetailPage from "./pages/user/porduct/product-detail-page";
+import ProductDetailPage from "./pages/user/product/product-detail-page";
 import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import CartContext from "./components/store/cart-context";
@@ -12,6 +12,7 @@ import CusServiceCenter from "./components/user/my-page-component/cus-service-ce
 import OrderCancelInfo from "./components/user/my-page-component/oreder-cancel-info";
 import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
 import Withdrawl from "./components/user/my-page-component/withdrawal";
+import Cart from "./pages/user/order/cart-page";
 const queryClient = new QueryClient();
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
               <Route path="cus-service-center" element={<CusServiceCenter />} />
               <Route path="withdrawl" element={<Withdrawl />} />
             </Route>
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </QueryClientProvider>
       </CartContext>
