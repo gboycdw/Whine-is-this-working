@@ -53,3 +53,10 @@ a {
 h1 {
   margin: 0;
 }
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  height: 500px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  overflow: scroll;
+}

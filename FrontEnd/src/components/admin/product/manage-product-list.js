@@ -9,12 +9,25 @@ const ManageProductList = (props) => {
   const products = props.products;
 
   const [checkedProductIds, setCheckedProductIds] = useState([]);
-
-  console.log(checkedProductIds);
+  const [isCheckAll, setIsCheckAll] = useState(false);
 
   const [page, setPage] = useState(1); // 페이징처리를 위한 현재 페이지
   const limit = 10; // 페이징처리를 위한 한화면 게시글 리밋
   const offset = (page - 1) * limit; // 페이징처리를위한 배열 슬라이스를 위한 오프셋
+
+  const clickAllHandler = () => {
+    if (isCheckAll) {
+      setIsCheckAll(false);
+      setCheckedProductIds([]);
+    } else {
+      let arr = [];
+      products.slice(offset, offset + limit).forEach((item) => {
+        arr.push(item.id);
+      });
+      setIsCheckAll(true);
+      setCheckedProductIds(arr);
+    }
+  };
 
   const deleteCheckedProductsHandler = () => {
     axios.post(
@@ -63,7 +76,7 @@ const ManageProductList = (props) => {
       <div class="flex flex-col py-2 px-5 bg-[#ffffff]">
         <ul>
           <li class=" flex text-center border-b w-full pt-2 pb-3 gap-3 text-sm font-bold">
-            <input type="checkbox" />
+            <input type="checkbox" onClick={clickAllHandler} />
             <span class="w-10 ">No</span>
             <span class="w-10"></span>
             <span class="grow ">상품명</span>
@@ -82,6 +95,7 @@ const ManageProductList = (props) => {
                 product={item}
                 checkedProductIds={checkedProductIds}
                 setCheckedProductIds={setCheckedProductIds}
+                isCheckAll={isCheckAll}
               />
             );
           })}

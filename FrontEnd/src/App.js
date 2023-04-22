@@ -13,6 +13,8 @@ import OrderCancelInfo from "./components/user/my-page-component/oreder-cancel-i
 import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
 import Withdrawl from "./components/user/my-page-component/withdrawal";
 import Cart from "./pages/user/order/cart-page";
+import NewProductPage from "./pages/admin/product/new-product-page";
+import EditProductPage from "./pages/admin/product/edit-product-page";
 const queryClient = new QueryClient();
 
 function App() {
@@ -34,6 +36,11 @@ function App() {
             <Route
               path="/manage/product_list"
               element={<ManageProductListPage />}
+            />
+            <Route path="/manage/new_product" element={<NewProductPage />} />
+            <Route
+              path="/manage/edit_product/:product_id"
+              element={<EditProductPage />}
             />
             <Route path="/mypage" element={<MyPage />}>
               {/* 마이페이지 중첩라우터 */}

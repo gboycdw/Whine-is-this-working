@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const ManageProductListItem = (props) => {
@@ -16,10 +16,14 @@ const ManageProductListItem = (props) => {
     editDay,
   } = props.product;
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(props.isCheckAll);
+  const [newSaleState, setNewSaleState] = useState(saleState);
+
+  useEffect(() => {
+    setIsChecked(props.isCheckAll);
+  }, [props.isCheckAll]);
 
   const inputCheckHandler = (e) => {
-    console.log(props.checkedProductIds);
     if (!isChecked) {
       setIsChecked(true);
       let copiedArr = [...props.checkedProductIds];
@@ -39,6 +43,7 @@ const ManageProductListItem = (props) => {
 
   const saleStateChangeHandler = (e) => {
     const saleState = e.target.value;
+    setNewSaleState(saleState);
     axios.post(
       "url주소",
       {
@@ -56,7 +61,7 @@ const ManageProductListItem = (props) => {
 
   return (
     <li class="flex text-center items-center border-b border-color2 w-full py-1 gap-3 text-sm">
-      <input type="checkbox" onClick={inputCheckHandler} />
+      <input type="checkbox" onClick={inputCheckHandler} checked={isChecked} />
       <span class="w-10 ">{no}</span>
       <span class="w-10 flex justify-center items-center">
         <img class="h-10" src={imgUrl} alt={name} />
@@ -66,7 +71,7 @@ const ManageProductListItem = (props) => {
       <span class="w-20 ">{category}</span>
       <select
         class="border h-7 w-16"
-        value={saleState}
+        value={newSaleState}
         onChange={saleStateChangeHandler}
       >
         <option value="판매중">판매중</option>
