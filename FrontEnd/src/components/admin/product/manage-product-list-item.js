@@ -78,7 +78,6 @@ const ManageProductListItem = (props) => {
         <option value="품절">품절</option>
         <option value="숨김">숨김</option>
       </select>
-
       <span class="w-16 ">{inventory}</span>
       <span class="w-32 ">{registerDay}</span>
       <span class="w-32 ">{editDay}</span>

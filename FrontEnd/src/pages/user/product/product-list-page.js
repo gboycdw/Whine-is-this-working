@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import { getAllProduct } from "../../../api/api-product";
 
-const ProductList = () => {
+const ProductListPage = () => {
   const products = getAllProduct(); //데이터 받아오는 함수 (백엔드 연결 전 임시용)
 
   // App.js에 정의한 라우터를 통해 받아온 url의 category 정보를 받음
@@ -80,4 +80,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductListPage;

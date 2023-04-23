@@ -1,23 +1,31 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from "../../UI/button";
-import { Navigate, Router, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NewProduct = (props) => {
   const product = props.product;
   const { register } = useForm();
   const navigate = useNavigate();
 
+  const [isImageModal, setIsImageModal] = useState(false);
+  const [imgFile, setImgFile] = useState(
+    product ? product.imgUrl : "/defaultImage.jpg"
+  );
+  const imgRef = useRef();
+
   const [brand, setBrand] = useState(product ? product.brand : "");
   const [name, setName] = useState(product ? product.name : "");
   const [price, setPrice] = useState(product ? product.price : "");
+  const [imgUrl, setImgUrl] = useState(
+    product ? product.imgUrl : "/defaultImage.jpg"
+  );
   const [discountPrice, setDiscountPrice] = useState(
     product ? product.discountPrice : ""
   );
-  const [imgUrl, setImgUrl] = useState(product ? product.imgUrl : "");
   const [inventory, setInventory] = useState(product ? product.inventory : "");
   const [country, setCountry] = useState(
     product ? product.feature.country : ""
@@ -33,6 +41,8 @@ const NewProduct = (props) => {
   const [alcoholDegree, setAlcoholDegree] = useState(
     product ? product.feature.alcoholDegree : ""
   );
+  const [isPicked, setIsPicked] = useState(product ? product.isPicked : false);
+  const [isBest, setIsBest] = useState(product ? product.isBest : false);
   const [info, setInfo] = useState(product ? product.info : "");
 
   const inputChangeHandler = (e) => {
@@ -75,6 +85,12 @@ const NewProduct = (props) => {
     if (e.target.id === "alcoholDegree") {
       setAlcoholDegree(e.target.value);
     }
+    if (e.target.id === "isPicked") {
+      setIsPicked(!e.target.checked);
+    }
+    if (e.target.id === "isBest") {
+      setIsBest(!e.target.checked);
+    }
   };
 
   const editorChangeHandler = (e, editor) => {
@@ -96,35 +112,93 @@ const NewProduct = (props) => {
       brand,
       name,
       price,
+      imgUrl,
       discountPrice,
       inventory,
       country,
       area,
       color,
-      sugar,
-      acidity,
-      tannic,
-      body,
+      feature: {
+        sugar,
+        acidity,
+        tannic,
+        body,
+      },
       info,
+      isPicked: false,
+      isBest: false,
     };
+
     console.log(data);
+  };
+
+  const toggleImageModalHandler = (e) => {
+    e.preventDefault();
+    if (isImageModal) {
+      setIsImageModal(false);
+    } else {
+      setIsImageModal(true);
+    }
+  };
+
+  const uploadImgFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+  };
+
+  const addImageHandler = (e) => {
+    e.preventDefault();
+    setImgUrl(imgFile);
+    setIsImageModal(false);
   };
 
   return (
     <div class="flex flex-col p-10 bg-color3">
+      {isImageModal ? (
+        <div class="fixed w-[500px] h-[600px] bg-[#ffffff] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-50 p-10 rounded-xl flex flex-col items-center gap-5">
+          <div class="flex w-full flex-col items-center border p-5">
+            <div class="h-96">
+              <img
+                class="h-[300px]"
+                src={imgFile ? imgFile : ``}
+                alt="프로필 이미지"
+              />
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={imgRef}
+              onChange={uploadImgFile}
+            ></input>
+          </div>
+          <div class="flex gap-3">
+            <div onClick={toggleImageModalHandler}>
+              <Button isConfirm={false}>취소</Button>
+            </div>
+            <div onClick={addImageHandler}>
+              <Button isConfirm={true}>이미지 추가</Button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <form ction="">
         <div class="flex">
           <div class="flex flex-col gap-10 w-full p-10 bg-[#ffffff]">
-            <div class="flex gap-28 pb-10 border-b justify-between">
+            <div class="flex gap-28 pb-10 border-b justify-between relative">
               <div class="flex flex-col justify-center gap-4">
-                <div class="flex justify-center items-center w-[464px] bg-color2 p-10">
-                  <img
-                    class="h-96"
-                    src="https://images.vivino.com/thumbs/1iSKLGNDSSCm8_MW6HK2Hw_pb_x960.png"
-                    alt="wine"
-                  />
+                <div class="flex justify-center items-center w-[464px] border p-10">
+                  <img class="h-96" src={imgUrl} alt="wine" />
                 </div>
-                <button class="border h-12 rounded border-color1 border-2 text-color1 font-bold">
+                <button
+                  class="border h-12 rounded border-color1 border-2 text-color1 font-bold"
+                  onClick={toggleImageModalHandler}
+                >
                   이미지 추가
                 </button>
               </div>
@@ -300,6 +374,30 @@ const NewProduct = (props) => {
                         value={alcoholDegree}
                         min="0"
                         max="100"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="flex gap-3 items-center">
+                      <span class="w-24 font-bold">추천상품</span>
+                      <input
+                        type="checkbox"
+                        class="border rounded flex-grow h-8 w-12 px-2"
+                        id="isPicked"
+                        onClick={inputChangeHandler}
+                        checked={isPicked}
+                      />
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-center">
+                    <div class="flex gap-3 items-center">
+                      <span class="w-24 font-bold">베스트상품</span>
+                      <input
+                        type="checkbox"
+                        class="border rounded flex-grow h-8 w-12 px-2"
+                        id="isBest"
+                        onClick={inputChangeHandler}
+                        checked={isBest}
                       />
                     </div>
                   </div>

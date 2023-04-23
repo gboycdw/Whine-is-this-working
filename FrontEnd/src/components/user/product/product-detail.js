@@ -5,6 +5,7 @@ import classes from "./product-detail.module.css";
 //import imgA from 'https://pixabay.com/ko/vectors/%ec%99%80%ec%9d%b8-%eb%a7%88%ec%8b%9c%eb%8b%a4-%eb%b3%91-%ec%9d%8c%eb%a3%8c-%ec%88%a0-150955/';
 const ProductDetail = (props) => {
   const { name, country, imgUrl, alcoholDegree, price, info } = props.product; // props로 wine 객체를 받아옴.
+
   const { cartData, setCartData } = useContext(cartCtx);
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price * amount);
@@ -37,6 +38,7 @@ const ProductDetail = (props) => {
     //장바구니 버튼 클릭시 핸들러 json data를 총가격을 추가하여 만들고 api로 보낸다
     const selectedData = props.product;
     selectedData.amount = amount;
+    selectedData.isChecked = true;
     const isAdded = cartData.find((data) => data.id === selectedData.id);
     const copiedCartData = [...cartData];
     if (isAdded) {

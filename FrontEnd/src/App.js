@@ -2,8 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductDetailPage from "./pages/user/product/product-detail-page";
 import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
-import CartContext from "./components/store/cart-context";
-import ProductList from "./pages/user/product/product-list-page";
+// import CartContext from "./components/store/cart-context";
 import AdminPage from "./pages/admin/admin-page";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
 import MyPage from "./pages/user/my-page/my-page";
@@ -15,18 +14,40 @@ import Withdrawl from "./components/user/my-page-component/withdrawal";
 import Cart from "./pages/user/order/cart-page";
 import NewProductPage from "./pages/admin/product/new-product-page";
 import EditProductPage from "./pages/admin/product/edit-product-page";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
+import CartContext from "./components/store/cart-context";
+import ManageOrderListPage from "./pages/admin/order/manage-order-list-page";
+import ProductListPage from "./pages/user/product/product-list-page";
+import CartPage from "./pages/user/order/cart-page";
+import SignUpPage from "./pages/auth/signup-page";
+import LoginPage from "./pages/auth/login-page";
 const queryClient = new QueryClient();
 
 function App() {
   return (
+    // <RecoilRoot>
     <BrowserRouter>
       <CartContext>
         <QueryClientProvider client={queryClient}>
           <Routes>
             <Route path="/" element={<MainPage />} />
+            {/* 장바구니 페이지 라우터 */}
+            <Route path="/cart" element={<CartPage />} />
+
+            {/* 로그인 페이지 라우터 */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* 회원가입 페이지 라우터 */}
+            <Route path="/signup" element={<SignUpPage />} />
             <Route
               path="/product/category/:category"
-              element={<ProductList />}
+              element={<ProductListPage />}
             />
             <Route
               path="/product/:product_id"
@@ -41,6 +62,10 @@ function App() {
             <Route
               path="/manage/edit_product/:product_id"
               element={<EditProductPage />}
+            />
+            <Route
+              path="/manage/order_list"
+              element={<ManageOrderListPage />}
             />
             <Route path="/mypage" element={<MyPage />}>
               {/* 마이페이지 중첩라우터 */}
@@ -59,6 +84,7 @@ function App() {
         </QueryClientProvider>
       </CartContext>
     </BrowserRouter>
+    // </RecoilRoot>
   );
 }
 

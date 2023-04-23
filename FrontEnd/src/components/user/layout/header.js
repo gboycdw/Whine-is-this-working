@@ -4,6 +4,8 @@ import CategoryModal from "./category-modal";
 
 import classes from "./header.module.css";
 import styled from "styled-components";
+// import { useRecoilState } from "recoil";
+// import { authState } from "../../store/auth-context";
 
 const categoryBundle = [
   // 카테고리 더미데이터 (각 카테고리의 타이틀이 있고 카테고리리스트들이 자식요소로있음)
@@ -46,9 +48,9 @@ const categoryBundle = [
 ];
 
 const Header = () => {
+  // const [auth, setAuth] = useRecoilState(authState);
   const [categoryIndex, setCategoryIndex] = useState();
   const [isLogin, setIsLogin] = useState("false");
-  const [isAdmin, setIsAdmin] = useState("false");
   // 메인네비게이션 카테고리 모달을 컨트롤하기 위한 state 관리
 
   const categoryOnMouseOverHandler = (e) => {

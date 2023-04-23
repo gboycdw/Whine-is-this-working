@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { cartCtx } from "../../store/cart-context";
+import { cartCtx, storage } from "../../store/cart-context";
 const CartItem = (props) => {
   const {
     alcoholDegree,
@@ -12,6 +12,7 @@ const CartItem = (props) => {
     brand,
     imgUrl,
     discountPrice,
+    isChecked,
   } = props.cart;
   const [cartAmount, setCartAmount] = useState(amount);
   const [totalPrice, setTotalPrice] = useState(price * cartAmount);
@@ -47,23 +48,55 @@ const CartItem = (props) => {
   // 카트에 담긴 수량을 localStorage에 업데이트
   useEffect(() => {
     let arr = [...cartData];
-    arr.map((item) =>
+    const tempCart = arr.map((item) =>
       item.id === id ? { ...item, amount: cartAmount } : item
     );
+    settotalDiscountPrice(cartAmount * discountPrice);
+    localStorage.setItem("cartData", JSON.stringify(tempCart));
 
-    localStorage.setItem("cartData", JSON.stringify(arr));
+    // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
+    setCartData(storage("cartData"));
   }, [cartAmount]);
 
+  // 체크 누르면 토글 역할 하게 해주는 핸들러
+  const checkStatusHandler = () => {
+    if (isChecked) {
+      let arr = [...cartData];
+      const tempCart = arr.map((item) =>
+        item.id === id ? { ...item, isChecked: false } : item
+      );
+      localStorage.setItem("cartData", JSON.stringify(tempCart));
+
+      // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
+      setCartData(storage("cartData"));
+    } else if (!isChecked) {
+      let arr = [...cartData];
+      const tempCart = arr.map((item) =>
+        item.id === id ? { ...item, isChecked: true } : item
+      );
+      localStorage.setItem("cartData", JSON.stringify(tempCart));
+
+      // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
+      setCartData(storage("cartData"));
+    }
+  };
   return (
-    <li key={id} className="flex justify-between w-[1200px] py-[45px] border-b">
+    <li
+      key={id}
+      className="flex justify-between w-[1200px] py-[45px] border-b-[#E5D1D1] border-b-[2px]"
+    >
       <div className="flex w-[500px]">
         {/* 체크박스, 상품사진 */}
-        <div className="flex">
+        <div className="flex items-center">
           <input
             type="checkbox"
             id="cart"
             name="scales"
-            className="mr-[20px]"
+            className="mr-[20px]
+            bg-gray-200 hover:bg-gray-300 cursor-pointer
+            w-5 h-5 border-3 border-amber-500 focus:outline-none rounded-lg"
+            onClick={checkStatusHandler}
+            checked={isChecked}
           />
           <label for="cart">
             <picture>
@@ -98,25 +131,31 @@ const CartItem = (props) => {
       </div>
 
       {/* 수량 조절 버튼 (-, 수량, +) */}
-      <div className="flex mr-[200px]">
+      <div className="flex mr-[200px] items-center">
         {/* 수량 1개 감소 버튼 */}
         <button
           type="button"
           onClick={wineCountMinusHandler}
-          className="w-10 border-slate-300"
+          className="w-7 h-7 text-[#FFFFFF] mr-[20px] bg-[#7B4848] rounded-[5px]"
         >
           -
         </button>
+
         {/* 수량 직접 입력 버튼 */}
         <input
           type="text"
           title="수량"
           value={cartAmount}
-          className="w-10"
+          className="w-7 h-7"
           onChange={inputChangeHandler}
         />
+
         {/* 수량 1개 증가 버튼 */}
-        <button type="button" className="w-6" onClick={wineCountPlusHandler}>
+        <button
+          type="button"
+          className="w-7 h-7 text-[#FFFFFF] bg-[#7B4848] rounded-[5px]"
+          onClick={wineCountPlusHandler}
+        >
           +
         </button>
       </div>
@@ -126,17 +165,19 @@ const CartItem = (props) => {
         {/* 금액 계산 */}
         <div className="flex flex-col items-center justify-center">
           <span>상품금액</span>
-          <span>{totalPrice}</span>
+          <span className="text-[20px]">₩ {totalPrice}</span>
         </div>
         {/* 할인금액 */}
         <div className="flex flex-col items-center justify-center">
           <span>할인금액</span>
-          <span>{discountPrice * cartAmount}</span>
+          <span className="text-[20px]">₩ {totalDiscountPrice}</span>
         </div>
         {/* 총 결제금액 */}
         <div className="flex flex-col items-center justify-center">
           <span>총 결제금액</span>
-          <span>{totalPrice - totalDiscountPrice}</span>
+          <span className="text-[20px]">
+            ₩ {totalPrice - totalDiscountPrice}
+          </span>
         </div>
       </div>
     </li>
