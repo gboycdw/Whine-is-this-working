@@ -17,8 +17,8 @@ class CategoryService {
   }
 
   //카테고리 추가
-  async createCategory(productInfo) {
-    const { name, lists } = productInfo;
+  async createCategory(categoryInfo) {
+    const { name, lists } = categoryInfo;
     const newInfo = { name, lists };
     const newCategory = await categoryModel.createCategory(newInfo);
     return newCategory;

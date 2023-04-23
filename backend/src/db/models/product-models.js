@@ -21,9 +21,9 @@ export class ProductModel {
     return product;
   }
 
-  //와인 타입별로 조회(ex. 레드, 화이트, 스파클링, etc..)
-  async findByType(type) {
-    const products = await Product.find({ type: type });
+  //와인 컬러별로 조회(ex. 레드, 화이트, 스파클링, etc..)
+  async findByColor(color) {
+    const products = await Product.find({ color: color });
     return products;
   }
 
@@ -34,10 +34,22 @@ export class ProductModel {
   }
 
   //와인 가격별로 조회
-  async findByPrice(lowerPrice, HigherPrice) {
+  async findByPrice(lowerPrice, higherPrice) {
     const products = await Product.find({
-      $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: HigherPrice } }],
+      $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: higherPrice } }],
     });
+    return products;
+  }
+
+  //Pick 와인 조회
+  async findByPicked() {
+    const products = await Product.find({ isPicked: true });
+    return products;
+  }
+
+  //Best 와인 조회
+  async findByBest() {
+    const products = await Product.find({ isBest: true });
     return products;
   }
 
