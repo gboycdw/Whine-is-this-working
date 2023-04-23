@@ -27,6 +27,7 @@ import ProductListPage from "./pages/user/product/product-list-page";
 import CartPage from "./pages/user/order/cart-page";
 import SignUpPage from "./pages/auth/signup-page";
 import LoginPage from "./pages/auth/login-page";
+import PersonalInfo from "./components/user/my-page-component/personal-info";
 const queryClient = new QueryClient();
 
 function App() {
@@ -68,10 +69,10 @@ function App() {
               element={<ManageOrderListPage />}
             />
             <Route path="/mypage" element={<MyPage />}>
-              {/* 마이페이지 중첩라우터 */}
               <Route path="order-infromation" element={<OrderInfomation />} />
+              {/* //마이페이지 네비게이션 중첩라우터 */}
               <Route path="" element={<OrderInfomation />} />
-              <Route path="order-cancel" element={<OrderCancelInfo />} />
+              <Route path="personal-info" element={<PersonalInfo />} />
               <Route
                 path="personal-info-modify"
                 element={<PersonalInfoModify />}
@@ -79,7 +80,6 @@ function App() {
               <Route path="cus-service-center" element={<CusServiceCenter />} />
               <Route path="withdrawl" element={<Withdrawl />} />
             </Route>
-            <Route path="/cart" element={<Cart />} />
           </Routes>
         </QueryClientProvider>
       </CartContext>

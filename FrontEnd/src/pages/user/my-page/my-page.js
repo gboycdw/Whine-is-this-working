@@ -9,15 +9,10 @@ const MyPage = () => {
           <div>
             <h1 class="text-3xl flex">마이페이지</h1>
           </div>
-          <div class="flex ">
-            <span class="text-c1">마이페이지 </span>
-            <span class="text-c1">{">"} </span>
-            <span> 주문내역</span>
-          </div>
         </div>
         <div class="flex">
           <MyPageNav />
-          <div class="m-[10px] w-[85vw] bg-[]">
+          <div class="m-[10px] w-[85vw]">
             <Outlet />
           </div>
         </div>

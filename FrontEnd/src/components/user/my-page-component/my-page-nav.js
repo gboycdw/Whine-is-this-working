@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const MyPageNav = () => {
   const linkRef1 = useRef();
@@ -13,7 +13,7 @@ const MyPageNav = () => {
     linkRef2.current.style.color = "#c9c9c9";
     linkRef3.current.style.color = "#c9c9c9";
     linkRef4.current.style.color = "#c9c9c9";
-    if (e.target !== linkRef5.current) {
+    if (e.target != linkRef5.current) {
       //회원탈퇴 요소가 아니면 검은색으로
       e.target.style.color = "#060606";
     }
@@ -40,12 +40,12 @@ const MyPageNav = () => {
           </li>
           <li class=" mb-[20px]">
             <Link
-              to="/mypage/order-cancel"
+              to="/mypage/personal-info"
               ref={linkRef2}
               onClick={navBarHandler}
               class={color}
             >
-              주문취소내역
+              내 정보
             </Link>
           </li>
           <li class=" mb-[20px]">
@@ -55,7 +55,7 @@ const MyPageNav = () => {
               onClick={navBarHandler}
               class={color}
             >
-              개인정보수정
+              개인정보 수정
             </Link>
           </li>
           <li class=" mb-[20px] ">

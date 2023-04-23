@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Layout from "../../components/user/layout/layout";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = (props) => {
   const [id, setId] = useState("");
