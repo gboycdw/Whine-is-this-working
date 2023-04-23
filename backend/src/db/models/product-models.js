@@ -4,7 +4,7 @@ import { ProductSchema } from "../schemas/product-schema.js";
 const Product = model("Product", ProductSchema);
 
 export class ProductModel {
-  async find() {
+  async findAll() {
     const products = await Product.find({});
     return products;
   }
@@ -36,7 +36,7 @@ export class ProductModel {
   //와인 가격별로 조회
   async findByPrice(lowerPrice, HigherPrice) {
     const products = await Product.findAll({
-      $and: [{ price: { $gte: lowerPrice } }, { price: { $lte: HigherPrice } }],
+      $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: HigherPrice } }],
     });
     return products;
   }
@@ -49,13 +49,10 @@ export class ProductModel {
 
   //와인 정보 수정
   async updateProduct(id, productInfo) {
-    const filter = { _id: id };
-    const option = { returnOriginal: false };
-
     const updateProduct = await Product.findOneAndUpdate(
-      filter,
+      { _id: id },
       productInfo,
-      option
+      { returnOriginal: false }
     );
     return updateProduct;
   }

@@ -71,6 +71,12 @@ class ProductService {
     return product;
   }
 
+  //상품 가격별로 조회
+  async getProductsByPrice(lowerPrice, higherPrice) {
+    const products = await productModel.findByPrice(lowerPrice, higherPrice);
+    return products;
+  }
+
   //상품 수정
   async updateProduct(id, updateInfo) {
     const product = await productModel.updateProduct(id, updateInfo);
