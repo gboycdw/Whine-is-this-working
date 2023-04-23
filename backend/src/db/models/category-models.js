@@ -27,7 +27,7 @@ export class CategoryModel {
     const updateCategory = await Category.findOneAndUpdate(
       { _id: id },
       categoryInfo,
-      { returnOriginal: flase }
+      { returnOriginal: false }
     );
     return updateCategory;
   }

@@ -4,14 +4,14 @@ import { ProductSchema } from "../schemas/product-schema.js";
 const Product = model("Product", ProductSchema);
 
 export class ProductModel {
-  async findAll() {
+  async find() {
     const products = await Product.find({});
     return products;
   }
 
   //와인 ID로 상세 정보 조회
   async findById(id) {
-    const product = await Product.find({ _id: id });
+    const product = await Product.findOne({ _id: id });
     return product;
   }
 
@@ -29,13 +29,13 @@ export class ProductModel {
 
   //와인 나라별로 조회
   async findByCountry(country) {
-    const products = await Product.findAll({ country: country });
+    const products = await Product.find({ country: country });
     return products;
   }
 
   //와인 가격별로 조회
   async findByPrice(lowerPrice, HigherPrice) {
-    const products = await Product.findAll({
+    const products = await Product.find({
       $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: HigherPrice } }],
     });
     return products;

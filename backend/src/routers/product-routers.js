@@ -25,7 +25,7 @@ productRouter.get("/:id", async (req, res, next) => {
 });
 
 //와인 타입별로 조회
-productRouter.get("/types/:type", async(req, res, next) => {
+productRouter.get("/types/:type", async (req, res, next) => {
   try {
     const search_type = req.params.type;
     const products = await productService.getProductsByType(search_type);
@@ -35,17 +35,31 @@ productRouter.get("/types/:type", async(req, res, next) => {
   }
 });
 
-//와인 가격별로 조회
-productRouter.get("/price/:min/:max", async(req, res, next) => {
+//와인 나라별로 조회
+productRouter.get("/countries/:country", async (req, res, next) => {
   try {
-    const lowerPrice = req.params.min;
-    const higherPrice = req.params.max;
-    const products = await productService.getProductsByPrice(lowerPrice, higherPrice);
+    const search_country = req.params.country;
+    const products = await productService.getProductsByCountry(search_country);
     res.status(201).json(products);
   } catch (err) {
     next(err);
   }
-})
+});
+
+//와인 가격별로 조회
+productRouter.get("/price/:min/:max", async (req, res, next) => {
+  try {
+    const lowerPrice = req.params.min;
+    const higherPrice = req.params.max;
+    const products = await productService.getProductsByPrice(
+      lowerPrice,
+      higherPrice
+    );
+    res.status(201).json(products);
+  } catch (err) {
+    next(err);
+  }
+});
 
 //상품 추가
 productRouter.post("/", async (req, res, next) => {
