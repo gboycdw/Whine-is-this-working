@@ -73,7 +73,7 @@ const ManageProductListItem = (props) => {
       <span class="w-24 ">{price.toLocaleString()}원</span>
       <span class="w-20 ">{category}</span>
       <select
-        class="border h-7 w-16"
+        class="border border-color2 rounded h-7 w-16"
         value={newSaleState}
         onChange={saleStateChangeHandler}
       >
