@@ -20,3 +20,4 @@ mongoose.connection.on("error", () => {
 export * from "./models/user-models.js";
 export * from "./models/product-models.js";
 export * from "./models/order-models.js";
+export * from "./models/category-models.js";

@@ -24,14 +24,10 @@ const FeatureSchema = new Schema({
   },
 });
 
-//상품 정보 (이름, 영어이름, 브랜드, 종류, 나라, 지역, 가격, 이미지URL, 정보, 태그, 특성)
+//상품 정보 (이름, 브랜드, 색상, 나라, 지역, 이미지 주소, 정보, 가격, 할인가격, 판매수량, 판매상태, 선택상품, 최고상품, 재고량, 태그, 특성)
 const ProductSchema = new Schema(
   {
     name: {
-      type: String,
-      required: true,
-    },
-    nameEng: {
       type: String,
       required: true,
     },
@@ -39,7 +35,7 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    type: {
+    color: {
       type: String,
       required: true,
     },
@@ -51,10 +47,6 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
     imgUrl: {
       type: String,
       required: true,
@@ -62,6 +54,32 @@ const ProductSchema = new Schema(
     info: {
       type: String,
       required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    discountPrice: {
+      type: Number,
+      required: true,
+    },
+    saleCount: {
+      type: Number,
+      required: true,
+    },
+    saleState: {
+      type: String,
+      required: true,
+    },
+    isPicked: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isBest: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     inventory: {
       type: Number,
@@ -78,6 +96,7 @@ const ProductSchema = new Schema(
   },
   {
     timestamps: true,
+    collection: "products",
   }
 );
 

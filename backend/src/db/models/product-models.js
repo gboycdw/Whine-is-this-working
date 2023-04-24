@@ -11,7 +11,7 @@ export class ProductModel {
 
   //와인 ID로 상세 정보 조회
   async findById(id) {
-    const product = await Product.find({ _id: id });
+    const product = await Product.findOne({ _id: id });
     return product;
   }
 
@@ -21,23 +21,35 @@ export class ProductModel {
     return product;
   }
 
-  //와인 타입별로 조회(ex. 레드, 화이트, 스파클링, etc..)
-  async findByType(type) {
-    const products = await Product.find({ type: type });
+  //와인 컬러별로 조회(ex. 레드, 화이트, 스파클링, etc..)
+  async findByColor(color) {
+    const products = await Product.find({ color: color });
     return products;
   }
 
   //와인 나라별로 조회
   async findByCountry(country) {
-    const products = await Product.findAll({ country: country });
+    const products = await Product.find({ country: country });
     return products;
   }
 
   //와인 가격별로 조회
-  async findByPrice(lowerPrice, HigherPrice) {
-    const products = await Product.findAll({
-      $and: [{ price: { $gte: lowerPrice } }, { price: { $lte: HigherPrice } }],
+  async findByPrice(lowerPrice, higherPrice) {
+    const products = await Product.find({
+      $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: higherPrice } }],
     });
+    return products;
+  }
+
+  //Pick 와인 조회
+  async findByPicked() {
+    const products = await Product.find({ isPicked: true });
+    return products;
+  }
+
+  //Best 와인 조회
+  async findByBest() {
+    const products = await Product.find({ isBest: true });
     return products;
   }
 
@@ -49,13 +61,10 @@ export class ProductModel {
 
   //와인 정보 수정
   async updateProduct(id, productInfo) {
-    const filter = { _id: id };
-    const option = { returnOriginal: false };
-
     const updateProduct = await Product.findOneAndUpdate(
-      filter,
+      { _id: id },
       productInfo,
-      option
+      { returnOriginal: false }
     );
     return updateProduct;
   }
