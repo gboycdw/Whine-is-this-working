@@ -120,27 +120,3 @@ class OrderModel {
 
 const orderModel = new OrderModel();
 export { orderModel };
-
-// ---- Database 수동 추가용 툴 ---- //
-// const orderInfo = {
-//   _id: new ObjectId(),
-//   __v: 0,
-//   buyer: "1",
-//   buyerEmail: "giveme@gmail.com",
-//   buyerPhoneNumber: "010-1234-5678",
-//   recipientName: "쟤한테주세요",
-//   recipientPhoneNumber: "010-1234-5678",
-//   shippingAddress: "제주도",
-//   shippingRequest: "빨리 주세용",
-//   shippingStatus: "배송 준비중",
-//   productList: ["레드와인1"],
-//   priceList: [30000],
-//   totalPrice: null,
-//   orderIndex: null,
-// };
-// orderModel.createOrder(orderInfo); // 추가 구현완료
-// orderModel.deleteAll("추가삭제테스트"); // 삭제 구현완료
-// orderModel.cancelOrder("주문취소테스트1");
-// orderModel.cancelOrder("주문취소테스트2");
-// orderModel.changeStatus("주문변경테스트", "배송안할건데?");
-// ------------------------------//
