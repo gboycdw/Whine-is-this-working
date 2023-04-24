@@ -9,8 +9,6 @@ const OrderSchema = new Schema(
       {
         type: String,
         required: true,
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: "Product", // 주문 당시의 history를 저장하여야 함.
       },
     ],
 
@@ -22,6 +20,16 @@ const OrderSchema = new Schema(
         // select: true,
       },
     ],
+    // // 만약 프론트에서 객체로 넘겨주고자 할 경우 이 스키마를 사용해야 함.
+    // OrderList: {
+    //   type: Map,
+    //   of: Number,
+    //   required: true,
+    //   validate: {
+    //     validator: (v) => Object.keys(v).length > 0,
+    //     message: "Products cannot be empty",
+    //   },
+    // },
     totalPrice: {
       // 구매할 상품의 총 가격
       type: Number,
