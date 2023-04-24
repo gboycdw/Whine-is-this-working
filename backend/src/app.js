@@ -13,10 +13,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 라우터 등록
-app.use("/user", userRouter);
-app.use("/order", orderRouter);
-app.use("/product", productRouter);
-app.use("/category", categoryRouter);
+app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/products", productRouter);
+app.use("/api/categories", categoryRouter);
 app.use("/", viewsRouter);
 app.use(viewsRouter);
 

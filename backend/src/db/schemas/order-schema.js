@@ -4,40 +4,42 @@ import { Schema } from "mongoose";
 const OrderSchema = new Schema(
   {
     //----------------주문 리스트----------------//
-    productList: [
-      // 구매할 상품 리스트
-      {
-        type: String,
-        required: true,
+    orderList: {
+      // 구매할 물건의 이름과 갯수
+      type: Map,
+      of: Number,
+      required: true,
+      validate: {
+        validator: (v) => Object.keys(v).length > 0,
+        message: "0개의 상품을 주문할 수 없습니다.",
       },
-    ],
+    },
+    priceList: {
+      // 구매할 물건의 이름과 가격
+      type: Map,
+      of: Number,
+      required: true,
+      validate: {
+        validator: (v) => Object.keys(v).length > 0,
+        message: "가격은 반드시 존재해야 하는 값입니다.",
+      },
+    },
 
-    priceList: [
-      // 구매할 상품의 가격 리스트
-      {
-        type: Number,
-        required: true,
-        // select: true,
-      },
-    ],
-    // // 만약 프론트에서 객체로 넘겨주고자 할 경우 이 스키마를 사용해야 함.
-    // OrderList: {
-    //   type: Map,
-    //   of: Number,
-    //   required: true,
-    //   validate: {
-    //     validator: (v) => Object.keys(v).length > 0,
-    //     message: "Products cannot be empty",
-    //   },
-    // },
     totalPrice: {
-      // 구매할 상품의 총 가격
+      // 구매할 상품의 총 가격. 프론트단에서 넘겨받을 예정임.
+      type: Number,
+      required: true,
+    },
+
+    deliveryFee: {
+      // 배송비. 0원이면 0원이라고 표시해야 함.
       type: Number,
       required: true,
     },
 
     //----------------주문자 정보----------------//
-    orderIndex: {
+    orderNumber: {
+      // 주문번호 (서버에 저장할 때 자동 생성)
       type: String,
       required: true,
     },
@@ -76,7 +78,7 @@ const OrderSchema = new Schema(
       required: true,
     },
     shippingExtraAddress: {
-      // 배송 추가 주소 - 미리 작성함
+      // 배송 추가 주소
       type: String,
       required: false,
     },
@@ -91,9 +93,13 @@ const OrderSchema = new Schema(
       required: false,
     },
     shippingStatus: {
-      // 주문 상태 : 배송중 / 배송전
+      // 주문 상태 : 상품준비중 / 배송중 / 배송완료
       type: String,
       require: true,
+    },
+    wayBill: {
+      // 운송장 번호. 변경 가능함. 배송중으로 바뀌면 부여해야 하니 필수도 아님.
+      type: String,
     },
   },
   {
