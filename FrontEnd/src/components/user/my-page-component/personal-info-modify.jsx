@@ -1,6 +1,6 @@
 import { useState } from "react";
-import PopupDom from "./PopupDom";
-import PopupPostCode from "./PopupPostCode";
+import PopupDom from "./post-popup/popup-dom";
+import PopupPostCode from "./post-popup/popup-post-code";
 const PersonalInfoModify = () => {
   const [pwd, setPwd] = useState("");
   const pwdChangeHandler = (e) => {
