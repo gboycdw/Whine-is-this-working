@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import uuid from "react-uuid";
 import styled from "styled-components";
 import CategoryModalList from "./category-modal-list";
 
@@ -29,9 +30,7 @@ const CategoryModal = (props) => {
         <div key={categories.id} className={classes.category_modal}>
           <CategoryModalUl>
             {categories.map((category) => {
-              return (
-                <CategoryModalList key={category.id} category={category} />
-              );
+              return <CategoryModalList key={uuid()} category={category} />;
             })}
           </CategoryModalUl>
         </div>

@@ -4,6 +4,7 @@ import CategoryModal from "./category-modal";
 
 import classes from "./header.module.css";
 import styled from "styled-components";
+import uuid from "react-uuid";
 // import { useRecoilState } from "recoil";
 // import { authState } from "../../store/auth-context";
 
@@ -38,12 +39,6 @@ const categoryBundle = [
     categories: [
       { id: 1, name: "10000 ~ 30000", link: "/product/category/lowprice" },
     ],
-  },
-  {
-    id: 3,
-    title: "best",
-    link: "/product/category/best",
-    categories: [],
   },
 ];
 
@@ -150,19 +145,13 @@ const Header = () => {
           {categoryBundle.map((bundle) => {
             return (
               <li
-                key={bundle.id}
+                key={uuid()}
                 id={bundle.id}
                 className={classes.main_nav_li}
                 onMouseOver={categoryOnMouseOverHandler}
                 onMouseOut={categoryOnMouseOutHandler}
               >
-                {bundle.categories.length > 0 ? (
-                  <span>{bundle.title}</span>
-                ) : (
-                  <Link to={bundle.link}>
-                    <span>{bundle.title}</span>
-                  </Link>
-                )}
+                <span>{bundle.title}</span>
 
                 <CategoryModal
                   categoryBundle={bundle}
@@ -173,6 +162,11 @@ const Header = () => {
             );
           })}
           {/* isCategoryModal state가 true냐 false냐에따라 모달창 컨트롤하는 부분 */}
+          <li className={classes.main_nav_li}>
+            <Link to="/product/category/best">
+              <span>BEST</span>
+            </Link>
+          </li>
         </MainNavUl>
         {/* </ul> */}
       </div>
@@ -186,7 +180,7 @@ const MainNavUl = styled.ul`
   height: 100%;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(${categoryBundle.length}, 1fr);
+  grid-template-columns: repeat(${categoryBundle.length + 1}, 1fr);
 `;
 
 export default Header;

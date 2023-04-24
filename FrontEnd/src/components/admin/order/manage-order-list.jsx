@@ -212,10 +212,7 @@ const ManageOrderList = () => {
         <span> | </span>
         <span>
           배송완료&nbsp;
-          {
-            orders.filter((order) => order.deliveryState === "상품준비중")
-              .length
-          }
+          {orders.filter((order) => order.deliveryState === "배송완료").length}
         </span>
       </div>
       <div class="py-4 flex gap-4">

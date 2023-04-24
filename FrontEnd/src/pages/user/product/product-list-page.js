@@ -57,7 +57,7 @@ const ProductListPage = () => {
         <div class="py-16">
           <div>
             <h1 className={classes.categoryName}>
-              {categoryName.toUpperCase()} WINE
+              {categoryName.toUpperCase()}
             </h1>
           </div>
           <ProductListUl>

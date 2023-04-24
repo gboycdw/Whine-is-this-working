@@ -28,6 +28,8 @@ import CartPage from "./pages/user/order/cart-page";
 import SignUpPage from "./pages/auth/signup-page";
 import LoginPage from "./pages/auth/login-page";
 import PersonalInfo from "./components/user/my-page-component/personal-info";
+import ManageCategoryPage from "./pages/admin/category/manage-category-page";
+import BreakdownOrderPage from "./pages/admin/order/breakdown-order-page";
 const queryClient = new QueryClient();
 
 function App() {
@@ -65,9 +67,15 @@ function App() {
               element={<EditProductPage />}
             />
             <Route
+              path="/manage/order_breakdown"
+              element={<BreakdownOrderPage />}
+            />
+            <Route
               path="/manage/order_list"
               element={<ManageOrderListPage />}
             />
+
+            <Route path="/manage/category" element={<ManageCategoryPage />} />
             <Route path="/mypage" element={<MyPage />}>
               <Route path="order-infromation" element={<OrderInfomation />} />
               {/* //마이페이지 네비게이션 중첩라우터 */}

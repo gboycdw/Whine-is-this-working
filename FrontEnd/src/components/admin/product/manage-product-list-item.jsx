@@ -19,10 +19,12 @@ const ManageProductListItem = (props) => {
   const [isChecked, setIsChecked] = useState(props.isCheckAll);
   const [newSaleState, setNewSaleState] = useState(saleState);
 
+  // 부모 컴포넌트에서 모든 체크, 모든 체크 해제 어떤 값을내리냐에따라 이 컴포넌트의 체크여부 상태를 업데이트함
   useEffect(() => {
     setIsChecked(props.isCheckAll);
   }, [props.isCheckAll]);
 
+  // 상품 체크 핸들러 (부모컴포넌트의 체크된 제품ID들 배열 상태를 업데이트함)
   const inputCheckHandler = (e) => {
     if (!isChecked) {
       setIsChecked(true);
@@ -41,6 +43,7 @@ const ManageProductListItem = (props) => {
     }
   };
 
+  // 판매상태 변경 핸들러 (바뀐 판매상태를 백엔드에 상품 id값과 같이 전송)
   const saleStateChangeHandler = (e) => {
     const saleState = e.target.value;
     setNewSaleState(saleState);

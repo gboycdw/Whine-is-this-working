@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import uuid from "react-uuid";
 
 const AdminMainNav = () => {
   const NavCategory = (props) => {
@@ -9,7 +10,7 @@ const AdminMainNav = () => {
         <ul class="flex flex-col mb-5">
           {categories.map((category) => {
             return (
-              <li key={categories.name} class="pl-2 mt-2 text-sm">
+              <li key={uuid()} class="pl-2 mt-2 text-sm">
                 <Link to={category.link}>- {category.name}</Link>
               </li>
             );
@@ -20,7 +21,7 @@ const AdminMainNav = () => {
   };
 
   return (
-    <div class="inline-block flex flex-col bg-color1 text-[rgb(255,255,255)] w-[16rem]">
+    <div class="flex flex-col bg-color1 text-[rgb(255,255,255)] w-[16rem]">
       <div class="flex items-center justify-center h-[80px] bg-color0">
         <Link to="/manage">
           <h1 class="font-bold text-xl">ADMIN PAGE</h1>
@@ -37,7 +38,7 @@ const AdminMainNav = () => {
         <NavCategory
           title={"주문 관리"}
           categories={[
-            { name: "주문 내역", link: "/manage/order" },
+            { name: "주문 내역", link: "/manage/order_breakdown" },
             { name: "주문 관리", link: "/manage/order_list" },
           ]}
         />
