@@ -2,7 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import { userService } from "../services/index.js";
 import { loginRequired } from "../middlewares/login-required.js";
-import { adminLoginRequired } from "../middlewares/admin-required.js";
+// import { adminLoginRequired } from "../middlewares/admin-required.js";
 
 //express의 Router를 통해 userRouter 생성
 const userRouter = Router();
@@ -39,7 +39,8 @@ userRouter.post("/signUp", async (req, res, next) => {
 });
 
 //로그인
-userRouter.post("/login", adminLoginRequired, async (req, res, next) => {
+userRouter.post("/login", async (req, res, next) => {
+  // admin 미들웨어 없어서 임시로 미들웨어를 삭제함
   console.log("로그인 시도 🌸");
   const { email, password } = req.body;
 
