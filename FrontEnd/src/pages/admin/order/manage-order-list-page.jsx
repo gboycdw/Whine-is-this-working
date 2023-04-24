@@ -3,7 +3,7 @@ import ManageOrderList from "../../../components/admin/order/manage-order-list";
 
 const ManageOrderListPage = () => {
   return (
-    <AdminLayout title="주문 관리">
+    <AdminLayout title="주문 내역">
       <ManageOrderList />
     </AdminLayout>
   );
