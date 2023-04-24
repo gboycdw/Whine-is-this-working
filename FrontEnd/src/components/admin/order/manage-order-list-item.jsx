@@ -36,8 +36,8 @@ const ManageOrderListItem = (props) => {
 
       <span class="flex-grow ">{request}</span>
       <span class="w-32 ">{orderDate}</span>
-      <Link to={`/manage/edit_product/${id}`} class="w-20 ">
-        수정하기
+      <Link to={`/manage/order_manage/${id}`} class="w-20 ">
+        주문관리
       </Link>
     </li>
   );

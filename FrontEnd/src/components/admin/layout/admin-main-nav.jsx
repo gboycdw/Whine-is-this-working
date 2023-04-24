@@ -38,8 +38,8 @@ const AdminMainNav = () => {
         <NavCategory
           title={"주문 관리"}
           categories={[
-            { name: "주문 내역", link: "/manage/order_breakdown" },
-            { name: "주문 관리", link: "/manage/order_list" },
+            { name: "주문 내역", link: "/manage/order_list" },
+            { name: "주문 관리", link: "/manage/order_manage" },
           ]}
         />
         <NavCategory
