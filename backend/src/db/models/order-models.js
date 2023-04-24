@@ -71,6 +71,7 @@ class OrderModel {
       // );
       //----------------하단의 코드 router로 이동 권장--------------------//
       searchingOrder.shippingAddress = updateInfo.shippingAddress;
+      searchingOrder.shippingExtraAddress = updateInfo.shippingExtraAddress;
       searchingOrder.shippingRequest = updateInfo.shippingRequest;
       searchingOrder.buyerEmail = updateInfo.buyerEmail;
       searchingOrder.buyerPhoneNumber = updateInfo.buyerPhoneNumber;

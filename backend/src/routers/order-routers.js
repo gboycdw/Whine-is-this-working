@@ -63,7 +63,7 @@ orderRouter.delete("/admin/delete/:orderindex", async (req, res) => {
     console.log("🔄 주문번호 ", orderIndex, " 의 주문내역을 삭제하는 중...");
     await orderService.deleteOrderByAdmin(orderIndex);
     res.send("주문내역 삭제 완료");
-    console.log("✔️ 주문번호 ", orderIndex, " 의 주문내역 삭제 완료.");
+    console.log("✔️  주문번호 ", orderIndex, " 의 주문내역 삭제 완료.");
   } catch (err) {
     res
       .status(500)

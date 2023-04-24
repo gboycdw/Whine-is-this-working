@@ -75,11 +75,11 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    // shippingExtreAddress: {
-    //   // 배송 추가 주소 - 미리 작성함
-    //   type: String,
-    //   required: false,
-    // },
+    shippingExtraAddress: {
+      // 배송 추가 주소 - 미리 작성함
+      type: String,
+      required: false,
+    },
     shippingPostalCode: {
       // 배송지 우편번호
       type: String,
