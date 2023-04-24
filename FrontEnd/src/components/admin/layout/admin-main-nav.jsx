@@ -21,18 +21,18 @@ const AdminMainNav = () => {
   };
 
   return (
-    <div class="flex flex-col bg-color1 text-[rgb(255,255,255)] w-[16rem]">
-      <div class="flex items-center justify-center h-[80px] bg-color0">
+    <div class="flex flex-col w-[16rem] border-r border-color2">
+      <div class="flex items-center justify-center h-[80px] border-b border-color2 bg-color2">
         <Link to="/manage">
-          <h1 class="font-bold text-xl">ADMIN PAGE</h1>
+          <h1 class="text-xl">ADMIN PAGE</h1>
         </Link>
       </div>
       <div class="flex flex-col py-6 px-12 h-vh">
         <NavCategory
           title={"상품 관리"}
           categories={[
-            { name: "상품 등록", link: "/manage/new_product" },
             { name: "상품 관리", link: "/manage/product_list" },
+            { name: "상품 등록", link: "/manage/new_product" },
           ]}
         />
         <NavCategory

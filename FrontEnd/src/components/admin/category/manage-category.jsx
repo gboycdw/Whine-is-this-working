@@ -14,6 +14,7 @@ const categories = [
       { id: 2, name: "화이트와인" },
       { id: 3, name: "로제와인" },
       { id: 4, name: "무알콜" },
+      { id: 5, name: "스파클링" },
     ],
   },
   {
@@ -23,12 +24,22 @@ const categories = [
       { id: 1, name: "스페인" },
       { id: 2, name: "프랑스" },
       { id: 3, name: "미국" },
+      { id: 4, name: "이탈리아" },
+      { id: 5, name: "아르헨티나" },
     ],
   },
   {
     id: 2,
     title: "가격대별",
-    categories: [{ id: 1, name: "10000 ~ 30000" }],
+    categories: [
+      { id: uuid(), name: "~1만원" },
+      { id: uuid(), name: "1만원~3만원" },
+      { id: uuid(), name: "3만원~5만원" },
+      { id: uuid(), name: "5만원~10만원" },
+      { id: uuid(), name: "10만원~50만원" },
+      { id: uuid(), name: "100만원~500만원" },
+      { id: uuid(), name: "500만원~" },
+    ],
   },
 ];
 
@@ -144,8 +155,8 @@ const ManageCategory = (props) => {
 
   return (
     <div class="flex w-full p-6">
-      <div class="flex flex-col bg-[#ffffff] px-8 py-4 min-h-[500px] ">
-        <div class="flex flex-col gap-5 justify-between">
+      <div class="flex flex-col bg-[#ffffff] px-8 py-4 min-h-[500px] border border-color2">
+        <div class="grid grid-cols-2 gap-10">
           {categoryBundle.map((bundle) => {
             return (
               <div key={uuid()} class="flex flex-col w-[400px] text-sm">
@@ -183,7 +194,7 @@ const ManageCategory = (props) => {
                     );
                   })}
                 </ul>
-                <div class="flex justify-between h-12 items-center px-1">
+                <div class="flex justify-end h-12 items-center px-1">
                   <button id={bundle.id} onClick={categoryAddHandler}>
                     카테고리 추가
                   </button>
