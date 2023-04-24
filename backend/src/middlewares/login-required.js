@@ -6,8 +6,7 @@ async function loginRequired(req, res, next) {
   const userToken = req.header("auth-token");
   //토큰이 없으면 로그인 페이지로
   if (!userToken) {
-    res.redirect("/loginPage");
-    return;
+    return res.status(403).redirect("/loginPage");
   }
 
   try {

@@ -2,21 +2,25 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import { userService } from "../services/index.js";
 import { loginRequired } from "../middlewares/login-required.js";
+import { adminLoginRequired } from "../middlewares/admin-required.js";
 
 //express의 Router를 통해 userRouter 생성
 const userRouter = Router();
 
 // 가입시 POST 요청에 대한 라우팅 , /register 이라는 경로로 요청 시
-userRouter.post("/register", async (req, res, next) => {
+userRouter.post("/signUp", async (req, res, next) => {
   try {
     //요청으로 전달된 body의 값들을 변수에 저장 !
-    const name = req.body.name;
-    const email = req.body.email;
-    const password = req.body.password;
-    const address1 = req.body.address1;
-    const address2 = req.body.address2;
-    const postalCode = req.body.postalCode;
-    const phoneNumber = req.body.phoneNumber;
+    const {
+      name,
+      email,
+      password,
+      address1,
+      address2,
+      postalCode,
+      phoneNumber,
+    } = req.body;
+
     // userSerivce의 createUser 메소드를 통해 사용자를 생성
     const newUser = await userService.createUser({
       name,
@@ -35,7 +39,7 @@ userRouter.post("/register", async (req, res, next) => {
 });
 
 //로그인
-userRouter.post("/login", async (req, res, next) => {
+userRouter.post("/login", adminLoginRequired, async (req, res, next) => {
   console.log("로그인 시도 🌸");
   const { email, password } = req.body;
 
@@ -45,7 +49,7 @@ userRouter.post("/login", async (req, res, next) => {
 });
 
 //탈퇴
-userRouter.post("/deleteUser", loginRequired, async (req, res, next) => {
+userRouter.delete("/", loginRequired, async (req, res, next) => {
   const token = req.header("auth-token");
   // 토큰의 secret key와 발급할때의 secre_key 값 비교
   console.log(req.userId);
@@ -63,13 +67,13 @@ userRouter.post("/deleteUser", loginRequired, async (req, res, next) => {
 });
 
 //업데이트
-userRouter.post("/updateUser", loginRequired, async (req, res, next) => {
+userRouter.patch("/", loginRequired, async (req, res, next) => {
   //req 헤더의 autho token
   const token = req.header("auth-token");
 
   const password = req.body.password;
-  const address1 = req.body.address;
-  const address2 = req.body.address;
+  const address1 = req.body.address1;
+  const address2 = req.body.address2;
   const postalCode = req.body.postalCode;
   const phoneNumber = req.body.phoneNumber;
 
