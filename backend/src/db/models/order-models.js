@@ -20,6 +20,8 @@ class OrderModel {
   async createOrder(orderInfo) {
     try {
       const newOrder = await Order.create(orderInfo);
+      //----------------주문합계를 생성하는 부분---------------//
+      newOrder.totalPrice = newOrder.priceList.reduce((a, b) => a + b);
       //----------------고유한 주문번호를 생성하는 부분---------------//
       newOrder.orderIndex = dayjs().format("YYYYMMDD") + nanoid(6);
       //---------생성한 주문번호를 저장---------//
@@ -123,7 +125,6 @@ export { orderModel };
 // const orderInfo = {
 //   _id: new ObjectId(),
 //   __v: 0,
-//   buyerId: "sfsfsf",
 //   buyer: "1",
 //   buyerEmail: "giveme@gmail.com",
 //   buyerPhoneNumber: "010-1234-5678",
@@ -134,7 +135,7 @@ export { orderModel };
 //   shippingStatus: "배송 준비중",
 //   productList: ["레드와인1"],
 //   priceList: [30000],
-//   totalPrice: 30000,
+//   totalPrice: null,
 //   orderIndex: null,
 // };
 // orderModel.createOrder(orderInfo); // 추가 구현완료
