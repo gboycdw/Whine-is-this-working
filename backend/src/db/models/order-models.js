@@ -8,12 +8,30 @@ const Order = mongoose.model("orders", OrderSchema);
 class OrderModel {
   // 주문자 id(email)로 해당 유저의 주문내역을 검색하는 기능
   async findById(userId) {
-    return await Order.find({ buyerEmail: userId }).lean();
+    try {
+      const findOrder = await Order.find({ buyerEmail: userId }).lean();
+      if (findOrder.length < 1) {
+        throw new Error("해당 유저의 주문내역이 존재하지 않습니다.");
+      }
+      return findOrder;
+    } catch (err) {
+      console.log(err);
+      throw new Error("주문내역이 존재하지 않습니다");
+    }
   }
 
   // [Admin] 모든 유저의 주문내역을 조회하는 기능
   async findAllOrders() {
-    return await Order.find({}).lean();
+    try {
+      const allOrder = await Order.find({}).lean();
+      if (allOrder.length < 1) {
+        throw new Error("주문내역이 하나도 존재하지 않습니다.");
+      }
+      return allOrder;
+    } catch (err) {
+      console.log(err);
+      throw new Error("주문내역이 하나도 존재하지 않습니다.");
+    }
   }
 
   // 유저가 새 주문을 생성하는 기능.
