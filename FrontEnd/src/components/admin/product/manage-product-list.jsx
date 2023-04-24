@@ -5,6 +5,8 @@ import Button from "../../UI/button";
 import ManageProductListItem from "./manage-product-list-item";
 import axios from "axios";
 
+const categories = ["레드", "화이트", "로제", "논알콜"];
+
 const ManageProductList = (props) => {
   const products = props.products;
 
@@ -15,6 +17,10 @@ const ManageProductList = (props) => {
   const limit = 10; // 페이징처리를 위한 한화면 게시글 리밋
   const offset = (page - 1) * limit; // 페이징처리를위한 배열 슬라이스를 위한 오프셋
 
+
+  /* 체크박스 전체 선택 핸들러 
+  이미 모두 체크가 되어있는경우 클릭하면 모든 체크를 해제하고 상품IDs라는 배열이 담긴 상태를 빈배열로 초기화
+  모든 체크가 해제되어있거나 일부만 체크되어있을경우 모두 체크하고 상품IDs 이 페이지의 모든 상품id들을 배열로 업데이트*/
   const clickAllHandler = () => {
     if (isCheckAll) {
       setIsCheckAll(false);
@@ -29,6 +35,7 @@ const ManageProductList = (props) => {
     }
   };
 
+  // 체크된 상품 삭제 핸들러 (체크된 상품들의 id들을 배열로 백엔드에 넘겨줌)
   const deleteCheckedProductsHandler = () => {
     axios.post(
       "url주소",
@@ -61,7 +68,9 @@ const ManageProductList = (props) => {
         <div class="w-36 bg-[#ffffff] flex justify-center py-3 px-3">
           <select class="w-full">
             <option value="카테고리선택">카테고리 선택</option>
-            <option value="white">white</option>
+            {categories.map((category) => {
+              return <option value={category}>{category}</option>;
+            })}
           </select>
         </div>
         <input
