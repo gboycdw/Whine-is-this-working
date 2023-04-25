@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import AdminPage from "./pages/admin/admin-page";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
 import MyPage from "./pages/user/my-page/my-page";
-import OrderInfomation from "./components/user/my-page-component/order-information";
+import OrderedItemsList from "./components/user/my-page-component/ordered-items-list/ordered-items-list";
 import CusServiceCenter from "./components/user/my-page-component/cus-service-center";
 import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
 import Withdrawl from "./components/user/my-page-component/withdrawal";
@@ -78,9 +78,9 @@ function App() {
 
             <Route path="/manage/category" element={<ManageCategoryPage />} />
             <Route path="/mypage" element={<MyPage />}>
-              <Route path="order-infromation" element={<OrderInfomation />} />
+              <Route path="ordered-items-list" element={<OrderedItemsList />} />
               {/* //마이페이지 네비게이션 중첩라우터 */}
-              <Route path="" element={<OrderInfomation />} />
+              <Route path="" element={<OrderedItemsList />} />
               <Route path="personal-info" element={<PersonalInfo />} />
               <Route
                 path="personal-info-modify"

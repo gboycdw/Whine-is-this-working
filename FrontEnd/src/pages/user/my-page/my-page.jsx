@@ -10,7 +10,7 @@ const MyPage = () => {
             <h1 class="text-3xl flex">마이페이지</h1>
           </div>
         </div>
-        <div class="flex">
+        <div class="flex ">
           <MyPageNav />
           <div class="m-[10px] w-[85vw]">
             <Outlet />
