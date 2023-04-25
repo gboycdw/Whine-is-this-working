@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../../user/product/pagination";
 import Button from "../../UI/button";
 import ManageProductListItem from "./manage-product-list-item";
 import axios from "axios";
+import { useQuery } from "react-query";
 
 const categories = ["레드", "화이트", "로제", "논알콜"];
 
 const ManageProductList = (props) => {
   const products = props.products;
+
+  const navigate = useNavigate();
 
   const [checkedProductIds, setCheckedProductIds] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -27,27 +30,26 @@ const ManageProductList = (props) => {
     } else {
       let arr = [];
       products.slice(offset, offset + limit).forEach((item) => {
-        arr.push(item.id);
+        arr.push(item._id);
       });
       setIsCheckAll(true);
       setCheckedProductIds(arr);
     }
   };
-
   // 체크된 상품 삭제 핸들러 (체크된 상품들의 id들을 배열로 백엔드에 넘겨줌)
+
+  console.log(checkedProductIds);
   const deleteCheckedProductsHandler = () => {
-    axios.post(
-      "url주소",
-      {
-        checkedProductIds, // 체크된 상품들의 id 배열을 엑시오스로 넘겨줌
-      },
-      {
-        headers: {
-          "Content-type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    );
+    try {
+      const result = checkedProductIds.forEach((id) => {
+        axios.delete(`http://34.22.85.44/api/products/${id}`);
+      });
+      console.log(result);
+      alert("선택한 상품이 삭제되었습니다.");
+      navigate("/manage/product_list");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -68,7 +70,11 @@ const ManageProductList = (props) => {
           <select class="w-full">
             <option value="카테고리선택">카테고리 선택</option>
             {categories.map((category) => {
-              return <option value={category}>{category}</option>;
+              return (
+                <option key={category.id} value={category}>
+                  {category}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -84,7 +90,7 @@ const ManageProductList = (props) => {
       <div class="flex flex-col py-2 px-5 bg-[#ffffff]">
         <ul>
           <li class=" flex text-center border-b w-full pt-2 pb-3 gap-3 text-sm font-bold">
-            <input type="checkbox" onClick={clickAllHandler} />
+            <input type="checkbox" onChange={clickAllHandler} />
             <span class="w-10 ">No</span>
             <span class="w-10"></span>
             <span class="grow ">상품명</span>
@@ -99,7 +105,7 @@ const ManageProductList = (props) => {
           {products.slice(offset, offset + limit).map((item) => {
             return (
               <ManageProductListItem
-                key={item.id}
+                key={item._id}
                 product={item}
                 checkedProductIds={checkedProductIds}
                 setCheckedProductIds={setCheckedProductIds}
@@ -121,7 +127,7 @@ const ManageProductList = (props) => {
             />
           </div>
           <Button isConfirm={true}>
-            <Link to="/manage/product/new_product">상품 등록</Link>
+            <Link to="/manage/new_product">상품 등록</Link>
           </Button>
         </div>
       </div>

@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useQuery } from "react-query";
 import ManageCategory from "../../../components/admin/category/manage-category";
 import AdminLayout from "../../../components/admin/layout/admin-layout";
 
@@ -42,9 +44,18 @@ const categoryBundle = [
 ];
 
 const ManageCategoryPage = () => {
+  const { data, isLoading, error } = useQuery("category", async () => {
+    const data = await axios.get(`http://34.22.85.44/api/categories`);
+    return data.data;
+  });
+
   return (
     <AdminLayout title="카테고리 관리">
-      <ManageCategory categoryBundle={categoryBundle} />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <ManageCategory categoryBundle={data} />
+      )}
     </AdminLayout>
   );
 };

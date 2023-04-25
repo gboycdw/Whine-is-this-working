@@ -11,7 +11,7 @@ import uuid from "react-uuid";
 const categoryBundle = [
   // 카테고리 더미데이터 (각 카테고리의 타이틀이 있고 카테고리리스트들이 자식요소로있음)
   {
-    id: 0,
+    _id: 0,
     title: "wine", // 카테고리 번들의 타이틀//
     categories: [
       // 카테고리 번들의 각 카테고리 객체들
