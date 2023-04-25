@@ -18,7 +18,7 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/products", productRouter);
 app.use("/api/categories", categoryRouter);
-app.use("/", viewsRouter);
-app.use(viewsRouter);
+app.use("/main", viewsRouter);
+// app.use(viewsRouter);
 
 export { app };
