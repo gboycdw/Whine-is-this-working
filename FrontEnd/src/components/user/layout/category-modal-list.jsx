@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import classes from "./category-modal-list.module.css";
 
 const CategoryModalList = (props) => {
-  const { id, name } = props.category;
+  const { id, category, name } = props.category;
 
   return (
     <>

@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../../user/product/pagination";
 import Button from "../../UI/button";
 import ManageProductListItem from "./manage-product-list-item";
 import axios from "axios";
+import { useQuery } from "react-query";
 
 const categories = ["레드", "화이트", "로제", "논알콜"];
 
 const ManageProductList = (props) => {
   const products = props.products;
+
+  const navigate = useNavigate();
 
   const [checkedProductIds, setCheckedProductIds] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -16,7 +19,6 @@ const ManageProductList = (props) => {
   const [page, setPage] = useState(1); // 페이징처리를 위한 현재 페이지
   const limit = 10; // 페이징처리를 위한 한화면 게시글 리밋
   const offset = (page - 1) * limit; // 페이징처리를위한 배열 슬라이스를 위한 오프셋
-
 
   /* 체크박스 전체 선택 핸들러 
   이미 모두 체크가 되어있는경우 클릭하면 모든 체크를 해제하고 상품IDs라는 배열이 담긴 상태를 빈배열로 초기화
@@ -28,32 +30,30 @@ const ManageProductList = (props) => {
     } else {
       let arr = [];
       products.slice(offset, offset + limit).forEach((item) => {
-        arr.push(item.id);
+        arr.push(item._id);
       });
       setIsCheckAll(true);
       setCheckedProductIds(arr);
     }
   };
-
   // 체크된 상품 삭제 핸들러 (체크된 상품들의 id들을 배열로 백엔드에 넘겨줌)
+
   const deleteCheckedProductsHandler = () => {
-    axios.post(
-      "url주소",
-      {
-        checkedProductIds, // 체크된 상품들의 id 배열을 엑시오스로 넘겨줌
-      },
-      {
-        headers: {
-          "Content-type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    );
+    try {
+      const result = checkedProductIds.forEach((id) => {
+        axios.delete(`http://34.22.85.44/api/products/${id}`);
+      });
+      console.log(result);
+      alert("선택한 상품이 삭제되었습니다.");
+      navigate("/manage/product_list");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div class="flex flex-col p-6">
-      <div class="border-b">
+    <div className="flex flex-col p-6">
+      <div className="border-b ">
         <span>전체 {products.length}</span>
         <span> | </span>
         <span>
@@ -64,43 +64,47 @@ const ManageProductList = (props) => {
         <span> | </span>
         <span>숨김 0</span>
       </div>
-      <div class="py-4 flex gap-4">
-        <div class="w-36 bg-[#ffffff] flex justify-center py-3 px-3">
-          <select class="w-full">
+      <div className="py-4 flex gap-4 text-sm">
+        <div className="w-32 h-11 flex justify-center px-3 border border-color2 rounded">
+          <select className="w-full">
             <option value="카테고리선택">카테고리 선택</option>
             {categories.map((category) => {
-              return <option value={category}>{category}</option>;
+              return (
+                <option key={category.id} value={category}>
+                  {category}
+                </option>
+              );
             })}
           </select>
         </div>
         <input
-          class="flex-grow py-3 px-3 "
+          className="flex-grow h-11 px-3 border border-color2 rounded"
           type="text"
           placeholder="상품명 검색"
         />
-        <div class="w-36 flex justify-center bg-[#ffffff] py-3 px-3">
+        <div className="w-32 h-11 flex justify-center bg-[#ffffff] px-2 border border-color2 rounded items-center">
           엑셀 다운로드 | v
         </div>
       </div>
-      <div class="flex flex-col py-2 px-5 bg-[#ffffff]">
+      <div className="flex flex-col py-2 px-5 bg-[#ffffff]">
         <ul>
-          <li class=" flex text-center border-b w-full pt-2 pb-3 gap-3 text-sm font-bold">
-            <input type="checkbox" onClick={clickAllHandler} />
-            <span class="w-10 ">No</span>
-            <span class="w-10"></span>
-            <span class="grow ">상품명</span>
-            <span class="w-24 ">판매가</span>
-            <span class="w-20 ">카테고리</span>
-            <span class="w-16 ">상태</span>
-            <span class="w-16 ">재고</span>
-            <span class="w-32 ">등록일</span>
-            <span class="w-32 ">수정일</span>
-            <button class="w-20">수정하기</button>
+          <li className=" flex text-center border-b w-full pt-2 pb-3 gap-3 text-sm font-bold">
+            <input type="checkbox" onChange={clickAllHandler} />
+            <span className="w-10 ">No</span>
+            <span className="w-10"></span>
+            <span className="grow ">상품명</span>
+            <span className="w-24 ">판매가</span>
+            <span className="w-20 ">카테고리</span>
+            <span className="w-16 ">상태</span>
+            <span className="w-16 ">재고</span>
+            <span className="w-32 ">등록일</span>
+            <span className="w-32 ">수정일</span>
+            <button className="w-20">수정하기</button>
           </li>
           {products.slice(offset, offset + limit).map((item) => {
             return (
               <ManageProductListItem
-                key={item.id}
+                key={item._id}
                 product={item}
                 checkedProductIds={checkedProductIds}
                 setCheckedProductIds={setCheckedProductIds}
@@ -109,11 +113,11 @@ const ManageProductList = (props) => {
             );
           })}
         </ul>
-        <div class="relative flex justify-between items-center h-20">
+        <div className="relative flex justify-between items-center h-20">
           <div onClick={deleteCheckedProductsHandler}>
             <Button isConfirm={false}>선택 상품 삭제</Button>
           </div>
-          <div class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
+          <div className="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
             <Pagination
               total={products.length}
               limit={limit}
@@ -122,7 +126,7 @@ const ManageProductList = (props) => {
             />
           </div>
           <Button isConfirm={true}>
-            <Link to="/manage/product/new_product">상품 등록</Link>
+            <Link to="/manage/new_product">상품 등록</Link>
           </Button>
         </div>
       </div>

@@ -5,12 +5,12 @@ const AdminMainNav = () => {
   const NavCategory = (props) => {
     const { title, categories } = props;
     return (
-      <div class="flex flex-col">
-        <h3 class="font-bold text-base">{title}</h3>
-        <ul class="flex flex-col mb-5">
+      <div className="flex flex-col">
+        <h3 className="font-bold text-base">{title}</h3>
+        <ul className="flex flex-col mb-5">
           {categories.map((category) => {
             return (
-              <li key={uuid()} class="pl-2 mt-2 text-sm">
+              <li key={uuid()} className="pl-2 mt-2 text-sm">
                 <Link to={category.link}>- {category.name}</Link>
               </li>
             );
@@ -21,18 +21,18 @@ const AdminMainNav = () => {
   };
 
   return (
-    <div class="flex flex-col bg-color1 text-[rgb(255,255,255)] w-[16rem]">
-      <div class="flex items-center justify-center h-[80px] bg-color0">
+    <div className="flex flex-col w-[16rem] border-r border-color2">
+      <div className="flex items-center justify-center h-[80px] border-b border-color2 bg-color2">
         <Link to="/manage">
-          <h1 class="font-bold text-xl">ADMIN PAGE</h1>
+          <h1 className="text-xl">ADMIN PAGE</h1>
         </Link>
       </div>
-      <div class="flex flex-col py-6 px-12 h-vh">
+      <div className="flex flex-col py-6 px-12 h-vh">
         <NavCategory
           title={"상품 관리"}
           categories={[
-            { name: "상품 등록", link: "/manage/new_product" },
             { name: "상품 관리", link: "/manage/product_list" },
+            { name: "상품 등록", link: "/manage/new_product" },
           ]}
         />
         <NavCategory

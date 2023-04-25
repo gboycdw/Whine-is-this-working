@@ -1,19 +1,25 @@
 import { useParams } from "react-router";
 import ProductDetail from "../../../components/user/product/product-detail";
 import Layout from "../../../components/user/layout/layout";
-import { getAllProduct } from "../../../api/api-product";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const ProductDetailPage = () => {
-  const products = getAllProduct();
+  const productId = useParams().product_id;
 
-  const productID = +useParams().product_id;
-
-  const product = products.find((product) => product.id === productID);
-
+  const { data, isLoading, error } = useQuery(
+    ["product", productId],
+    async () => {
+      const data = await axios.get(
+        `http://34.22.85.44/api/products/${productId}`
+      );
+      return data.data;
+    }
+  );
   return (
     <>
       <Layout>
-        <ProductDetail product={product} />
+        {isLoading ? <div>Loading...</div> : <ProductDetail product={data} />}
       </Layout>
     </>
   );

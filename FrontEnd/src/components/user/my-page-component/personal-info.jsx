@@ -30,7 +30,7 @@ const PersonalInfo = () => {
             </div>
 
             <div class="flex-row">
-              <span class="m-[10px] mb-[0px]">
+              <span class="m-[10px] ">
                 <span class="m-[20px] mb-[0px] inline-block w-[120px]">
                   주소
                 </span>
@@ -38,10 +38,8 @@ const PersonalInfo = () => {
               <span class="m-[10px]">
                 <span class="">{person.address}</span>
               </span>
-              <div class="m-[10px] mt-[0px]">
-                <span class="m-[20px] mt-[0px] inline-block w-[120px]">
-                  상세주소
-                </span>
+              <div class="m-[10px] ">
+                <span class="m-[20px]  inline-block w-[120px]">상세주소</span>
                 <span class="m-[10px] ml-[20px]">{person.addressDetail}</span>
               </div>
             </div>

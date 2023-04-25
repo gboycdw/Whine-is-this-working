@@ -1,11 +1,17 @@
-import { getAllProduct } from "../api/api-product";
+import axios from "axios";
+import { useQuery } from "react-query";
 import Layout from "../components/user/layout/layout";
 import MainArticle from "../components/user/main/main-article";
 import MainItem from "../components/user/main/main-item";
 import OurPick from "../components/user/main/ourpick";
 
 const MainPage = () => {
-  const products = getAllProduct();
+  const { data, isLoading } = useQuery("products", async () => {
+    const data = await axios.get(`http://34.22.85.44/api/products`);
+    return data.data;
+  });
+
+  console.log(data);
 
   return (
     <>
@@ -15,10 +21,16 @@ const MainPage = () => {
           src="banner.jpeg"
           alt="banner"
         />
-        <OurPick products={products} />
-        <MainItem title={"BEST"} products={products} />
-        <MainItem title={"NEW ARRIVAL"} products={products} />
-        <MainArticle />
+        {data ? (
+          <>
+            <OurPick products={data} />
+            <MainItem title={"BEST"} products={data} />
+            <MainItem title={"NEW ARRIVAL"} products={data} />
+            <MainArticle />
+          </>
+        ) : (
+          <div>Loading...</div>
+        )}
       </Layout>
     </>
   );

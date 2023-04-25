@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductDetailPage from "./pages/user/product/product-detail-page";
 import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 // import CartContext from "./components/store/cart-context";
 import AdminPage from "./pages/admin/admin-page";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
@@ -29,73 +30,73 @@ import SignUpPage from "./pages/auth/signup-page";
 import LoginPage from "./pages/auth/login-page";
 import PersonalInfo from "./components/user/my-page-component/personal-info";
 import ManageCategoryPage from "./pages/admin/category/manage-category-page";
-import ManageOrderPage from "./pages/admin/order/manage-order-page";
+import ManageOrderDetailPage from "./pages/admin/order/manage-order-detail-page";
+
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <CartContext>
-          <QueryClientProvider client={queryClient}>
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              {/* 장바구니 페이지 라우터 */}
-              <Route path="/cart" element={<CartPage />} />
+    // <RecoilRoot>
+    <BrowserRouter>
+      <CartContext>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={true} />
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            {/* 장바구니 페이지 라우터 */}
+            <Route path="/cart" element={<CartPage />} />
 
-              {/* 로그인 페이지 라우터 */}
-              <Route path="/login" element={<LoginPage />} />
+            {/* 로그인 페이지 라우터 */}
+            <Route path="/login" element={<LoginPage />} />
 
-              {/* 회원가입 페이지 라우터 */}
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route
-                path="/product/category/:category"
-                element={<ProductListPage />}
-              />
-              <Route
-                path="/product/:product_id"
-                element={<ProductDetailPage />}
-              />
-              <Route path="/manage" element={<AdminPage />} />
-              <Route
-                path="/manage/product_list"
-                element={<ManageProductListPage />}
-              />
-              <Route path="/manage/new_product" element={<NewProductPage />} />
-              <Route
-                path="/manage/edit_product/:product_id"
-                element={<EditProductPage />}
-              />
-              <Route
-                path="/manage/order_manage"
-                element={<ManageOrderPage />}
-              />
-              <Route
-                path="/manage/order_list"
-                element={<ManageOrderListPage />}
-              />
+            {/* 회원가입 페이지 라우터 */}
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route
+              path="/product/category/:category"
+              element={<ProductListPage />}
+            />
+            <Route
+              path="/product/:product_id"
+              element={<ProductDetailPage />}
+            />
+            <Route path="/manage" element={<AdminPage />} />
+            <Route
+              path="/manage/product_list"
+              element={<ManageProductListPage />}
+            />
+            <Route path="/manage/new_product" element={<NewProductPage />} />
+            <Route
+              path="/manage/edit_product/:product_id"
+              element={<EditProductPage />}
+            />
 
-              <Route path="/manage/category" element={<ManageCategoryPage />} />
-              <Route path="/mypage" element={<MyPage />}>
-                <Route path="order-infromation" element={<OrderInfomation />} />
-                {/* //마이페이지 네비게이션 중첩라우터 */}
-                <Route path="" element={<OrderInfomation />} />
-                <Route path="personal-info" element={<PersonalInfo />} />
-                <Route
-                  path="personal-info-modify"
-                  element={<PersonalInfoModify />}
-                />
-                <Route
-                  path="cus-service-center"
-                  element={<CusServiceCenter />}
-                />
-                <Route path="withdrawl" element={<Withdrawl />} />
-              </Route>
-            </Routes>
-          </QueryClientProvider>
-        </CartContext>
-      </BrowserRouter>
-    </RecoilRoot>
+            <Route
+              path="/manage/order_list"
+              element={<ManageOrderListPage />}
+            />
+            <Route
+              path="/manage/order_manage/:order_id"
+              element={<ManageOrderDetailPage />}
+            />
+
+            <Route path="/manage/category" element={<ManageCategoryPage />} />
+            <Route path="/mypage" element={<MyPage />}>
+              <Route path="order-infromation" element={<OrderInfomation />} />
+              {/* //마이페이지 네비게이션 중첩라우터 */}
+              <Route path="" element={<OrderInfomation />} />
+              <Route path="personal-info" element={<PersonalInfo />} />
+              <Route
+                path="personal-info-modify"
+                element={<PersonalInfoModify />}
+              />
+              <Route path="cus-service-center" element={<CusServiceCenter />} />
+              <Route path="withdrawl" element={<Withdrawl />} />
+            </Route>
+          </Routes>
+        </QueryClientProvider>
+      </CartContext>
+    </BrowserRouter>
+    // </RecoilRoot>
   );
 }
 
