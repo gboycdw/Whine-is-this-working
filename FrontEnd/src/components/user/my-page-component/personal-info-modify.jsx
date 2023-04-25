@@ -71,6 +71,15 @@ const PersonalInfoModify = () => {
     addressDetail:${addressDetail}
     tel:${tel}
     `);
+    let personInfo = {
+      pwd: pwd,
+      pwdCheck: pwdCheck,
+      fullAddress: fullAddress,
+      addressDetail: addressDetail,
+      tel: tel,
+    };
+    console.log(personInfo);
+
     // button 클릭시 비밀번호 재설정 <-> 비밀번호 확인 일치 && 연락처 형식 맞으면 main-page로 이동
     if (
       pwd.trim() === "" ||
@@ -102,7 +111,7 @@ const PersonalInfoModify = () => {
           <div class="h-[15%]">
             <h1 class="text-3xl mb-[10%]">개인 정보 수정</h1>
           </div>
-          <div class=" h-[60%]">
+          <div class=" h-[60%] border-2 border-c1 rounded-xl">
             <div class="w-[100%] m-[10px]">
               <span class="inline-block w-[120px] m-[20px] mb-[20px]">
                 이름
@@ -191,7 +200,6 @@ const PersonalInfoModify = () => {
           </div>
           <div class="m-[10px] flex justify-center items-center h-[25%]">
             <button
-              to="/mypage"
               onClick={modifySuccessHandler}
               class="border-[1px] border-c1 m-[10px] bg-[white] w-[60px] h-[40px]"
             >
