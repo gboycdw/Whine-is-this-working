@@ -12,6 +12,7 @@
 5. 이 쇼핑몰에서 와인을 처음 접한 사람이 계속해서 다시 방문하게 하는 것을 목표로 합니다.
 ```
 
+
 ## 팀 소개
 
 ### **팀명 : 와인..게 되네? (whine-is-this-working?)**
@@ -34,13 +35,38 @@
 
 ### 폴더 구조
 
-**Front - End (실제 사용한걸로 수정)**
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9fb00c5b-d48d-4390-ba41-659d9b023723/Untitled.png)
-
-**Back - End**
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c288aa75-cd9c-4423-b45b-00441f6b5727/Untitled.png)
+```
+witw
+├── backend
+│   ├── src
+│   │   ├── db
+│   │   │   ├── schemas
+│   │   │   ├── models
+│   │   │   └── index.js
+│   │   ├── middlewares
+│   │   ├── routers
+│   │   ├── services
+│   │   └── app.js
+│   └── index.js
+└── FrontEnd
+    ├── public
+    ├── src
+    │   ├── api
+    │   ├── components
+    │   │   ├── admin
+    │   │   ├── store
+    │   │   ├── UI
+    │   │   └── user
+    │   ├── pages
+    │   │   ├── admin
+    │   │   ├── auth
+    │   │   ├── user
+    │   │   └── main-pages.jsx
+    │   ├── App.jsx
+    │   ├── index.js
+    │   └── reportWebVitals.js
+    └── postcss.config.js
+```
 
 ## 페르소나
 
@@ -64,85 +90,93 @@
 
 1. npm install express
 2. npm install cors
-3. npm install dotenv
-4. npm install bcrypt
-5. npm install nanoid
-6. npm install dayjs
-7. npm install jsonwebtoken
+3. npm install bcrypt
+4. npm install nanoid
+5. npm install dayjs
+6. npm install jsonwebtoken
+7. npm install dotenv
 
-`API 명세`
+### API 명세
 
-|        | API Address                          | Request     | Description                                 | Response |
-| ------ | ------------------------------------ | ----------- | ------------------------------------------- | -------- |
-|        | —————`<Orders>`—————     |             |                                             |          |
-| GET    | /api/orders                          |             | (admin) 모든 유저의 주문 정보 조회          |          |
-| GET    | /api/orders/:userid                  |             | 해당 유저의 주문 정보 조회                  |          |
-| POST   | /api/orders                          | 주문 정보   | 새 주문정보 생성                            |          |
-| DELETE | /api/orders/admin/:number            |             | (admin) 주문 삭제                           |          |
-| DELETE | /api/orders/:number                  |             | 주문 취소                                   |          |
-| PUT    | /api/orders/:number                  | 변경 내용   | 주문 내용 변경                              |          |
-| PUT    | /api/orders/:number/:status          |             | (admin) 배송 상태 변경                      |          |
-| PUT    | /api/orders/:number/:waybill         |             | (admin) 운송장 번호 변경                    |          |
-|        | —————`<Users>`—————      |             |                                             |          |
-| POST   | /api/users/signUp                    |             | 회원가입                                    |          |
-| POST   | /api/users/login                     |             | 로그인                                      |          |
-| PATCH  | /api/users                           |             | 유저정보수정                                |          |
-| DELETE | /api/users                           |             | 회원 탈퇴                                   |          |
-|        | —————`<Products>`—————   |             |                                             |          |
-| GET    | /api/products                        |             | 상품 목록 전체 조회                         |          |
-| GET    | /api/products/:id                    |             | 상품 ID로 상품 상세 조회                    |          |
-| GET    | /api/products/types/:type            |             | 상품 타입별로 상품 목록 조회                |          |
-| GET    | /api/products/countries/:country     |             | 상품 나라별로 상품 목록 조회                |          |
-| GET    | /api/products/prices/:min/:max       |             | 가격의 최솟값, 최댓값 사이의 상품 목록 조회 |          |
-| GET    | /api/products/list/picked            |             | Picked 상품 조회                            |          |
-| GET    | /api/products/list/best              |             | Best 상품 조회                              |          |
-| POST   | /api/products                        | 새 상품정보 | 상품 추가                                   |          |
-| PUT    | /api/products/:id                    | 변경할 정보 | ID에 맞는 상품 수정                         |          |
-| PATCH  | /api/products/:id/:saleState         | 판매 상태   | ID에 맞는 상품의 판매 상태만 수정           |          |
-| DELETE | /api/products/:id                    |             | ID에 맞는 상품 삭제                         |          |
-|        | —————`<Categories>`————— |             |                                             |          |
-| GET    | /api/categories                      |             | 카테고리 목록 조회                          |          |
-| GET    | /api/categories/:name                |             | 카테고리 이름으로 상품 조회                 |          |
-| POST   | /api/categories                      | 카테고리명  | 카테고리 추가                               |          |
-| PUT    | /api/categories/:id                  | 카테고리명  | ID에 맞는 카테고리 수정                     |          |
-| DELETE | /api/categories/:id                  |             | ID에 맞는 카테고리 삭제                     |          |
+|        | API Address                      | Request       | Params    | Description                                 | Response |
+| ------ | -------------------------------- | ------------- | --------- | ------------------------------------------- | -------- |
+|        | —————`<Orders>`————— |               |           |                                             |          |
+| GET    | /api/orders                      |               |           | `admin` 모든 주문 정보 조회               |          |
+| GET    | /api/orders/:userid              |               | E-mail ID | 해당 ID를 쓰는 유저의 주문 정보 조회        |          |
+| POST   | /api/orders                      | 주문 정보     |           | 새 주문정보 생성                            |          |
+| DELETE | /api/orders/admin/:number        |               | 주문 번호 | `admin` 주문 삭제                         |          |
+| DELETE | /api/orders/:number              |               | 주문 번호 | 배송 전 건의 주문 취소                      |          |
+| PATCH  | /api/orders/information          | 주문 변경내역 |           | 배송 전 건의 주문 내용 변경                 |          |
+| PATCH  | /api/orders/shippingstatus       | 배송 상태     |           | `admin` 배송 전 건의 배송 상태 변경       |          |
+| PATCH  | /api/orders/waybill              | 운송장 번호   |           | admin 배송 중 건의 운송장 번호 변경         |          |
+|        | —————`<Users>`—————  |               |           |                                             |          |
+| POST   | /api/users/signUp                |               |           | 회원가입                                    |          |
+| POST   | /api/users/login                 |               |           | 로그인                                      |          |
+| PATCH  | /api/users                       |               |           | 유저정보수정                                |          |
+| DELETE | /api/users                       |               |           | 회원 탈퇴                                   |          |
+|        | ————`<Products>`————   |               |           |                                             |          |
+| GET    | /api/products                    |               |           | 상품 목록 전체 조회                         |          |
+| GET    | /api/products/:id                |               |           | 상품 ID로 상품 상세 조회                    |          |
+| GET    | /api/products/types/:type        |               |           | 상품 타입별로 상품 목록 조회                |          |
+| GET    | /api/products/countries/:country |               |           | 상품 나라별로 상품 목록 조회                |          |
+| GET    | /api/products/prices/:min/:max   |               |           | 가격의 최솟값, 최댓값 사이의 상품 목록 조회 |          |
+| GET    | /api/products/lists/picked       |               |           | Picked 상품 조회                            |          |
+| GET    | /api/products/lists/best         |               |           | Best 상품 조회                              |          |
+| POST   | /api/products                    | 새 상품정보   |           | 상품 추가                                   |          |
+| PUT    | /api/products/:id                | 변경할 정보   |           | ID에 맞는 상품 수정                         |          |
+| PATCH  | /api/products/:id/:saleState     | 판매 상태     |           | ID에 맞는 상품의 판매 상태만 수정           |          |
+| DELETE | /api/products/:id                |               |           | ID에 맞는 상품 삭제                         |          |
+|        | ————`<Categories>`———— |               |           |                                             |          |
+| GET    | /api/categories                  |               |           | 카테고리 목록 조회                          |          |
+| GET    | /api/categories/:title           |               |           | 카테고리 이름으로 상품 조회                 |          |
+| POST   | /api/categories                  | 카테고리명    |           | 카테고리 추가                               |          |
+| PUT    | /api/categories/:id              | 카테고리명    |           | ID에 맞는 카테고리 수정                     |          |
+| DELETE | /api/categories/:id              |               |           | ID에 맞는 카테고리 삭제                     |          |
 
 ## 사용 기술 스택
 
-**Front - End (실제 사용한걸로 수정해주세요)**
+**Front - End**
 
-[](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)[https://img.shields.io/badge/HTML5-E34F26?style=flat-square&amp;logo=html5&amp;logoColor=white](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-
-[](https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=css3&logoColor=white)[https://img.shields.io/badge/CSS-1572B6?style=flat-square&amp;logo=css3&amp;logoColor=white](https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=css3&logoColor=white)
-
-[](https://img.shields.io/badge/Javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)[https://img.shields.io/badge/Javascript-F7DF1E?style=flat-square&amp;logo=javascript&amp;logoColor=black](https://img.shields.io/badge/Javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+- React
+- tailwindcss
+- JavaScript
 
 **Back - End**
 
-[](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white)[https://img.shields.io/badge/Node.js-339933?style=flat-square&amp;logo=Node.js&amp;logoColor=white](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white)
-
-[](https://img.shields.io/badge/Express-000000?style=flat-square&logo=Express&logoColor=white)[https://img.shields.io/badge/Express-000000?style=flat-square&amp;logo=Express&amp;logoColor=white](https://img.shields.io/badge/Express-000000?style=flat-square&logo=Express&logoColor=white)
-
-[](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=MongoDB&logoColor=white)[https://img.shields.io/badge/MongoDB-47A248?style=flat-square&amp;logo=MongoDB&amp;logoColor=white](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=MongoDB&logoColor=white)
+- Node.js
+- Express.js
+- MongoDB
 
 ## 서비스 개요 (지금 최신 상황에 맞게 수정할 수 있으면 좋겠습니다)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9bea4e52-7405-48cc-b39e-e40fc02afcc2/Untitled.png)
+관리자
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3564d163-d108-4620-862a-254e167c128e/Untitled.png)
+https://file.notion.so/f/s/3564d163-d108-4620-862a-254e167c128e/Untitled.png?id=c2819333-7292-4504-9ffa-ebb0e4dbd377&table=block&spaceId=55a278f0-5647-4c26-af1e-2433b9293c4f&expirationTimestamp=1682538865413&signature=jntkW20ZwTifYIJnA-W9zRnX6aCm-wijycp9hyVQEtg&downloadName=Untitled.png
 
-피그마 링크 : [](https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1&t=FLTBiv5qqQpDmWJf-0)[https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1&amp;t=FLTBiv5qqQpDmWJf-0](https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1&t=FLTBiv5qqQpDmWJf-0)
+사용자
+
+https://file.notion.so/f/s/9bea4e52-7405-48cc-b39e-e40fc02afcc2/Untitled.png?id=086971e4-6710-4399-8736-528a98ab6170&table=block&spaceId=55a278f0-5647-4c26-af1e-2433b9293c4f&expirationTimestamp=1682538861502&signature=5BG3UyrsBur24oOilnGS2xmxQ6fmLvzvHyN6PhxHALk&downloadName=Untitled.png
+
+피그마 링크 : [https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1&amp;t=FLTBiv5qqQpDmWJf-0](https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1&t=FLTBiv5qqQpDmWJf-0)
 
 ## 코드 컨벤션
 
 1. URL, URI는 REST API 규칙에 따른다.
-2. 파일명의 띄어쓰기는 “-” (하이픈) 으로 연결한다.
+2. 파일명의 띄어쓰기는 "-" (하이픈) 으로 연결한다.
 3. Class는 대문자로 시작하는 Upper Camel Case를 사용한다.
 4. 일반 변수명은 소문자로 시작하는 Lower Camel Case로 통일한다.
 5. 백엔드는 3계층 구조로 설계한다. (Router, Service, Model)
 
 ## Branch 구조
 
-Master - dev - feature#BE - .…각 branch
+```
+              feature#FE
+             /
+master -----dev 
+             \ 
+              feature#BE - feature#BE#order / feature#BE#user / feature#BE#product
+```
 
-……………………- feature#FE - ….각 branch
+## 기타 사항
+
+end.
