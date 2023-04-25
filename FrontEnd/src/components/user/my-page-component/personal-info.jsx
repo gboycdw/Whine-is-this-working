@@ -10,12 +10,12 @@ const PersonalInfo = () => {
     <>
       <div class=" flex justify-center items-center ">
         <div class="w-[80%] h-[80%] ">
-          <div class="h-[15%]">
+          <div class="h-[15%] ">
             <h1 class="text-3xl mb-[10%]">내 정보</h1>
           </div>
-          <div class=" h-[60%]">
-            <div class="w-[100%] m-[10px]">
-              <span class="inline-block w-[120px] m-[20px] mb-[20px]">
+          <div class=" h-[60%] border-2 border-c1 rounded-xl">
+            <div class="w-[100%] m-[10px] ">
+              <span class="inline-block w-[120px] m-[20px] mb-[20px] ">
                 이름
               </span>
               <span class="inline-block w-[120px] m-[20px] mb-[20px]">
