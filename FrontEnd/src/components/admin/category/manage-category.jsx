@@ -2,39 +2,14 @@ import { useState } from "react";
 import CategoryManageForm from "./manage-category-form";
 import uuid from "react-uuid";
 import Button from "../../UI/button";
-
-const categories = [
-  // 카테고리 더미데이터 (각 카테고리의 타이틀이 있고 카테고리리스트들이 자식요소로있음)
-  {
-    id: 0,
-    title: "wine", // 카테고리 번들의 타이틀//
-    categories: [
-      // 카테고리 번들의 각 카테고리 객체들
-      { id: 1, name: "레드와인" },
-      { id: 2, name: "화이트와인" },
-      { id: 3, name: "로제와인" },
-      { id: 4, name: "무알콜" },
-    ],
-  },
-  {
-    id: 1,
-    title: "country",
-    categories: [
-      { id: 1, name: "스페인" },
-      { id: 2, name: "프랑스" },
-      { id: 3, name: "미국" },
-    ],
-  },
-  {
-    id: 2,
-    title: "가격대별",
-    categories: [{ id: 1, name: "10000 ~ 30000" }],
-  },
-];
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ManageCategory = (props) => {
   // const categoryBundle = props.categoryBundle;
-  const [categoryBundle, setCategoryBundle] = useState(categories);
+  const [categoryBundle, setCategoryBundle] = useState(props.categoryBundle);
+  const navigate = useNavigate();
+  console.log(categoryBundle);
 
   const categoryPushHandler = (categoryBundleId, enteredNewCategory) => {
     const enteredNewCategoryId = enteredNewCategory.id;
@@ -132,7 +107,14 @@ const ManageCategory = (props) => {
       alert("카테고리 이름에 빈곳이 있습니다.");
       return;
     }
-    console.log(categoryBundle);
+    try {
+      const result = await axios.post("http://34.22.85.44/api/cateogries", {});
+      console.log(result);
+      alert("카테고리가 성공적으로 저장되었습니다.");
+      navigate("/manage/category");
+    } catch (error) {
+      console.log(error);
+    }
     alert("카테고리 저장이 완료되었습니다.");
 
     // for (let i = 0; i < categories.length; i++) {
@@ -144,8 +126,8 @@ const ManageCategory = (props) => {
 
   return (
     <div class="flex w-full p-6">
-      <div class="flex flex-col bg-[#ffffff] px-8 py-4 min-h-[500px] ">
-        <div class="flex flex-col gap-5 justify-between">
+      <div class="flex flex-col bg-[#ffffff] px-8 py-4 min-h-[500px] border border-color2">
+        <div class="grid grid-cols-2 gap-10">
           {categoryBundle.map((bundle) => {
             return (
               <div key={uuid()} class="flex flex-col w-[400px] text-sm">
@@ -183,7 +165,7 @@ const ManageCategory = (props) => {
                     );
                   })}
                 </ul>
-                <div class="flex justify-between h-12 items-center px-1">
+                <div class="flex justify-end h-12 items-center px-1">
                   <button id={bundle.id} onClick={categoryAddHandler}>
                     카테고리 추가
                   </button>

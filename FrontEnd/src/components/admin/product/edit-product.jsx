@@ -4,33 +4,52 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from "../../UI/button";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useQuery } from "react-query";
 
-const NewProduct = () => {
+const EditProduct = (props) => {
+  const productId = useParams().product_id;
   const navigate = useNavigate();
 
+  const data = props.product;
+
+  // console.log(productId);
+
+  // const { data, isLoading, error } = useQuery(
+  //   ["product", productId],
+  //   async () => {
+  //     const data = await axios.get(
+  //       `http://34.22.85.44/api/products/${productId}`
+  //     );
+  //     return data.data;
+  //   }
+  // );
+  // console.log(data, isLoading, error);
+
   const [isImageModal, setIsImageModal] = useState(false);
-  const [imgFile, setImgFile] = useState("/defaultImage.jpg");
+  const [imgFile, setImgFile] = useState(data?.imgUrl);
   const imgRef = useRef();
 
   //각 폼데이터들 상태관리
-  const [brand, setBrand] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState();
-  const [imgUrl, setImgUrl] = useState("/defaultImage.jpg");
-  const [discountPrice, setDiscountPrice] = useState("");
-  const [inventory, setInventory] = useState("");
-  const [country, setCountry] = useState("카테고리 선택");
-  const [region, setRegion] = useState("");
-  const [type, setType] = useState("카테고리 선택");
-  const [sugar, setSugar] = useState("선택");
-  const [acidity, setAcidity] = useState("선택");
-  const [tannic, setTannic] = useState("선택");
-  const [body, setBody] = useState("선택");
-  const [alcoholDegree, setAlcoholDegree] = useState("");
-  const [isPicked, setIsPicked] = useState(false);
-  const [isBest, setIsBest] = useState(false);
-  const [info, setInfo] = useState("");
-  const [tags, setTags] = useState("");
+  const [brand, setBrand] = useState(data?.brand);
+  const [name, setName] = useState(data?.name);
+  const [price, setPrice] = useState(data?.price);
+  const [imgUrl, setImgUrl] = useState(data?.imgUrl);
+  const [discountPrice, setDiscountPrice] = useState(data?.discountPrice);
+  const [inventory, setInventory] = useState(data?.inventory);
+  const [country, setCountry] = useState(data?.country);
+  const [region, setRegion] = useState(data?.region);
+  const [type, setType] = useState(data?.type);
+  const [sugar, setSugar] = useState(data?.features.sugar);
+  const [acidity, setAcidity] = useState(data?.features.acidity);
+  const [tannic, setTannic] = useState(data?.features.tannic);
+  const [body, setBody] = useState(data?.features.body);
+  const [alcoholDegree, setAlcoholDegree] = useState(
+    data?.features.alcoholDegree
+  );
+  const [isPicked, setIsPicked] = useState(data?.isPicked);
+  const [isBest, setIsBest] = useState(data?.isBest);
+  const [info, setInfo] = useState(data?.info);
+  const [tags, setTags] = useState(data?.tags.join(","));
 
   // 각 input 온채인지 핸들러
   const inputChangeHandler = (e) => {
@@ -93,7 +112,7 @@ const NewProduct = () => {
   // 폼 취소 핸들러
   const formCancleHandler = (e) => {
     e.preventDefault();
-    if (window.confirm("정말로 취소하시겠습니까? 입력한 내용은 삭제됩니다.")) {
+    if (window.confirm("정말로 취소하시겠습니까? 수정한 내용은 없어집니다.")) {
       return navigate("/manage/product_list");
     } else {
     }
@@ -128,7 +147,7 @@ const NewProduct = () => {
     };
 
     /* validation 부분 시간이 남으면 리팩토링이 필요함 */
-    if (Object.values(data).filter((data) => data === "").length > 0) {
+    if (Object.values(data).filter((data) => data === null).length > 0) {
       alert("상품 정보를 빠짐없이 입력해주세요.");
       return;
     }
@@ -153,36 +172,42 @@ const NewProduct = () => {
     // 이부분에 axios 구현
 
     try {
-      const result = await axios.post("http://34.22.85.44/api/products", {
-        name,
-        brand,
-        type,
-        country,
-        region,
-        imgUrl,
-        info,
-        price,
-        discountPrice,
-        saleCount: 0,
-        saleState: "판매중",
-        isPicked,
-        isBest,
-        inventory,
-        tags,
-        feature: {
-          sugar,
-          acidity,
-          tannic,
-          body,
-          alcoholDegree,
-        },
-      });
+      const result = await axios.put(
+        `http://34.22.85.44/api/products/${productId}`,
+        {
+          _id: productId,
+          name,
+          brand,
+          type,
+          country,
+          region,
+          imgUrl,
+          info,
+          price,
+          discountPrice,
+          saleCount: 0,
+          saleState: "판매중",
+          isPicked,
+          isBest,
+          inventory,
+          tags,
+          feature: {
+            sugar,
+            acidity,
+            tannic,
+            body,
+            alcoholDegree,
+          },
+        }
+      );
       console.log(result);
-      alert("상품이 성공적으로 추가되었습니다.");
+      alert("상품이 성공적으로 수정되었습니다.");
       navigate("/manage/product_list");
     } catch (error) {
       console.log(error);
     }
+
+    // navigate("/manage/product_list");
   };
 
   // 이미지 추가 모달 핸들러
@@ -504,4 +529,4 @@ const NewProduct = () => {
   );
 };
 
-export default NewProduct;
+export default EditProduct;

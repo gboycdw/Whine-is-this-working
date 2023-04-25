@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProductDetailPage from "./pages/user/product/product-detail-page";
 import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 // import CartContext from "./components/store/cart-context";
 import AdminPage from "./pages/admin/admin-page";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
@@ -29,7 +30,8 @@ import SignUpPage from "./pages/auth/signup-page";
 import LoginPage from "./pages/auth/login-page";
 import PersonalInfo from "./components/user/my-page-component/personal-info";
 import ManageCategoryPage from "./pages/admin/category/manage-category-page";
-import ManageOrderPage from "./pages/admin/order/manage-order-page";
+import ManageOrderDetailPage from "./pages/admin/order/manage-order-detail-page";
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -38,6 +40,7 @@ function App() {
     <BrowserRouter>
       <CartContext>
         <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={true} />
           <Routes>
             <Route path="/" element={<MainPage />} />
             {/* 장바구니 페이지 라우터 */}
@@ -66,10 +69,14 @@ function App() {
               path="/manage/edit_product/:product_id"
               element={<EditProductPage />}
             />
-            <Route path="/manage/order_manage" element={<ManageOrderPage />} />
+
             <Route
               path="/manage/order_list"
               element={<ManageOrderListPage />}
+            />
+            <Route
+              path="/manage/order_manage/:order_id"
+              element={<ManageOrderDetailPage />}
             />
 
             <Route path="/manage/category" element={<ManageCategoryPage />} />
