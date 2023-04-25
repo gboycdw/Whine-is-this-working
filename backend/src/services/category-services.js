@@ -11,15 +11,15 @@ class CategoryService {
   }
   
   //카테고리 이름으로 조회
-  async getCategoryByName(name) {
-    const category = await categoryModel.findByName(name);
+  async getCategoryByTitle(title) {
+    const category = await categoryModel.findByTitle(title);
     return category;
   }
 
   //카테고리 추가
   async createCategory(categoryInfo) {
-    const { name, lists } = categoryInfo;
-    const newInfo = { name, lists };
+    const { title, categories } = categoryInfo;
+    const newInfo = { title, categories };
     const newCategory = await categoryModel.createCategory(newInfo);
     return newCategory;
   }

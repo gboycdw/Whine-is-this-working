@@ -11,8 +11,8 @@ export class CategoryModel {
   }
 
   //카테고리 이름으로 조회
-  async findByName(name) {
-    const category = await Category.findOne({ name: name });
+  async findByTitle(title) {
+    const category = await Category.findOne({ title: title });
     return category;
   }
 

@@ -7,7 +7,8 @@ class ProductService {
 
   //상품 생성
   async createProduct(productInfo) {
-    const {
+    var {
+      seq,
       name,
       brand,
       region,
@@ -26,7 +27,8 @@ class ProductService {
       features,
     } = productInfo;
 
-    const newInfo = {
+    var newInfo = {
+      seq,
       name,
       brand,
       region,

@@ -1,7 +1,4 @@
-import { model } from "mongoose";
-import { ProductSchema } from "../schemas/product-schema.js";
-
-const Product = model("Product", ProductSchema);
+import { Product } from "../schemas/product-schema.js";
 
 export class ProductModel {
   async find() {
@@ -11,7 +8,7 @@ export class ProductModel {
 
   //와인 ID로 상세 정보 조회
   async findById(id) {
-    const product = await Product.findOne({ _id: id });
+    const product = await Product.find({ _id: id });
     return product;
   }
 

@@ -13,10 +13,10 @@ categoryRouter.get("/", async (req, res, next) => {
 });
 
 //카테고리 이름별 조회
-categoryRouter.get("/:name", async (req, res, next) => {
+categoryRouter.get("/:title", async (req, res, next) => {
   try {
-    const c_name = req.params.name;
-    const categories = await categoryService.getCategoryByName(c_name);
+    const c_title = req.params.title;
+    const categories = await categoryService.getCategoryByTitle(c_title);
     res.status(201).json(categories);
   } catch (err) {
     next(err);
@@ -26,10 +26,10 @@ categoryRouter.get("/:name", async (req, res, next) => {
 //카테고리 추가
 categoryRouter.post("/", async (req, res, next) => {
   try {
-    const { name, lists } = req.body;
+    const { title, categories } = req.body;
     const newCategory = await categoryService.createCategory({
-      name,
-      lists,
+      title,
+      categories,
     });
 
     res.status(201).json(newCategory);
@@ -42,12 +42,12 @@ categoryRouter.post("/", async (req, res, next) => {
 categoryRouter.put("/:id", async (req, res, next) => {
   try {
     const update_id = req.params.id;
-    const name = req.body.name;
-    const lists = req.body.lists;
+    const title = req.body.title;
+    const lists = req.body.categories;
 
     const updateCategory = await categoryService.updateCategory(update_id, {
-      name,
-      lists: lists,
+      title,
+      categories: lists,
     });
 
     res.status(201).json(updateCategory);
