@@ -198,7 +198,7 @@ const PersonalInfoModify = () => {
               ></input>
             </div>
           </div>
-          <div class="m-[10px] flex justify-center items-center h-[25%]">
+          <div class="m-[10px] flex justify-center items-center h-[25%] mb-[10%]">
             <button
               onClick={modifySuccessHandler}
               class="border-[1px] border-c1 m-[10px] bg-[white] w-[60px] h-[40px]"

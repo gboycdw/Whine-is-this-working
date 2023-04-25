@@ -44,7 +44,7 @@ const Withdrawl = () => {
 
   return (
     <>
-      <div class="h-[80%] flex justify-center items-center ">
+      <div class="h-[800px] flex justify-center items-center ">
         <div class="w-[80%] h-[100%]  ">
           <div class="h-[15%]">
             <h1 class=" text-c3 text-3xl mb-[10%] ">회원 탈퇴</h1>
