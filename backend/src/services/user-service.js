@@ -78,6 +78,10 @@ class UserService {
       { expiresIn: "1h" } //토큰 유효시간 1시간 설정
     );
 
+    if (userData.role === "super-admin") {
+      console.log("✨ 총관리자 로그인 성공! ✨");
+      return { userToken };
+    }
     if (userData.role === "admin") {
       console.log("✨ 관리자 로그인 성공! ✨");
       return { userToken };
@@ -107,6 +111,12 @@ class UserService {
 
     const updatedUser = await this.userModel.updateUser(userId, toUpdateInfo);
     return updatedUser;
+  }
+
+  // 전체 유저 정보 조회
+  async getAllUser() {
+    const result = await this.userModel.getAllUser();
+    return result;
   }
 }
 
