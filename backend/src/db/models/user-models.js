@@ -46,8 +46,19 @@ export class UserModel {
       throw new Error("유저 정보 업데이트 중 에러가 발생했습니다. models");
     }
   }
+
+  //전체 유저 정보 불러오기
+  async getAllUser() {
+    try {
+      const allUser = await User.find(
+        {},
+        { name: 1, email: 1, phoneNumber: 1, role: 1 }
+      ).lean();
+      return allUser;
+    } catch (err) {
+      throw new Error("전체 유저 불러오기 중 에러가 발생했습니다. models");
+    }
+  }
 }
 
-const userModel = new UserModel();
-
-export { userModel };
+export const userModel = new UserModel();
