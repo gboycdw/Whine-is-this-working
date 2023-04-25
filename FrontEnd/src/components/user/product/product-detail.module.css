@@ -1,15 +1,14 @@
 .product_detail_container {
   max-width: 1200px;
   margin: 0 auto;
-  /* background-color: aqua; */
   display: block;
 }
-.product_detail_wrap {
+/* .product_detail_wrap {
   width: 100%;
   height: 100%;
   float: left;
   position: relative;
-}
+} */
 .product_detail_left {
   margin: 0;
   padding: 0;
