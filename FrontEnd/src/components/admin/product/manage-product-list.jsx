@@ -17,7 +17,6 @@ const ManageProductList = (props) => {
   const limit = 10; // 페이징처리를 위한 한화면 게시글 리밋
   const offset = (page - 1) * limit; // 페이징처리를위한 배열 슬라이스를 위한 오프셋
 
-
   /* 체크박스 전체 선택 핸들러 
   이미 모두 체크가 되어있는경우 클릭하면 모든 체크를 해제하고 상품IDs라는 배열이 담긴 상태를 빈배열로 초기화
   모든 체크가 해제되어있거나 일부만 체크되어있을경우 모두 체크하고 상품IDs 이 페이지의 모든 상품id들을 배열로 업데이트*/
@@ -53,7 +52,7 @@ const ManageProductList = (props) => {
 
   return (
     <div class="flex flex-col p-6">
-      <div class="border-b">
+      <div class="border-b ">
         <span>전체 {products.length}</span>
         <span> | </span>
         <span>
@@ -64,8 +63,8 @@ const ManageProductList = (props) => {
         <span> | </span>
         <span>숨김 0</span>
       </div>
-      <div class="py-4 flex gap-4">
-        <div class="w-36 bg-[#ffffff] flex justify-center py-3 px-3">
+      <div class="py-4 flex gap-4 text-sm">
+        <div class="w-32 h-11 flex justify-center px-3 border border-color2 rounded">
           <select class="w-full">
             <option value="카테고리선택">카테고리 선택</option>
             {categories.map((category) => {
@@ -74,11 +73,11 @@ const ManageProductList = (props) => {
           </select>
         </div>
         <input
-          class="flex-grow py-3 px-3 "
+          class="flex-grow h-11 px-3 border border-color2 rounded"
           type="text"
           placeholder="상품명 검색"
         />
-        <div class="w-36 flex justify-center bg-[#ffffff] py-3 px-3">
+        <div class="w-32 h-11 flex justify-center bg-[#ffffff] px-2 border border-color2 rounded items-center">
           엑셀 다운로드 | v
         </div>
       </div>

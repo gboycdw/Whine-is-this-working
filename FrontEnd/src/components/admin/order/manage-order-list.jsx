@@ -185,7 +185,7 @@ const ManageOrderList = () => {
   };
 
   return (
-    <div class="flex flex-col p-6 ">
+    <div class="flex flex-col p-6">
       <div class="border-b">
         <span>전체 {orders.length}</span>
         <span> | </span>
@@ -215,8 +215,8 @@ const ManageOrderList = () => {
           {orders.filter((order) => order.deliveryState === "배송완료").length}
         </span>
       </div>
-      <div class="py-4 flex gap-4">
-        <div class="w-36 bg-[#ffffff] flex justify-center py-3 px-3">
+      <div class="py-4 flex gap-4 text-sm">
+        <div class="w-32 h-11 bg-[#ffffff] flex justify-center px-3 border border-color2 rounded">
           <select class="w-full">
             <option value="카테고리선택">카테고리 선택</option>
             <option value="주문자명">주문자명</option>
@@ -227,11 +227,11 @@ const ManageOrderList = () => {
           </select>
         </div>
         <input
-          class="flex-grow py-3 px-3 "
+          class="flex-grow h-11 px-3 border border-color2 rounded"
           type="text"
           placeholder="상품명 검색"
         />
-        <div class="w-36 flex justify-center bg-[#ffffff] py-3 px-3">
+        <div class="w-32 h-11 flex justify-center bg-[#ffffff] px-3 border border-color2 rounded items-center">
           엑셀 다운로드 | v
         </div>
       </div>
@@ -243,7 +243,7 @@ const ManageOrderList = () => {
             <span class="w-24">아이디</span>
             <span class="w-24 ">주문자명</span>
             <span class="w-24 ">주문금액</span>
-            <span class="w-20 ">배송상태</span>
+            <span class="w-24 ">배송상태</span>
             <span class="flex-grow ">요청사항</span>
             <span class="w-32 ">주문날짜</span>
             <button class="w-20">비고</button>

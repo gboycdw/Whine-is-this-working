@@ -31,6 +31,8 @@ import PersonalInfo from "./components/user/my-page-component/personal-info";
 import ManageCategoryPage from "./pages/admin/category/manage-category-page";
 import ManageOrderPage from "./pages/admin/order/manage-order-page";
 import OrderPage from "./pages/user/order/order-page";
+import ManageOrderDetailPage from "./pages/admin/order/manage-order-detail-page";
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -67,10 +69,14 @@ function App() {
               path="/manage/edit_product/:product_id"
               element={<EditProductPage />}
             />
-            <Route path="/manage/order_manage" element={<ManageOrderPage />} />
+
             <Route
               path="/manage/order_list"
               element={<ManageOrderListPage />}
+            />
+            <Route
+              path="/manage/order_manage/:order_id"
+              element={<ManageOrderDetailPage />}
             />
 
             {/* 주문 페이지 */}
