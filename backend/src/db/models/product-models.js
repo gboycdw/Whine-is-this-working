@@ -21,9 +21,9 @@ export class ProductModel {
     return product;
   }
 
-  //와인 컬러별로 조회(ex. 레드, 화이트, 스파클링, etc..)
-  async findByColor(color) {
-    const products = await Product.find({ color: color });
+  //와인 타입별로 조회(ex. 레드, 화이트, 스파클링, etc..)
+  async findByType(type) {
+    const products = await Product.find({ type: type });
     return products;
   }
 

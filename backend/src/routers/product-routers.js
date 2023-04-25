@@ -25,10 +25,10 @@ productRouter.get("/:id", async (req, res, next) => {
 });
 
 //와인 타입별로 조회
-productRouter.get("/colors/:color", async (req, res, next) => {
+productRouter.get("/types/:type", async (req, res, next) => {
   try {
-    const search_color = req.params.color;
-    const products = await productService.getProductsByColor(search_color);
+    const search_type = req.params.type;
+    const products = await productService.getProductsByType(search_type);
     res.status(201).json(products);
   } catch (err) {
     next(err);
@@ -47,7 +47,7 @@ productRouter.get("/countries/:country", async (req, res, next) => {
 });
 
 //와인 가격별로 조회
-productRouter.get("/price/:min/:max", async (req, res, next) => {
+productRouter.get("/prices/:min/:max", async (req, res, next) => {
   try {
     const lowerPrice = req.params.min;
     const higherPrice = req.params.max;
@@ -61,15 +61,35 @@ productRouter.get("/price/:min/:max", async (req, res, next) => {
   }
 });
 
+//와인 Picked 상품 조회
+productRouter.get("/list/picked", async(req, res, next) => {
+  try {
+    const products = await productService.getPickedProducts();
+    res.status(201).json(products);
+  } catch (err) {
+    next(err);
+  }
+})
+
+//와인 Best 상품 조회
+productRouter.get("/list/best", async(req, res, next) => {
+  try {
+    const products = await productService.getBestProducts();
+    res.status(201).json(products);
+  } catch (err) {
+    next(err);
+  }
+})
+
 //상품 추가
 productRouter.post("/", async (req, res, next) => {
   try {
     const {
       name,
       brand,
-      color,
+      region,
+      type,
       country,
-      area,
       info,
       inventory,
       imgUrl,
@@ -86,9 +106,9 @@ productRouter.post("/", async (req, res, next) => {
     const newProduct = await productService.createProduct({
       name,
       brand,
-      color,
+      region,
+      type,
       country,
-      area,
       info,
       inventory,
       imgUrl,
@@ -115,9 +135,9 @@ productRouter.put("/:id", async (req, res, next) => {
     const {
       name,
       brand,
-      color,
+      region,
+      type,
       country,
-      area,
       info,
       inventory,
       imgUrl,
@@ -134,9 +154,9 @@ productRouter.put("/:id", async (req, res, next) => {
     const updateProduct = await productService.updateProduct(update_id, {
       name,
       brand,
-      color,
+      region,
+      type,
       country,
-      area,
       info,
       inventory,
       imgUrl,

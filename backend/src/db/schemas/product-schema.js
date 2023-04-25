@@ -35,7 +35,7 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    color: {
+    type: {
       type: String,
       required: true,
     },
@@ -43,7 +43,7 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    area: {
+    region: {
       type: String,
       required: true,
     },

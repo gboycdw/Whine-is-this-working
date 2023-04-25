@@ -10,9 +10,9 @@ class ProductService {
     const {
       name,
       brand,
-      color,
+      region,
+      type,
       country,
-      area,
       info,
       inventory,
       imgUrl,
@@ -29,9 +29,9 @@ class ProductService {
     const newInfo = {
       name,
       brand,
-      color,
+      region,
+      type,
       country,
-      area,
       info,
       inventory,
       imgUrl,
@@ -68,8 +68,8 @@ class ProductService {
   }
 
   //상품 종류별로 조회
-  async getProductsByColor(color) {
-    const product = await productModel.findByColor(color);
+  async getProductsByType(type) {
+    const product = await productModel.findByType(type);
     return product;
   }
 
