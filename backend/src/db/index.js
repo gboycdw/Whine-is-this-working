@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 // .env 파일의 MONGODB_URL를 가져온다, 없을시 .env내 설정을 확인해야한다.
 const DB_URL =
   process.env.DB_URL || "서버 주소가 없습니다. .env 내 설정을 확인해주세요.";

@@ -9,6 +9,7 @@ productRouter.get("/", async (req, res, next) => {
     const products = await productService.getProducts();
     res.status(201).json(products);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
@@ -20,6 +21,7 @@ productRouter.get("/:id", async (req, res, next) => {
     const product = await productService.getProductById(search_id);
     res.status(201).json(product);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
@@ -31,6 +33,7 @@ productRouter.get("/types/:type", async (req, res, next) => {
     const products = await productService.getProductsByType(search_type);
     res.status(201).json(products);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
@@ -42,6 +45,7 @@ productRouter.get("/countries/:country", async (req, res, next) => {
     const products = await productService.getProductsByCountry(search_country);
     res.status(201).json(products);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
@@ -57,26 +61,29 @@ productRouter.get("/prices/:min/:max", async (req, res, next) => {
     );
     res.status(201).json(products);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
 
-//와인 Picked 상품 조회
-productRouter.get("/list/picked", async(req, res, next) => {
+//와인 Picked 상품 조회 
+productRouter.get("/lists/picked", async(req, res, next) => {
   try {
     const products = await productService.getPickedProducts();
     res.status(201).json(products);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 })
 
 //와인 Best 상품 조회
-productRouter.get("/list/best", async(req, res, next) => {
+productRouter.get("/lists/best", async(req, res, next) => {
   try {
     const products = await productService.getBestProducts();
     res.status(201).json(products);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 })
@@ -85,6 +92,7 @@ productRouter.get("/list/best", async(req, res, next) => {
 productRouter.post("/", async (req, res, next) => {
   try {
     const {
+      seq,
       name,
       brand,
       region,
@@ -104,6 +112,7 @@ productRouter.post("/", async (req, res, next) => {
     } = req.body;
 
     const newProduct = await productService.createProduct({
+      seq,
       name,
       brand,
       region,
@@ -124,6 +133,7 @@ productRouter.post("/", async (req, res, next) => {
 
     res.status(201).json(newProduct);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
@@ -133,6 +143,7 @@ productRouter.put("/:id", async (req, res, next) => {
   try {
     const update_id = req.params.id;
     const {
+      seq,
       name,
       brand,
       region,
@@ -152,6 +163,7 @@ productRouter.put("/:id", async (req, res, next) => {
     } = req.body;
 
     const updateProduct = await productService.updateProduct(update_id, {
+      seq,
       name,
       brand,
       region,
@@ -172,6 +184,7 @@ productRouter.put("/:id", async (req, res, next) => {
 
     res.status(201).json(updateProduct);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
@@ -187,6 +200,7 @@ productRouter.patch("/:id/:saleState", async (req, res, next) => {
     });
     res.status(201).json(updateProduct);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
@@ -198,6 +212,7 @@ productRouter.delete("/:id", async (req, res, next) => {
     const result = await productService.deleteProduct(delete_id);
     res.status(201).json(result);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });
