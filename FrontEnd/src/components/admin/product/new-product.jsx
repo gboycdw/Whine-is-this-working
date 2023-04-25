@@ -54,6 +54,7 @@ const NewProduct = (props) => {
   const [isPicked, setIsPicked] = useState(product ? product.isPicked : false);
   const [isBest, setIsBest] = useState(product ? product.isBest : false);
   const [info, setInfo] = useState(product ? product.info : null);
+  const [tags, setTags] = useState(product ? product.tags.join(",") : null);
 
   // 각 input 온채인지 핸들러
   const inputChangeHandler = (e) => {
@@ -102,6 +103,9 @@ const NewProduct = (props) => {
     if (e.target.id === "isBest") {
       setIsBest(!isBest);
     }
+    if (e.target.id === "tags") {
+      setTags(e.target.value.trim().split(","));
+    }
   };
 
   // CK에디터 인풋 온채인지 핸들러
@@ -142,29 +146,30 @@ const NewProduct = (props) => {
       info,
       isPicked,
       isBest,
+      tags,
     };
     /* validation 부분 시간이 남으면 리팩토링이 필요함 */
-    if (Object.values(data).filter((data) => data === null).length > 0) {
-      alert("상품 정보를 빠짐없이 입력해주세요.");
-      return;
-    }
-    if (country === "카테고리 선택") {
-      alert("나라 카테고리를 선택해주세요.");
-      return;
-    }
-    if (color === "카테고리 선택") {
-      alert("와인종류 카테고리를 선택해주세요.");
-      return;
-    }
-    if (
-      sugar === "선택" ||
-      acidity === "선택" ||
-      tannic === "선택" ||
-      body === "선택"
-    ) {
-      alert("와인 특성들을 선택해주세요.");
-      return;
-    }
+    // if (Object.values(data).filter((data) => data === null).length > 0) {
+    //   alert("상품 정보를 빠짐없이 입력해주세요.");
+    //   return;
+    // }
+    // if (country === "카테고리 선택") {
+    //   alert("나라 카테고리를 선택해주세요.");
+    //   return;
+    // }
+    // if (color === "카테고리 선택") {
+    //   alert("와인종류 카테고리를 선택해주세요.");
+    //   return;
+    // }
+    // if (
+    //   sugar === "선택" ||
+    //   acidity === "선택" ||
+    //   tannic === "선택" ||
+    //   body === "선택"
+    // ) {
+    //   alert("와인 특성들을 선택해주세요.");
+    //   return;
+    // }
 
     // 이부분에 axios 구현
     console.log(data);
@@ -198,10 +203,10 @@ const NewProduct = (props) => {
   };
 
   return (
-    <div class="flex flex-col p-6 bg-color3">
+    <div class="flex flex-col p-6 bg-color3 ">
       {isImageModal ? (
-        <div class="fixed w-[500px] h-[600px] bg-[#ffffff] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-50 p-10 rounded-xl flex flex-col items-center gap-5">
-          <div class="flex w-full flex-col items-center border p-5">
+        <div class="fixed border border-color2 w-[430px] h-[600px] bg-[#ffffff] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-50 p-10 rounded-xl flex flex-col items-center gap-5">
+          <div class="flex w-full flex-col items-center border border-color2 p-5">
             <div class="h-96">
               <img
                 class="h-[300px]"
@@ -229,26 +234,26 @@ const NewProduct = (props) => {
         ""
       )}
       <form>
-        <div class="flex">
+        <div class="flex px-10">
           <div class="flex flex-col gap-10 w-full p-10 bg-[#ffffff]">
-            <div class="flex gap-28 pb-10 border-b justify-between relative">
+            <div class="flex gap-24 pb-10 border-b border-color2 justify-between relative">
               <div class="flex flex-col justify-center gap-4">
-                <div class="flex justify-center items-center w-[464px] border p-10">
-                  <img class="h-96" src={imgUrl} alt="wine" />
+                <div class="flex justify-center items-center h-[400px] w-[400px] border border-color2 rounded p-10">
+                  <img class="h-[300px]" src={imgUrl} alt="wine" />
                 </div>
                 <button
-                  class="border h-12 rounded border-color1 border-2 text-color1 font-bold"
+                  class="border h-12 rounded border-color2 border-2 text-color1 font-bold"
                   onClick={toggleImageModalHandler}
                 >
                   이미지 추가
                 </button>
               </div>
-              <div class="flex flex-grow flex-col gap-4 justify-center">
+              <div class="flex flex-grow flex-col gap-3 justify-center text-sm">
                 <div class="flex gap-3 items-center">
                   <span class="w-20 font-bold">브랜드명</span>
                   <input
                     type="text"
-                    class="border rounded flex-grow h-8 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="brand"
                     value={brand}
@@ -258,7 +263,7 @@ const NewProduct = (props) => {
                   <span class="w-20 font-bold">상품명</span>
                   <input
                     type="text"
-                    class="border rounded flex-grow h-8 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="name"
                     value={name}
@@ -268,7 +273,7 @@ const NewProduct = (props) => {
                   <span class="w-20 font-bold">판매가격</span>
                   <input
                     type="text"
-                    class="border rounded flex-grow h-8 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="price"
                     value={price}
@@ -278,7 +283,7 @@ const NewProduct = (props) => {
                   <span class="w-20 font-bold">할인가격</span>
                   <input
                     type="text"
-                    class="border rounded flex-grow h-8 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="discountPrice"
                     value={discountPrice}
@@ -288,7 +293,7 @@ const NewProduct = (props) => {
                   <span class="w-20 font-bold">재고수량</span>
                   <input
                     type="text"
-                    class="border rounded h-8 px-2 flex-grow"
+                    class="border border-color2 rounded h-7 px-2 flex-grow"
                     onChange={inputChangeHandler}
                     id="inventory"
                     value={inventory}
@@ -297,7 +302,7 @@ const NewProduct = (props) => {
                 <div class="flex gap-3 items-center">
                   <span class="w-20 font-bold">생산국</span>
                   <select
-                    class="border rounded flex-grow h-8 px-1 "
+                    class="border border-color2 rounded flex-grow h-7 px-1 "
                     onChange={inputChangeHandler}
                     id="country"
                     value={country}
@@ -313,7 +318,7 @@ const NewProduct = (props) => {
                   <span class="w-20 font-bold">생산지역</span>
                   <input
                     type="text"
-                    class="border rounded flex-grow h-8 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="area"
                     value={area}
@@ -323,7 +328,7 @@ const NewProduct = (props) => {
                   <span class="w-20 font-bold">와인종류</span>
                   <select
                     name=""
-                    class="border rounded flex-grow h-8 px-1"
+                    class="border border-color2 rounded flex-grow h-7 px-1"
                     onChange={inputChangeHandler}
                     id="color"
                     value={color}
@@ -340,7 +345,7 @@ const NewProduct = (props) => {
                     <span class="w-20 font-bold">당도</span>
                     <select
                       name=""
-                      class="border rounded w-16 h-8 px-1"
+                      class="border border-color2 rounded w-16 h-7 px-1"
                       onChange={inputChangeHandler}
                       id="sugar"
                       value={sugar}
@@ -357,7 +362,7 @@ const NewProduct = (props) => {
                     <span class="w-20 font-bold">산도</span>
                     <select
                       name=""
-                      class="border rounded w-16 h-8 px-1"
+                      class="border border-color2 rounded w-16 h-7 px-1"
                       onChange={inputChangeHandler}
                       id="acidity"
                       value={acidity}
@@ -376,7 +381,7 @@ const NewProduct = (props) => {
                     <span class="w-20 font-bold">탄닌</span>
                     <select
                       name=""
-                      class="border rounded w-16 h-8 px-1"
+                      class="border border-color2 rounded w-16 h-7 px-1"
                       onChange={inputChangeHandler}
                       id="tannic"
                       value={tannic}
@@ -393,7 +398,7 @@ const NewProduct = (props) => {
                     <span class="w-20 font-bold">바디</span>
                     <select
                       name=""
-                      class="border rounded w-16 h-8 px-1"
+                      class="border border-color2 rounded w-16 h-7 px-1"
                       onChange={inputChangeHandler}
                       id="body"
                       value={body}
@@ -413,7 +418,7 @@ const NewProduct = (props) => {
                       <span class="w-20 font-bold">도수</span>
                       <input
                         type="number"
-                        class="border rounded flex-grow h-8 w-16 px-2"
+                        class="border border-color2 rounded flex-grow h-7 w-16 px-2"
                         onChange={inputChangeHandler}
                         id="alcoholDegree"
                         value={alcoholDegree}
@@ -428,7 +433,7 @@ const NewProduct = (props) => {
                         <span class="w-20 font-bold">추천상품</span>
                         <input
                           type="checkbox"
-                          class="border rounded h-6 w-6 float-right"
+                          class="border border-color2 rounded h-5 w-5 float-right"
                           id="isPicked"
                           onClick={inputChangeHandler}
                           checked={isPicked}
@@ -440,7 +445,7 @@ const NewProduct = (props) => {
                         <span class="w-20 font-bold">베스트</span>
                         <input
                           type="checkbox"
-                          class="border rounded h-6 w-6 px-2"
+                          class="border border-color2 rounded h-5 w-5 px-2"
                           id="isBest"
                           onClick={inputChangeHandler}
                           checked={isBest}
@@ -460,6 +465,16 @@ const NewProduct = (props) => {
                     placeholder: "내용을 입력하세요.",
                   }}
                   data={info}
+                />
+              </div>
+              <div class="flex border px-2 py-1 mb-5 rounded border-color2">
+                <input
+                  class="w-full"
+                  type="text"
+                  placeholder="태그들을 입력하세요. ex) 스페인, 레드, 달달함"
+                  id="tags"
+                  value={tags}
+                  onChange={inputChangeHandler}
                 />
               </div>
 
