@@ -30,6 +30,7 @@ import LoginPage from "./pages/auth/login-page";
 import PersonalInfo from "./components/user/my-page-component/personal-info";
 import ManageCategoryPage from "./pages/admin/category/manage-category-page";
 import ManageOrderPage from "./pages/admin/order/manage-order-page";
+import OrderPage from "./pages/user/order/order-page";
 const queryClient = new QueryClient();
 
 function App() {
@@ -71,6 +72,9 @@ function App() {
               path="/manage/order_list"
               element={<ManageOrderListPage />}
             />
+
+            {/* 주문 페이지 */}
+            <Route path="order" element={<OrderPage />} />
 
             <Route path="/manage/category" element={<ManageCategoryPage />} />
             <Route path="/mypage" element={<MyPage />}>
