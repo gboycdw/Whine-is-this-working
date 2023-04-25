@@ -8,7 +8,7 @@ import { loginRequired } from "../middlewares/login-required.js";
 const userRouter = Router();
 
 // 가입시 POST 요청에 대한 라우팅 , /register 이라는 경로로 요청 시
-userRouter.post("/signUp", async (req, res, next) => {
+userRouter.post("/signup", async (req, res, next) => {
   try {
     //요청으로 전달된 body의 값들을 변수에 저장 !
     const {
@@ -33,6 +33,7 @@ userRouter.post("/signUp", async (req, res, next) => {
     });
     // 생성된 사용자 정보를 json형태로 res에 전달.
     res.status(201).json(newUser);
+    console.log("회원 가입 성공! 환영합니다.");
   } catch (err) {
     next(err);
   }
@@ -47,6 +48,7 @@ userRouter.post("/login", async (req, res, next) => {
   const userToken = await userService.getUserToken(email, password);
 
   res.status(200).json(userToken);
+  console.log("로그인 성공!");
 });
 
 //탈퇴
