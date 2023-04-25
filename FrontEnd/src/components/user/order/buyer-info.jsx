@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PopupDom from "../my-page-component/PopupDom";
+import PopupDom from "../my-page-component/post-popup/popup-dom";
 import OrderPostCode from "./order-post-code";
 
 // 주문자 정보, 배송 정보
@@ -12,8 +12,6 @@ const BuyerInfo = (props) => {
   const [shippingAddress, setShippingAddress] = useState("");
   const [shippingExtraAddress, setShippingExtraAddress] = useState("");
   const [shippingRequest, setShippingRequest] = useState("");
-
-  const data = 
 
   // 주문자 이름 입력값 업데이트 핸들러
   const buyerInputHandler = ({ target: { value } }) => {

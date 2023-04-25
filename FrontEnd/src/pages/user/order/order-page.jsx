@@ -9,11 +9,9 @@ const OrderPage = (props) => {
   const orderCancelHandler = () => {
     navigate("../");
   };
-
-  const totalPrice = 52000;
-  const point = 5000;
-  const totalDiscountPrice = 10000;
-  const deliveryCharge = 2500;
+  const orderCompleteHandler = () => {
+    navigate("/ordercomplete");
+  };
 
   return (
     <>
@@ -26,10 +24,9 @@ const OrderPage = (props) => {
 
           {/* 주문자 정보, 배송 정보 */}
           {/* 자식 요소에서 가져와서 status 업데이트 */}
-          <BuyerInfo  GGT={} />
+          <BuyerInfo />
 
           {/* 결제 금액 정보 */}
-          {/*  */}
           <BuyerPay />
 
           {/* 취소, 주문하기 버튼 */}
@@ -51,6 +48,7 @@ const OrderPage = (props) => {
                 type="button"
                 className="w-[200px] h-[60px] rounded-[10px] 
       bg-[#7B4848] text-[20px] text-[#FFFFFF]"
+                onClick={orderCompleteHandler}
               >
                 주문하기
               </button>

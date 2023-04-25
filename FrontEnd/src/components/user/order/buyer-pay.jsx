@@ -4,7 +4,6 @@ const BuyerPay = () => {
   const totalDiscountPrice = 10000;
   const deliveryCharge = 2500;
 
-  const colorChangeHandler = () => {};
   return (
     <>
       <div className="flex flex-col items-center mb-[25px]">

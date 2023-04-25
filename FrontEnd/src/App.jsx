@@ -32,6 +32,8 @@ import ManageCategoryPage from "./pages/admin/category/manage-category-page";
 import ManageOrderPage from "./pages/admin/order/manage-order-page";
 import OrderPage from "./pages/user/order/order-page";
 import ManageOrderDetailPage from "./pages/admin/order/manage-order-detail-page";
+import OrderCompletePage from "./pages/user/order/order-complete-page";
+import SignUpCompletePage from "./pages/auth/signup-complete-page";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +53,10 @@ function App() {
 
             {/* 회원가입 페이지 라우터 */}
             <Route path="/signup" element={<SignUpPage />} />
+
+            {/* 회원가입 완료 페이지 라우터 */}
+            <Route path="/signupcomplete" element={<SignUpCompletePage />} />
+
             <Route
               path="/product/category/:category"
               element={<ProductListPage />}
@@ -82,10 +88,13 @@ function App() {
             {/* 주문 페이지 */}
             <Route path="order" element={<OrderPage />} />
 
+            {/* 주문 완료 페이지 */}
+            <Route path="ordercomplete" element={<OrderCompletePage />} />
+
             <Route path="/manage/category" element={<ManageCategoryPage />} />
             <Route path="/mypage" element={<MyPage />}>
               <Route path="order-infromation" element={<OrderInfomation />} />
-              {/* //마이페이지 네비게이션 중첩라우터 */}
+              {/* 마이페이지 네비게이션 중첩라우터 */}
               <Route path="" element={<OrderInfomation />} />
               <Route path="personal-info" element={<PersonalInfo />} />
               <Route
