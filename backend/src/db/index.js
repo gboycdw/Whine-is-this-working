@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 // .env 파일의 MONGODB_URL를 가져온다, 없을시 .env내 설정을 확인해야한다.
 const DB_URL =
   process.env.DB_URL || "서버 주소가 없습니다. .env 내 설정을 확인해주세요.";
@@ -17,6 +18,7 @@ mongoose.connection.on("error", () => {
 });
 
 //models의 user-model.js에서 export하는 것을 전부다 export한다.
-export * from "./models/user-model.js";
+export * from "./models/user-models.js";
 export * from "./models/product-models.js";
 export * from "./models/order-models.js";
+export * from "./models/category-models.js";

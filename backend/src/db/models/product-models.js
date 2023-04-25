@@ -1,7 +1,4 @@
-import { model } from "mongoose";
-import { ProductSchema } from "../schemas/product-schema.js";
-
-const Product = model("Product", ProductSchema);
+import { Product } from "../schemas/product-schema.js";
 
 export class ProductModel {
   async find() {
@@ -29,15 +26,27 @@ export class ProductModel {
 
   //와인 나라별로 조회
   async findByCountry(country) {
-    const products = await Product.findAll({ country: country });
+    const products = await Product.find({ country: country });
     return products;
   }
 
   //와인 가격별로 조회
-  async findByPrice(lowerPrice, HigherPrice) {
-    const products = await Product.findAll({
-      $and: [{ price: { $gte: lowerPrice } }, { price: { $lte: HigherPrice } }],
+  async findByPrice(lowerPrice, higherPrice) {
+    const products = await Product.find({
+      $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: higherPrice } }],
     });
+    return products;
+  }
+
+  //Pick 와인 조회
+  async findByPicked() {
+    const products = await Product.find({ isPicked: true });
+    return products;
+  }
+
+  //Best 와인 조회
+  async findByBest() {
+    const products = await Product.find({ isBest: true });
     return products;
   }
 
@@ -49,13 +58,10 @@ export class ProductModel {
 
   //와인 정보 수정
   async updateProduct(id, productInfo) {
-    const filter = { _id: id };
-    const option = { returnOriginal: false };
-
     const updateProduct = await Product.findOneAndUpdate(
-      filter,
+      { _id: id },
       productInfo,
-      option
+      { returnOriginal: false }
     );
     return updateProduct;
   }

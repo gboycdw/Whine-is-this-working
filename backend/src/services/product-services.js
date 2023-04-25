@@ -7,32 +7,42 @@ class ProductService {
 
   //상품 생성
   async createProduct(productInfo) {
-    const {
+    var {
+      seq,
       name,
-      nameEng,
       brand,
+      region,
       type,
       country,
-      area,
-      price,
-      imgUrl,
       info,
       inventory,
+      imgUrl,
+      price,
+      discountPrice,
+      saleCount,
+      saleState,
+      isPicked,
+      isBest,
       tags,
       features,
     } = productInfo;
 
-    const newInfo = {
+    var newInfo = {
+      seq,
       name,
-      nameEng,
       brand,
+      region,
       type,
       country,
-      area,
-      price,
-      imgUrl,
       info,
       inventory,
+      imgUrl,
+      price,
+      discountPrice,
+      saleCount,
+      saleState,
+      isPicked,
+      isBest,
       tags,
       features,
     };
@@ -69,6 +79,24 @@ class ProductService {
   async getProductsByCountry(country) {
     const product = await productModel.findByCountry(country);
     return product;
+  }
+
+  //상품 가격별로 조회
+  async getProductsByPrice(lowerPrice, higherPrice) {
+    const products = await productModel.findByPrice(lowerPrice, higherPrice);
+    return products;
+  }
+
+  //Pick 상품 조회
+  async getPickedProducts() {
+    const products = await productModel.findByPicked();
+    return products;
+  }
+
+  //Best 상품 조회
+  async getBestProducts() {
+    const products = await productModel.findByBest();
+    return products;
   }
 
   //상품 수정
