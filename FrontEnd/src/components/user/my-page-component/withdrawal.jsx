@@ -80,10 +80,10 @@ const Withdrawl = () => {
             </div>
           </div>
           <div class="flex justify-center items-center h-[10%]">
-            <span class="border-[1px] border-c1 border-dashed m-[10px] bg-[white] w-[60px] h-[40px] flex justify-center items-center ">
+            <span class="border-[1px] border-c1 border-dashed m-[10px] w-[60px] h-[40px] flex justify-center items-center ">
               <button onClick={WithdrawlButtonHandler}>탈퇴</button>
             </span>
-            <span class="border-[1px] border-c1 m-[10px] bg-[white] w-[60px] h-[40px] flex justify-center items-center">
+            <span class="border-[1px] border-c1 m-[10px] w-[60px] h-[40px] flex justify-center items-center">
               <button onClick={withdrawlCancelButtonHandler}>취소</button>
             </span>
           </div>

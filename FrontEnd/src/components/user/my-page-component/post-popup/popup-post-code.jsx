@@ -35,11 +35,10 @@ const PopupPostCode = (props) => {
       {/* // 닫기 버튼 생성 */}
       <button
         type="button"
-        class="text-[white] border-2 border-c2 w-[30px] bg-c3"
+        className="text-[white] border-2 border-c2 w-[30px] bg-c3"
         onClick={() => {
           props.onClose();
         }}
-        className="postCode_btn"
       >
         X
       </button>
