@@ -39,7 +39,7 @@ class OrderModel {
     try {
       const newOrder = await Order.create(orderInfo);
       //----------------고유한 주문번호를 생성하는 부분---------------//
-      newOrder.orderNumber = dayjs().format("YYYYMMDD") + nanoid(6);
+      newOrder.orderIndex = dayjs().format("YYYYMMDD") + nanoid(6);
       //---------생성한 주문번호를 저장---------//
       const newOrderList = await newOrder.save();
       return newOrderList;
@@ -50,12 +50,12 @@ class OrderModel {
   }
 
   // 유저가 기존 주문관련 정보를 수정하는 기능
-  async changeOrder(orderNumber, updateInfo) {
+  async changeOrder(orderIndex, updateInfo) {
     try {
-      const searchingOrder = await Order.findOne({ orderNumber: orderNumber });
+      const searchingOrder = await Order.findOne({ orderIndex: orderIndex });
 
       if (!searchingOrder) {
-        throw new Error("⚠️  주문 정보가 없습니다. 주문을 먼저 진행해 주세요.");
+        throw new Error("⚠️ 주문 정보가 없습니다. 주문을 먼저 진행해 주세요.");
       }
 
       if (searchingOrder.shippingStatus === "배송중") {
@@ -76,15 +76,15 @@ class OrderModel {
   }
 
   // [Admin] 관리자가 주문번호로 기존 주문내역을 삭제하는 기능
-  async deleteAll(orderNumber) {
+  async deleteAll(orderIndex) {
     try {
-      const orderToCancel = await Order.findOne({ orderNumber: orderNumber });
+      const orderToCancel = await Order.findOne({ orderIndex: orderIndex });
       if (!orderToCancel) {
         throw new Error(
-          "⚠️  주문 정보가 없습니다. 주문번호를 다시 확인해 주세요."
+          "⚠️ 주문 정보가 없습니다. 주문번호를 다시 확인해 주세요."
         );
       }
-      await Order.deleteOne({ orderNumber: orderNumber });
+      await Order.deleteOne({ orderIndex: orderIndex });
     } catch (err) {
       console.log(err);
       throw new Error("❌ 주문 정보 삭제 실패. 오류 메시지를 확인하세요.");
@@ -92,19 +92,19 @@ class OrderModel {
   }
 
   // 유저가 주문번호로 자신의 주문을 취소하는 기능
-  async cancelOrder(orderNumber) {
+  async cancelOrder(orderIndex) {
     try {
-      const orderToCancel = await Order.findOne({ orderNumber: orderNumber });
+      const orderToCancel = await Order.findOne({ orderIndex: orderIndex });
       if (!orderToCancel) {
         throw new Error(
-          "⚠️  주문 정보가 없습니다. 주문번호를 다시 확인해 주세요."
+          "⚠️ 주문 정보가 없습니다. 주문번호를 다시 확인해 주세요."
         );
       }
       // 유저 인터페이스에서는, 배송중인 상품의 취소가 불가능하다.
       if (orderToCancel.shippingStatus === "배송중") {
         throw new Error("⚠️ 배송 중인 주문을 취소가 불가능합니다.");
       }
-      await Order.deleteOne({ orderNumber: orderNumber });
+      await Order.deleteOne({ orderIndex: orderIndex });
     } catch (err) {
       console.log(err);
       throw new Error("❌ 주문 취소 실패!! 오류 메시지를 확인하세요.");
@@ -112,15 +112,15 @@ class OrderModel {
   }
 
   // [Admin] 관리자가 주문번호로 기존 주문내역의 배송상태를 변경하는 기능
-  async changeStatus(orderNumber, Status) {
+  async changeStatus(orderIndex, status) {
     try {
       const orderToChangeStatus = await Order.findOne({
-        orderNumber: orderNumber,
+        orderIndex: orderIndex,
       });
       if (!orderToChangeStatus) {
-        throw new Error("⚠️  주문 정보가 없습니다.");
+        throw new Error("⚠️ 주문 정보가 없습니다.");
       }
-      orderToChangeStatus.shippingStatus = Status;
+      orderToChangeStatus.shippingStatus = status;
       const updatedStatus = await orderToChangeStatus.save();
       return updatedStatus;
     } catch (err) {
@@ -130,17 +130,17 @@ class OrderModel {
   }
 
   // [Admin] 관리자가 주문번호로 기존 주문내역의 운송장번호를 변경하는 기능
-  async changeWayBill(orderNumber, number) {
+  async changeWayBill(orderIndex, number) {
     try {
       const toChangeWayBill = await Order.findOne({
-        orderNumber: orderNumber,
+        orderIndex: orderIndex,
       });
       if (!toChangeWayBill) {
-        throw new Error("⚠️  주문 정보가 없습니다.");
+        throw new Error("⚠️ 주문 정보가 없습니다.");
       }
       if (toChangeWayBill.shippingStatus !== "배송중") {
         throw new Error(
-          "⚠️  배송중이 아닌 상품의 운송장번호를 입력/변경할 수 없습니다."
+          "⚠️ 배송중이 아닌 상품의 운송장번호를 입력/변경할 수 없습니다."
         );
       }
       toChangeWayBill.wayBill = number;

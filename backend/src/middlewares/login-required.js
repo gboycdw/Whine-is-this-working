@@ -6,7 +6,7 @@ async function loginRequired(req, res, next) {
   const userToken = req.header("auth-token");
   //토큰이 없으면 로그인 페이지로
   if (!userToken) {
-    return res.status(403).redirect("/"); // 일단은 view router상의 root page로 연결함. 추후 프론트 서버 받아서 변경.
+    return res.status(403).redirect("/main"); // 일단은 view router상의 root page로 연결함. 추후 프론트 서버 받아서 변경.
   }
 
   try {

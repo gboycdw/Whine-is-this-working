@@ -38,7 +38,7 @@ const OrderSchema = new Schema(
     },
 
     //----------------주문자 정보----------------//
-    orderNumber: {
+    orderIndex: {
       // 주문번호 (서버에 저장할 때 자동 생성)
       type: String,
       required: true,

@@ -25,31 +25,31 @@ class OrderService {
     return newOrders;
   }
   // 유저가 주문번호로 검색하여 주문정보를 변경하는 기능
-  async changeUsersOrder(orderNumber, updateInfo) {
-    const changeOrders = await orderModel.changeOrder(orderNumber, updateInfo);
+  async changeUsersOrder(orderIndex, updateInfo) {
+    const changeOrders = await orderModel.changeOrder(orderIndex, updateInfo);
     return changeOrders;
   }
   // 관리자가 주문번호로 검색하여 특정 유저의 주문을 삭제하는 기능
-  async deleteOrderByAdmin(orderNumber) {
-    const deleteOrder = await orderModel.deleteAll(orderNumber);
+  async deleteOrderByAdmin(orderIndex) {
+    const deleteOrder = await orderModel.deleteAll(orderIndex);
     return deleteOrder;
   }
   // 유저가 주문번호로 검색하여 배송 시작 전의 자신의 주문을 취소하는 기능
-  async deleteOrderByUser(orderNumber) {
-    const cancelOrder = await orderModel.cancelOrder(orderNumber);
+  async deleteOrderByUser(orderIndex) {
+    const cancelOrder = await orderModel.cancelOrder(orderIndex);
     return cancelOrder;
   }
   // 관리자가 주문번호로 검색하여 해당 주문의 배송 상태를 변경하는 기능
-  async changeStatusByAdmin(orderNumber, status) {
+  async changeStatusByAdmin(orderIndex, status) {
     const changeShippingStatus = await orderModel.changeStatus(
-      orderNumber,
+      orderIndex,
       status
     );
     return changeShippingStatus;
   }
   // 관리자가 주문번호로 검색하여 해당 주문의 운송장번호를 변경하는 기능
-  async changeWayBillByAdmin(orderNumber, waybill) {
-    const changeWayBill = await orderModel.changeWayBill(orderNumber, waybill);
+  async changeWayBillByAdmin(orderIndex, waybill) {
+    const changeWayBill = await orderModel.changeWayBill(orderIndex, waybill);
     return changeWayBill;
   }
 }
