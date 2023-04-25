@@ -60,40 +60,52 @@
 
 ## API 명세 (도메인 : asdfasdf) // 내용 각자 수정 보완 해주세요
 
-|        | API Address                          | Request     | Description                                 | Response |
-| ------ | ------------------------------------ | ----------- | ------------------------------------------- | -------- |
-|        | —————`<Orders>`—————     |             |                                             |          |
-| GET    | /api/orders                          |             | (admin) 모든 유저의 주문 정보 조회          |          |
-| GET    | /api/orders/:userid                  |             | 해당 유저의 주문 정보 조회                  |          |
-| POST   | /api/orders                          | 주문 정보   | 새 주문정보 생성                            |          |
-| DELETE | /api/orders/admin/:number            |             | (admin) 주문 삭제                           |          |
-| DELETE | /api/orders/:number                  |             | 주문 취소                                   |          |
-| PUT    | /api/orders/:number                  | 변경 내용   | 주문 내용 변경                              |          |
-| PUT    | /api/orders/:number/:status          |             | (admin) 배송 상태 변경                      |          |
-| PUT    | /api/orders/:number/:waybill         |             | (admin) 운송장 번호 변경                    |          |
-|        | —————`<Users>`—————      |             |                                             |          |
-| POST   | /api/users/signUp                    |             | 회원가입                                    |          |
-| POST   | /api/users/login                     |             | 로그인                                      |          |
-| PATCH  | /api/users                           |             | 유저정보수정                                |          |
-| DELETE | /api/users                           |             | 회원 탈퇴                                   |          |
-|        | —————`<Products>`—————   |             |                                             |          |
-| GET    | /api/products                        |             | 상품 목록 전체 조회                         |          |
-| GET    | /api/products/:id                    |             | 상품 ID로 상품 상세 조회                    |          |
-| GET    | /api/products/types/:type            |             | 상품 타입별로 상품 목록 조회                |          |
-| GET    | /api/products/countries/:country     |             | 상품 나라별로 상품 목록 조회                |          |
-| GET    | /api/products/prices/:min/:max       |             | 가격의 최솟값, 최댓값 사이의 상품 목록 조회 |          |
-| GET    | /api/products/list/picked            |             | Picked 상품 조회                            |          |
-| GET    | /api/products/list/best              |             | Best 상품 조회                              |          |
-| POST   | /api/products                        | 새 상품정보 | 상품 추가                                   |          |
-| PUT    | /api/products/:id                    | 변경할 정보 | ID에 맞는 상품 수정                         |          |
-| PATCH  | /api/products/:id/:saleState         | 판매 상태   | ID에 맞는 상품의 판매 상태만 수정           |          |
-| DELETE | /api/products/:id                    |             | ID에 맞는 상품 삭제                         |          |
-|        | —————`<Categories>`————— |             |                                             |          |
-| GET    | /api/categories                      |             | 카테고리 목록 조회                          |          |
-| GET    | /api/categories/:name                |             | 카테고리 이름으로 상품 조회                 |          |
-| POST   | /api/categories                      | 카테고리명  | 카테고리 추가                               |          |
-| PUT    | /api/categories/:id                  | 카테고리명  | ID에 맞는 카테고리 수정                     |          |
-| DELETE | /api/categories/:id                  |             | ID에 맞는 카테고리 삭제                     |          |
+### 설치해야 하는 패키지 `node.js version : v18.16.0`
+
+1. npm install express
+2. npm install cors
+3. npm install dotenv
+4. npm install bcrypt
+5. npm install nanoid
+6. npm install dayjs
+7. npm install jsonwebtoken
+
+`API 명세`
+
+|        | API Address                      | Request     | Description                                 | Response |
+| ------ | -------------------------------- | ----------- | ------------------------------------------- | -------- |
+|        | —————`<Orders>`—————             |             |                                             |          |
+| GET    | /api/orders                      |             | (admin) 모든 유저의 주문 정보 조회          |          |
+| GET    | /api/orders/:userid              |             | 해당 유저의 주문 정보 조회                  |          |
+| POST   | /api/orders                      | 주문 정보   | 새 주문정보 생성                            |          |
+| DELETE | /api/orders/admin/:number        |             | (admin) 주문 삭제                           |          |
+| DELETE | /api/orders/:number              |             | 주문 취소                                   |          |
+| PUT    | /api/orders/:number              | 변경 내용   | 주문 내용 변경                              |          |
+| PUT    | /api/orders/:number/:status      |             | (admin) 배송 상태 변경                      |          |
+| PUT    | /api/orders/:number/:waybill     |             | (admin) 운송장 번호 변경                    |          |
+|        | —————`<Users>`—————              |             |                                             |          |
+| POST   | /api/users/signUp                |             | 회원가입                                    |          |
+| POST   | /api/users/login                 |             | 로그인                                      |          |
+| PATCH  | /api/users                       |             | 유저정보수정                                |          |
+| DELETE | /api/users                       |             | 회원 탈퇴                                   |          |
+|        | —————`<Products>`—————           |             |                                             |          |
+| GET    | /api/products                    |             | 상품 목록 전체 조회                         |          |
+| GET    | /api/products/:id                |             | 상품 ID로 상품 상세 조회                    |          |
+| GET    | /api/products/types/:type        |             | 상품 타입별로 상품 목록 조회                |          |
+| GET    | /api/products/countries/:country |             | 상품 나라별로 상품 목록 조회                |          |
+| GET    | /api/products/prices/:min/:max   |             | 가격의 최솟값, 최댓값 사이의 상품 목록 조회 |          |
+| GET    | /api/products/list/picked        |             | Picked 상품 조회                            |          |
+| GET    | /api/products/list/best          |             | Best 상품 조회                              |          |
+| POST   | /api/products                    | 새 상품정보 | 상품 추가                                   |          |
+| PUT    | /api/products/:id                | 변경할 정보 | ID에 맞는 상품 수정                         |          |
+| PATCH  | /api/products/:id/:saleState     | 판매 상태   | ID에 맞는 상품의 판매 상태만 수정           |          |
+| DELETE | /api/products/:id                |             | ID에 맞는 상품 삭제                         |          |
+|        | —————`<Categories>`—————         |             |                                             |          |
+| GET    | /api/categories                  |             | 카테고리 목록 조회                          |          |
+| GET    | /api/categories/:name            |             | 카테고리 이름으로 상품 조회                 |          |
+| POST   | /api/categories                  | 카테고리명  | 카테고리 추가                               |          |
+| PUT    | /api/categories/:id              | 카테고리명  | ID에 맞는 카테고리 수정                     |          |
+| DELETE | /api/categories/:id              |             | ID에 맞는 카테고리 삭제                     |          |
 
 ## 사용 기술 스택
 
