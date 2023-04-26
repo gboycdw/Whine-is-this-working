@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const person = {
   email: "Elice@naver.com",
@@ -24,13 +24,12 @@ const Withdrawl = () => {
     let val = e.target.value;
     setpwd(val);
   };
-  const WithdrawlButtonHandler = () => {
+  const withdrawlButtonHandler = () => {
     if (pwd === person.pwd) {
-      console.log(personInfoModfied);
       alert(
         `
         탈퇴가 완료 되었습니다.
-        지금까지 와인게되네 서비스를 이용해 주셔서 감사합니다. 
+        지금까지 '와인게되네' 서비스를 이용해 주셔서 감사합니다. 
          `
       );
       navigate("/");
@@ -44,7 +43,7 @@ const Withdrawl = () => {
 
   return (
     <>
-      <div class="h-[80%] flex justify-center items-center ">
+      <div class="h-[800px] flex justify-center items-center ">
         <div class="w-[80%] h-[100%]  ">
           <div class="h-[15%]">
             <h1 class=" text-c3 text-3xl mb-[10%] ">회원 탈퇴</h1>
@@ -55,6 +54,7 @@ const Withdrawl = () => {
             </div>
             <div class=" h-[90%]">
               <textarea
+                // 탈퇴 사유 인풋
                 type="text"
                 value={content}
                 onChange={contentChangeHandler}
@@ -80,10 +80,10 @@ const Withdrawl = () => {
             </div>
           </div>
           <div class="flex justify-center items-center h-[10%]">
-            <span class="border-[1px] border-c1 border-dashed m-[10px] bg-[white] w-[60px] h-[40px] flex justify-center items-center ">
-              <button onClick={WithdrawlButtonHandler}>탈퇴</button>
+            <span class="border-[1px] border-c1 border-dashed m-[10px] w-[60px] h-[40px] flex justify-center items-center ">
+              <button onClick={withdrawlButtonHandler}>탈퇴</button>
             </span>
-            <span class="border-[1px] border-c1 m-[10px] bg-[white] w-[60px] h-[40px] flex justify-center items-center">
+            <span class="border-[1px] border-c1 m-[10px] w-[60px] h-[40px] flex justify-center items-center">
               <button onClick={withdrawlCancelButtonHandler}>취소</button>
             </span>
           </div>
