@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const ProductDetail = (props) => {
   // props로 wine 객체를 받아옴
-  // const { name, brand, tags, imgUrl, price, features, region } = props.product;
+  // const { name, brand, tags, imgUrl, price, features, region, info } = props.product;
   // const { alcoholDegree, body, acidity, sugar, tannic } = features;
 
   // 더미 데이터
@@ -286,7 +286,7 @@ const ProductDetail = (props) => {
           </div>
         </div>
         {/* 하단) 제품 설명 이미지 */}
-        <div className="w-[750px] h-[750px] bg-[#F6EEEE] mb-[20px]"></div>
+        <div className="w-[750px] h-[750px] bg-[#F6EEEE] mb-[20px]">{info}</div>
       </div>
     </>
   );
