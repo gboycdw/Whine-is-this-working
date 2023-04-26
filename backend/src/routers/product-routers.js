@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { productService } from "../services/index.js";
+import { productValidation } from "../middlewares/productValidation.js";
 
 const productRouter = Router();
 
@@ -66,8 +67,8 @@ productRouter.get("/prices/:min/:max", async (req, res, next) => {
   }
 });
 
-//와인 Picked 상품 조회 
-productRouter.get("/lists/picked", async(req, res, next) => {
+//와인 Picked 상품 조회
+productRouter.get("/lists/picked", async (req, res, next) => {
   try {
     const products = await productService.getPickedProducts();
     res.status(201).json(products);
@@ -75,10 +76,10 @@ productRouter.get("/lists/picked", async(req, res, next) => {
     console.log(err);
     next(err);
   }
-})
+});
 
 //와인 Best 상품 조회
-productRouter.get("/lists/best", async(req, res, next) => {
+productRouter.get("/lists/best", async (req, res, next) => {
   try {
     const products = await productService.getBestProducts();
     res.status(201).json(products);
@@ -86,10 +87,10 @@ productRouter.get("/lists/best", async(req, res, next) => {
     console.log(err);
     next(err);
   }
-})
+});
 
 //상품 추가
-productRouter.post("/", async (req, res, next) => {
+productRouter.post("/", productValidation, async (req, res, next) => {
   try {
     const {
       seq,

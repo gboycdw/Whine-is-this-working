@@ -19,6 +19,12 @@ class OrderService {
     }
     return result;
   }
+  async findOrderIndex(orderIndex) {
+    const order = await orderModel.findByOrderIndex(orderIndex);
+
+    return order;
+  }
+
   // 새로운 주문을 생성하는 기능
   async createNewOrder(orderInfo) {
     const newOrders = await orderModel.createOrder(orderInfo);

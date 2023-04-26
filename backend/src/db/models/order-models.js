@@ -19,7 +19,20 @@ class OrderModel {
       throw new Error("❌ 주문내역이 존재하지 않습니다");
     }
   }
-  // --------------- 주문번호로 1개만 검색하는 기능 추가 필요 ----------------- //
+  // 주문번호로 주문내역을 검색하는 기능
+  async findByOrderIndex(orderIndex) {
+    try {
+      const findOrderByIndex = await Order.findOne({ orderIndex: orderIndex });
+      if (findOrderByIndex.length < 1) {
+        throw new Error("⚠️ 해당 주문내역이 존재하지 않습니다.");
+      }
+      // const saveMe = await findOrderByIndex.save();
+      return findOrderByIndex;
+    } catch (err) {
+      // console.log(err);
+      throw new Error("❌ 주문내역이 존재하지 않습니다");
+    }
+  }
   // [Admin] 모든 유저의 주문내역을 조회하는 기능
   async findAllOrders() {
     try {
