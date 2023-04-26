@@ -21,7 +21,7 @@ const MyPageNav = () => {
 
   return (
     <>
-      <div class="w-[180px] flex flex-col  m-[10px] mb-[30px] h-[100vh] border-r-[1px] border-barColor justify-between">
+      <div class="w-[180px] flex flex-col m-[10px] mb-[30px]  border-r-[1px] border-barColor justify-between">
         <ul class="relative left-0 flex flex-col ">
           <li class=" mb-[20px]">
             <Link to="/cart" class={color}>
@@ -30,7 +30,7 @@ const MyPageNav = () => {
           </li>
           <li class=" mb-[20px]">
             <Link
-              to="/mypage/order-infromation"
+              to="/mypage/ordered-items-list"
               ref={linkRef1}
               onClick={navBarHandler}
               class="text-c2"

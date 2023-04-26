@@ -5,11 +5,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 // import CartContext from "./components/store/cart-context";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
-import MyPage from "./pages/user/my-page/my-page";
-import OrderInfomation from "./components/user/my-page-component/order-information";
-import CusServiceCenter from "./components/user/my-page-component/cus-service-center";
-import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
-import Withdrawl from "./components/user/my-page-component/withdrawal";
 import NewProductPage from "./pages/admin/product/new-product-page";
 import EditProductPage from "./pages/admin/product/edit-product-page";
 import {
@@ -89,23 +84,7 @@ function App() {
                 path="/manage/order_manage/:order_index"
                 element={<ManageOrderDetailPage />}
               />
-
               <Route path="/manage/category" element={<ManageCategoryPage />} />
-              <Route path="/mypage" element={<MyPage />}>
-                <Route path="order-infromation" element={<OrderInfomation />} />
-                {/* //마이페이지 네비게이션 중첩라우터 */}
-                <Route path="" element={<OrderInfomation />} />
-                <Route path="personal-info" element={<PersonalInfo />} />
-                <Route
-                  path="personal-info-modify"
-                  element={<PersonalInfoModify />}
-                />
-                <Route
-                  path="cus-service-center"
-                  element={<CusServiceCenter />}
-                />
-                <Route path="withdrawl" element={<Withdrawl />} />
-              </Route>
             </Routes>
           </QueryClientProvider>
         </CartContext>
