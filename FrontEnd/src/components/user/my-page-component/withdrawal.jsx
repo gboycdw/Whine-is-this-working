@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const person = {
   email: "Elice@naver.com",
@@ -24,9 +24,8 @@ const Withdrawl = () => {
     let val = e.target.value;
     setpwd(val);
   };
-  const WithdrawlButtonHandler = () => {
+  const withdrawlButtonHandler = () => {
     if (pwd === person.pwd) {
-      console.log(personInfoModfied);
       alert(
         `
         탈퇴가 완료 되었습니다.
@@ -55,6 +54,7 @@ const Withdrawl = () => {
             </div>
             <div class=" h-[90%]">
               <textarea
+                // 탈퇴 사유 인풋
                 type="text"
                 value={content}
                 onChange={contentChangeHandler}
@@ -81,7 +81,7 @@ const Withdrawl = () => {
           </div>
           <div class="flex justify-center items-center h-[10%]">
             <span class="border-[1px] border-c1 border-dashed m-[10px] w-[60px] h-[40px] flex justify-center items-center ">
-              <button onClick={WithdrawlButtonHandler}>탈퇴</button>
+              <button onClick={withdrawlButtonHandler}>탈퇴</button>
             </span>
             <span class="border-[1px] border-c1 m-[10px] w-[60px] h-[40px] flex justify-center items-center">
               <button onClick={withdrawlCancelButtonHandler}>취소</button>
