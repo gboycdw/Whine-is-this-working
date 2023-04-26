@@ -8,7 +8,7 @@ export class ProductModel {
 
   //와인 ID로 상세 정보 조회
   async findById(id) {
-    const product = await Product.find({ _id: id });
+    const product = await Product.findOne({ _id: id });
     return product;
   }
 
