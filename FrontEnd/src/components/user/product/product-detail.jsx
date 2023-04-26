@@ -3,13 +3,13 @@ import { cartCtx } from "../../store/cart-context";
 
 const ProductDetail = (props) => {
   // props로 wine 객체를 받아옴
-  const { name, nameEng, brand, tags, imgUrl, price, feature } = props.product;
-  const { alcoholDegree, body, acidity, sugar, tannic, area } = feature;
+  const { name, nameEng, brand, tags, imgUrl, price, features } = props.product;
+  const { alcoholDegree, body, acidity, sugar, tannic, area } = features;
+
+  console.log(tags);
   const { cartData, setCartData } = useContext(cartCtx);
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price * amount);
-
-  // console.log(props.product);
 
   useEffect(() => {
     setTotalPrice(price * amount);

@@ -1,19 +1,19 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { changeSaleStateById } from "../../../api/api-product";
 
 const ManageProductListItem = (props) => {
   const {
-    id,
-    no,
+    _id,
+    seq,
     imgUrl,
     name,
     price,
-    category,
+    type,
     saleState,
     inventory,
-    registerDay,
-    editDay,
+    createdAt,
+    updatedAt,
   } = props.product;
 
   const [isChecked, setIsChecked] = useState(props.isCheckAll);
@@ -26,54 +26,48 @@ const ManageProductListItem = (props) => {
 
   // 상품 체크 핸들러 (부모컴포넌트의 체크된 제품ID들 배열 상태를 업데이트함)
   const inputCheckHandler = (e) => {
+    console.log(_id);
     if (!isChecked) {
       setIsChecked(true);
       let copiedArr = [...props.checkedProductIds];
-      copiedArr.push(id);
+      copiedArr.push(_id);
       props.setCheckedProductIds(copiedArr);
     } else {
       setIsChecked(false);
       let copiedArr = [...props.checkedProductIds];
       copiedArr.forEach((productId) => {
-        if (productId === id) {
-          copiedArr.splice(id, 1);
+        if (productId === _id) {
+          copiedArr.splice(_id, 1);
         }
       });
+      console.log(copiedArr);
       props.setCheckedProductIds(copiedArr);
     }
   };
 
   // 판매상태 변경 핸들러 (바뀐 판매상태를 백엔드에 상품 id값과 같이 전송)
-  const saleStateChangeHandler = (e) => {
+  const saleStateChangeHandler = async (e) => {
     const saleState = e.target.value;
     setNewSaleState(saleState);
-    axios.post(
-      "url주소",
-      {
-        id,
-        saleState, // 체크된 상품들의 id 배열을 엑시오스로 넘겨줌
-      },
-      {
-        headers: {
-          "Content-type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    );
+    const result = await changeSaleStateById(_id, saleState);
+    console.log(result);
   };
 
   return (
-    <li class="flex text-center items-center border-b border-color2 w-full py-1 gap-3 text-sm">
-      <input type="checkbox" onClick={inputCheckHandler} checked={isChecked} />
-      <span class="w-10 ">{no}</span>
-      <span class="w-10 flex justify-center items-center">
-        <img class="h-10" src={imgUrl} alt={name} />
+    <li className="flex text-center items-center border-b border-color2 w-full py-1 gap-3 text-sm">
+      <input type="checkbox" onChange={inputCheckHandler} checked={isChecked} />
+      <span className="w-10 ">{seq}</span>
+      <span className="w-10 flex justify-center items-center">
+        <img className="h-10" src={imgUrl} alt={name} />
       </span>
-      <span class="grow ">{name}</span>
-      <span class="w-24 ">{price.toLocaleString()}원</span>
-      <span class="w-20 ">{category}</span>
+      <span className="grow">
+        <Link to={`/product/${_id}`}>{name}</Link>
+      </span>
+
+      <span className="w-24 ">{price.toLocaleString()}원</span>
+      <span className="w-20 ">{type}</span>
       <select
-        class="border border-color2 rounded h-7 w-16"
+        className="border border-color2 rounded h-7 w-16"
         value={newSaleState}
         onChange={saleStateChangeHandler}
       >
@@ -81,10 +75,10 @@ const ManageProductListItem = (props) => {
         <option value="품절">품절</option>
         <option value="숨김">숨김</option>
       </select>
-      <span class="w-16 ">{inventory}</span>
-      <span class="w-32 ">{registerDay}</span>
-      <span class="w-32 ">{editDay}</span>
-      <Link to={`/manage/edit_product/${id}`} class="w-20 ">
+      <span className="w-16 ">{inventory}</span>
+      <span className="w-32 ">{createdAt.slice(0, 10)}</span>
+      <span className="w-32 ">{updatedAt.slice(0, 10)}</span>
+      <Link to={`/manage/edit_product/${_id}`} className="w-20 ">
         수정하기
       </Link>
     </li>

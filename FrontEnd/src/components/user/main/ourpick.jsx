@@ -1,37 +1,58 @@
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { getProductsByIsPicked } from "../../../api/api-product";
 
-const OurPick = (props) => {
-  const { products } = props;
+const OurPick = () => {
+  const { data, isLoading, error, isError } = useQuery(
+    "PickedProducts",
+    async () => await getProductsByIsPicked()
+  );
 
   return (
-    <div class="flex flex-col mt-16 p-10">
-      <div class="flex justify-center mb-24">
-        <h2 class="text-3xl tracking-[0.5em] font-bold">OUR PICK</h2>
+    <>
+      <div class="flex flex-col mt-16 p-10">
+        <div class="flex justify-center mb-24">
+          <h2 class="text-3xl tracking-[0.5em] font-bold">OUR PICK</h2>
+        </div>
+        {isLoading ? (
+          <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
+            Loading...
+          </div>
+        ) : !isError ? (
+          <div>
+            <ul class="flex justify-between overflow-hidden">
+              {data.slice(0, 3).map((item) => {
+                return (
+                  <Link key={item._id} to={`/product/${item._id}`}>
+                    <li class="bg-color2 w-80 h-96 flex flex-col justify-between items-center rounded-3xl py-5 px-6">
+                      <div class="flex w-full">
+                        <span>tag</span>
+                      </div>
+                      <img
+                        class="h-[220px]"
+                        src={item.imgUrl}
+                        alt={item.name}
+                      />
+                      <div class="flex flex-col items-center">
+                        <span class="text-base">{item.brand}</span>
+                        <span class="text-lg font-semibold">{item.name}</span>
+                      </div>
+                      <span class="text-2xl font-bold">
+                        {item.price.toLocaleString()}원
+                      </span>
+                    </li>
+                  </Link>
+                );
+              })}
+            </ul>
+          </div>
+        ) : (
+          <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
+            {error.message}
+          </div>
+        )}
       </div>
-      <div>
-        <ul class="flex justify-between overflow-hidden">
-          {products.slice(0, 3).map((item) => {
-            return (
-              <Link key={item.id} to={`/product/${item.id}`}>
-                <li class="bg-color2 w-80 h-96 flex flex-col justify-between items-center rounded-3xl py-5 px-6">
-                  <div class="flex w-full">
-                    <span>tag</span>
-                  </div>
-                  <img class="h-[220px]" src={item.imgUrl} alt={item.name} />
-                  <div class="flex flex-col items-center">
-                    <span class="text-base">{item.brand}</span>
-                    <span class="text-lg font-semibold">{item.name}</span>
-                  </div>
-                  <span class="text-2xl font-bold">
-                    {item.price.toLocaleString()}원
-                  </span>
-                </li>
-              </Link>
-            );
-          })}
-        </ul>
-      </div>
-    </div>
+    </>
   );
 };
 
