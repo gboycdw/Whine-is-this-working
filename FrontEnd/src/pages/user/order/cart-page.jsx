@@ -67,6 +67,8 @@ const CartPage = (props) => {
   // console.log(totalPrice);
   // console.log(totalDiscountPrice);
 
+  const orderSubmitHandler = () => {};
+
   return (
     <>
       <Layout>
@@ -177,6 +179,7 @@ const CartPage = (props) => {
           <div className="flex justify-center">
             <div>
               <button
+                onClick={orderSubmitHandler}
                 type="button"
                 className="w-[280px] h-[60px] rounded-[10px] 
               bg-[#7B4848] text-[20px] text-[#FFFFFF] mb-[50px]

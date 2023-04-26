@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { atom } from "recoil";
 
 export const storage = (props) => {
   if (typeof window !== "undefined") {
@@ -22,5 +23,10 @@ const CartContext = (props) => {
     </cartCtx.Provider>
   );
 };
+
+const orderDataState = atom({
+  key: "orderDataState",
+  default: {},
+});
 
 export default CartContext;

@@ -5,6 +5,9 @@ import CategoryModal from "./category-modal";
 import classes from "./header.module.css";
 import styled from "styled-components";
 import uuid from "react-uuid";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { authState } from "../../store/auth-context";
 // import { useRecoilState } from "recoil";
 // import { authState } from "../../store/auth-context";
 
@@ -49,10 +52,18 @@ const categoryBundle = [
 ];
 
 const Header = () => {
+  const token = window.location.href.split("?token=")[1];
+
   // const [auth, setAuth] = useRecoilState(authState);
   const [categoryIndex, setCategoryIndex] = useState();
-  const [isLogin, setIsLogin] = useState("false");
+  const [authData, setAuthData] = useState({});
+  const [login, setLogin] = useState(true);
   // 메인네비게이션 카테고리 모달을 컨트롤하기 위한 state 관리
+
+  useEffect(() => {
+    if (token) localStorage.setItem("auth", token);
+    if (localStorage.getItem("auth")) setAuthData(token);
+  }, [setAuthData, token]);
 
   const categoryOnMouseOverHandler = (e) => {
     setCategoryIndex(+e.currentTarget.id);
@@ -70,7 +81,8 @@ const Header = () => {
             to="/login"
             onClick={(e) => {
               e.preventDefault();
-              setIsLogin(true);
+              setAuthData(token);
+              setLogin();
             }}
           >
             로그인
@@ -107,7 +119,7 @@ const Header = () => {
             to="/"
             onClick={(e) => {
               e.preventDefault();
-              setIsLogin(false);
+              setAuthData(false);
             }}
           >
             로그아웃
@@ -125,7 +137,7 @@ const Header = () => {
         </Link>
         <div className={classes.nav_top}>
           <ul className={classes.nav_top_ul}>
-            {!isLogin ? <LoginUserNav /> : <LoginAdminNav />}
+            {!login ? <LoginUserNav /> : <LoginAdminNav />}
           </ul>
         </div>
         <div className={classes.nav_icon}>

@@ -6,13 +6,6 @@ import MainItem from "../components/user/main/main-item";
 import OurPick from "../components/user/main/ourpick";
 
 const MainPage = () => {
-  const { data, isLoading } = useQuery("products", async () => {
-    const data = await axios.get(`http://34.22.85.44/api/products`);
-    return data.data;
-  });
-
-  console.log(data);
-
   return (
     <>
       <Layout>
@@ -21,16 +14,12 @@ const MainPage = () => {
           src="banner.jpeg"
           alt="banner"
         />
-        {data ? (
-          <>
-            <OurPick products={data} />
-            <MainItem title={"BEST"} products={data} />
-            <MainItem title={"NEW ARRIVAL"} products={data} />
-            <MainArticle />
-          </>
-        ) : (
-          <div>Loading...</div>
-        )}
+        <>
+          <OurPick />
+          <MainItem title={"BEST"} />
+          <MainItem title={"NEW ARRIVAL"} />
+          <MainArticle />
+        </>
       </Layout>
     </>
   );
