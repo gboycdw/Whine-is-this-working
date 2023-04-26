@@ -74,19 +74,23 @@ orderRouter.patch(
   }
 );
 //------------[Admin] 주문정보로 배송 상태 변경하기 -------------//
-orderRouter.patch("/shippingstatus", async (req, res) => {
-  try {
-    const orderIndex = req.body.orderIndex;
-    const status = req.body.shippingStatus;
-    console.log("🔄 주문번호 ", orderIndex, " 의 배송정보를 수정하는 중...");
-    const dbdata = await orderService.changeStatusByAdmin(orderIndex, status);
-    res.json(dbdata);
-    console.log("✔️ 주문번호 ", orderIndex, " 의 배송정보 변경 완료.");
-  } catch (err) {
-    res.status(500).send("Internal server Error!! 배송상태 변경 실패");
-    console.log(err);
+orderRouter.patch(
+  "/shippingstatus",
+  orderChecker.changeStatusJoi,
+  async (req, res) => {
+    try {
+      const orderIndex = req.body.orderIndex;
+      const status = req.body.shippingStatus;
+      console.log("🔄 주문번호 ", orderIndex, " 의 배송정보를 수정하는 중...");
+      const dbdata = await orderService.changeStatusByAdmin(orderIndex, status);
+      res.json(dbdata);
+      console.log("✔️ 주문번호 ", orderIndex, " 의 배송정보 변경 완료.");
+    } catch (err) {
+      res.status(500).send("Internal server Error!! 배송상태 변경 실패");
+      console.log(err);
+    }
   }
-});
+);
 //------------[Admin] 주문정보로 운송장번호 변경하기 -------------//
 orderRouter.patch(
   "/waybill",

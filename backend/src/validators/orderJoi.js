@@ -36,5 +36,9 @@ const OrderJoiSchema = {
     orderIndex: Joi.string().required(),
     wayBill: Joi.string().required(),
   }),
+  changeShippingStatus: Joi.object().keys({
+    orderIndex: Joi.string().required(),
+    shippingStatus: Joi.string().required(),
+  }),
 };
 export { OrderJoiSchema };
