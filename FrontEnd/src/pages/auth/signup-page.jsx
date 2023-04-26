@@ -1,42 +1,61 @@
 import { useState } from "react";
 import Layout from "../../components/user/layout/layout";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUpPage = (props) => {
-  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [button, setButton] = useState(true);
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
+  const [address1, setAddress1] = useState("");
+  const [address2, setAddress2] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
-  // dummy) DB에 저장된 id, password
-  // const realId = "hello@elice.com";
+  const [button, setButton] = useState(true);
+
+  const navigate = useNavigate();
+
+  // dummy) DB에 저장된 email, password
+  // const realemail = "hello@elice.com";
   // const realPwd = "hello1234";
 
   // 이름 입력값 업데이트 핸들러
-  const nameInputHandler = ({ target: { value } }) => {
-    return setName(value);
+  const nameInputHandler = (e) => {
+    setName(e.target.value);
   };
 
   // 아이디 입력값 업데이트 핸들러
-  const idInputHandler = ({ target: { value } }) => {
-    return setId(value);
+  const emailInputHandler = (e) => {
+    setEmail(e.target.value);
   };
 
   // 비밀번호 입력값 업데이트 핸들러
-  const pwdInputHandler = ({ target: { value } }) => {
-    return setPassword(value);
+  const pwdInputHandler = (e) => {
+    setPassword(e.target.value);
   };
 
   // 비밀번호 확인 입력값 업데이트 핸들러
-  const pwdCheckInputHandler = ({ target: { value } }) => {
-    return setPasswordCheck(value);
+  const pwdCheckInputHandler = (e) => {
+    setPasswordCheck(e.target.value);
   };
 
   // 주소 입력값 업데이트 핸들러
-  const addressInputHandler = ({ target: { value } }) => {
-    return setAddress(value);
+  const addressInputHandler = (e) => {
+    if (e.target.id === "address1") {
+      setAddress1(e.target.value);
+    }
+    if (e.target.id === "address2") {
+      setAddress2(e.target.value);
+    }
+    if (e.target.id === "postalCode") {
+      setPostalCode(e.target.value);
+    }
+  };
+
+  const PhoneNumberChangeHandler = (e) => {
+    setPhoneNumber(e.target.value);
   };
 
   // 유효성 검사 통과시 회원가입 버튼 활성화
@@ -44,22 +63,33 @@ const SignUpPage = (props) => {
   // 2) 비밀번호 8자 이상
   // 3) 비밀번호와 비밀번호 확인 입력값 일치
   const changeButtonHandler = () => {
-    id.includes("@") &&
-    id.includes(".") &&
+    email.includes("@") &&
+    email.includes(".") &&
     password.length >= 8 &&
-    password === passwordCheck
+    password === passwordCheck &&
+    address1.trim() !== "" &&
+    address2.trim() !== "" &&
+    postalCode.trim() !== "" &&
+    phoneNumber.trim() !== ""
       ? setButton(false)
       : setButton(true);
   };
 
   // 회원가입 후 회원가입 완료 페이지로 이동 핸들러
-  const navigate = useNavigate();
-  const signUpCheckHandler = (e) => {
-    if (password === passwordCheck) {
-      e.stopPropagation();
-      navigate("/signupcomplete");
-    } else {
+  const signupSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (password !== passwordCheck) {
       alert("입력하신 비밀번호가 다릅니다.");
+    }
+    try {
+      const result = await axios.post(
+        "http://34.22.85.44:5000/api/users/signUp",
+        { name, email, password, address1, address2, postalCode, phoneNumber }
+      );
+      console.log(result);
+      navigate("/signupcomplete");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -111,13 +141,13 @@ const SignUpPage = (props) => {
 
             {/* 이메일 */}
             <li className="flex flex-col">
-              <span className="text-[16px] mb-[5px]">아이디</span>
+              <span className="text-[16px] mb-[5px]">이메일</span>
               <input
-                type="id"
-                name="id"
+                type="email"
+                name="email"
                 placeholder="이메일을 입력해주세요"
-                value={id}
-                onChange={idInputHandler}
+                value={email}
+                onChange={emailInputHandler}
                 onKeyUp={changeButtonHandler}
                 className="p-[10px] border-[#e5d1d1] border-[2px] 
                 w-[650px] h-[45px] mb-[25px]
@@ -157,16 +187,55 @@ const SignUpPage = (props) => {
                 focus:outline-[#AA7373] focus:outline-[2px]"
             ></input>
           </li>
+          {/* 전화번호 */}
+          <li className="flex flex-col">
+            <span className="text-[16px] mb-[5px]">핸드폰번호</span>
+            <input
+              type="number"
+              name="address"
+              placeholder="핸드폰 번호를 입력해주세요."
+              onChange={PhoneNumberChangeHandler}
+              value={phoneNumber}
+              className="p-[10px] border-[#e5d1d1] border-[2px] 
+              w-[650px] h-[45px] mb-[25px]
+              focus:outline-[#AA7373] focus:outline-[2px]"
+            ></input>
+          </li>
 
           {/* 주소 */}
           <li className="flex flex-col">
             <span className="text-[16px] mb-[5px]">주소</span>
+            <div className="flex gap-[20px]">
+              <input
+                type="number"
+                name="postalCode"
+                id="postalCode"
+                placeholder="우편번호를 입력해주세요."
+                onChange={addressInputHandler}
+                value={postalCode}
+                className="p-[10px] border-[#e5d1d1] border-[2px] 
+              w-[180px] h-[45px] mb-[25px]
+              focus:outline-[#AA7373] focus:outline-[2px]"
+              ></input>
+              <input
+                type="text"
+                name="address1"
+                id="address1"
+                placeholder="주소를 입력해주세요"
+                onChange={addressInputHandler}
+                value={address1}
+                className="p-[10px] border-[#e5d1d1] border-[2px] 
+              w-[450px] h-[45px] mb-[25px]
+              focus:outline-[#AA7373] focus:outline-[2px]"
+              ></input>
+            </div>
             <input
               type="text"
-              name="address"
-              placeholder="주소를 입력해주세요"
+              name="address2"
+              id="address2"
+              placeholder="상세주소를 입력해주세요."
               onChange={addressInputHandler}
-              value={address}
+              value={address2}
               className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[650px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
@@ -181,7 +250,7 @@ const SignUpPage = (props) => {
               className="w-[650px] h-[60px] mt-[30px] rounded-[10px] 
               bg-[#7B4848] text-[20px] text-[#FFFFFF]
               disabled:bg-[#E5D1D1] disabled:text-[#262626]"
-              onClick={signUpCheckHandler}
+              onClick={signupSubmitHandler}
             >
               회원가입
             </button>

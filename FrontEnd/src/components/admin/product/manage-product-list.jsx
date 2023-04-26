@@ -3,12 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../../user/product/pagination";
 import Button from "../../UI/button";
 import ManageProductListItem from "./manage-product-list-item";
-import axios from "axios";
-import { useQuery } from "react-query";
-import {
-  deleteCheckedProductsById,
-  deleteProductById,
-} from "../../../api/api-product";
+import { useQueryClient } from "react-query";
+import { deleteCheckedProductsById } from "../../../api/api-product";
 
 const categories = ["레드", "화이트", "로제", "논알콜"];
 
@@ -16,6 +12,7 @@ const ManageProductList = (props) => {
   const products = props.products;
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [checkedProductIds, setCheckedProductIds] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -48,6 +45,7 @@ const ManageProductList = (props) => {
       console.log(result);
       alert("선택한 상품이 삭제되었습니다.");
       navigate("/manage/product_list");
+      queryClient.invalidateQueries("products");
     } catch (error) {
       console.log(error);
     }

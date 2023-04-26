@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { changeShippingStatusByOrderIndex } from "../../../api/api-order";
 
@@ -15,6 +16,8 @@ const ManageOrderListItem = (props) => {
     createdAt,
   } = props.order;
 
+  const queryClient = useQueryClient();
+
   const [newShippingStatus, setNewShippingStatus] = useState(shippingStatus);
   const [isChecked, setIsChecked] = useState(props.isCheckAll);
 
@@ -29,6 +32,7 @@ const ManageOrderListItem = (props) => {
         orderIndex,
         shippingStatus
       );
+      queryClient.invalidateQueries(["orders"], orderIndex);
       console.log(result);
     } catch (error) {
       console.log(error);

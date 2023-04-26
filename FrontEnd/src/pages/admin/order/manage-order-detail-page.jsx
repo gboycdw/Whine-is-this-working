@@ -1,16 +1,15 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { getOrderByOrderBuyerEmail } from "../../../api/api-order";
+import { getOrderByOrderIndex } from "../../../api/api-order";
 import AdminLayout from "../../../components/admin/layout/admin-layout";
 import ManageOrderDetail from "../../../components/admin/order/manage-order-detail";
 
 const ManageOrderDetailPage = () => {
-  const buyerEmail = useParams().buyer_email;
+  const orderIndex = useParams().order_index;
 
-  console.log(buyerEmail);
-
-  const { data, isLoading, isError, error } = useQuery("orders", async () =>
-    getOrderByOrderBuyerEmail(buyerEmail)
+  const { data, isLoading, isError, error } = useQuery(
+    ["orders", orderIndex],
+    async () => getOrderByOrderIndex(orderIndex)
   );
 
   console.log(data, isLoading, isError, error);

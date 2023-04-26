@@ -10,7 +10,7 @@ const OurPick = () => {
 
   return (
     <>
-      <div class="flex flex-col mt-16 p-10">
+      <div class="relative flex flex-col mt-16 p-10">
         <div class="flex justify-center mb-24">
           <h2 class="text-3xl tracking-[0.5em] font-bold">OUR PICK</h2>
         </div>

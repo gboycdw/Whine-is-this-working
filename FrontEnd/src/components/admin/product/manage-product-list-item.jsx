@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { changeSaleStateById } from "../../../api/api-product";
 
@@ -24,6 +25,7 @@ const ManageProductListItem = (props) => {
     setIsChecked(props.isCheckAll);
   }, [props.isCheckAll]);
 
+  const queryClient = useQueryClient();
   // 상품 체크 핸들러 (부모컴포넌트의 체크된 제품ID들 배열 상태를 업데이트함)
   const inputCheckHandler = (e) => {
     console.log(_id);
@@ -49,8 +51,13 @@ const ManageProductListItem = (props) => {
   const saleStateChangeHandler = async (e) => {
     const saleState = e.target.value;
     setNewSaleState(saleState);
-    const result = await changeSaleStateById(_id, saleState);
-    console.log(result);
+    try {
+      const result = await changeSaleStateById(_id, saleState);
+      console.log(result);
+      queryClient.invalidateQueries(["products", _id]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

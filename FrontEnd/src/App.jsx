@@ -4,14 +4,12 @@ import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 // import CartContext from "./components/store/cart-context";
-import AdminPage from "./pages/admin/admin-page";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
 import MyPage from "./pages/user/my-page/my-page";
 import OrderInfomation from "./components/user/my-page-component/order-information";
 import CusServiceCenter from "./components/user/my-page-component/cus-service-center";
 import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
 import Withdrawl from "./components/user/my-page-component/withdrawal";
-import Cart from "./pages/user/order/cart-page";
 import NewProductPage from "./pages/admin/product/new-product-page";
 import EditProductPage from "./pages/admin/product/edit-product-page";
 import {
@@ -88,7 +86,7 @@ function App() {
                 element={<ManageOrderListPage />}
               />
               <Route
-                path="/manage/order_manage/:buyer_email"
+                path="/manage/order_manage/:order_index"
                 element={<ManageOrderDetailPage />}
               />
 
