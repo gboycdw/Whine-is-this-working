@@ -18,7 +18,8 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/products", productRouter);
 app.use("/api/categories", categoryRouter);
-app.use("/main", viewsRouter);
+app.use("/", viewsRouter);
 // app.use(viewsRouter);
+// app.user(errorHandler) <-- 에러핸들러 추가 예정
 
 export { app };
