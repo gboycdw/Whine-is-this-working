@@ -21,7 +21,7 @@ const OrderedItems = () => {
   ];
   const ChildItemListUp = ({ orderedItemId }) => {
     return (
-      <div class="w-[100%] h-[100px] border-2 border-c1 rounded-xl mb-[20px]">
+      <div class="w-[100%] h-[120px]   flex items-center">
         {/* div's orderedItemId: {orderedItemId} */}
         <OrderedItem />
       </div>

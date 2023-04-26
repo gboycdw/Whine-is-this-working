@@ -1,29 +1,29 @@
 import { useContext, useEffect, useState } from "react";
 
 const OrderedItem = () => {
-  const orderedItem = [
-    {
-      orderedItemId: "1",
-    },
-    {
-      orderedItemId: "2",
-    },
-    {
-      imgUrl:
-        "https://pixabay.com/ko/vectors/%ec%99%80%ec%9d%b8-%eb%a7%88%ec%8b%9c%eb%8b%a4-%eb%b3%91-%ec%9d%8c%eb%a3%8c-%ec%88%a0-150955/",
-    },
-  ];
+  const orderedItem = {
+    productName: "17th Rayen Francho Cielf IV 480ml",
+
+    productNums: 2,
+    imgUrl:
+      "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
+  };
   return (
     <>
-      <div class=" flex justify-center items-center ">
-        <div class="w-[90%] h-[90%] m-[20px]">
-          <div class=" flex justify-center  ">
-            <img
-              src={orderedItem.imgUrl}
-              alt={"와인이미지"}
-              class="m-[20px]"
-            ></img>
-            <span class="m-[20px]">17th Rayen Francho Cielf IV 480ml, 2병</span>
+      <div class="  justify-items-start  ">
+        <div class="w-[90%] h-[90%] m-[20px] ">
+          <div class=" flex  ">
+            <div class="m-[20px] w-[70px] h-[70px] bg-bgc1 flex justify-center items-center  ">
+              <img
+                src={orderedItem.imgUrl}
+                alt={"와인이미지"}
+                class="w-[25px] h-[50px] "
+              ></img>
+            </div>
+
+            <span class="m-[20px] w-[100%]">
+              {orderedItem.productName}, {orderedItem.productNums}병
+            </span>
           </div>
         </div>
       </div>
