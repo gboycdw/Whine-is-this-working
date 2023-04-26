@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { cartCtx } from "../../store/cart-context";
-import classes from "./product-detail.module.css";
 
-//import imgA from 'https://pixabay.com/ko/vectors/%ec%99%80%ec%9d%b8-%eb%a7%88%ec%8b%9c%eb%8b%a4-%eb%b3%91-%ec%9d%8c%eb%a3%8c-%ec%88%a0-150955/';
 const ProductDetail = (props) => {
-  const { name, country, imgUrl, alcoholDegree, price, info } = props.product; // props로 wine 객체를 받아옴.
+  // props로 wine 객체를 받아옴
+  const { name, nameEng, brand, tags, imgUrl, price, features } = props.product;
+  const { alcoholDegree, body, acidity, sugar, tannic, area } = features;
 
-  console.log(props.product);
-
+  console.log(tags);
   const { cartData, setCartData } = useContext(cartCtx);
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price * amount);
@@ -20,24 +19,28 @@ const ProductDetail = (props) => {
     localStorage.setItem("cartData", JSON.stringify(cartData));
   }, [cartData]);
 
+  // 마이너스 버튼 핸들러
   const wineCountMinus = () => {
-    // 마이너스 버튼 핸들러
     if (!amount < 1) {
       let a = amount;
       setAmount(--a);
     }
   };
+
+  // 플러스 버튼 핸들러
   const wineCountAdd = () => {
-    // 플러스 버튼 핸들러
     let a = amount;
     setAmount(++a);
   };
+
+  // input에 숫자를 입력시 제품 개수 업데이트 해주는 핸들러
   const inputChangeHandler = (e) => {
-    // input에 숫자를 입력시 제품의 개수를 setAmount를 통해 useState로 다시 설정
     setAmount(e.target.value);
   };
+
+  // 장바구니 버튼 핸들러
+  // 장바구니 버튼 클릭시 json data를 총가격을 추가하여 만들고 api로 보냄
   const basketButtonHandler = () => {
-    //장바구니 버튼 클릭시 핸들러 json data를 총가격을 추가하여 만들고 api로 보낸다
     const selectedData = props.product;
     selectedData.amount = amount;
     selectedData.isChecked = true;
@@ -52,93 +55,130 @@ const ProductDetail = (props) => {
     setCartData(copiedCartData);
     setAmount(1); //개수 초기화
   };
-  const buyButtonHandler = () => {
-    //바로 구매 버튼 핸들러 json data를 총가격을 추가하여 만들고 api로 보낸다
 
+  // 바로 구매 버튼 핸들러
+  // json data를 총가격을 추가하여 만들고 api로 보냄
+  const buyButtonHandler = () => {
     setAmount(1); //개수 초기화
   };
+
+  // 바디, 산도, 당도, 탄닌 지수 막대바로 표현하는 함수
+  const detailStickBarHandler = (feature) => {
+    let scoreArr = [];
+
+    // 특정 지수만큼의 빨간 바
+    for (let i = 0; i < parseInt(feature[1]); i++) {
+      if (i === 0) {
+        scoreArr.push(
+          <div className=" w-[32px] h-[13px] bg-[#C47474] rounded-l-[10px]"></div>
+        );
+      } else if (i === parseInt(feature[1]) - 1 && i === 4) {
+        scoreArr.push(
+          <div className=" w-[32px] h-[13px] bg-[#C47474] rounded-r-[10px]"></div>
+        );
+      } else {
+        scoreArr.push(<div className=" w-[32px] h-[13px] bg-[#C47474]"></div>);
+      }
+    }
+
+    // (5-특정 지수)만큼의 회색 바 0, 1
+    for (let i = 0; i < 5 - parseInt(feature[1]); i++) {
+      if (i === 4 - parseInt(feature[1])) {
+        scoreArr.push(
+          <div className=" w-[32px] h-[13px] bg-[#DEDEDE] opacity-90 rounded-r-[10px]"></div>
+        );
+      } else {
+        scoreArr.push(
+          <div className=" w-[32px] h-[13px] bg-[#DEDEDE] opacity-90"></div>
+        );
+      }
+    }
+    return scoreArr;
+  };
+
   return (
     <>
-      <div class="pt-16">
-        {" "}
-        {/*product-detail 전체 div*/}
-        <div className={classes.product_detail_wrap}>
-          {" "}
-          {/*이미지~ 장바구니, 바로구매하기 까지 div*/}
-          <div className={classes.product_detail_left}>
-            <div className={classes.product_detail_wine_img_container}>
-              <img
-                className={classes.product_detail_wine_img}
-                src={imgUrl}
-                alt={"와인이미지"}
-              ></img>
+      <div className="flex justify-center">
+        <div
+          className="flex flex-col w-[700px] mt-[50px]
+       items-center justify-content content-center"
+        >
+          {/* 이미지 - 제품 설명 가로 배치를 위한 div flex */}
+          <div className="flex items-center">
+            {/* 와인 이미지 + 배경 */}
+            <div className="flex h-[450px] w-[400px] mr-[10px] bg-[#F6EEEE] items-center justify-center">
+              <img className="h-[350px]" src={imgUrl} alt={"와인이미지"}></img>
             </div>
-          </div>
-          <div>
-            <div className={classes.product_detail_right}>
-              <p className={classes.product_detail_right_name_p}>
-                이름: {name}
-              </p>
-              <p className={classes.product_detail_right_coutry_p}>
-                나라: {country}
-              </p>
-              <p className={classes.product_detail_right_price_p}>
-                가격: {price.toLocaleString()}원
-              </p>
-              <p className={classes.product_detail_right_alcohol_degree_p}>
-                알코올 도수: {alcoholDegree}%
-              </p>
-            </div>
-            <div
-              className={classes.product_detail_right_button_input_container}
-            >
-              <button
-                className={classes.product_detail_right_button_minus}
-                onClick={wineCountMinus}
-              >
-                -
-              </button>
-              <input
-                type="number"
-                min="1"
-                max="20"
-                className={classes.product_detail_right_button_input}
-                onChange={inputChangeHandler}
-                value={amount}
-              />{" "}
-              {/*input은 최소 1~20개 까지 문자열은 x */}
-              <button
-                className={classes.product_detail_right_button_plus}
-                onClick={wineCountAdd}
-              >
-                +
-              </button>
-              <span className={classes.product_detail_right_button_total_price}>
-                {amount} x {price.toLocaleString()}원 = 총 결제금액:{" "}
-                {totalPrice.toLocaleString()}원
+
+            {/* all) 와인 정보 (이름, 도수, 영어이름, 브랜드, 
+                태그, 가격, 바디, 산도, 당도, 탄닌) */}
+            <div className="flex flex-col m-[35px] mt-[40px] w-[300px]">
+              {/* 1. 와인 이름 + 도수 */}
+              <div className="flex space-x-[10px] items-center">
+                <span className="text-[30px] font-[600]">{name}</span>
+                <span className="text-[18px]">{alcoholDegree}%</span>
+              </div>
+
+              {/* 2. 와인 영어 이름 */}
+              <span className="text-[16px] mb-[5px]">{nameEng}</span>
+
+              {/* 3. 와인 원산지 */}
+              <span className="text-[16px] mb-[10px]">생산지 : {area}</span>
+
+              {/* 4. 와인 태그 */}
+              <div className="flex space-x-[10px] mb-[10px]">
+                {tags.map((tag) => (
+                  <div
+                    className="flex w-[50px] h-[25px] 
+                  bg-[#E5D1D1] rounded-[5px] items-center justify-center"
+                  >
+                    <span>{tag}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* 5. 가격 */}
+              <span className="text-[26px] font-[600] mb-[20px]">
+                {price}원
               </span>
-            </div>
-            <div className={classes.product_detail_right_button_container}>
-              {" "}
-              {/*장바구니 , 구매하기 버튼*/}
-              <button
-                className={classes.product_detail_right_button_basket}
-                onClick={basketButtonHandler}
-              >
-                장바구니
-              </button>
-              <button
-                className={classes.product_detail_right_button_buy}
-                onClick={buyButtonHandler}
-              >
-                바로구매하기
-              </button>
+
+              {/* 6. 바디, 산도, 당도, 탄닌 */}
+              <div class="flex flex-col space-y-[5px]">
+                {/* 바디 */}
+                <div className="flex items-center">
+                  <span className="text-[18px] font-[600] mr-[20px]">바디</span>
+                  <div className="flex items-center">
+                    {detailStickBarHandler(body)}
+                  </div>
+                  <div className="ml-[15px]">{body[1]}</div>
+                </div>
+                {/* 산도 */}
+                <div className="flex items-center">
+                  <span className="text-[18px] font-[600] mr-[20px]">산도</span>
+                  <div className="flex items-center">
+                    {detailStickBarHandler(acidity)}
+                  </div>
+                  <div className="ml-[15px]">{acidity[1]}</div>
+                </div>
+                {/* 당도 */}
+                <div className="flex items-center">
+                  <span className="text-[18px] font-[600] mr-[20px]">당도</span>
+                  <div className="flex items-center">
+                    {detailStickBarHandler(sugar)}
+                  </div>
+                  <div className="ml-[15px]">{sugar[1]}</div>
+                </div>
+                {/* 탄닌 */}
+                <div className="flex items-center">
+                  <span className="text-[18px] font-[600] mr-[20px]">탄닌</span>
+                  <div className="flex items-center">
+                    {detailStickBarHandler(tannic)}
+                  </div>
+                  <div className="ml-[15px]">{tannic[1]}</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={classes.product_detail_explain}>
-          {/*제품 상세 설명 div*/}
-          <h1 className={classes.product_detail_explain_h1}>{info}</h1>
         </div>
       </div>
     </>

@@ -9,7 +9,6 @@ import ManageProductListPage from "./pages/admin/product/manage-product-list-pag
 import MyPage from "./pages/user/my-page/my-page";
 import OrderInfomation from "./components/user/my-page-component/order-information";
 import CusServiceCenter from "./components/user/my-page-component/cus-service-center";
-import OrderCancelInfo from "./components/user/my-page-component/oreder-cancel-info";
 import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
 import Withdrawl from "./components/user/my-page-component/withdrawal";
 import Cart from "./pages/user/order/cart-page";
@@ -31,6 +30,9 @@ import LoginPage from "./pages/auth/login-page";
 import PersonalInfo from "./components/user/my-page-component/personal-info";
 import ManageCategoryPage from "./pages/admin/category/manage-category-page";
 import ManageOrderDetailPage from "./pages/admin/order/manage-order-detail-page";
+import OrderPage from "./pages/user/order/order-page";
+import OrderCompletePage from "./pages/user/order/order-complete-page";
+import SignUpCompletePage from "./pages/auth/signup-complete-page";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +45,7 @@ function App() {
             <ReactQueryDevtools initialIsOpen={true} />
             <Routes>
               <Route path="/" element={<MainPage />} />
+
               {/* 장바구니 페이지 라우터 */}
               <Route path="/cart" element={<CartPage />} />
 
@@ -51,6 +54,16 @@ function App() {
 
               {/* 회원가입 페이지 라우터 */}
               <Route path="/signup" element={<SignUpPage />} />
+
+              {/* 회원가입 완료 페이지 라우터 */}
+              <Route path="/signupcomplete" element={<SignUpCompletePage />} />
+
+              {/* 주문 페이지 라우터 */}
+              <Route path="/order" element={<OrderPage />} />
+
+              {/* 주문 완료 페이지 라우터 */}
+              <Route path="/ordercomplete" element={<OrderCompletePage />} />
+
               <Route
                 path="/product/category/:category"
                 element={<ProductListPage />}

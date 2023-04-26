@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Layout from "../../components/user/layout/layout";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SignUpPage = (props) => {
   const [id, setId] = useState("");
@@ -52,16 +52,12 @@ const SignUpPage = (props) => {
       : setButton(true);
   };
 
-  // 로그인이 되었을 경우 메인 페이지로 이동 핸들러
-  const goToSignUpComplete = () => {
-    Navigate("/signupcomplete");
-  };
-
   // 회원가입 후 회원가입 완료 페이지로 이동 핸들러
+  const navigate = useNavigate();
   const signUpCheckHandler = (e) => {
     if (password === passwordCheck) {
       e.stopPropagation();
-      goToSignUpComplete();
+      navigate("/signupcomplete");
     } else {
       alert("입력하신 비밀번호가 다릅니다.");
     }
