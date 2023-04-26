@@ -18,8 +18,7 @@ const OrderJoiSchema = {
     wayBill: Joi.string().required(),
     totalPrice: Joi.number().required(),
     deliveryFee: Joi.number().required(),
-    orderList: Joi.object().required(),
-    priceList: Joi.object().required(),
+    orderList: Joi.array().required(),
   }),
 
   changeOrder: Joi.object().keys({

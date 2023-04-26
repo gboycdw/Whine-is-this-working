@@ -1,27 +1,28 @@
-// const mongoose = require("mongoose");
 import { Schema } from "mongoose";
 
 const OrderSchema = new Schema(
   {
     //----------------주문 리스트----------------//
     orderList: {
-      // 구매할 물건의 이름과 갯수
-      type: Map,
-      of: Number,
+      type: [
+        {
+          _id: false,
+          product: {
+            type: Schema.Types.ObjectId,
+            ref: "Product",
+            required: true,
+          },
+          amount: {
+            type: Number,
+            required: true,
+            min: 1,
+          },
+        },
+      ],
       required: true,
       validate: {
-        validator: (v) => Object.keys(v).length > 0,
+        validator: (v) => v.length > 0,
         message: "0개의 상품을 주문할 수 없습니다.",
-      },
-    },
-    priceList: {
-      // 구매할 물건의 이름과 가격
-      type: Map,
-      of: Number,
-      required: true,
-      validate: {
-        validator: (v) => Object.keys(v).length > 0,
-        message: "가격은 반드시 존재해야 하는 값입니다.",
       },
     },
 

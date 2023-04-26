@@ -32,7 +32,6 @@ orderRouter.get("/", async (req, res) => {
 orderRouter.get("/order/:index", async (req, res) => {
   try {
     const orderIndex = req.params.index;
-    console.log(orderIndex);
     const dbdata = await orderService.findOrderIndex(orderIndex);
     console.log("🔎 해당 주문번호의 주문정보를 조회합니다...");
     res.json(dbdata);
@@ -45,7 +44,6 @@ orderRouter.get("/order/:index", async (req, res) => {
 orderRouter.post("/", orderChecker.newOrderJoi, async (req, res, next) => {
   console.log("🔄 새로운 주문내역을 만드는 중...");
   const orderInfo = req.body;
-  console.log(orderInfo);
   try {
     const dbdata = await orderService.createNewOrder(orderInfo);
     console.log("✔️ 주문 완료. 감사합니다.");
