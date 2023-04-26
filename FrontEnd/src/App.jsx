@@ -4,14 +4,7 @@ import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 // import CartContext from "./components/store/cart-context";
-import AdminPage from "./pages/admin/admin-page";
 import ManageProductListPage from "./pages/admin/product/manage-product-list-page";
-import MyPage from "./pages/user/my-page/my-page";
-import OrderedItemsList from "./components/user/my-page-component/ordered-items-list/ordered-items-list";
-import CusServiceCenter from "./components/user/my-page-component/cus-service-center";
-import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
-import Withdrawl from "./components/user/my-page-component/withdrawal";
-import Cart from "./pages/user/order/cart-page";
 import NewProductPage from "./pages/admin/product/new-product-page";
 import EditProductPage from "./pages/admin/product/edit-product-page";
 import {
@@ -64,15 +57,6 @@ function App() {
               {/* 주문 완료 페이지 라우터 */}
               <Route path="/ordercomplete" element={<OrderCompletePage />} />
 
-<<<<<<< HEAD
-            <Route path="/manage/category" element={<ManageCategoryPage />} />
-            <Route path="/mypage" element={<MyPage />}>
-              <Route path="ordered-items-list" element={<OrderedItemsList />} />
-              {/* //마이페이지 네비게이션 중첩라우터 */}
-              <Route path="" element={<OrderedItemsList />} />
-              <Route path="personal-info" element={<PersonalInfo />} />
-=======
->>>>>>> 32941010772871cf8dbc1c2eaff583b719486281
               <Route
                 path="/product/category/:category"
                 element={<ProductListPage />}
@@ -97,26 +81,10 @@ function App() {
                 element={<ManageOrderListPage />}
               />
               <Route
-                path="/manage/order_manage/:buyer_email"
+                path="/manage/order_manage/:order_index"
                 element={<ManageOrderDetailPage />}
               />
-
               <Route path="/manage/category" element={<ManageCategoryPage />} />
-              <Route path="/mypage" element={<MyPage />}>
-                <Route path="order-infromation" element={<OrderInfomation />} />
-                {/* //마이페이지 네비게이션 중첩라우터 */}
-                <Route path="" element={<OrderInfomation />} />
-                <Route path="personal-info" element={<PersonalInfo />} />
-                <Route
-                  path="personal-info-modify"
-                  element={<PersonalInfoModify />}
-                />
-                <Route
-                  path="cus-service-center"
-                  element={<CusServiceCenter />}
-                />
-                <Route path="withdrawl" element={<Withdrawl />} />
-              </Route>
             </Routes>
           </QueryClientProvider>
         </CartContext>

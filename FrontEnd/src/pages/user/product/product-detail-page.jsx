@@ -7,16 +7,16 @@ import { getProductById } from "../../../api/api-product";
 const ProductDetailPage = () => {
   const productId = useParams().product_id;
 
-  // const { data, isLoading, isError, error } = useQuery(
-  //   ["product", productId],
-  //   async () => await getProductById(productId)
-  // );
+  const { data, isLoading, isError, error } = useQuery(
+    ["product", productId],
+    async () => await getProductById(productId)
+  );
 
   // 백 서버 닫아서 임시
-  const isLoading = false;
-  const isError = false;
-  const data = {};
-  const error = {};
+  // const isLoading = false;
+  // const isError = false;
+  // const data = {};
+  // const error = {};
 
   console.log(data, isLoading, error);
   return (

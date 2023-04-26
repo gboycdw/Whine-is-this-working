@@ -5,10 +5,15 @@ export const getAllOrders = async () => {
   return data.data;
 };
 
-export const getOrderByOrderBuyerEmail = async (buyerEmail) => {
+export const getOrdersByBuyerEmail = async (buyerEmail) => {
   const data = await axios.get(
     `http://34.22.85.44:5000/api/orders/${buyerEmail}`
   );
+  return data.data;
+};
+
+export const getOrderByOrderIndex = async (OrderIndex) => {
+  const data = await axios.get(`http://34.22.85.44:5000/api/orders/`);
   return data.data;
 };
 

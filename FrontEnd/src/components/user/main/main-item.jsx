@@ -10,7 +10,7 @@ const MainItem = () => {
 
   return (
     <>
-      <div class="flex flex-col mt-16 p-10">
+      <div class="relative flex flex-col mt-16 p-10 min-h-[200px]">
         <div class="flex justify-center mb-24">
           <h2 class="text-3xl tracking-[0.5em] font-bold">BEST</h2>
         </div>

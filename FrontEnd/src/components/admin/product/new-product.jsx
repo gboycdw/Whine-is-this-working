@@ -2,12 +2,13 @@ import { useRef, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from "../../UI/button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useQueryClient } from "react-query";
 
 const NewProduct = () => {
   const navigate = useNavigate();
-
+  const queryClient = useQueryClient();
   const [isImageModal, setIsImageModal] = useState(false);
   const [imgFile, setImgFile] = useState("/defaultImage.jpg");
   const imgRef = useRef();
@@ -153,7 +154,7 @@ const NewProduct = () => {
     // 이부분에 axios 구현
 
     try {
-      const result = await axios.post("http://34.22.85.44/api/products", {
+      const result = await axios.post("http://34.22.85.44:5000/api/products", {
         name,
         brand,
         type,
@@ -180,6 +181,7 @@ const NewProduct = () => {
       console.log(result);
       alert("상품이 성공적으로 추가되었습니다.");
       navigate("/manage/product_list");
+      queryClient.invalidateQueries("products");
     } catch (error) {
       console.log(error);
     }

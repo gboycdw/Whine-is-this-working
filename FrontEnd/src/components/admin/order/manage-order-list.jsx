@@ -1,10 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
+import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteOrderById,
-  deleteOrderByOrderIndex,
-} from "../../../api/api-order";
+import { deleteOrderByOrderIndex } from "../../../api/api-order";
+import Button from "../../UI/button";
 import Pagination from "../../user/product/pagination";
 import ManageOrderListItem from "./manage-order-list-item";
 
@@ -15,6 +13,7 @@ const ManageOrderList = (props) => {
   const [isCheckAll, setIsCheckAll] = useState(false);
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [page, setPage] = useState(1); // 페이징처리를 위한 현재 페이지
   const limit = 10; // 페이징처리를 위한 한화면 게시글 리밋
@@ -39,6 +38,7 @@ const ManageOrderList = (props) => {
     try {
       const result = await deleteOrderByOrderIndex(checkedOrderIndexes);
       console.log(result);
+      queryClient.invalidateQueries("orders");
       alert("선택한 주문이 삭제되었습니다.");
       navigate("/manage/order_list");
     } catch (error) {
@@ -47,7 +47,7 @@ const ManageOrderList = (props) => {
   };
 
   return (
-    <div class="flex flex-col p-6">
+    <div class="flex flex-col p-6 min-h-screen">
       <div class="border-b">
         <span>전체 {orders.length}</span>
         <span> | </span>
@@ -129,6 +129,9 @@ const ManageOrderList = (props) => {
               page={page}
               setPage={setPage}
             />
+          </div>
+          <div onClick={deleteCheckedOrdersHandler}>
+            <Button isConfirm={false}>선택 상품 삭제</Button>
           </div>
         </div>
       </div>

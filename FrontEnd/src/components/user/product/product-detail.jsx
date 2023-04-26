@@ -4,22 +4,23 @@ import { useNavigate } from "react-router-dom";
 
 const ProductDetail = (props) => {
   // props로 wine 객체를 받아옴
-  // const { name, brand, tags, imgUrl, price, features, region, info } = props.product;
-  // const { alcoholDegree, body, acidity, sugar, tannic } = features;
+  const { name, brand, tags, imgUrl, price, features, region, info } =
+    props.product;
+  const { alcoholDegree, body, acidity, sugar, tannic } = features;
 
   // 더미 데이터
-  const name = "와인 이름";
-  const brand = "brandnew";
-  const tags = ["미국", "레드"];
-  const imgUrl =
-    "https://www.winenara.com/uploads/product/550/513bd110184e950077d43da6c57a2cdf.png";
-  const price = 130000;
-  const alcoholDegree = 13;
-  const body = "b3";
-  const acidity = "a2";
-  const sugar = "s1";
-  const tannic = "t5";
-  const region = "프랑스의 한적한 시골마을";
+  // const name = "와인 이름";
+  // const brand = "brandnew";
+  // const tags = ["미국", "레드"];
+  // const imgUrl =
+  //   "https://www.winenara.com/uploads/product/550/513bd110184e950077d43da6c57a2cdf.png";
+  // const price = 130000;
+  // const alcoholDegree = 13;
+  // const body = "b3";
+  // const acidity = "a2";
+  // const sugar = "s1";
+  // const tannic = "t5";
+  // const region = "프랑스의 한적한 시골마을";
 
   const { cartData, setCartData } = useContext(cartCtx);
   const [amount, setAmount] = useState(1);
@@ -114,15 +115,15 @@ const ProductDetail = (props) => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col m-auto w-[800px]">
         {/* 상단) 제품 이미지, 제품 설명, 제품 가격 정보 */}
         <div className="flex justify-center">
           <div
-            className="flex w-[750px]
-       items-center justify-center content-center"
+            className="flex 
+       items-center justify-center content-center w-full"
           >
             {/* 이미지 - 제품 설명 가로 배치를 위한 div flex */}
-            <div className="flex items-center">
+            <div className="flex justify-between gap-8 items-center">
               {/* 와인 이미지 + 배경 */}
               <div className="flex h-[480px] w-[400px] mr-[10px] bg-[#F6EEEE] items-center justify-center">
                 <img
@@ -286,7 +287,9 @@ const ProductDetail = (props) => {
           </div>
         </div>
         {/* 하단) 제품 설명 이미지 */}
-        <div className="w-[750px] h-[750px] bg-[#F6EEEE] mb-[20px]">{info}</div>
+        <div className="flex m-auto w-full h-[750px] bg-[#F6EEEE] mb-[20px]">
+          {info}
+        </div>
       </div>
     </>
   );

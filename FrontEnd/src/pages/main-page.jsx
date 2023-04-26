@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useQuery } from "react-query";
 import Layout from "../components/user/layout/layout";
 import MainArticle from "../components/user/main/main-article";
 import MainItem from "../components/user/main/main-item";
