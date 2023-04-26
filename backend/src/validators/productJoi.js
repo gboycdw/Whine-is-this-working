@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const ProductJoi = Joi.object().keys({
-  name: Joi.string(),
+  name: Joi.string().required(),
   brand: Joi.string().required(),
   type: Joi.string().required(),
   country: Joi.string().required(),
@@ -18,4 +18,5 @@ const ProductJoi = Joi.object().keys({
   tags: Joi.array().required(),
   features: Joi.object().required(),
 });
+
 export { ProductJoi };

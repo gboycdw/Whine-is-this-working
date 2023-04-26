@@ -86,7 +86,7 @@ class UserService {
       console.log("✨ 관리자 로그인 성공! ✨");
       return { userToken };
     }
-    return userToken;
+    return { userToken };
   }
 
   // 회원 탈퇴
