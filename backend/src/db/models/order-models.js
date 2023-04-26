@@ -19,7 +19,7 @@ class OrderModel {
       throw new Error("❌ 주문내역이 존재하지 않습니다");
     }
   }
-
+  // --------------- 주문번호로 1개만 검색하는 기능 추가 필요 ----------------- //
   // [Admin] 모든 유저의 주문내역을 조회하는 기능
   async findAllOrders() {
     try {
