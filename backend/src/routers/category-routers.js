@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { categoryService } from "../services/index.js";
+import { categoryValidation } from "../middlewares/categoryValidation.js";
 
 const categoryRouter = Router();
+
 //카테고리 전체 조회
 categoryRouter.get("/", async (req, res, next) => {
   try {
@@ -24,7 +26,7 @@ categoryRouter.get("/:title", async (req, res, next) => {
 });
 
 //카테고리 추가
-categoryRouter.post("/", async (req, res, next) => {
+categoryRouter.post("/", categoryValidation, async (req, res, next) => {
   try {
     const { title, categories } = req.body;
     const newCategory = await categoryService.createCategory({
@@ -39,16 +41,20 @@ categoryRouter.post("/", async (req, res, next) => {
 });
 
 //카테고리 수정
-categoryRouter.put("/:id", async (req, res, next) => {
+categoryRouter.put("/:id", categoryValidation, async (req, res, next) => {
   try {
     const update_id = req.params.id;
     const title = req.body.title;
-    const lists = req.body.categories;
+    const categories = req.body.categories;
 
-    const updateCategory = await categoryService.updateCategory(update_id, {
-      title,
-      categories: lists,
-    });
+    const updateCategory = await categoryService.updateCategory(
+      { _id: update_id },
+      {
+        title,
+        categories: categories,
+      },
+      { returnOriginal: false }
+    );
 
     res.status(201).json(updateCategory);
   } catch (err) {

@@ -140,7 +140,7 @@ productRouter.post("/", productValidation, async (req, res, next) => {
 });
 
 //상품 수정
-productRouter.put("/:id", async (req, res, next) => {
+productRouter.put("/:id", productValidation, async (req, res, next) => {
   try {
     const update_id = req.params.id;
     const {

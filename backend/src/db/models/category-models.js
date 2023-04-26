@@ -23,12 +23,8 @@ export class CategoryModel {
   }
 
   //카테고리 수정
-  async updateCategory(id, categoryInfo) {
-    const updateCategory = await Category.findOneAndUpdate(
-      { _id: id },
-      categoryInfo,
-      { returnOriginal: false }
-    );
+  async updateCategory(id, categoryInfo, option) {
+    const updateCategory = await Category.updateOne(id, categoryInfo, option);
     return updateCategory;
   }
 
