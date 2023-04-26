@@ -2,12 +2,13 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import { userService } from "../services/index.js";
 import { loginRequired } from "../middlewares/login-required.js";
+import { userChecker } from "../middlewares/userValidation.js";
 
 //express의 Router를 통해 userRouter 생성
 const userRouter = Router();
 
 // 가입시 POST 요청에 대한 라우팅 , /register 이라는 경로로 요청 시
-userRouter.post("/signup", async (req, res, next) => {
+userRouter.post("/signup", userChecker.signUpJoi, async (req, res, next) => {
   try {
     //요청으로 전달된 body의 값들을 변수에 저장 !
     const {
