@@ -5,6 +5,10 @@ import Button from "../../UI/button";
 import ManageProductListItem from "./manage-product-list-item";
 import axios from "axios";
 import { useQuery } from "react-query";
+import {
+  deleteCheckedProductsById,
+  deleteProductById,
+} from "../../../api/api-product";
 
 const categories = ["레드", "화이트", "로제", "논알콜"];
 
@@ -38,12 +42,9 @@ const ManageProductList = (props) => {
   };
   // 체크된 상품 삭제 핸들러 (체크된 상품들의 id들을 배열로 백엔드에 넘겨줌)
 
-  console.log(checkedProductIds);
-  const deleteCheckedProductsHandler = () => {
+  const deleteCheckedProductsHandler = async () => {
     try {
-      const result = checkedProductIds.forEach((id) => {
-        axios.delete(`http://34.22.85.44/api/products/${id}`);
-      });
+      const result = await deleteCheckedProductsById(checkedProductIds);
       console.log(result);
       alert("선택한 상품이 삭제되었습니다.");
       navigate("/manage/product_list");
@@ -53,8 +54,8 @@ const ManageProductList = (props) => {
   };
 
   return (
-    <div class="flex flex-col p-6">
-      <div class="border-b ">
+    <div className="flex flex-col p-6">
+      <div className="border-b ">
         <span>전체 {products.length}</span>
         <span> | </span>
         <span>
@@ -65,9 +66,9 @@ const ManageProductList = (props) => {
         <span> | </span>
         <span>숨김 0</span>
       </div>
-      <div class="py-4 flex gap-4 text-sm">
-        <div class="w-32 h-11 flex justify-center px-3 border border-color2 rounded">
-          <select class="w-full">
+      <div className="py-4 flex gap-4 text-sm">
+        <div className="w-32 h-11 flex justify-center px-3 border border-color2 rounded">
+          <select className="w-full">
             <option value="카테고리선택">카테고리 선택</option>
             {categories.map((category) => {
               return (
@@ -79,28 +80,28 @@ const ManageProductList = (props) => {
           </select>
         </div>
         <input
-          class="flex-grow h-11 px-3 border border-color2 rounded"
+          className="flex-grow h-11 px-3 border border-color2 rounded"
           type="text"
           placeholder="상품명 검색"
         />
-        <div class="w-32 h-11 flex justify-center bg-[#ffffff] px-2 border border-color2 rounded items-center">
+        <div className="w-32 h-11 flex justify-center bg-[#ffffff] px-2 border border-color2 rounded items-center">
           엑셀 다운로드 | v
         </div>
       </div>
-      <div class="flex flex-col py-2 px-5 bg-[#ffffff]">
+      <div className="flex flex-col py-2 px-5 bg-[#ffffff]">
         <ul>
-          <li class=" flex text-center border-b w-full pt-2 pb-3 gap-3 text-sm font-bold">
+          <li className="flex text-center border-b w-full pt-2 pb-3 gap-3 text-sm font-bold">
             <input type="checkbox" onChange={clickAllHandler} />
-            <span class="w-10 ">No</span>
-            <span class="w-10"></span>
-            <span class="grow ">상품명</span>
-            <span class="w-24 ">판매가</span>
-            <span class="w-20 ">카테고리</span>
-            <span class="w-16 ">상태</span>
-            <span class="w-16 ">재고</span>
-            <span class="w-32 ">등록일</span>
-            <span class="w-32 ">수정일</span>
-            <button class="w-20">수정하기</button>
+            <span className="w-10 ">No</span>
+            <span className="w-10"></span>
+            <span className="grow ">상품명</span>
+            <span className="w-24 ">판매가</span>
+            <span className="w-20 ">카테고리</span>
+            <span className="w-16 ">상태</span>
+            <span className="w-16 ">재고</span>
+            <span className="w-32 ">등록일</span>
+            <span className="w-32 ">수정일</span>
+            <button className="w-20">수정하기</button>
           </li>
           {products.slice(offset, offset + limit).map((item) => {
             return (
@@ -114,11 +115,11 @@ const ManageProductList = (props) => {
             );
           })}
         </ul>
-        <div class="relative flex justify-between items-center h-20">
+        <div className="relative flex justify-between items-center h-20">
           <div onClick={deleteCheckedProductsHandler}>
             <Button isConfirm={false}>선택 상품 삭제</Button>
           </div>
-          <div class="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
+          <div className="absolute left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%]">
             <Pagination
               total={products.length}
               limit={limit}

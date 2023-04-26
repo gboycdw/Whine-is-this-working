@@ -1,10 +1,11 @@
 import { getAllProduct } from "../../../../api/api-product";
 
 const ProductInfo = (props) => {
-  const data = getAllProduct();
-  const { id, country, name, inventory, price } = data;
+  const data = [];
+  // const data = getAllProduct();
+  // const { id, country, name, inventory, price } = data;
 
-  console.log(data);
+  // console.log(data);
   return (
     <div class="flex flex-col">
       <h3 class="px-4 py-2 text-lg">주문상품정보</h3>

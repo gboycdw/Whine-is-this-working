@@ -1,5 +1,4 @@
 import Product from "../../../components/user/product/product";
-import classes from "./product-list.module.css";
 import Pagination from "../../../components/user/product/pagination";
 import { useState } from "react";
 import Layout from "../../../components/user/layout/layout";
@@ -14,12 +13,15 @@ const ProductListPage = () => {
 
   const categoryName = urlParams;
 
-  const { data, isLoading } = useQuery(["products", categoryName], async () => {
-    const data = await axios.get(
-      `http://34.22.85.44/api/products/types/${categoryName}`
-    );
-    return data.data;
-  });
+  const { data, isLoading, isError, error } = useQuery(
+    ["products", categoryName],
+    async () => {
+      const data = await axios.get(
+        `http://34.22.85.44/api/products/types/${categoryName}`
+      );
+      return data.data;
+    }
+  );
 
   // const filteredProducts = products.filter((data) => {
   //   if (Object.values(data.feature).indexOf(categoryName) !== -1) {
@@ -44,37 +46,41 @@ const ProductListPage = () => {
   // styled.ul = css가 적용된 ul 태그
 
   return (
-    <>
-      <Layout>
-        <div class="py-16">
-          {data ? (
-            <>
-              <div>
-                <h1 className={classes.categoryName}>
-                  {categoryName.toUpperCase()}({data?.length})
-                </h1>
-              </div>
-              <ProductListUl>
-                {data?.slice(offset, offset + limit).map((product) => {
-                  return <Product key={product.id} product={product} />;
-                })}
-              </ProductListUl>
-              <div>
-                <Pagination
-                  // 필터된 데이터 개수에 따라 창 개수로 설정
-                  total={data?.length}
-                  limit={limit}
-                  page={page}
-                  setPage={setPage}
-                />
-              </div>
-            </>
-          ) : (
-            <div>Loading...</div>
-          )}
+    <Layout>
+      <div class="inline-block relative py-16 min-h-screen w-full">
+        <div>
+          <h1 className="ml-[30px] mb-[50px] text-2xl">
+            {categoryName.toUpperCase()}({data?.length})
+          </h1>
         </div>
-      </Layout>
-    </>
+        {isLoading ? (
+          <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
+            Loading...
+          </div>
+        ) : !isError ? (
+          <>
+            <ProductListUl>
+              {data?.slice(offset, offset + limit).map((product) => {
+                return <Product key={product.id} product={product} />;
+              })}
+            </ProductListUl>
+            <div>
+              <Pagination
+                // 필터된 데이터 개수에 따라 창 개수로 설정
+                total={data?.length}
+                limit={limit}
+                page={page}
+                setPage={setPage}
+              />
+            </div>
+          </>
+        ) : (
+          <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
+            {error.message}
+          </div>
+        )}
+      </div>
+    </Layout>
   );
 };
 

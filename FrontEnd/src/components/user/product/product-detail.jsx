@@ -6,6 +6,8 @@ import classes from "./product-detail.module.css";
 const ProductDetail = (props) => {
   const { name, country, imgUrl, alcoholDegree, price, info } = props.product; // props로 wine 객체를 받아옴.
 
+  console.log(props.product);
+
   const { cartData, setCartData } = useContext(cartCtx);
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price * amount);
