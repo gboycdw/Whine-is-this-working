@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import classes from "./product.module.css";
 
 const Product = (props) => {
-  const { id, name, nameEng, imgUrl, tags, price } = props.product;
+  const { _id, name, nameEng, imgUrl, tags, price } = props.product;
 
   return (
-    <li key={id} className={classes.product_item}>
-      <Link to={`/product/${id}`}>
+    <li key={_id} className={classes.product_item}>
+      <Link to={`/product/${_id}`}>
         <div>
           <div className={classes.product_box}>
             <img className={classes.product_img} src={imgUrl} alt={name}></img>

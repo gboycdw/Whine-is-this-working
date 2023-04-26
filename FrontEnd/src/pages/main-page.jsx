@@ -1,12 +1,11 @@
-import { getAllProduct } from "../api/api-product";
+import axios from "axios";
+import { useQuery } from "react-query";
 import Layout from "../components/user/layout/layout";
 import MainArticle from "../components/user/main/main-article";
 import MainItem from "../components/user/main/main-item";
 import OurPick from "../components/user/main/ourpick";
 
 const MainPage = () => {
-  const products = getAllProduct();
-
   return (
     <>
       <Layout>
@@ -15,10 +14,12 @@ const MainPage = () => {
           src="banner.jpeg"
           alt="banner"
         />
-        <OurPick products={products} />
-        <MainItem title={"BEST"} products={products} />
-        <MainItem title={"NEW ARRIVAL"} products={products} />
-        <MainArticle />
+        <>
+          <OurPick />
+          <MainItem title={"BEST"} />
+          <MainItem title={"NEW ARRIVAL"} />
+          <MainArticle />
+        </>
       </Layout>
     </>
   );
