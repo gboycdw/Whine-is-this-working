@@ -5,6 +5,7 @@ import { orderRouter } from "./routers/order-routers.js";
 import { productRouter } from "./routers/product-routers.js";
 import { viewsRouter } from "./routers/view-routers.js";
 import { categoryRouter } from "./routers/category-routers.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 app.use(cors());
@@ -19,7 +20,6 @@ app.use("/api/orders", orderRouter);
 app.use("/api/products", productRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/", viewsRouter);
-// app.use(viewsRouter);
-// app.user(errorHandler) <-- 에러핸들러 추가 예정
+app.use(errorHandler);
 
 export { app };
