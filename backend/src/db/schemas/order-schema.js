@@ -26,7 +26,7 @@ const OrderSchema = new Schema(
       },
     },
 
-    totalPrice: {
+    totalPayPrice: {
       // 구매할 상품의 총 가격. 프론트단에서 넘겨받을 예정임.
       type: Number,
       required: true,
@@ -83,11 +83,11 @@ const OrderSchema = new Schema(
       type: String,
       required: false,
     },
-    shippingPostalCode: {
-      // 배송지 우편번호
-      type: String,
-      // required: true,
-    },
+    // shippingPostalCode: {
+    //   // 배송지 우편번호
+    //   type: String,
+    //   // required: true,
+    // },
     shippingRequest: {
       // 배송 요청사항 - 필수는 아님.
       type: String,
