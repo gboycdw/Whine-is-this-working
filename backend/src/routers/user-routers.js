@@ -44,7 +44,7 @@ userRouter.post("/signup", userChecker.signUpJoi, async (req, res, next) => {
 });
 
 //로그인
-userRouter.post("/login", async (req, res, next) => {
+userRouter.post("/login", userChecker.loginJoi, async (req, res, next) => {
   console.log("로그인 시도 🌸");
   const { email, password } = req.body;
   try {
@@ -63,7 +63,7 @@ userRouter.delete("/", loginRequired, async (req, res, next) => {
   const token = req.header("auth-token");
   // 토큰의 secret key와 발급할때의 secre_key 값 비교
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  console.log("✔️ 토큰 발급 완료. 계속해서 회원 탈퇴를 진행합니다.");
+  console.log("✔️ 토큰 검증 완료. 계속해서 회원 탈퇴를 진행합니다.");
   //토큰에서 추출한 유저 아이디
   const userId = decodedToken.userId;
   try {
@@ -82,11 +82,7 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
   //req 헤더의 autho token
   const token = req.header("auth-token");
   console.log("🔄 유저 정보를 업데이트합니다...");
-  const password = req.body.password;
-  const address1 = req.body.address1;
-  const address2 = req.body.address2;
-  const postalCode = req.body.postalCode;
-  const phoneNumber = req.body.phoneNumber;
+  const { password, address1, address2, postalCode, phoneNumber } = req.body;
 
   const toUpdateInfo = {
     //password값이 있을 경우(true), password 속성: req.body에서 받은 password 변수 값 --> ex) {password : "myPassword1234"}
@@ -98,15 +94,14 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
     ...(phoneNumber && { phoneNumber }),
   };
 
-  console.log("🔎 권한 확인 중...");
+  console.log("🔎 토큰 확인 중...");
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log(decodedToken.userId);
+    console.log("✔️ 토큰 검증 완료. 유저 정보를 업데이트 합니다.");
     const updatedUser = await userService.updateUser(
       decodedToken.userId,
       toUpdateInfo
     );
-    console.log("✔️ 권한 확인 완료. 유저 정보를 업데이트 합니다.");
     return res.status(200).json(updatedUser);
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -115,29 +110,57 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
 });
 
 //유저 권한(role) 변경
-userRouter.patch("/role-info", async (req, res, next) => {
-  try {
-    const token = req.header("auth-token");
-    const { userId, role } = req.body;
-    console.log("🔎 총 관리자(super-admin) 권한을 확인합니다...");
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const currentUserRole = decodedToken.role;
+userRouter.patch(
+  "/role-info",
+  userChecker.roleChangeJoi,
+  async (req, res, next) => {
+    try {
+      const token = req.header("auth-token");
+      const { userId, role } = req.body;
+      console.log("🔎 총 관리자(super-admin) 권한을 확인합니다...");
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      const currentUserRole = decodedToken.role;
 
-    if (currentUserRole !== "super-admin") {
-      throw new Error("총관리자가 아닙니다.");
+      if (currentUserRole !== "super-admin") {
+        throw new Error("총관리자가 아닙니다.");
+      }
+      console.log("👑Super-admin Accepted👑");
+      const updatedRole = await userService.updateUser(userId, { role });
+      console.log("✔️ 유저 권한이 수정되었습니다.");
+      return res.status(201).json(updatedRole);
+    } catch (err) {
+      next(err);
     }
-    console.log("👑Super-admin Accepted👑");
-    const updatedRole = await userService.updateUser(userId, { role });
-    console.log("✔️ 유저 권한이 수정되었습니다.");
-    return res.status(201).json(updatedRole);
+  }
+);
+
+// 전체 유저 조회
+userRouter.get("/allUser", async (req, res, next) => {
+  const token = req.header("auth-token");
+  console.log("🔎 토큰 검증 중...");
+  const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  const currentUserRole = decodedToken.role;
+
+  if (currentUserRole !== "admin" || "super-admin") {
+    throw new Error("관리자가 아닙니다.");
+  }
+  try {
+    console.log("🔎 검증 완료! 모든 유저 리스트를 조회합니다...");
+    const allUser = await userService.getAllUser();
+    console.log("🖥️ 유저 정보 출력 중..");
+    return res.status(200).json(allUser);
   } catch (err) {
     console.log(`❌ ${err}`);
     next(err);
   }
 });
 
-// 전체 유저 조회
-userRouter.get("/allUser", async (req, res, next) => {
+// 토큰 검증 후 유저 정보 조회
+userRouter.get("/auth/verifyToken", async (req, res, next) => {
+  const token = req.header("auth-token");
+  if (!token) {
+    return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
+  }
   try {
     console.log("🔎 모든 유저 리스트를 조회합니다...");
     const allUser = await userService.getAllUser();

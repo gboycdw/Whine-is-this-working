@@ -59,6 +59,13 @@ export class UserModel {
       throw new Error(err);
     }
   }
-}
 
+  async findUserById(email) {
+    const userData = await User.findOne(
+      { email },
+      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
+    );
+    return userData;
+  }
+}
 export const userModel = new UserModel();

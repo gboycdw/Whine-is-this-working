@@ -81,27 +81,16 @@ class UserService {
       secretKey,
       { expiresIn: "1h" } //토큰 유효시간 1시간 설정
     );
-    // const sendData = userToken;
-    const sendData = {
-      name: userData.name,
-      email: userData.email,
-      phonenumber: userData.phoneNumber,
-      address1: userData.address1,
-      address2: userData.address2,
-      role: userData.role,
-      token: userToken,
-    };
+
     if (userData.role === "super-admin") {
       console.log("✨ 총관리자 로그인 성공! ✨");
-      return { sendData };
+      return { userToken };
     }
     if (userData.role === "admin") {
       console.log("✨ 관리자 로그인 성공! ✨");
-      return { sendData };
+      return { userToken };
     }
-    console.log("✨ 일반회원 로그인 성공! ✨");
-
-    return { sendData };
+    return { userToken };
   }
 
   // 회원 탈퇴
@@ -132,6 +121,17 @@ class UserService {
   async getAllUser() {
     const result = await this.userModel.getAllUser();
     return result;
+  }
+
+  // 토큰 검사 후 유저 정보 리턴
+  async verifyToken(userToken) {
+    try {
+      const token = jwt.verify(userToken, process.env.JWT_SECRET_KEY);
+      const userData = await this.userModel.findUserById(token.userId);
+      return userData;
+    } catch (err) {
+      throw new Error("토큰이 유효하지않거나 ID를 찾을 수 없습니다.");
+    }
   }
 }
 
