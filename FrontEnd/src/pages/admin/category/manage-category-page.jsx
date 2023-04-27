@@ -10,7 +10,7 @@ const ManageCategoryPage = () => {
   );
 
   return (
-    <AdminLayout title="카테고리 관리">
+    <>
       {isLoading ? (
         <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
           Loading...
@@ -22,7 +22,7 @@ const ManageCategoryPage = () => {
           {error.message}
         </div>
       )}
-    </AdminLayout>
+    </>
   );
 };
 

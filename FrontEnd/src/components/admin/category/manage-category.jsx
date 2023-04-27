@@ -37,16 +37,6 @@ const ManageCategory = (props) => {
     console.log(newBundle);
 
     setCategoryBundle(newBundle);
-
-    // const findIndex = newCategoryBundle.findIndex(
-    //   (category) => category.id === id
-    // );
-    // let copiedCategory = [...category];
-    // copiedCategory[findIndex] = {
-    //   ...category[findIndex],
-    //   name: enteredCategory.name,
-    // };
-    // setCategory(copiedCategory);
   };
 
   const categoryDeleteHandler = (categoryBundleId, categoryId) => {

@@ -7,10 +7,10 @@ const ManageOrderDetail = (props) => {
   const order = props.order[0];
 
   return (
-    <div className="flex p-6 justify-center bg-[#ffffff] mb-10">
-      <div className="flex text-sm justify-center m-auto">
-        <div className="flex flex-col gap-8">
-          <div className="flex">
+    <div class="flex p-6 justify-center bg-[#ffffff] mb-10">
+      <div class="flex text-sm justify-center m-auto">
+        <div class="flex flex-col gap-8">
+          <div class="flex">
             <OrderInfo order={order} />
             <DeliveryInfo order={order} />
           </div>

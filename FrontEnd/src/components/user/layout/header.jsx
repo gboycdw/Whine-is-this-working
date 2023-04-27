@@ -1,21 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CategoryModal from "./category-modal";
 
 import classes from "./header.module.css";
-import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { authState } from "../../store/auth-context";
 import { useQuery } from "react-query";
 import { getAllCategories } from "../../../api/api-category";
-// import { useRecoilState } from "recoil";
-// import { authState } from "../../store/auth-context";
+import { useContext } from "react";
+import { authCtx } from "../../store/auth-context";
 
 const Header = () => {
-  // const [auth, setAuth] = useRecoilState(authState);
   const [categoryIndex, setCategoryIndex] = useState();
-  const [login, setLogin] = useState(true);
-  // 메인네비게이션 카테고리 모달을 컨트롤하기 위한 state 관리
+
+  const { isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin, auth } =
+    useContext(authCtx);
+
+  const navigate = useNavigate();
+
+  console.log(auth);
 
   let { data, isLoading, isError, error } = useQuery(
     "categories",
@@ -35,22 +36,47 @@ const Header = () => {
     setCategoryIndex(null);
   }; // 카테고리 영역에서 마우스를 떼면 모달창 사라짐
 
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("auth");
+    setIsLoggedIn(false);
+    setIsAdmin(false);
+    navigate("/");
+  };
+
+  const VisitorNav = () => {
+    return (
+      <>
+        <li>
+          <Link to="/login">로그인</Link>
+        </li>
+        <li>
+          <Link to="/signup">회원가입</Link>
+        </li>
+        <li>|</li>
+        <li>
+          <Link to="/cart">장바구니</Link>
+        </li>
+        <li>
+          <Link to="/order">주문</Link>
+        </li>
+        <li>
+          <Link to="/cs">고객센터</Link>
+        </li>
+      </>
+    );
+  };
+
   const LoginUserNav = () => {
     return (
       <>
         <li>
-          <Link
-            to="/login"
-            onClick={(e) => {
-              e.preventDefault();
-              setLogin();
-            }}
-          >
-            로그인
-          </Link>
+          <Link to="/mypage">shagrat님</Link>
         </li>
         <li>
-          <Link to="/signup">회원가입</Link>
+          <Link to="/" onClick={logoutHandler}>
+            로그아웃
+          </Link>
         </li>
         <li>|</li>
         <li>
@@ -70,18 +96,13 @@ const Header = () => {
     return (
       <>
         <li>
-          <Link to="/manage">관리자페이지</Link>
-        </li>
-        <li>
           <Link to="/">admin님</Link>
         </li>
         <li>
-          <Link
-            to="/"
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >
+          <Link to="/manage">관리자페이지</Link>
+        </li>
+        <li>
+          <Link to="/" onClick={logoutHandler}>
             로그아웃
           </Link>
         </li>
@@ -97,7 +118,13 @@ const Header = () => {
         </Link>
         <div className={classes.nav_top}>
           <ul className={classes.nav_top_ul}>
-            {!login ? <LoginUserNav /> : <LoginAdminNav />}
+            {!isLoggedIn ? (
+              <VisitorNav />
+            ) : !isAdmin ? (
+              <LoginUserNav />
+            ) : (
+              <LoginAdminNav />
+            )}
           </ul>
         </div>
         <div className={classes.nav_icon}>

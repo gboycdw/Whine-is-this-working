@@ -1,6 +1,5 @@
 import { useParams } from "react-router";
 import ProductDetail from "../../../components/user/product/product-detail";
-import Layout from "../../../components/user/layout/layout";
 import { useQuery } from "react-query";
 import { getProductById } from "../../../api/api-product";
 
@@ -18,7 +17,7 @@ const ProductDetailPage = () => {
   // const data = {};
   // const error = {};\
   return (
-    <Layout>
+    <>
       {/* <div className="inline-block relative py-16 min-h-screen w-full"> */}
       <div>
         {isLoading ? (
@@ -33,7 +32,7 @@ const ProductDetailPage = () => {
           </div>
         )}
       </div>
-    </Layout>
+    </>
   );
 };
 

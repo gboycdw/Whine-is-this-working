@@ -1,5 +1,4 @@
 .header {
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,14 +18,14 @@
 }
 
 .nav_top {
-  position: relative;
   display: flex;
   justify-content: end;
   align-items: center;
+  width: 1200px;
   height: 40px;
+  margin: auto;
   color: var(--main-color);
   font-size: 12px;
-  margin-right: 50px;
 }
 
 .nav_top_ul {
@@ -42,7 +41,8 @@
 }
 
 .nav_icon {
-  margin-right: 50px;
+  width: 1200px;
+  margin: auto;
   margin-top: 25px;
   display: flex;
   justify-content: flex-end;

@@ -215,13 +215,13 @@ const NewProduct = () => {
   };
 
   return (
-    <div className="flex flex-col p-6 bg-color3 ">
+    <div class="flex flex-col p-6 bg-color3 ">
       {isImageModal ? (
-        <div className="fixed border border-color2 w-[430px] h-[600px] bg-[#ffffff] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-50 p-10 rounded-xl flex flex-col items-center gap-5">
-          <div className="flex w-full flex-col items-center border border-color2 p-5">
-            <div className="h-96">
+        <div class="fixed border border-color2 w-[430px] h-[600px] bg-[#ffffff] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-50 p-10 rounded-xl flex flex-col items-center gap-5">
+          <div class="flex w-full flex-col items-center border border-color2 p-5">
+            <div class="h-96">
               <img
-                className="h-[300px]"
+                class="h-[300px]"
                 src={imgFile ? imgFile : ``}
                 alt="프로필 이미지"
               />
@@ -233,7 +233,7 @@ const NewProduct = () => {
               onChange={uploadImgFile}
             />
           </div>
-          <div className="flex gap-3">
+          <div class="flex gap-3">
             <div onClick={toggleImageModalHandler}>
               <Button isConfirm={false}>취소</Button>
             </div>
@@ -246,75 +246,75 @@ const NewProduct = () => {
         ""
       )}
       <form>
-        <div className="flex px-10">
-          <div className="flex flex-col gap-10 w-full p-10 bg-[#ffffff]">
-            <div className="flex gap-24 pb-10 border-b border-color2 justify-between relative">
-              <div className="flex flex-col justify-center gap-4">
-                <div className="flex justify-center items-center h-[400px] w-[400px] border border-color2 rounded p-10">
-                  <img className="h-[300px]" src={imgUrl} alt="wine" />
+        <div class="flex px-10">
+          <div class="flex flex-col gap-10 w-full p-10 bg-[#ffffff]">
+            <div class="flex gap-24 pb-10 border-b border-color2 justify-between relative">
+              <div class="flex flex-col justify-center gap-4">
+                <div class="flex justify-center items-center h-[400px] w-[400px] border border-color2 rounded p-10">
+                  <img class="h-[300px]" src={imgUrl} alt="wine" />
                 </div>
                 <button
-                  className="border h-12 rounded border-color2 border-2 text-color1 font-bold"
+                  class="border h-12 rounded border-color2 border-2 text-color1 font-bold"
                   onClick={toggleImageModalHandler}
                 >
                   이미지 추가
                 </button>
               </div>
-              <div className="flex flex-grow flex-col gap-3 justify-center text-sm">
-                <div className="flex gap-3 items-center">
-                  <span className="w-20 font-bold">브랜드명</span>
+              <div class="flex flex-grow flex-col gap-3 justify-center text-sm">
+                <div class="flex gap-3 items-center">
+                  <span class="w-20 font-bold">브랜드명</span>
                   <input
                     type="text"
-                    className="border border-color2 rounded flex-grow h-7 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="brand"
                     value={brand}
                   />
                 </div>
-                <div className="flex gap-3 items-center">
-                  <span className="w-20 font-bold">상품명</span>
+                <div class="flex gap-3 items-center">
+                  <span class="w-20 font-bold">상품명</span>
                   <input
                     type="text"
-                    className="border border-color2 rounded flex-grow h-7 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="name"
                     value={name}
                   />
                 </div>
-                <div className="flex gap-3 items-center">
-                  <span className="w-20 font-bold">판매가격</span>
+                <div class="flex gap-3 items-center">
+                  <span class="w-20 font-bold">판매가격</span>
                   <input
                     type="number"
-                    className="border border-color2 rounded flex-grow h-7 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="price"
                     value={price}
                   />
                 </div>
-                <div className="flex gap-3 items-center">
-                  <span className="w-20 font-bold">할인가격</span>
+                <div class="flex gap-3 items-center">
+                  <span class="w-20 font-bold">할인가격</span>
                   <input
                     type="number"
-                    className="border border-color2 rounded flex-grow h-7 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="discountPrice"
                     value={discountPrice}
                   />
                 </div>
-                <div className="flex gap-3 items-center justify-end">
-                  <span className="w-20 font-bold">재고수량</span>
+                <div class="flex gap-3 items-center justify-end">
+                  <span class="w-20 font-bold">재고수량</span>
                   <input
                     type="number"
-                    className="border border-color2 rounded h-7 px-2 flex-grow"
+                    class="border border-color2 rounded h-7 px-2 flex-grow"
                     onChange={inputChangeHandler}
                     id="inventory"
                     value={inventory}
                   />
                 </div>
-                <div className="flex gap-3 items-center">
-                  <span className="w-20 font-bold">생산국</span>
+                <div class="flex gap-3 items-center">
+                  <span class="w-20 font-bold">생산국</span>
                   <select
-                    className="border border-color2 rounded flex-grow h-7 px-1 "
+                    class="border border-color2 rounded flex-grow h-7 px-1 "
                     onChange={inputChangeHandler}
                     id="country"
                     value={country}
@@ -326,21 +326,21 @@ const NewProduct = () => {
                     <option value="이탈리아">이탈리아</option>
                   </select>
                 </div>
-                <div className="flex gap-3 items-center">
-                  <span className="w-20 font-bold">생산지역</span>
+                <div class="flex gap-3 items-center">
+                  <span class="w-20 font-bold">생산지역</span>
                   <input
                     type="text"
-                    className="border border-color2 rounded flex-grow h-7 px-2"
+                    class="border border-color2 rounded flex-grow h-7 px-2"
                     onChange={inputChangeHandler}
                     id="region"
                     value={region}
                   />
                 </div>
-                <div className="flex gap-3 items-center">
-                  <span className="w-20 font-bold">와인종류</span>
+                <div class="flex gap-3 items-center">
+                  <span class="w-20 font-bold">와인종류</span>
                   <select
                     name=""
-                    className="border border-color2 rounded flex-grow h-7 px-1"
+                    class="border border-color2 rounded flex-grow h-7 px-1"
                     onChange={inputChangeHandler}
                     id="type"
                     value={type}
@@ -352,12 +352,12 @@ const NewProduct = () => {
                     <option value="논알콜">논알콜</option>
                   </select>
                 </div>
-                <div className="flex justify-between">
-                  <div className="flex gap-3 items-center">
-                    <span className="w-20 font-bold">당도</span>
+                <div class="flex justify-between">
+                  <div class="flex gap-3 items-center">
+                    <span class="w-20 font-bold">당도</span>
                     <select
                       name=""
-                      className="border border-color2 rounded w-16 h-7 px-1"
+                      class="border border-color2 rounded w-16 h-7 px-1"
                       onChange={inputChangeHandler}
                       id="sugar"
                       value={sugar}
@@ -370,11 +370,11 @@ const NewProduct = () => {
                       <option value="s5">5</option>
                     </select>
                   </div>
-                  <div className="flex gap-3 items-center">
-                    <span className="w-20 font-bold">산도</span>
+                  <div class="flex gap-3 items-center">
+                    <span class="w-20 font-bold">산도</span>
                     <select
                       name=""
-                      className="border border-color2 rounded w-16 h-7 px-1"
+                      class="border border-color2 rounded w-16 h-7 px-1"
                       onChange={inputChangeHandler}
                       id="acidity"
                       value={acidity}
@@ -388,12 +388,12 @@ const NewProduct = () => {
                     </select>
                   </div>
                 </div>
-                <div className="flex justify-between">
-                  <div className="flex gap-3 items-center">
-                    <span className="w-20 font-bold">탄닌</span>
+                <div class="flex justify-between">
+                  <div class="flex gap-3 items-center">
+                    <span class="w-20 font-bold">탄닌</span>
                     <select
                       name=""
-                      className="border border-color2 rounded w-16 h-7 px-1"
+                      class="border border-color2 rounded w-16 h-7 px-1"
                       onChange={inputChangeHandler}
                       id="tannic"
                       value={tannic}
@@ -406,11 +406,11 @@ const NewProduct = () => {
                       <option value="t5">5</option>
                     </select>
                   </div>
-                  <div className="flex gap-3 items-center">
-                    <span className="w-20 font-bold">바디</span>
+                  <div class="flex gap-3 items-center">
+                    <span class="w-20 font-bold">바디</span>
                     <select
                       name=""
-                      className="border border-color2 rounded w-16 h-7 px-1"
+                      class="border border-color2 rounded w-16 h-7 px-1"
                       onChange={inputChangeHandler}
                       id="body"
                       value={body}
@@ -424,13 +424,13 @@ const NewProduct = () => {
                     </select>
                   </div>
                 </div>
-                <div className="flex justify-between">
-                  <div className="flex gap-3 items-center">
-                    <div className="flex gap-3 items-center">
-                      <span className="w-20 font-bold">도수</span>
+                <div class="flex justify-between">
+                  <div class="flex gap-3 items-center">
+                    <div class="flex gap-3 items-center">
+                      <span class="w-20 font-bold">도수</span>
                       <input
                         type="number"
-                        className="border border-color2 rounded flex-grow h-7 w-16 px-2"
+                        class="border border-color2 rounded flex-grow h-7 w-16 px-2"
                         onChange={inputChangeHandler}
                         id="alcoholDegree"
                         value={alcoholDegree}
@@ -439,25 +439,25 @@ const NewProduct = () => {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-col gap-3 items-center">
-                    <div className="flex gap-3 items-center  ">
-                      <div className="flex gap-3 items-center justify-between w-[156px]">
-                        <span className="w-20 font-bold">추천상품</span>
+                  <div class="flex flex-col gap-3 items-center">
+                    <div class="flex gap-3 items-center  ">
+                      <div class="flex gap-3 items-center justify-between w-[156px]">
+                        <span class="w-20 font-bold">추천상품</span>
                         <input
                           type="checkbox"
-                          className="border border-color2 rounded h-5 w-5 float-right"
+                          class="border border-color2 rounded h-5 w-5 float-right"
                           id="isPicked"
                           onChange={inputChangeHandler}
                           checked={isPicked}
                         />
                       </div>
                     </div>
-                    <div className="flex gap-3 items-center">
-                      <div className="flex gap-3 items-center justify-between w-[156px]">
-                        <span className="w-20 font-bold">베스트</span>
+                    <div class="flex gap-3 items-center">
+                      <div class="flex gap-3 items-center justify-between w-[156px]">
+                        <span class="w-20 font-bold">베스트</span>
                         <input
                           type="checkbox"
-                          className="border border-color2 rounded h-5 w-5 px-2"
+                          class="border border-color2 rounded h-5 w-5 px-2"
                           id="isBest"
                           onChange={inputChangeHandler}
                           checked={isBest}
@@ -468,8 +468,8 @@ const NewProduct = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col">
-              <div className="w-full">
+            <div class="flex flex-col">
+              <div class="w-full">
                 <CKEditor
                   editor={ClassicEditor}
                   onChange={editorChangeHandler}
@@ -479,9 +479,9 @@ const NewProduct = () => {
                   data={info}
                 />
               </div>
-              <div className="flex border px-2 py-1 mb-5 rounded border-color2">
+              <div class="flex border px-2 py-1 mb-5 rounded border-color2">
                 <input
-                  className="w-full"
+                  class="w-full"
                   type="text"
                   placeholder="태그들을 입력하세요. ex) 스페인, 레드, 달달함"
                   id="tags"
@@ -490,7 +490,7 @@ const NewProduct = () => {
                 />
               </div>
 
-              <div className="flex justify-between">
+              <div class="flex justify-between">
                 <div onClick={formCancleHandler}>
                   <Button isConfirm={false}>취소하기</Button>
                 </div>

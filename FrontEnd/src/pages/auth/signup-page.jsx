@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Layout from "../../components/user/layout/layout";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -95,168 +94,166 @@ const SignUpPage = (props) => {
 
   return (
     <>
-      <Layout>
-        <div className="flex flex-col items-center">
-          {/* 회원가입 Title */}
-          <div className="mb-[20px] mt-[50px] mb-[50px]">
-            <h1 className="text-[32px] font-[600]">회원가입</h1>
-          </div>
-          {/* 성인인증 */}
-          <div
-            className="flex flex-col items-center justify-center
+      <div className="flex flex-col items-center">
+        {/* 회원가입 Title */}
+        <div className="mb-[20px] mt-[50px] mb-[50px]">
+          <h1 className="text-[32px] font-[600]">회원가입</h1>
+        </div>
+        {/* 성인인증 */}
+        <div
+          className="flex flex-col items-center justify-center
           w-[650px] h-[200px] border-[#E5D1D1] border-[3.5px] rounded-[20px] mb-[60px]"
-          >
-            <div
-              className="flex w-[180px] h-[55px] rounded-[10px] bg-[#7B4848]
+        >
+          <div
+            className="flex w-[180px] h-[55px] rounded-[10px] bg-[#7B4848]
               items-center justify-center text-[#FFFFFF] text-[17px] mb-[20px]"
-            >
-              성인인증
-            </div>
-
-            <div className="flex flex-col items-center text-[15.5px]">
-              <p>
-                정보통신망 이용 촉진 및 정보보호 등에 관한 법률 및 청소년
-                보호법의 규정에 의하여
-              </p>
-              <p className="underline underline-offset-[3px]">
-                19세 미만의 청소년은 이용할 수 없습니다.
-              </p>
-            </div>
+          >
+            성인인증
           </div>
-          <ul className="flex flex-col">
-            {/* 이름 */}
-            <li className="flex flex-col">
-              <span className="text-[16px] mb-[5px]">이름</span>
-              <input
-                type="text"
-                name="name"
-                placeholder="이름을 입력해주세요"
-                onChange={nameInputHandler}
-                value={name}
-                className="p-[10px] border-[#e5d1d1] border-[2px] 
+
+          <div className="flex flex-col items-center text-[15.5px]">
+            <p>
+              정보통신망 이용 촉진 및 정보보호 등에 관한 법률 및 청소년 보호법의
+              규정에 의하여
+            </p>
+            <p className="underline underline-offset-[3px]">
+              19세 미만의 청소년은 이용할 수 없습니다.
+            </p>
+          </div>
+        </div>
+        <ul className="flex flex-col">
+          {/* 이름 */}
+          <li className="flex flex-col">
+            <span className="text-[16px] mb-[5px]">이름</span>
+            <input
+              type="text"
+              name="name"
+              placeholder="이름을 입력해주세요"
+              onChange={nameInputHandler}
+              value={name}
+              className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[650px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
-              ></input>
-            </li>
+            ></input>
+          </li>
 
-            {/* 이메일 */}
-            <li className="flex flex-col">
-              <span className="text-[16px] mb-[5px]">이메일</span>
-              <input
-                type="email"
-                name="email"
-                placeholder="이메일을 입력해주세요"
-                value={email}
-                onChange={emailInputHandler}
-                onKeyUp={changeButtonHandler}
-                className="p-[10px] border-[#e5d1d1] border-[2px] 
-                w-[650px] h-[45px] mb-[25px]
-                focus:outline-[#AA7373] focus:outline-[2px]"
-              ></input>
-            </li>
-
-            {/* 비밀번호 */}
-            <li className="flex flex-col">
-              <span className="text-[16px] mb-[5px]">비밀번호</span>
-              <input
-                type="password"
-                name="password"
-                placeholder="비밀번호 (8자 이상 입력해주세요)"
-                value={password}
-                onChange={pwdInputHandler}
-                onKeyUp={changeButtonHandler}
-                className="p-[10px] border-[#e5d1d1] border-[2px] 
-                w-[650px] h-[45px] mb-[25px]
-                focus:outline-[#AA7373] focus:outline-[2px]"
-              ></input>
-            </li>
-          </ul>
-
-          {/* 비밀번호 확인 */}
+          {/* 이메일 */}
           <li className="flex flex-col">
-            <span className="text-[16px] mb-[5px]">비밀번호 확인</span>
+            <span className="text-[16px] mb-[5px]">이메일</span>
             <input
-              type="password"
-              name="passwordCheck"
-              placeholder="비밀번호를 한 번 더 입력해주세요"
-              value={passwordCheck}
-              onChange={pwdCheckInputHandler}
+              type="email"
+              name="email"
+              placeholder="이메일을 입력해주세요"
+              value={email}
+              onChange={emailInputHandler}
               onKeyUp={changeButtonHandler}
               className="p-[10px] border-[#e5d1d1] border-[2px] 
                 w-[650px] h-[45px] mb-[25px]
                 focus:outline-[#AA7373] focus:outline-[2px]"
             ></input>
           </li>
-          {/* 전화번호 */}
+
+          {/* 비밀번호 */}
           <li className="flex flex-col">
-            <span className="text-[16px] mb-[5px]">핸드폰번호</span>
+            <span className="text-[16px] mb-[5px]">비밀번호</span>
+            <input
+              type="password"
+              name="password"
+              placeholder="비밀번호 (8자 이상 입력해주세요)"
+              value={password}
+              onChange={pwdInputHandler}
+              onKeyUp={changeButtonHandler}
+              className="p-[10px] border-[#e5d1d1] border-[2px] 
+                w-[650px] h-[45px] mb-[25px]
+                focus:outline-[#AA7373] focus:outline-[2px]"
+            ></input>
+          </li>
+        </ul>
+
+        {/* 비밀번호 확인 */}
+        <li className="flex flex-col">
+          <span className="text-[16px] mb-[5px]">비밀번호 확인</span>
+          <input
+            type="password"
+            name="passwordCheck"
+            placeholder="비밀번호를 한 번 더 입력해주세요"
+            value={passwordCheck}
+            onChange={pwdCheckInputHandler}
+            onKeyUp={changeButtonHandler}
+            className="p-[10px] border-[#e5d1d1] border-[2px] 
+                w-[650px] h-[45px] mb-[25px]
+                focus:outline-[#AA7373] focus:outline-[2px]"
+          ></input>
+        </li>
+        {/* 전화번호 */}
+        <li className="flex flex-col">
+          <span className="text-[16px] mb-[5px]">핸드폰번호</span>
+          <input
+            type="number"
+            name="address"
+            placeholder="핸드폰 번호를 입력해주세요."
+            onChange={PhoneNumberChangeHandler}
+            value={phoneNumber}
+            className="p-[10px] border-[#e5d1d1] border-[2px] 
+              w-[650px] h-[45px] mb-[25px]
+              focus:outline-[#AA7373] focus:outline-[2px]"
+          ></input>
+        </li>
+
+        {/* 주소 */}
+        <li className="flex flex-col">
+          <span className="text-[16px] mb-[5px]">주소</span>
+          <div className="flex gap-[20px]">
             <input
               type="number"
-              name="address"
-              placeholder="핸드폰 번호를 입력해주세요."
-              onChange={PhoneNumberChangeHandler}
-              value={phoneNumber}
+              name="postalCode"
+              id="postalCode"
+              placeholder="우편번호를 입력해주세요."
+              onChange={addressInputHandler}
+              value={postalCode}
               className="p-[10px] border-[#e5d1d1] border-[2px] 
-              w-[650px] h-[45px] mb-[25px]
-              focus:outline-[#AA7373] focus:outline-[2px]"
-            ></input>
-          </li>
-
-          {/* 주소 */}
-          <li className="flex flex-col">
-            <span className="text-[16px] mb-[5px]">주소</span>
-            <div className="flex gap-[20px]">
-              <input
-                type="number"
-                name="postalCode"
-                id="postalCode"
-                placeholder="우편번호를 입력해주세요."
-                onChange={addressInputHandler}
-                value={postalCode}
-                className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[180px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
-              ></input>
-              <input
-                type="text"
-                name="address1"
-                id="address1"
-                placeholder="주소를 입력해주세요"
-                onChange={addressInputHandler}
-                value={address1}
-                className="p-[10px] border-[#e5d1d1] border-[2px] 
-              w-[450px] h-[45px] mb-[25px]
-              focus:outline-[#AA7373] focus:outline-[2px]"
-              ></input>
-            </div>
+            ></input>
             <input
               type="text"
-              name="address2"
-              id="address2"
-              placeholder="상세주소를 입력해주세요."
+              name="address1"
+              id="address1"
+              placeholder="주소를 입력해주세요"
               onChange={addressInputHandler}
-              value={address2}
+              value={address1}
               className="p-[10px] border-[#e5d1d1] border-[2px] 
-              w-[650px] h-[45px] mb-[25px]
+              w-[450px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
             ></input>
-          </li>
+          </div>
+          <input
+            type="text"
+            name="address2"
+            id="address2"
+            placeholder="상세주소를 입력해주세요."
+            onChange={addressInputHandler}
+            value={address2}
+            className="p-[10px] border-[#e5d1d1] border-[2px] 
+              w-[650px] h-[45px] mb-[25px]
+              focus:outline-[#AA7373] focus:outline-[2px]"
+          ></input>
+        </li>
 
-          {/* 회원가입 버튼 */}
-          <div className="mb-[100px]">
-            <button
-              type="button"
-              disabled={button}
-              className="w-[650px] h-[60px] mt-[30px] rounded-[10px] 
+        {/* 회원가입 버튼 */}
+        <div className="mb-[100px]">
+          <button
+            type="button"
+            disabled={button}
+            className="w-[650px] h-[60px] mt-[30px] rounded-[10px] 
               bg-[#7B4848] text-[20px] text-[#FFFFFF]
               disabled:bg-[#E5D1D1] disabled:text-[#262626]"
-              onClick={signupSubmitHandler}
-            >
-              회원가입
-            </button>
-          </div>
+            onClick={signupSubmitHandler}
+          >
+            회원가입
+          </button>
         </div>
-      </Layout>
+      </div>
     </>
   );
 };

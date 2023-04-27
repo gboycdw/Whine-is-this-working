@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../../../api/api-product";
-import AdminLayout from "../../../components/admin/layout/admin-layout";
 import EditProduct from "../../../components/admin/product/edit-product";
 
 const EditProductPage = () => {
@@ -15,7 +14,7 @@ const EditProductPage = () => {
   console.log(data);
 
   return (
-    <AdminLayout title="상품수정">
+    <>
       {isLoading ? (
         <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
           Loading...
@@ -27,7 +26,7 @@ const EditProductPage = () => {
           {error.message}
         </div>
       )}
-    </AdminLayout>
+    </>
   );
 };
 

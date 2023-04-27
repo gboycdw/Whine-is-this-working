@@ -3,9 +3,9 @@ import NewProduct from "../../../components/admin/product/new-product";
 
 const NewProductPage = () => {
   return (
-    <AdminLayout title="상품 등록">
+    <>
       <NewProduct />
-    </AdminLayout>
+    </>
   );
 };
 

@@ -1,9 +1,7 @@
 import Product from "../../../components/user/product/product";
 import Pagination from "../../../components/user/product/pagination";
 import { useState } from "react";
-import Layout from "../../../components/user/layout/layout";
 import { useParams } from "react-router";
-import styled from "styled-components";
 import { useQuery, useQueryClient } from "react-query";
 import {
   getProductsByCategory,
@@ -18,7 +16,6 @@ const ProductListPage = () => {
   const categoryName = useParams().category_name;
   const categoryPrice1 = useParams().price_1;
   const categoryPrice2 = useParams().price_2;
-  const queryClient = useQueryClient();
 
   const { data, isLoading, isError, error } = useQuery(
     ["products", categoryName],
@@ -48,7 +45,7 @@ const ProductListPage = () => {
   // styled.ul = css가 적용된 ul 태그
 
   return (
-    <Layout>
+    <>
       <div className="inline-block relative py-16 min-h-screen w-full">
         <div>
           <h1 className="ml-[30px] mb-[50px] text-2xl">
@@ -84,7 +81,7 @@ const ProductListPage = () => {
           </div>
         )}
       </div>
-    </Layout>
+    </>
   );
 };
 

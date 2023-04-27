@@ -10,7 +10,7 @@ const ManageProductListPage = () => {
   );
 
   return (
-    <AdminLayout title="상품수정">
+    <>
       {isLoading ? (
         <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
           Loading...
@@ -22,7 +22,7 @@ const ManageProductListPage = () => {
           {error.message}
         </div>
       )}
-    </AdminLayout>
+    </>
   );
 };
 

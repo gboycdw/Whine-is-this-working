@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { getOrderByOrderIndex } from "../../../api/api-order";
-import AdminLayout from "../../../components/admin/layout/admin-layout";
 import ManageOrderDetail from "../../../components/admin/order/manage-order-detail";
 
 const ManageOrderDetailPage = () => {
@@ -13,7 +12,7 @@ const ManageOrderDetailPage = () => {
   );
 
   return (
-    <AdminLayout title="주문 상세 관리">
+    <>
       {isLoading ? (
         <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
           Loading...
@@ -25,7 +24,7 @@ const ManageOrderDetailPage = () => {
           {error.message}
         </div>
       )}
-    </AdminLayout>
+    </>
   );
 };
 

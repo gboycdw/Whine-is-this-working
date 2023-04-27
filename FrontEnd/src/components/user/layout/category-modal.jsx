@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import CategoryModalList from "./category-modal-list";
 
 import classes from "./category-modal.module.css";
