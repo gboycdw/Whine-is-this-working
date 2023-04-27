@@ -73,20 +73,23 @@ class UserService {
 
     // id와 권한을  jwt페이로드에 포함시키고 , 서명키에 secretKey전달 , 토큰의 유효시간은 1시간
     const userToken = jwt.sign(
-      { userId: userData.email, role: userData.role },
+      // { userId: userData.email, role: userData.role },
       secretKey,
       { expiresIn: "1h" } //토큰 유효시간 1시간 설정
     );
-
+    const sendData = {
+      name: userData.name,
+      token: userToken,
+    };
     if (userData.role === "super-admin") {
       console.log("✨ 총관리자 로그인 성공! ✨");
-      return { userToken };
+      return { sendData };
     }
     if (userData.role === "admin") {
       console.log("✨ 관리자 로그인 성공! ✨");
-      return { userToken };
+      return { sendData };
     }
-    return { userToken };
+    return { sendData };
   }
 
   // 회원 탈퇴
