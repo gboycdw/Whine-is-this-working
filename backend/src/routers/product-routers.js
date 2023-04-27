@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { productService } from "../services/index.js";
-import { productValidation } from "../middlewares/productValidation.js";
+import { productChecker } from "../middlewares/productValidation.js";
 
 const productRouter = Router();
 
@@ -106,124 +106,136 @@ productRouter.get("/lists/best", async (req, res, next) => {
 });
 
 //상품 추가
-productRouter.post("/", productValidation, async (req, res, next) => {
-  try {
-    const {
-      seq,
-      name,
-      brand,
-      region,
-      type,
-      country,
-      info,
-      inventory,
-      imgUrl,
-      price,
-      discountPrice,
-      saleCount,
-      saleState,
-      isPicked,
-      isBest,
-      tags,
-      features,
-    } = req.body;
-    console.log("🔄 새로운 상품을 등록하는 중...");
-    const newProduct = await productService.createProduct({
-      seq,
-      name,
-      brand,
-      region,
-      type,
-      country,
-      info,
-      inventory,
-      imgUrl,
-      price,
-      discountPrice,
-      saleCount,
-      saleState,
-      isPicked,
-      isBest,
-      tags,
-      features,
-    });
+productRouter.post(
+  "/",
+  productChecker.createProductJoi,
+  async (req, res, next) => {
+    try {
+      const {
+        seq,
+        name,
+        brand,
+        region,
+        type,
+        country,
+        info,
+        inventory,
+        imgUrl,
+        price,
+        discountPrice,
+        saleCount,
+        saleState,
+        isPicked,
+        isBest,
+        tags,
+        features,
+      } = req.body;
+      console.log("🔄 새로운 상품을 등록하는 중...");
+      const newProduct = await productService.createProduct({
+        seq,
+        name,
+        brand,
+        region,
+        type,
+        country,
+        info,
+        inventory,
+        imgUrl,
+        price,
+        discountPrice,
+        saleCount,
+        saleState,
+        isPicked,
+        isBest,
+        tags,
+        features,
+      });
 
-    res.status(201).json(newProduct);
-    console.log("✔️ 상품 등록이 완료되었습니다!");
-  } catch (err) {
-    console.log(err);
-    next(err);
+      res.status(201).json(newProduct);
+      console.log("✔️ 상품 등록이 완료되었습니다!");
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
   }
-});
+);
 
 //상품 수정
-productRouter.put("/:id", productValidation, async (req, res, next) => {
-  try {
-    const update_id = req.params.id;
-    const {
-      seq,
-      name,
-      brand,
-      region,
-      type,
-      country,
-      info,
-      inventory,
-      imgUrl,
-      price,
-      discountPrice,
-      saleCount,
-      saleState,
-      isPicked,
-      isBest,
-      tags,
-      features,
-    } = req.body;
-    console.log("🔄 상품 정보를 수정합니다.");
-    const updateProduct = await productService.updateProduct(update_id, {
-      seq,
-      name,
-      brand,
-      region,
-      type,
-      country,
-      info,
-      inventory,
-      imgUrl,
-      price,
-      discountPrice,
-      saleCount,
-      saleState,
-      isPicked,
-      isBest,
-      tags: tags,
-      features: features,
-    });
+productRouter.put(
+  "/:id",
+  productChecker.updateProductJoi,
+  async (req, res, next) => {
+    try {
+      const update_id = req.params.id;
+      const {
+        seq,
+        name,
+        brand,
+        region,
+        type,
+        country,
+        info,
+        inventory,
+        imgUrl,
+        price,
+        discountPrice,
+        saleCount,
+        saleState,
+        isPicked,
+        isBest,
+        tags,
+        features,
+      } = req.body;
+      console.log("🔄 상품 정보를 수정합니다.");
+      const updateProduct = await productService.updateProduct(update_id, {
+        seq,
+        name,
+        brand,
+        region,
+        type,
+        country,
+        info,
+        inventory,
+        imgUrl,
+        price,
+        discountPrice,
+        saleCount,
+        saleState,
+        isPicked,
+        isBest,
+        tags: tags,
+        features: features,
+      });
 
-    res.status(201).json(updateProduct);
-    console.log("✔️ 상품 정보가 수정되었습니다.");
-  } catch (err) {
-    console.log(err);
-    next(err);
+      res.status(201).json(updateProduct);
+      console.log("✔️ 상품 정보가 수정되었습니다.");
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
   }
-});
+);
 
 //상품 판매상태 수정
-productRouter.patch("/:id/:saleState", async (req, res, next) => {
-  try {
-    const update_id = req.params.id;
-    const update_state = req.params.saleState;
-    console.log("🔄 상품 판매상태를 수정합니다.");
-    const updateProduct = await productService.updateProduct(update_id, {
-      saleState: update_state,
-    });
-    res.status(201).json(updateProduct);
-    console.log("✔️ 상품 판매상태 변경 완료.");
-  } catch (err) {
-    console.log(err);
-    next(err);
+productRouter.patch(
+  "/:id/:saleState",
+  productChecker.updateSaleStateJoi,
+  async (req, res, next) => {
+    try {
+      const update_id = req.params.id;
+      const update_state = req.params.saleState;
+      console.log("🔄 상품 판매상태를 수정합니다.");
+      const updateProduct = await productService.updateProduct(update_id, {
+        saleState: update_state,
+      });
+      res.status(201).json(updateProduct);
+      console.log("✔️ 상품 판매상태 변경 완료.");
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
   }
-});
+);
 
 //상품 삭제
 productRouter.delete("/:id", async (req, res, next) => {

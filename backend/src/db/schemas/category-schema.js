@@ -12,6 +12,9 @@ const CategorySchema = new Schema({
         required: true,
       },
     },
+    {
+      _id: false,
+    },
   ],
 });
 

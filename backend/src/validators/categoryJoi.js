@@ -1,8 +1,15 @@
 import Joi from "joi";
 
-const CategoryJoi = Joi.object().keys({
-  title: Joi.string().required(),
-  categories: Joi.array().required(),
-});
+const CategoryJoiSchema = {
+  createCategory: Joi.object().keys({
+    title: Joi.string().required(),
+    categories: Joi.array().required(),
+  }),
 
-export { CategoryJoi };
+  updateCategory: Joi.object().keys({
+    //title: Joi.string().required(),
+    categories: Joi.array().required(),
+  }),
+};
+
+export { CategoryJoiSchema };
