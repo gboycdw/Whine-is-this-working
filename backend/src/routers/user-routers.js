@@ -38,6 +38,7 @@ userRouter.post("/signup", userChecker.signUpJoi, async (req, res, next) => {
     res.status(201).json(newUser);
     console.log("회원 가입 성공! 환영합니다.");
   } catch (err) {
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -46,11 +47,14 @@ userRouter.post("/signup", userChecker.signUpJoi, async (req, res, next) => {
 userRouter.post("/login", async (req, res, next) => {
   console.log("로그인 시도 🌸");
   const { email, password } = req.body;
-
-  const userToken = await userService.getUserToken(email, password);
-
-  res.status(200).json(userToken);
-  console.log("✔️ 로그인 성공!");
+  try {
+    const userToken = await userService.getUserToken(email, password);
+    res.status(200).json(userToken);
+    console.log("✔️ 로그인 성공!");
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
 });
 
 //탈퇴
@@ -68,7 +72,7 @@ userRouter.delete("/", loginRequired, async (req, res, next) => {
       .status(200)
       .json({ result: "탈퇴되었습니다. 이용해주셔서 감사합니다." });
   } catch (err) {
-    console.log("탈퇴 실패! 🚫");
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -105,7 +109,7 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
     console.log("✔️ 권한 확인 완료. 유저 정보를 업데이트 합니다.");
     return res.status(200).json(updatedUser);
   } catch (err) {
-    console.log("업데이트 실패! 💧");
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -127,6 +131,7 @@ userRouter.patch("/role-info", async (req, res, next) => {
     console.log("✔️ 유저 권한이 수정되었습니다.");
     return res.status(201).json(updatedRole);
   } catch (err) {
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -138,7 +143,10 @@ userRouter.get("/allUser", async (req, res, next) => {
     const allUser = await userService.getAllUser();
     console.log("🖥️ 유저 정보 출력 중..");
     return res.status(200).json(allUser);
-  } catch (err) {}
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
 });
 
 export { userRouter };

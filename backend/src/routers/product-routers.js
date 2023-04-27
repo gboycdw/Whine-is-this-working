@@ -12,7 +12,7 @@ productRouter.get("/", async (req, res, next) => {
     res.status(201).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
-    console.log(err);
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -26,7 +26,7 @@ productRouter.get("/:id", async (req, res, next) => {
     res.status(201).json(product);
     console.log("✔️ 조회 완료!");
   } catch (err) {
-    console.log(err);
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -40,7 +40,7 @@ productRouter.get("/types/:type", async (req, res, next) => {
     res.status(201).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
-    console.log(err);
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -54,7 +54,7 @@ productRouter.get("/countries/:country", async (req, res, next) => {
     res.status(201).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
-    console.log(err);
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -74,7 +74,7 @@ productRouter.get("/prices/:min/:max", async (req, res, next) => {
     res.status(201).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
-    console.log(err);
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -87,7 +87,7 @@ productRouter.get("/lists/picked", async (req, res, next) => {
     res.status(201).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
-    console.log(err);
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -100,7 +100,7 @@ productRouter.get("/lists/best", async (req, res, next) => {
     res.status(201).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
-    console.log(err);
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
@@ -154,7 +154,7 @@ productRouter.post(
       res.status(201).json(newProduct);
       console.log("✔️ 상품 등록이 완료되었습니다!");
     } catch (err) {
-      console.log(err);
+      console.log(`❌ ${err}`);
       next(err);
     }
   }
@@ -214,7 +214,7 @@ productRouter.put(
       res.status(201).json(updateProduct);
       console.log("✔️ 상품 정보가 수정되었습니다.");
     } catch (err) {
-      console.log(err);
+      console.log(`❌ ${err}`);
       next(err);
     }
   }
@@ -235,7 +235,7 @@ productRouter.patch(
       res.status(201).json(updateProduct);
       console.log("✔️ 상품 판매상태 변경 완료.");
     } catch (err) {
-      console.log(err);
+      console.log(`❌ ${err}`);
       next(err);
     }
   }
@@ -250,7 +250,7 @@ productRouter.delete("/:id", async (req, res, next) => {
     res.status(201).json(result);
     console.log("✔️ 상품 삭제 완료!");
   } catch (err) {
-    console.log(err);
+    console.log(`❌ ${err}`);
     next(err);
   }
 });

@@ -3,16 +3,28 @@ import { Product } from "../schemas/product-schema.js";
 export class ProductModel {
   async find() {
     const products = await Product.find({});
+    if (products.length < 1) {
+      throw new Error("[상품 조회 실패] 등록된 상품이 존재하지 않습니다.");
+    }
     return products;
   }
 
   //와인 ID로 상세 정보 조회
   async findById(id) {
-    const product = await Product.findOne({ _id: id });
-    return product;
+    try {
+      const product = await Product.findOne({ _id: id });
+      if (!product) {
+        throw new Error(
+          "[상품 조회 실패] 해당 id를 가지는 상품이 존재하지 않습니다."
+        );
+      }
+      return product;
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
-  //와인 이름으로 상세 정보 조회
+  //와인 이름으로 상세 정보 조회 ===> 미사용 기능..?
   async findByName(search_name) {
     const product = await Product.findOne({ name: search_name });
     return product;
@@ -21,12 +33,22 @@ export class ProductModel {
   //와인 타입별로 조회(ex. 레드, 화이트, 스파클링, etc..)
   async findByType(type) {
     const products = await Product.find({ type: type });
+    if (products.length < 1) {
+      throw new Error(
+        "[상품 조회 실패] 해당 type을 가지는 상품이 존재하지 않습니다."
+      );
+    }
     return products;
   }
 
   //와인 나라별로 조회
   async findByCountry(country) {
     const products = await Product.find({ country: country });
+    if (products.length < 1) {
+      throw new Error(
+        "[상품 조회 실패] 해당 국가에서 제조한 상품이 존재하지 않습니다."
+      );
+    }
     return products;
   }
 
@@ -35,41 +57,70 @@ export class ProductModel {
     const products = await Product.find({
       $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: higherPrice } }],
     });
+    if (products.length < 1) {
+      throw new Error(
+        "[상품 조회 실패] 해당 가격대의 상품이 존재하지 않습니다."
+      );
+    }
     return products;
   }
 
   //Pick 와인 조회
   async findByPicked() {
     const products = await Product.find({ isPicked: true });
+    if (products.length < 1) {
+      throw new Error(
+        "[상품 조회 실패] OurPick 상품이 아직 준비되지 않았습니다. 조금만 기다려 주세요!"
+      );
+    }
     return products;
   }
 
   //Best 와인 조회
   async findByBest() {
     const products = await Product.find({ isBest: true });
+    if (products.length < 1) {
+      throw new Error(
+        "[상품 조회 실패] 베스트 상품 정보는 현재 준비 중입니다."
+      );
+    }
     return products;
   }
 
   //와인 추가하기
   async createProduct(productInfo) {
-    const newProduct = await Product.create(productInfo);
-    return newProduct;
+    try {
+      const newProduct = await Product.create(productInfo);
+      return newProduct;
+    } catch (err) {
+      throw new Error("[상품 추가 실패] 상품 정보를 다시 확인해 주세요.");
+    }
   }
 
   //와인 정보 수정
   async updateProduct(id, productInfo, option) {
-    const updateProduct = await Product.findOneAndUpdate(
-      id,
-      productInfo,
-      option
-    );
-    return updateProduct;
+    try {
+      const updateProduct = await Product.findOneAndUpdate(
+        id,
+        productInfo,
+        option
+      );
+      return updateProduct;
+    } catch (err) {
+      throw new Error("[상품 정보수정 실패] 입력 내용을 다시 확인해 주세요.");
+    }
   }
 
   //와인 삭제
   async deleteProduct(id) {
-    const deleteProduct = await Product.deleteOne({ _id: id });
-    return deleteProduct;
+    try {
+      const deleteProduct = await Product.deleteOne({ _id: id });
+      return deleteProduct;
+    } catch (err) {
+      throw new Error(
+        "[상품 삭제 실패] 해당 id를 가지는 상품이 존재하지 않습니다."
+      );
+    }
   }
 }
 

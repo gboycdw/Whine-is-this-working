@@ -25,7 +25,9 @@ class UserService {
 
     // 가입된 이메일 확인
     if (usingIdCheck) {
-      throw new Error("이미 사용중인 이메일입니다. 다시 입력해주세요.");
+      throw new Error(
+        "[회원가입 실패] 이미 사용중인 이메일입니다. 다시 입력해주세요."
+      );
     }
 
     // 해시 함수를 10번 반복, 소금을 10번 뿌린 해쉬포테이토
@@ -52,11 +54,11 @@ class UserService {
     const userData = await this.userModel.findById(userId);
 
     if (!userData) {
-      throw new Error("가입되지않은 회원입니다.");
+      throw new Error("[로그인 실패] 회원정보가 존재하지 않습니다.");
     }
 
     if (userData.status === 0) {
-      throw new Error("탈퇴한 회원입니다.");
+      throw new Error("[로그인 실패] 탈퇴한 회원입니다.");
     }
 
     const hashedUserPassword = userData.password;
@@ -65,7 +67,9 @@ class UserService {
     // 보안상 비밀번호만 틀렸다고 표시하지않는게 좋다고 알고있어요.
     // 비밀번호 일치하지 않을시
     if (!comparePassword) {
-      throw new Error("아이디 또는 비밀번호가 일치하지않습니다.");
+      throw new Error(
+        "[로그인 실패] 아이디 또는 비밀번호가 일치하지 않습니다."
+      );
     }
 
     // 비밀번호 일치시 JWT 토큰 생성
@@ -95,8 +99,8 @@ class UserService {
       console.log("✨ 관리자 로그인 성공! ✨");
       return { sendData };
     }
-    console.log("✨ 로그인 성공! ✨");
-    console.log(sendData);
+    console.log("✨ 일반회원 로그인 성공! ✨");
+
     return { sendData };
   }
 
