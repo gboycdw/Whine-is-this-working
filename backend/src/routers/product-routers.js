@@ -187,25 +187,29 @@ productRouter.put(
         features,
       } = req.body;
       console.log("🔄 상품 정보를 수정합니다.");
-      const updateProduct = await productService.updateProduct(update_id, {
-        seq,
-        name,
-        brand,
-        region,
-        type,
-        country,
-        info,
-        inventory,
-        imgUrl,
-        price,
-        discountPrice,
-        saleCount,
-        saleState,
-        isPicked,
-        isBest,
-        tags: tags,
-        features: features,
-      });
+      const updateProduct = await productService.updateProduct(
+        { _id: update_id },
+        {
+          seq,
+          name,
+          brand,
+          region,
+          type,
+          country,
+          info,
+          inventory,
+          imgUrl,
+          price,
+          discountPrice,
+          saleCount,
+          saleState,
+          isPicked,
+          isBest,
+          tags: tags,
+          features: features,
+        },
+        { returnOriginal: false }
+      );
 
       res.status(201).json(updateProduct);
       console.log("✔️ 상품 정보가 수정되었습니다.");

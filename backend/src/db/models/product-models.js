@@ -57,11 +57,11 @@ export class ProductModel {
   }
 
   //와인 정보 수정
-  async updateProduct(id, productInfo) {
+  async updateProduct(id, productInfo, option) {
     const updateProduct = await Product.findOneAndUpdate(
-      { _id: id },
+      id,
       productInfo,
-      { returnOriginal: false }
+      option
     );
     return updateProduct;
   }
