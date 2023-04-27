@@ -2,7 +2,7 @@ import { useState } from "react";
 import OrderedItems from "./ordered-items";
 import Pagination from "../../product/pagination";
 import { useQuery } from "react-query";
-import { getOrderByOrderBuyerEmail } from "../../../../api/api-order";
+import { getOrdersByBuyerEmail } from "../../../../api/api-order";
 
 const OrderedItemsList = () => {
   const limit = 5; // items의 페이지네이션 단위
@@ -11,7 +11,7 @@ const OrderedItemsList = () => {
   const buyerEmail = "test@gmail.com";
   const { data, isLoading, isError, error } = useQuery(
     ["orders", buyerEmail],
-    async () => await getOrderByOrderBuyerEmail(buyerEmail)
+    async () => await getOrdersByBuyerEmail(buyerEmail)
   );
   const orderedItemsData = data;
   console.log("order", orderedItemsData);

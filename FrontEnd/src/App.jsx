@@ -28,6 +28,11 @@ import OrderCompletePage from "./pages/user/order/order-complete-page";
 import SignUpCompletePage from "./pages/auth/signup-complete-page";
 import AuthContex from "./components/store/auth-context";
 import Layout from "./components/Layout/layout";
+import MyPage from "./pages/user/my-page/my-page";
+import OrderedItemsList from "./components/user/my-page-component/ordered-items-list/ordered-items-list";
+import PersonalInfoModify from "./components/user/my-page-component/personal-info-modify";
+import CusServiceCenter from "./components/user/my-page-component/cus-service-center";
+import Withdrawl from "./components/user/my-page-component/withdrawal";
 
 const queryClient = new QueryClient();
 

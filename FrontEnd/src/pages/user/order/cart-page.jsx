@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import CartItem from "../../../components/user/order/cart-item";
 import { cartCtx, storage } from "../../../components/store/cart-context";
+import { useNavigate } from "react-router-dom";
+import Layout from "../../../components/Layout/layout";
 const CartPage = (props) => {
   const { cartData, setCartData } = useContext(cartCtx);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
+  const totalPayPrice = totalPrice - totalDiscountPrice;
 
   const newArr = cartData.filter((item) => item.isChecked === true);
   const [isAllChecked, setIsAllChecked] = useState(true);
@@ -62,11 +65,26 @@ const CartPage = (props) => {
     setTotalDiscountPrice(totalDiscountPrice);
   }, [cartData, newArr]);
 
-  // console.log(cartData);
-  // console.log(totalPrice);
-  // console.log(totalDiscountPrice);
-
-  const orderSubmitHandler = () => {};
+  const navigate = useNavigate();
+  const orderSubmitHandler = () => {
+    // buyer-pay 컴포넌트에 세션스토리지를 통해 정보 넘겨줌
+    const data = {
+      totalPrice,
+      totalDiscountPrice,
+      totalPayPrice,
+      cartData,
+    };
+    try {
+      const result = sessionStorage.setItem(
+        "cartToOrder",
+        JSON.stringify(data)
+      );
+      console.log(result);
+      navigate("/order");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -152,9 +170,7 @@ const CartPage = (props) => {
           {/* 총 결제금액 */}
           <div className="flex flex-col items-center">
             <span className="text-[18px]">총 결제금액</span>
-            <span className="text-[24px] font-[600]">
-              {totalPrice - totalDiscountPrice}원
-            </span>
+            <span className="text-[24px] font-[600]">{totalPayPrice}원</span>
           </div>
         </div>
       </div>

@@ -1,9 +1,6 @@
-const BuyerPay = () => {
-  const totalPrice = 52000;
-  const point = 5000;
-  const totalDiscountPrice = 10000;
+const BuyerPay = (props) => {
+  const point = 0;
   const deliveryCharge = 2500;
-
   return (
     <>
       <div className="flex flex-col items-center mb-[25px]">
@@ -16,7 +13,7 @@ const BuyerPay = () => {
           {/* 총 상품가격 */}
           <li className="flex mb-[25px]">
             <span className="text-[16px] mb-[5px] w-[120px]">총 상품가격</span>
-            <span>{totalPrice}원</span>
+            <span>{props.totalPrice}원</span>
           </li>
 
           {/* 포인트 */}
@@ -88,7 +85,7 @@ const BuyerPay = () => {
               <div className="flex items-center place-content-between h-[35px]">
                 <span className="ml-[20px]">총 구매금액</span>
                 <span className="text-[18px] font-[600] mr-[20px]">
-                  {totalPrice}원
+                  {props.totalPrice}원
                 </span>
               </div>
 
@@ -96,7 +93,7 @@ const BuyerPay = () => {
               <div className="flex items-center place-content-between h-[35px]">
                 <span className="ml-[20px]">할인금액</span>
                 <span className="text-[18px] font-[600] mr-[20px]">
-                  - {totalDiscountPrice}원
+                  - {props.totalDiscountPrice}원
                 </span>
               </div>
 
@@ -123,7 +120,11 @@ const BuyerPay = () => {
               >
                 <span className="ml-[20px]">총 결제금액</span>
                 <span className="text-[18px] font-[600] mr-[20px]">
-                  {totalPrice - totalDiscountPrice - point + deliveryCharge}원
+                  {props.totalPrice -
+                    props.totalDiscountPrice -
+                    point +
+                    deliveryCharge}
+                  원
                 </span>
               </div>
 
@@ -132,7 +133,10 @@ const BuyerPay = () => {
                 <span className="ml-[20px]">적립 예정 포인트 (3% 적립)</span>
                 <span className="text-[16px] font-[600] mr-[20px]">
                   +{" "}
-                  {(totalPrice - totalDiscountPrice - point + deliveryCharge) *
+                  {(props.totalPrice -
+                    props.totalDiscountPrice -
+                    point +
+                    deliveryCharge) *
                     0.03}
                   원
                 </span>

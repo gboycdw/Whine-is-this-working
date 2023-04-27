@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import Layout from "../../../components/Layout/layout";
 import BuyerInfo from "../../../components/user/order/buyer-info";
 import BuyerPay from "../../../components/user/order/buyer-pay";
+import { useState } from "react";
+import { useQueryClient } from "react-query";
+import axios from "axios";
 
 const OrderPage = (props) => {
   // 주문 취소시 이전 페이지로 이동시켜주는 핸들러
@@ -8,7 +12,76 @@ const OrderPage = (props) => {
   const orderCancelHandler = () => {
     navigate("../");
   };
-  const orderCompleteHandler = () => {
+
+  const [buyer, setBuyer] = useState("");
+  const [buyerEmail, setBuyerEmail] = useState("");
+  const [buyerPhoneNumber, setBuyerPhoneNumber] = useState("");
+  const [recipientName, setRecipientName] = useState("");
+  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
+  const [shippingAddress, setShippingAddress] = useState("");
+  const [shippingExtraAddress, setShippingExtraAddress] = useState("");
+  const [shippingRequest, setShippingRequest] = useState("");
+  const queryClient = useQueryClient();
+
+  // 장바구니에서 세션스토리지에 저장한 데이터를 불러오는 함수
+  const storage = () => {
+    if (typeof window !== "undefined") {
+      const data = window.sessionStorage.getItem("cartToOrder");
+      if (data === null) {
+        return [];
+      } else {
+        return JSON.parse(data);
+      }
+    }
+  };
+
+  // 장바구니에서 받은 데이터를 buyer-pay에 props를 이용해 넘겨줌
+  const { totalPrice, totalDiscountPrice, totalPayPrice, cartData } = storage();
+
+  // cartData를 돌면서 "product":_id, "amount":amount 형식으로 객체 생성
+  const orderList = [];
+  for (let i = 0; i <= cartData.length - 1; i++) {
+    console.log(cartData[i]["_id"]);
+    orderList.push({
+      product: cartData[i]["_id"],
+      amount: cartData[i]["amount"],
+    });
+  }
+
+  const shippingStatus = "배송준비중";
+  const orderIndex = "0";
+  const deliveryFee = 2500;
+  const wayBill = "0";
+
+  // 주문 완료시 axios로 데이터 보내고
+  // 주문 완료 페이지로 이동시켜주는 핸들러
+  const orderCompleteHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const result = await axios.post("http://34.22.85.44:5000/api/orders", {
+        buyer,
+        buyerEmail,
+        buyerPhoneNumber,
+        recipientName,
+        recipientPhoneNumber,
+        shippingAddress,
+        shippingExtraAddress,
+        shippingRequest,
+        shippingStatus,
+        orderList,
+        totalPayPrice,
+        orderIndex,
+        deliveryFee,
+        wayBill,
+      });
+      console.log(result);
+      alert("주문이 성공적으로 완료되었습니다.");
+      navigate("/");
+      queryClient.invalidateQueries("orders");
+    } catch (error) {
+      console.log(error);
+    }
     navigate("/ordercomplete");
   };
 
@@ -22,10 +95,31 @@ const OrderPage = (props) => {
 
         {/* 주문자 정보, 배송 정보 */}
         {/* 자식 요소에서 가져와서 status 업데이트 */}
-        <BuyerInfo />
+        <BuyerInfo
+          buyer={buyer}
+          setBuyer={setBuyer}
+          buyerEmail={buyerEmail}
+          setBuyerEmail={setBuyerEmail}
+          buyerPhoneNumber={buyerPhoneNumber}
+          setBuyerPhoneNumber={setBuyerPhoneNumber}
+          recipientName={recipientName}
+          setRecipientName={setRecipientName}
+          recipientPhoneNumber={recipientPhoneNumber}
+          setRecipientPhoneNumber={setRecipientPhoneNumber}
+          shippingAddress={shippingAddress}
+          setShippingAddress={setShippingAddress}
+          shippingExtraAddress={shippingExtraAddress}
+          setShippingExtraAddress={setShippingExtraAddress}
+          shippingRequest={shippingRequest}
+          setShippingRequest={setShippingRequest}
+        />
 
         {/* 결제 금액 정보 */}
-        <BuyerPay />
+        <BuyerPay
+          totalPrice={totalPrice}
+          totalDiscountPrice={totalDiscountPrice}
+          cartData={cartData}
+        />
 
         {/* 취소, 주문하기 버튼 */}
         <div className="flex space-x-[15px]">

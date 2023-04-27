@@ -4,48 +4,39 @@ import OrderPostCode from "./order-post-code";
 
 // 주문자 정보, 배송 정보
 const BuyerInfo = (props) => {
-  const [buyerName, setBuyerName] = useState("");
-  const [buyerEmail, setBuyerEmail] = useState("");
-  const [buyerPhoneNumber, setBuyerPhoneNumber] = useState("");
-  const [recipientName, setRecipientName] = useState("");
-  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
-  const [shippingAddress, setShippingAddress] = useState("");
-  const [shippingExtraAddress, setShippingExtraAddress] = useState("");
-  const [shippingRequest, setShippingRequest] = useState("");
-
   // 주문자 이름 입력값 업데이트 핸들러
-  const buyerInputHandler = ({ target: { value } }) => {
-    return setBuyerName(value);
+  const buyerInputHandler = (e) => {
+    props.setBuyer(e.target.value);
   };
 
   // 주문자 이메일 입력값 업데이트 핸들러
-  const buyerEmailInputHandler = ({ target: { value } }) => {
-    return setBuyerEmail(value);
+  const buyerEmailInputHandler = (e) => {
+    props.setBuyerEmail(e.target.value);
   };
 
   // 연락처 입력값 업데이트 핸들러
-  const buyerPhoneNumberInputHandler = ({ target: { value } }) => {
-    return setBuyerPhoneNumber(value);
+  const buyerPhoneNumberInputHandler = (e) => {
+    props.setBuyerPhoneNumber(e.target.value);
   };
 
   // 수령인 입력값 업데이트 핸들러
-  const recipientNameInputHandler = ({ target: { value } }) => {
-    return setRecipientName(value);
+  const recipientNameInputHandler = (e) => {
+    props.setRecipientName(e.target.value);
   };
 
   // 수령인 전화번호 입력값 업데이트 핸들러
-  const recipientPhoneNumberInputHandler = ({ target: { value } }) => {
-    return setRecipientPhoneNumber(value);
+  const recipientPhoneNumberInputHandler = (e) => {
+    props.setRecipientPhoneNumber(e.target.value);
   };
 
   // 상세 주소 입력값 업데이트 핸들러
-  const shippingExtraAddressInputHandler = ({ target: { value } }) => {
-    return setShippingExtraAddress(value);
+  const shippingExtraAddressInputHandler = (e) => {
+    props.setShippingExtraAddress(e.target.value);
   };
 
   // 배송 메시지 업데이트 핸들러
-  const shippingRequestInputHandler = ({ target: { value } }) => {
-    return setShippingRequest(value);
+  const shippingRequestInputHandler = (e) => {
+    props.setShippingRequest(e.target.value);
   };
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -74,10 +65,10 @@ const BuyerInfo = (props) => {
               <span className="text-[16px] mb-[5px]">이름</span>
               <input
                 type="text"
-                name="buyerName"
+                name="buyer"
                 placeholder="주문자 이름을 입력해주세요"
                 onChange={buyerInputHandler}
-                value={buyerName}
+                value={props.buyer}
                 className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[650px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
@@ -91,7 +82,7 @@ const BuyerInfo = (props) => {
                 type="email"
                 name="buyerEmail"
                 placeholder="주문자 이메일을 입력해주세요"
-                value={buyerEmail}
+                value={props.buyerEmail}
                 onChange={buyerEmailInputHandler}
                 className="p-[10px] border-[#e5d1d1] border-[2px] 
                 w-[650px] h-[45px] mb-[25px]
@@ -105,9 +96,9 @@ const BuyerInfo = (props) => {
               <input
                 type="tel"
                 name="buyerPhoneNumber"
-                placeholder="주문자 연락처를 입력해주세요"
+                placeholder="띄어쓰기 없이 입력해주세요 (ex. 01012341234)"
                 onChange={buyerPhoneNumberInputHandler}
-                value={buyerPhoneNumber}
+                value={props.buyerPhoneNumber}
                 className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[650px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
@@ -130,7 +121,7 @@ const BuyerInfo = (props) => {
                 name="recipientName"
                 placeholder="수령인 이름을 입력해주세요"
                 onChange={recipientNameInputHandler}
-                value={recipientName}
+                value={props.recipientName}
                 className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[650px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
@@ -143,9 +134,9 @@ const BuyerInfo = (props) => {
               <input
                 type="tel"
                 name="recipientPhoneNumber"
-                placeholder="수령인 연락처를 입력해주세요"
+                placeholder="띄어쓰기 없이 입력해주세요 (ex. 01012341234)"
                 onChange={recipientPhoneNumberInputHandler}
-                value={recipientPhoneNumber}
+                value={props.recipientPhoneNumber}
                 className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[650px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
@@ -163,7 +154,7 @@ const BuyerInfo = (props) => {
               w-[540px] h-[45px] mb-[25px] mr-[10px]
               focus:outline-[#AA7373] focus:outline-[2px]"
                 >
-                  {shippingAddress}
+                  {props.shippingAddress}
                 </p>
                 <button
                   class="bg-[#7B4848] rounded-[10px] w-[100px] h-[45px] text-[#FFFFFF]"
@@ -178,7 +169,7 @@ const BuyerInfo = (props) => {
                   <PopupDom>
                     <OrderPostCode
                       onClose={closePostCode} //팝업닫음.
-                      setFullAddress={setShippingAddress} //받아온 data.address를 address에 setAddress로 설정.
+                      setFullAddress={props.setShippingAddress} //받아온 data.address를 address에 setAddress로 설정.
                     />
                   </PopupDom>
                 )}
@@ -193,7 +184,7 @@ const BuyerInfo = (props) => {
                 name="shippingExtraAddress"
                 placeholder="상세주소를 입력해주세요"
                 onChange={shippingExtraAddressInputHandler}
-                value={shippingExtraAddress}
+                value={props.shippingExtraAddress}
                 className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[650px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
@@ -208,7 +199,7 @@ const BuyerInfo = (props) => {
                 name="shippingRequest"
                 placeholder="배송 요청사항을 입력해주세요"
                 onChange={shippingRequestInputHandler}
-                value={shippingRequest}
+                value={props.shippingRequest}
                 className="p-[10px] border-[#e5d1d1] border-[2px] 
               w-[650px] h-[45px] mb-[25px]
               focus:outline-[#AA7373] focus:outline-[2px]"
