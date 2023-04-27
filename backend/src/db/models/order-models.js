@@ -15,7 +15,7 @@ class OrderModel {
       });
       if (findOrder.length < 1) {
         throw new Error(
-          `[주문내역 검색 실패] ID : ${userId} ... 주문내역이 존재하지 않습니다.`
+          `[주문내역 검색 실패] 해당 ID(${userId})의 주문내역이 존재하지 않습니다.`
         );
       }
       return findOrder;
@@ -71,6 +71,7 @@ class OrderModel {
       const newOrderList = await newOrder.save();
       return newOrderList;
     } catch (err) {
+      // console.log(err);
       throw new Error(err);
     }
   }
@@ -100,7 +101,7 @@ class OrderModel {
       const updatedOrderData = await searchingOrder.save();
       return updatedOrderData;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       throw new Error(err);
     }
   }
@@ -116,7 +117,7 @@ class OrderModel {
       }
       await Order.deleteOne({ orderIndex: orderIndex });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       throw new Error(err);
     }
   }
@@ -138,6 +139,7 @@ class OrderModel {
       }
       await Order.deleteOne({ orderIndex: orderIndex });
     } catch (err) {
+      // console.log(err);
       throw new Error(err);
     }
   }
@@ -149,12 +151,13 @@ class OrderModel {
         orderIndex: orderIndex,
       });
       if (!orderToChangeStatus) {
-        throw new Error("⚠️ [배송상태 변경 실패] 해당 주문정보가 없습니다.");
+        throw new Error("[배송상태 변경 실패] 해당 주문정보가 없습니다.");
       }
       orderToChangeStatus.shippingStatus = status;
       const updatedStatus = await orderToChangeStatus.save();
       return updatedStatus;
     } catch (err) {
+      // console.log(err);
       throw new Error(err);
     }
   }
@@ -166,19 +169,18 @@ class OrderModel {
         orderIndex: orderIndex,
       });
       if (!toChangeWayBill) {
-        throw new Error(
-          "⚠️ [운송장번호 변경 실패] 주문 정보를 찾을 수 없습니다."
-        );
+        throw new Error("[운송장번호 변경 실패] 주문 정보를 찾을 수 없습니다.");
       }
       if (toChangeWayBill.shippingStatus !== "배송중") {
         throw new Error(
-          "⚠️ [운송장번호 변경 실패] 배송중이 아닌 상품의 운송장번호를 입력/변경할 수 없습니다."
+          "[운송장번호 변경 실패] 배송중이 아닌 상품의 운송장번호를 입력/변경할 수 없습니다."
         );
       }
       toChangeWayBill.wayBill = number;
       const updatedStatus = await toChangeWayBill.save();
       return updatedStatus;
     } catch (err) {
+      // console.log(err);
       throw new Error(err);
     }
   }
