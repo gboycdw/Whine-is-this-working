@@ -12,6 +12,24 @@ export const getProductById = async (productId) => {
   return data.data;
 };
 
+export const getProductsByCategory = async (
+  categoryBundleTitle,
+  categoryName
+) => {
+  const data = await axios.get(
+    `http://34.22.85.44:5000/api/products/${categoryBundleTitle}/${categoryName}`
+  );
+  return data.data;
+};
+
+export const getProductsByCategoryPrice = async (price1, price2) => {
+  console.log(price1, price2);
+  const data = await axios.get(
+    `http://34.22.85.44:5000/api/products/prices/${price1}/${price2}`
+  );
+  return data.data;
+};
+
 export const getProductsByIsBest = async () => {
   const data = await axios.get(
     "http://34.22.85.44:5000/api/products/lists/best"

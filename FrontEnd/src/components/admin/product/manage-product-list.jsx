@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../../user/product/pagination";
 import Button from "../../UI/button";
 import ManageProductListItem from "./manage-product-list-item";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { deleteCheckedProductsById } from "../../../api/api-product";
 
 const categories = ["레드", "화이트", "로제", "논알콜"];
@@ -60,9 +60,13 @@ const ManageProductList = (props) => {
           판매중 {products.filter((item) => item.saleState === "판매중").length}
         </span>
         <span> | </span>
-        <span>품절 0</span>
+        <span>
+          품절 {products.filter((item) => item.saleState === "품절").length}
+        </span>
         <span> | </span>
-        <span>숨김 0</span>
+        <span>
+          숨김 {products.filter((item) => item.saleState === "숨김").length}
+        </span>
       </div>
       <div className="py-4 flex gap-4 text-sm">
         <div className="w-32 h-11 flex justify-center px-3 border border-color2 rounded">
@@ -70,7 +74,7 @@ const ManageProductList = (props) => {
             <option value="카테고리선택">카테고리 선택</option>
             {categories.map((category) => {
               return (
-                <option key={category.id} value={category}>
+                <option key={category._id} value={category}>
                   {category}
                 </option>
               );

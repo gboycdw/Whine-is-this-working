@@ -21,49 +21,49 @@ const MyPageNav = () => {
 
   return (
     <>
-      <div class="w-[180px] flex flex-col m-[10px] mb-[30px]  border-r-[1px] border-barColor justify-between">
-        <ul class="relative left-0 flex flex-col ">
-          <li class=" mb-[20px]">
-            <Link to="/cart" class={color}>
+      <div className="w-[180px] flex flex-col m-[10px] mb-[30px]  border-r-[1px] border-barColor justify-between">
+        <ul className="relative left-0 flex flex-col ">
+          <li className=" mb-[20px]">
+            <Link to="/cart" className={color}>
               장바구니
             </Link>
           </li>
-          <li class=" mb-[20px]">
+          <li className=" mb-[20px]">
             <Link
               to="/mypage/ordered-items-list"
               ref={linkRef1}
               onClick={navBarHandler}
-              class="text-c2"
+              className="text-c2"
             >
               주문내역
             </Link>
           </li>
-          <li class=" mb-[20px]">
+          <li className=" mb-[20px]">
             <Link
               to="/mypage/personal-info"
               ref={linkRef2}
               onClick={navBarHandler}
-              class={color}
+              className={color}
             >
               내 정보
             </Link>
           </li>
-          <li class=" mb-[20px]">
+          <li className=" mb-[20px]">
             <Link
               to="/mypage/personal-info-modify"
               ref={linkRef3}
               onClick={navBarHandler}
-              class={color}
+              className={color}
             >
               개인정보 수정
             </Link>
           </li>
-          <li class=" mb-[20px] ">
+          <li className=" mb-[20px] ">
             <Link
               to="/mypage/cus-service-center"
               ref={linkRef4}
               onClick={navBarHandler}
-              class={color}
+              className={color}
             >
               고객센터
             </Link>
@@ -74,7 +74,7 @@ const MyPageNav = () => {
             to="/mypage/withdrawl"
             ref={linkRef5}
             onClick={navBarHandler}
-            class="text-c3"
+            className="text-c3"
           >
             회원탈퇴
           </Link>

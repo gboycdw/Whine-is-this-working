@@ -59,14 +59,14 @@ const ManageOrderListItem = (props) => {
   };
 
   return (
-    <li class="flex text-center items-center border-b border-color2 w-full h-12 py-1 gap-3 text-sm">
+    <li className="flex text-center items-center border-b border-color2 w-full h-12 py-1 gap-3 text-sm">
       <input type="checkbox" onClick={inputCheckHandler} checked={isChecked} />
-      <span class="w-24 ">{orderIndex}</span>
-      <span class="w-24 ">{buyerEmail.split("@")[0]}</span>
-      <span class="w-24 ">{buyer}</span>
-      <span class="w-24 ">{totalPrice}원</span>
+      <span className="w-24 ">{orderIndex}</span>
+      <span className="w-24 ">{buyerEmail.split("@")[0]}</span>
+      <span className="w-24 ">{buyer}</span>
+      <span className="w-24 ">{totalPrice}원</span>
       <select
-        class="border h-7 w-24 border-color2"
+        className="border h-7 w-24 border-color2"
         value={newShippingStatus}
         onChange={orderStateChangeHandler}
       >
@@ -76,9 +76,9 @@ const ManageOrderListItem = (props) => {
         <option value="배송완료">배송완료</option>
       </select>
 
-      <span class="flex-grow ">{shippingRequest}</span>
-      <span class="w-32 ">{createdAt.slice(0, 10)}</span>
-      <Link to={`/manage/order_manage/${buyerEmail}`} class="w-20 ">
+      <span className="flex-grow ">{shippingRequest}</span>
+      <span className="w-32 ">{createdAt.slice(0, 10)}</span>
+      <Link to={`/manage/order_manage/${buyerEmail}`} className="w-20 ">
         주문관리
       </Link>
     </li>

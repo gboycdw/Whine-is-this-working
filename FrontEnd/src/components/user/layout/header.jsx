@@ -4,69 +4,31 @@ import CategoryModal from "./category-modal";
 
 import classes from "./header.module.css";
 import styled from "styled-components";
-import uuid from "react-uuid";
-import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { authState } from "../../store/auth-context";
+import { useQuery } from "react-query";
+import { getAllCategories } from "../../../api/api-category";
 // import { useRecoilState } from "recoil";
 // import { authState } from "../../store/auth-context";
 
-const categoryBundle = [
-  // 카테고리 더미데이터 (각 카테고리의 타이틀이 있고 카테고리리스트들이 자식요소로있음)
-  {
-    id: 0,
-    title: "wine", // 카테고리 번들의 타이틀//
-    categories: [
-      // 카테고리 번들의 각 카테고리 객체들
-      { id: 1, name: "레드와인" },
-      { id: 2, name: "화이트와인" },
-      { id: 3, name: "로제와인" },
-      { id: 4, name: "무알콜" },
-      { id: 5, name: "스파클링" },
-    ],
-  },
-  {
-    id: 1,
-    title: "country",
-    categories: [
-      { id: 1, name: "스페인" },
-      { id: 2, name: "프랑스" },
-      { id: 3, name: "미국" },
-      { id: 4, name: "이탈리아" },
-      { id: 5, name: "아르헨티나" },
-    ],
-  },
-  {
-    id: 2,
-    title: "가격대별",
-    categories: [
-      { id: uuid(), name: "~1만원" },
-      { id: uuid(), name: "1만원~3만원" },
-      { id: uuid(), name: "3만원~5만원" },
-      { id: uuid(), name: "5만원~10만원" },
-      { id: uuid(), name: "10만원~50만원" },
-      { id: uuid(), name: "100만원~500만원" },
-      { id: uuid(), name: "500만원~" },
-    ],
-  },
-];
-
 const Header = () => {
-  const token = window.location.href.split("?token=")[1];
-
   // const [auth, setAuth] = useRecoilState(authState);
   const [categoryIndex, setCategoryIndex] = useState();
-  const [authData, setAuthData] = useState({});
   const [login, setLogin] = useState(true);
   // 메인네비게이션 카테고리 모달을 컨트롤하기 위한 state 관리
 
-  useEffect(() => {
-    if (token) localStorage.setItem("auth", token);
-    if (localStorage.getItem("auth")) setAuthData(token);
-  }, [setAuthData, token]);
+  let { data, isLoading, isError, error } = useQuery(
+    "categories",
+    async () => await getAllCategories()
+  );
+  if (isLoading) {
+    data = [];
+  }
+
+  console.log(data);
 
   const categoryOnMouseOverHandler = (e) => {
-    setCategoryIndex(+e.currentTarget.id);
+    setCategoryIndex(e.currentTarget.id);
   }; // 카테고리 영역에서 마우스 올리면 모달창 보임
 
   const categoryOnMouseOutHandler = (e) => {
@@ -81,7 +43,6 @@ const Header = () => {
             to="/login"
             onClick={(e) => {
               e.preventDefault();
-              setAuthData(token);
               setLogin();
             }}
           >
@@ -119,7 +80,6 @@ const Header = () => {
             to="/"
             onClick={(e) => {
               e.preventDefault();
-              setAuthData(false);
             }}
           >
             로그아웃
@@ -158,47 +118,52 @@ const Header = () => {
         </div>
       </div>
       <div className={classes.main_nav}>
-        <MainNavUl>
+        <ul className="relative w-[800px] h-full grid grid-cols-4">
           {/* 카테고리 타이틀들 배열로로 카테고리바 네비게이션 생성 */}
-          {categoryBundle.map((bundle) => {
-            return (
-              <li
-                key={uuid()}
-                id={bundle.id}
-                className={classes.main_nav_li}
-                onMouseOver={categoryOnMouseOverHandler}
-                onMouseOut={categoryOnMouseOutHandler}
-              >
-                <span>{bundle.title}</span>
+          {data ? (
+            data.map((bundle) => {
+              return (
+                <li
+                  key={bundle._id}
+                  id={bundle._id}
+                  className={classes.main_nav_li}
+                  onMouseOver={categoryOnMouseOverHandler}
+                  onMouseOut={categoryOnMouseOutHandler}
+                >
+                  <span>{bundle.title}</span>
 
-                <CategoryModal
-                  categoryBundle={bundle}
-                  categoryIndex={categoryIndex}
-                />
-                {/* <CategoryModal categoryBundle={bundle} /> */}
+                  <CategoryModal
+                    categoryBundle={bundle}
+                    categoryIndex={categoryIndex}
+                  />
+                  {/* <CategoryModal categoryBundle={bundle} /> */}
+                </li>
+              );
+            })
+          ) : (
+            <ul className="relative w-[800px] h-full grid grid-cols-4">
+              <li className={classes.main_nav_li}>
+                <span>WINE</span>
               </li>
-            );
-          })}
+              <li className={classes.main_nav_li}>
+                <span>COUNTRY</span>
+              </li>
+              <li className={classes.main_nav_li}>
+                <span>PRICE</span>
+              </li>
+            </ul>
+          )}
           {/* isCategoryModal state가 true냐 false냐에따라 모달창 컨트롤하는 부분 */}
           <li className={classes.main_nav_li}>
-            <Link to="/product/category/best">
+            <Link to="/category/best">
               <span>BEST</span>
             </Link>
           </li>
-        </MainNavUl>
+        </ul>
         {/* </ul> */}
       </div>
     </div>
   );
 };
-
-const MainNavUl = styled.ul`
-  position: relative;
-  width: 800px;
-  height: 100%;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(${categoryBundle.length + 1}, 1fr);
-`;
 
 export default Header;

@@ -4,36 +4,38 @@ import { useState } from "react";
 import Layout from "../../../components/user/layout/layout";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import { useQuery } from "react-query";
-import axios from "axios";
+import { useQuery, useQueryClient } from "react-query";
+import {
+  getProductsByCategory,
+  getProductsByCategoryPrice,
+  getProductsByIsBest,
+} from "../../../api/api-product";
 
 const ProductListPage = () => {
   // App.js에 정의한 라우터를 통해 받아온 url의 category 정보를 받음
-  const urlParams = useParams().category;
-
-  const categoryName = urlParams;
+  const categoryBest = useParams().category_best;
+  const categoryBundleTitle = useParams().category_bundle_title;
+  const categoryName = useParams().category_name;
+  const categoryPrice1 = useParams().price_1;
+  const categoryPrice2 = useParams().price_2;
+  const queryClient = useQueryClient();
 
   const { data, isLoading, isError, error } = useQuery(
     ["products", categoryName],
     async () => {
-      const data = await axios.get(
-        `http://34.22.85.44/api/products/types/${categoryName}`
-      );
-      return data.data;
+      if (categoryPrice2) {
+        return getProductsByCategoryPrice(categoryPrice1, categoryPrice2);
+      } else if (categoryName) {
+        return getProductsByCategory(categoryBundleTitle, categoryName);
+      } else if (categoryBest === "best") {
+        return getProductsByIsBest();
+      } else {
+        return [];
+      }
     }
   );
 
-  // const filteredProducts = products.filter((data) => {
-  //   if (Object.values(data.feature).indexOf(categoryName) !== -1) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }); // url로 받아온 카테고리명을 특징으로 가지고 있는 데이터를 필터링
-
-  // 전체 데이터인데 쓸 지는 미정
-  // const [productData, setProductData] = useState(filteredData);
-
+  const filteredByIsLarvate = data?.filter((item) => item.saleState !== "숨김");
   // 추가기능) 개수 설정에 따라 n개씩 보여주기 기능 구현할 경우 사용
   // const limit, setLimit] = useState(12);
   const limit = 20;
@@ -47,10 +49,10 @@ const ProductListPage = () => {
 
   return (
     <Layout>
-      <div class="inline-block relative py-16 min-h-screen w-full">
+      <div className="inline-block relative py-16 min-h-screen w-full">
         <div>
           <h1 className="ml-[30px] mb-[50px] text-2xl">
-            {categoryName.toUpperCase()}({data?.length})
+            {categoryName}({data?.length})
           </h1>
         </div>
         {isLoading ? (
@@ -59,11 +61,13 @@ const ProductListPage = () => {
           </div>
         ) : !isError ? (
           <>
-            <ProductListUl>
-              {data?.slice(offset, offset + limit).map((product) => {
-                return <Product key={product.id} product={product} />;
-              })}
-            </ProductListUl>
+            <ul className="grid grid-rows-fr xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-[60px] gap-y-[90px] mb-[90px] place-items-center mx-auto">
+              {filteredByIsLarvate
+                ?.slice(offset, offset + limit)
+                .map((product) => {
+                  return <Product key={product._id} product={product} />;
+                })}
+            </ul>
             <div>
               <Pagination
                 // 필터된 데이터 개수에 따라 창 개수로 설정
@@ -83,14 +87,5 @@ const ProductListPage = () => {
     </Layout>
   );
 };
-
-const ProductListUl = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: repeat(5, minmax(0, 1fr));
-  gap: 60px;
-  row-gap: 90px;
-  margin-bottom: 90px;
-`;
 
 export default ProductListPage;

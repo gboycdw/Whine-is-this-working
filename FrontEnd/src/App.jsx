@@ -20,7 +20,6 @@ import ProductListPage from "./pages/user/product/product-list-page";
 import CartPage from "./pages/user/order/cart-page";
 import SignUpPage from "./pages/auth/signup-page";
 import LoginPage from "./pages/auth/login-page";
-import PersonalInfo from "./components/user/my-page-component/personal-info";
 import ManageCategoryPage from "./pages/admin/category/manage-category-page";
 import ManageOrderDetailPage from "./pages/admin/order/manage-order-detail-page";
 import OrderPage from "./pages/user/order/order-page";
@@ -58,9 +57,18 @@ function App() {
               <Route path="/ordercomplete" element={<OrderCompletePage />} />
 
               <Route
-                path="/product/category/:category"
+                path="/category/:category_best"
                 element={<ProductListPage />}
               />
+              <Route
+                path="/category/:category_bundle_title/:category_name"
+                element={<ProductListPage />}
+              />
+              <Route
+                path="/category/prices/:price_1/:price_2"
+                element={<ProductListPage />}
+              />
+
               <Route
                 path="/product/:product_id"
                 element={<ProductDetailPage />}

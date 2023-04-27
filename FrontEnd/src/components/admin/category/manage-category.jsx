@@ -6,31 +6,35 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ManageCategory = (props) => {
-  // const categoryBundle = props.categoryBundle;
   const [categoryBundle, setCategoryBundle] = useState(props.categoryBundle);
   const navigate = useNavigate();
   console.log(categoryBundle);
 
   const categoryPushHandler = (categoryBundleId, enteredNewCategory) => {
-    const enteredNewCategoryId = enteredNewCategory.id;
+    const enteredNewCategoryId = enteredNewCategory._id;
     const enteredNewCategoryName = enteredNewCategory.name;
 
     let copiedCategoryBundle = [...categoryBundle];
     const index = copiedCategoryBundle.findIndex(
-      (bundle) => bundle.id === categoryBundleId
+      (bundle) => bundle._id === categoryBundleId
     );
 
-    const newCategories = categoryBundle[index].categories.map((category) =>
-      category.id === enteredNewCategoryId
+    const newCategories = categoryBundle[index].categories.map((category) => {
+      console.log(category._id, enteredNewCategoryId);
+      return category._id === enteredNewCategoryId
         ? { ...category, name: enteredNewCategoryName }
-        : category
-    );
+        : category;
+    });
+
+    console.log(newCategories);
 
     const newBundle = categoryBundle.map((bundle) =>
-      bundle.id === categoryBundleId
+      bundle._id === categoryBundleId
         ? { ...bundle, categories: newCategories }
         : bundle
     );
+
+    console.log(newBundle);
 
     setCategoryBundle(newBundle);
 
@@ -48,15 +52,15 @@ const ManageCategory = (props) => {
   const categoryDeleteHandler = (categoryBundleId, categoryId) => {
     let copiedCategoryBundle = [...categoryBundle];
     const index = copiedCategoryBundle.findIndex(
-      (bundle) => bundle.id === categoryBundleId
+      (bundle) => bundle._id === categoryBundleId
     );
 
     const editedcategories = copiedCategoryBundle[index].categories.filter(
-      (category) => category.id !== categoryId
+      (category) => category._id !== categoryId
     );
 
     const newBundle = copiedCategoryBundle.map((bundle) =>
-      bundle.id === categoryBundleId
+      bundle._id === categoryBundleId
         ? { ...bundle, categories: editedcategories }
         : bundle
     );
@@ -68,8 +72,8 @@ const ManageCategory = (props) => {
     e.preventDefault();
     let newArr = [...categoryBundle];
     newArr.map((bundle) => {
-      if (bundle.id === +e.target.id) {
-        bundle.categories.push({ id: uuid(), name: "" });
+      if (bundle._id === e.target.id) {
+        bundle.categories.push({ _id: uuid(), name: "" });
       }
     });
     setCategoryBundle(newArr);
@@ -78,7 +82,6 @@ const ManageCategory = (props) => {
   const categorySaveHandler = async (event) => {
     event.preventDefault();
 
-    console.log(categoryBundle);
     if (
       categoryBundle.filter((bundle) => bundle.categories.length < 1).length > 0
     ) {
@@ -86,15 +89,6 @@ const ManageCategory = (props) => {
       return;
     }
 
-    console.log(
-      categoryBundle.filter((bundle) => {
-        return (
-          bundle.categories.filter((category) => {
-            return category.name.trim().length === 0;
-          }).length !== 0
-        );
-      })
-    );
     if (
       categoryBundle.filter((bundle) => {
         return (
@@ -107,13 +101,32 @@ const ManageCategory = (props) => {
       alert("카테고리 이름에 빈곳이 있습니다.");
       return;
     }
+
+    categoryBundle.forEach((bundle) => {
+      bundle.categories.forEach((categories) => {
+        delete categories._id;
+      });
+    });
+
     try {
-      const result = await axios.post("http://34.22.85.44/api/cateogries", {});
-      console.log(result);
-      alert("카테고리가 성공적으로 저장되었습니다.");
-      navigate("/manage/category");
+      categoryBundle.forEach(async (bundle) => {
+        await axios.patch(
+          `http://34.22.85.44:5000/api/categories/${bundle._id}`,
+          {
+            categories: bundle.categories,
+          }
+        );
+      });
+      // const response = await axios.put(
+      //   `http://34.22.85.44:5000/api/categories/${categoryBundle}`,
+      //   {
+      //     categoryBundle,
+      //   }
+      // );
+      // navigate("/manage/category");
     } catch (error) {
       console.log(error);
+      return;
     }
     alert("카테고리 저장이 완료되었습니다.");
 
@@ -125,25 +138,25 @@ const ManageCategory = (props) => {
   };
 
   return (
-    <div class="flex w-full p-6">
-      <div class="flex flex-col bg-[#ffffff] px-8 py-4 min-h-[500px] border border-color2">
-        <div class="grid grid-cols-2 gap-10">
+    <div className="flex w-full p-6">
+      <div className="flex flex-col bg-[#ffffff] px-8 py-4 min-h-[500px] border border-color2">
+        <div className="grid grid-cols-2 gap-10">
           {categoryBundle.map((bundle) => {
             return (
-              <div key={uuid()} class="flex flex-col w-[400px] text-sm">
-                <div class="h-12 flex gap-10 justify-between items-center border-b border-color2 ">
-                  <div class="flex items-center font-bold text-lg px-1">
+              <div key={uuid()} className="flex flex-col w-[400px] text-sm">
+                <div className="h-12 flex gap-10 justify-between items-center border-b border-color2 ">
+                  <div className="flex items-center font-bold text-lg px-1">
                     {bundle.title}
                   </div>
-                  {/* <div class="flex gap-2 px-1">
+                  {/* <div className="flex gap-2 px-1">
                     <button
-                      class="py-1 px-3 "
+                      className="py-1 px-3 "
                       // onClick={categoryEditHandler}
                     >
                       수정
                     </button>
                     <button
-                      class="py-1 px-3 "
+                      className="py-1 px-3 "
                       // onClick={categoryDeleteHandler}
                     >
                       삭제
@@ -155,18 +168,18 @@ const ManageCategory = (props) => {
                   {bundle.categories.map((category) => {
                     return (
                       <CategoryManageForm
-                        key={category.id}
+                        key={category._id}
                         categoryPushHandler={categoryPushHandler}
                         categoryDeleteHandler={categoryDeleteHandler}
-                        categoryBundleId={bundle.id}
-                        categoryId={category.id}
+                        categoryBundleId={bundle._id}
+                        categoryId={category._id}
                         categoryName={category.name}
                       />
                     );
                   })}
                 </ul>
-                <div class="flex justify-end h-12 items-center px-1">
-                  <button id={bundle.id} onClick={categoryAddHandler}>
+                <div className="flex justify-end h-12 items-center px-1">
+                  <button id={bundle._id} onClick={categoryAddHandler}>
                     카테고리 추가
                   </button>
                 </div>
@@ -174,7 +187,7 @@ const ManageCategory = (props) => {
             );
           })}
         </div>
-        <div class="flex justify-end">
+        <div className="flex justify-end">
           <div onClick={categorySaveHandler}>
             <Button isConfirm={true}>저장</Button>
           </div>
