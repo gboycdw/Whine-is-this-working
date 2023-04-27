@@ -4,9 +4,10 @@ import ManageCategory from "../../../components/admin/category/manage-category";
 import AdminLayout from "../../../components/admin/layout/admin-layout";
 
 const ManageCategoryPage = () => {
-  const { data, isLoading, isError, error } = useQuery("category", async () => {
-    await getAllCategories();
-  });
+  const { data, isLoading, isError, error } = useQuery(
+    "category",
+    async () => await getAllCategories()
+  );
 
   return (
     <AdminLayout title="카테고리 관리">

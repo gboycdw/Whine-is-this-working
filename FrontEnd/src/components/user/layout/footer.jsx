@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div class="bg-color0 p-5 text-[#ffffff]">
+    <div className="bg-color0 p-5 text-[#ffffff]">
       <div>
         <p>프로젝트명 : 와인 쇼핑몰 제작 | 팀명 : 와인..게되네</p>
         <p>팀리더 : 최도원 </p>

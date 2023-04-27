@@ -5,7 +5,9 @@ const Layout = (props) => {
   return (
     <>
       <Header />
-      <main class="w-[1200px] m-auto">{props.children}</main>
+      <main className="lg:w-[1200px] md:w-[900px] sm:w-[600px] m-auto">
+        {props.children}
+      </main>
       <Footer />
     </>
   );

@@ -29,7 +29,7 @@
 }
 
 .cate_tag_list {
-  display: block;
+  display: iline-block;
 }
 
 .tag_name {

@@ -12,8 +12,6 @@ const ManageOrderDetailPage = () => {
     async () => getOrderByOrderIndex(orderIndex)
   );
 
-  console.log(data, isLoading, isError, error);
-
   return (
     <AdminLayout title="주문 상세 관리">
       {isLoading ? (

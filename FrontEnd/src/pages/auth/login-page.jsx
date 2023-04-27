@@ -1,14 +1,19 @@
 import { useState } from "react";
 import Layout from "../../components/user/layout/layout";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { authState } from "../../components/store/auth-context";
 
 const LoginPage = (props) => {
+  // const [authData, setAuthData] = useRecoilState(authState);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [button, setButton] = useState(true);
 
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   // 아이디 입력값 업데이트 핸들러
   const emailChangeHandler = (e) => {
@@ -33,18 +38,29 @@ const LoginPage = (props) => {
   // };
 
   // 로그인이 되었을 경우 메인 페이지로 이동 핸들러
-
   // 아이디, 비밀번호 일치 여부 확인 핸들러
   const loginSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const result = await axios.post("/api/users/login", {
-        email,
-        password,
-      });
-      console.log(result);
+      const response = await axios.post(
+        "http://34.22.85.44:5000/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+      console.log(response.data);
+      const accessToken = response.data;
+      localStorage.setItem("auth", accessToken);
+      // setAuthData({ isLoggedIn: true });
+
+      if (state) {
+        navigate(state);
+      } else {
+        navigate("/");
+      }
     } catch (error) {
-      console.log(error);
+      alert(`${error.message}`);
     }
   };
 

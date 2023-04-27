@@ -8,7 +8,7 @@ const MainPage = () => {
     <>
       <Layout>
         <img
-          class="max-w-none w-screen ml-[calc(-50vw+50%)]"
+          className="max-w-none w-screen ml-[calc(-50vw+50%)]"
           src="banner.jpeg"
           alt="banner"
         />
