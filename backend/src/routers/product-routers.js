@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { productService } from "../services/index.js";
 import { productChecker } from "../middlewares/productValidation.js";
+// import { imageUploadHelper } from "../middlewares/multer.js";
 
 const productRouter = Router();
 
