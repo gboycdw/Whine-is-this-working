@@ -11,9 +11,8 @@ class OrderModel {
     try {
       const findOrder = await Order.find({ buyerEmail: userId }).populate({
         path: "orderList.product",
-        select: "name type country brand price discountPrice",
+        select: "name type country brand price discountPrice imgUrl",
       });
-      console.log(findOrder);
       if (findOrder.length < 1) {
         throw new Error("⚠️ 해당 유저의 주문내역이 존재하지 않습니다.");
       }
@@ -30,7 +29,7 @@ class OrderModel {
         orderIndex: orderIndex,
       }).populate({
         path: "orderList.product",
-        select: "name type country brand price discountPrice",
+        select: "name type country brand price discountPrice imgUrl",
       });
       if (findOrderByIndex.length < 1) {
         throw new Error("⚠️ 해당 주문내역이 존재하지 않습니다.");
@@ -47,7 +46,7 @@ class OrderModel {
     try {
       const allOrder = await Order.find({}).populate({
         path: "orderList.product",
-        select: "name type country brand price discountPrice",
+        select: "name type country brand price discountPrice imgUrl",
       });
       if (allOrder.length < 1) {
         throw new Error("⚠️ 주문내역이 하나도 존재하지 않습니다.");
@@ -95,7 +94,7 @@ class OrderModel {
       return updatedOrderData;
     } catch (err) {
       console.log(err);
-      throw new Error("❌ 주문내용 수정 실패!! 오류 메시지를 확인하세요.");
+      throw new Error(err);
     }
   }
 

@@ -12,9 +12,9 @@ orderRouter.get("/:userid", async (req, res) => {
     res.json(dbdata);
     console.log("✔️", userEmail, " 의 주문내역 출력 완료.");
   } catch (err) {
-    res
-      .status(500)
-      .send("Internal server Error!! 해당 유저의 주문내역이 없습니다.");
+    res.status(500)
+      .send(`Internal server Error!! 해당 유저의 주문내역이 없습니다.
+      오류 메시지 : ${err}`);
   }
 });
 //-------------[Admin] 모든 유저의 주문내역 검색하기-------------//
@@ -84,7 +84,8 @@ orderRouter.patch(
       res.json(dbdata);
       console.log("✔️ 주문번호 ", orderIndex, " 의 배송정보 변경 완료.");
     } catch (err) {
-      res.status(500).send("Internal server Error!! 배송상태 변경 실패");
+      res.status(500).send(`Internal server Error!! 배송상태 변경 실패
+      오류 메시지 : ${err}`);
       console.log(err);
     }
   }
