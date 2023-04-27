@@ -1,121 +1,146 @@
 import { Router } from "express";
 import { orderService } from "../services/index.js";
+import { orderChecker } from "../middlewares/orderValidation.js";
 const orderRouter = Router();
 
 //-----------------userId로 주문내역 검색하기-----------------//
-orderRouter.get("/:userid", async (req, res) => {
+orderRouter.get("/:userid", async (req, res, next) => {
   try {
     const userEmail = req.params.userid;
     console.log("🔎", userEmail, " 의 주문내역을 조회 중...");
     const dbdata = await orderService.findUserOrder(userEmail);
     res.json(dbdata);
-    console.log("✔️ ", userEmail, " 의 주문내역 출력 완료.");
+    console.log("✔️", userEmail, " 의 주문내역 출력 완료.");
   } catch (err) {
-    res
-      .status(500)
-      .send("Internal server Error!! 해당 유저의 주문내역이 없습니다.");
+    console.log(`❌ ${err}`);
+    next(err);
   }
 });
 //-------------[Admin] 모든 유저의 주문내역 검색하기-------------//
-orderRouter.get("/", async (req, res) => {
+orderRouter.get("/", async (req, res, next) => {
   try {
     const dbdata = await orderService.findAllOrdersByAdmin();
     console.log("🔎 모든 유저의 주문정보를 조회합니다...");
     res.json(dbdata);
-    console.log("✔️  주문정보 출력 완료!");
+    console.log("✔️ 주문정보 출력 완료!");
   } catch (err) {
-    res.status(500).send("Internal server Error!! 입력된 주문내역이 없습니다.");
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+//-------------주문번호로 주문내역 검색하기-------------//
+orderRouter.get("/order/:index", async (req, res, next) => {
+  try {
+    const orderIndex = req.params.index;
+    const dbdata = await orderService.findOrderIndex(orderIndex);
+    console.log("🔎 해당 주문번호의 주문정보를 조회합니다...");
+    res.json(dbdata);
+    console.log("✔️ 주문정보 출력 완료!");
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
   }
 });
 //-----------------유저가 새로운 주문 추가하기-----------------//
-orderRouter.post("/", async (req, res, next) => {
+orderRouter.post("/", orderChecker.newOrderJoi, async (req, res, next) => {
   console.log("🔄 새로운 주문내역을 만드는 중...");
   const orderInfo = req.body;
-  console.log(orderInfo);
   try {
     const dbdata = await orderService.createNewOrder(orderInfo);
-    console.log("✔️  주문 완료. 감사합니다.");
+    console.log("✔️ 주문 완료. 감사합니다.");
     res.json(dbdata);
   } catch (err) {
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
 //-----------주문번호로 유저의 주문정보 수정하기--------------//
-orderRouter.put("/:number", async (req, res, next) => {
-  const orderNumber = req.params.number;
-  console.log("🔄 주문번호 ", orderNumber, "의 주문정보를 수정하는 중...");
+orderRouter.patch(
+  "/information",
+  orderChecker.changeOrderJoi,
+  async (req, res, next) => {
+    const { orderIndex, ...updateInfo } = req.body;
+    console.log("🔄 주문번호 ", orderIndex, "의 주문정보를 수정하는 중...");
+    try {
+      const dbdata = await orderService.changeUsersOrder(
+        orderIndex,
+        updateInfo
+      );
+      res.json(dbdata);
+      console.log("✔️ 주문번호 ", orderIndex, "의 주문정보 수정 완료.");
+    } catch (err) {
+      console.log(`❌ ${err}`);
+      next(err);
+    }
+  }
+);
+//------------[Admin] 주문정보로 배송 상태 변경하기 -------------//
+orderRouter.patch(
+  "/shippingstatus",
+  orderChecker.changeStatusJoi,
+  async (req, res, next) => {
+    try {
+      const orderIndex = req.body.orderIndex;
+      const status = req.body.shippingStatus;
+      console.log("🔄 주문번호 ", orderIndex, " 의 배송정보를 수정하는 중...");
+      const dbdata = await orderService.changeStatusByAdmin(orderIndex, status);
+      res.json(dbdata);
+      console.log("✔️ 주문번호 ", orderIndex, " 의 배송정보 변경 완료.");
+    } catch (err) {
+      console.log(`❌ ${err}`);
+      next(err);
+    }
+  }
+);
+//------------[Admin] 주문정보로 운송장번호 변경하기 -------------//
+orderRouter.patch(
+  "/waybill",
+  orderChecker.changeWayBillJoi,
+  async (req, res, next) => {
+    try {
+      const orderIndex = req.body.orderIndex;
+      const wayBill = req.body.waybill;
+      console.log(
+        "🔄 주문번호 ",
+        orderIndex,
+        " 의 운송장정보를 수정하는 중..."
+      );
+      const dbdata = await orderService.changeWayBillByAdmin(
+        orderIndex,
+        wayBill
+      );
+      res.json(dbdata);
+      console.log("✔️ 주문번호 ", orderIndex, " 의 운송장번호 변경 완료.");
+    } catch (err) {
+      console.log(`❌ ${err}`);
+      next(err);
+    }
+  }
+);
+//-------------[Admin] 주문정보로 해당 주문 삭제하기 --------------//
+orderRouter.delete("/admin/:number", async (req, res, next) => {
   try {
-    const updateInfo = req.body;
-    const dbdata = await orderService.changeUsersOrder(orderNumber, updateInfo);
-    res.json(dbdata);
-    console.log("✔️  주문번호 ", orderNumber, "의 주문정보 수정 완료.");
+    const orderIndex = req.params.number;
+    console.log("🔄 주문번호 ", orderIndex, " 의 주문내역을 삭제하는 중...");
+    await orderService.deleteOrderByAdmin(orderIndex);
+    res.send("주문내역 삭제 완료");
+    console.log("✔️ 주문번호 ", orderIndex, " 의 주문내역 삭제 완료.");
   } catch (err) {
+    console.log(`❌ ${err}`);
     next(err);
   }
 });
-//------------[Admin] 주문정보로 배송 상태 변경하기 -------------//
-orderRouter.put("/:number/:status", async (req, res) => {
-  try {
-    const orderNumber = req.params.number;
-    const status = req.params.status;
-    console.log("🔄 주문번호 ", orderNumber, " 의 배송정보를 수정하는 중...");
-    const dbdata = await orderService.changeStatusByAdmin(orderNumber, status);
-    res.json(dbdata);
-    console.log("✔️  주문번호 ", orderNumber, " 의 배송정보 변경 완료.");
-  } catch (err) {
-    res.status(500).send("Internal server Error!! 배송상태 변경 실패");
-    console.log(err);
-  }
-});
-//------------[Admin] 주문정보로 운송장번호 변경하기 -------------//
-orderRouter.put("/:number/parcels/:waybill", async (req, res) => {
-  try {
-    const orderNumber = req.params.number;
-    const wayBill = req.params.waybill;
-    console.log("🔄 주문번호 ", orderNumber, " 의 운송장정보를 수정하는 중...");
-    const dbdata = await orderService.changeWayBillByAdmin(
-      orderNumber,
-      wayBill
-    );
-    res.json(dbdata);
-    console.log("✔️  주문번호 ", orderNumber, " 의 운송장번호 변경 완료.");
-  } catch (err) {
-    res.status(500).send("Internal server Error!! 운송장번호 변경 실패");
-    console.log(err);
-  }
-});
-//-------------[Admin] 주문정보로 해당 주문 삭제하기 --------------//
-orderRouter.delete("/admin/:number", async (req, res) => {
-  try {
-    const orderNumber = req.params.number;
-    console.log("🔄 주문번호 ", orderNumber, " 의 주문내역을 삭제하는 중...");
-    await orderService.deleteOrderByAdmin(orderNumber);
-    res.send("주문내역 삭제 완료");
-    console.log("✔️  주문번호 ", orderNumber, " 의 주문내역 삭제 완료.");
-  } catch (err) {
-    res
-      .status(500)
-      .send(
-        "Internal server Error!! 해당 유저의 주문내역이 없거나, 배송이 시작되었습니다."
-      );
-    console.log(err);
-  }
-});
 //-----------------유저가 주문정보로 본인의 주문 취소하기 -----------------//
-orderRouter.delete("/:number", async (req, res) => {
+orderRouter.delete("/:number", async (req, res, next) => {
   try {
-    const orderNumber = req.params.number;
-    console.log("🔄 주문번호 ", orderNumber, " 의 주문을 취소하는 중...");
-    await orderService.deleteOrderByUser(orderNumber);
+    const orderIndex = req.params.number;
+    console.log("🔄 주문번호 ", orderIndex, " 의 주문을 취소하는 중...");
+    await orderService.deleteOrderByUser(orderIndex);
     res.send("주문 취소 완료");
-    console.log("✔️ 주문번호 ", orderNumber, " 의 주문 취소 완료.");
+    console.log("✔️ 주문번호 ", orderIndex, " 의 주문 취소 완료.");
   } catch (err) {
-    res
-      .status(500)
-      .send(
-        "Internal server Error!! 해당 주문내역이 없거나, 배송이 시작되었습니다."
-      );
-    console.log(err);
+    console.log(`❌ ${err}`);
+    next(err);
   }
 });
 

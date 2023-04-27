@@ -17,7 +17,7 @@ export class UserModel {
       const newUser = await User.create(userInfo);
       return newUser;
     } catch (err) {
-      throw new Error("유저 회원가입 중 에러가 발생했습니다. models");
+      throw new Error(err);
     }
   }
 
@@ -26,7 +26,7 @@ export class UserModel {
     try {
       await User.findOneAndUpdate({ email: userId }, { status: 0 });
     } catch (err) {
-      throw new Error("유저 삭제 중 에러가 발생했습니다. models");
+      throw new Error(err);
     }
   }
 
@@ -43,7 +43,7 @@ export class UserModel {
       );
       return updatedUser;
     } catch (err) {
-      throw new Error("유저 정보 업데이트 중 에러가 발생했습니다. models");
+      throw new Error(err);
     }
   }
 
@@ -56,9 +56,16 @@ export class UserModel {
       ).lean();
       return allUser;
     } catch (err) {
-      throw new Error("전체 유저 불러오기 중 에러가 발생했습니다. models");
+      throw new Error(err);
     }
   }
-}
 
+  async findUserById(email) {
+    const userData = await User.findOne(
+      { email },
+      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
+    );
+    return userData;
+  }
+}
 export const userModel = new UserModel();

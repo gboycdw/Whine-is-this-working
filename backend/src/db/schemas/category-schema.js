@@ -7,14 +7,13 @@ const CategorySchema = new Schema({
   },
   categories: [
     {
-      id: {
-        type: Number,
-        required: true,
-      },
       name: {
         type: String,
         required: true,
       },
+    },
+    {
+      _id: false,
     },
   ],
 });

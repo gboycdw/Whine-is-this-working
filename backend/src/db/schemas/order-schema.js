@@ -1,31 +1,32 @@
-// const mongoose = require("mongoose");
 import { Schema } from "mongoose";
 
 const OrderSchema = new Schema(
   {
     //----------------주문 리스트----------------//
     orderList: {
-      // 구매할 물건의 이름과 갯수
-      type: Map,
-      of: Number,
+      type: [
+        {
+          _id: false,
+          product: {
+            type: Schema.Types.ObjectId,
+            ref: "Product",
+            required: true,
+          },
+          amount: {
+            type: Number,
+            required: true,
+            min: 1,
+          },
+        },
+      ],
       required: true,
       validate: {
-        validator: (v) => Object.keys(v).length > 0,
+        validator: (v) => v.length > 0,
         message: "0개의 상품을 주문할 수 없습니다.",
       },
     },
-    priceList: {
-      // 구매할 물건의 이름과 가격
-      type: Map,
-      of: Number,
-      required: true,
-      validate: {
-        validator: (v) => Object.keys(v).length > 0,
-        message: "가격은 반드시 존재해야 하는 값입니다.",
-      },
-    },
 
-    totalPrice: {
+    totalPayPrice: {
       // 구매할 상품의 총 가격. 프론트단에서 넘겨받을 예정임.
       type: Number,
       required: true,
@@ -38,7 +39,7 @@ const OrderSchema = new Schema(
     },
 
     //----------------주문자 정보----------------//
-    orderNumber: {
+    orderIndex: {
       // 주문번호 (서버에 저장할 때 자동 생성)
       type: String,
       required: true,
@@ -82,11 +83,11 @@ const OrderSchema = new Schema(
       type: String,
       required: false,
     },
-    shippingPostalCode: {
-      // 배송지 우편번호
-      type: String,
-      // required: true,
-    },
+    // shippingPostalCode: {
+    //   // 배송지 우편번호
+    //   type: String,
+    //   // required: true,
+    // },
     shippingRequest: {
       // 배송 요청사항 - 필수는 아님.
       type: String,

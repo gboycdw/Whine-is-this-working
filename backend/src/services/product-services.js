@@ -100,8 +100,8 @@ class ProductService {
   }
 
   //상품 수정
-  async updateProduct(id, updateInfo) {
-    const product = await productModel.updateProduct(id, updateInfo);
+  async updateProduct(id, updateInfo, option) {
+    const product = await productModel.updateProduct(id, updateInfo, option);
     return product;
   }
 
