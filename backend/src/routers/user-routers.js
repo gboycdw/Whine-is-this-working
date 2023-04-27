@@ -163,7 +163,7 @@ userRouter.get("/auth/verifyToken", async (req, res, next) => {
   }
   try {
     console.log("🔎 유저 정보를 조회합니다...");
-    const allUser = await userService.verifyToken();
+    const allUser = await userService.verifyToken(token);
     console.log("🖥️ 유저 정보 출력 중..");
     return res.status(200).json(allUser);
   } catch (err) {
