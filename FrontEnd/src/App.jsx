@@ -110,6 +110,24 @@ function App() {
                     path="/manage/category"
                     element={<ManageCategoryPage />}
                   />
+                  <Route path="/mypage" element={<MyPage />}>
+                    <Route path="/mypage" element={<OrderedItemsList />} />
+                    {/* //마이페이지 네비게이션 중첩라우터 */}
+                    <Route
+                      path="ordered-items-list"
+                      element={<OrderedItemsList />}
+                    />
+                    <Route path="personal-info" element={<PersonalInfo />} />
+                    <Route
+                      path="personal-info-modify"
+                      element={<PersonalInfoModify />}
+                    />
+                    <Route
+                      path="cus-service-center"
+                      element={<CusServiceCenter />}
+                    />
+                    <Route path="withdrawl" element={<Withdrawl />} />
+                  </Route>
                 </Routes>
               </Layout>
             </QueryClientProvider>

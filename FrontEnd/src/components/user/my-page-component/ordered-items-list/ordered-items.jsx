@@ -7,11 +7,10 @@ const OrderedItems = (
   props
 ) => {
   const navigate = useNavigate();
-  const orderedItems = props.orderedItems; //아이템들 정보 담긴 배열
-  const dateOfOrder = props.dateOfOrder; //주문 날짜
+  const orderList = props.orderList; //아이템들 정보 담긴 배열
+  const dateOfOrder = props.dateOfOrder.replaceAll("-", ".").slice(0, 10); //주문 날짜 createAt 으로 받아와서 자르고 -는 .로 바꿈.
   const shippingState = props.shippingState; //배송상태
   const shippingOptionHandler = (e) => {
-    console.log(e.target.innerHTML);
     e.target.innerHTML === "주문취소"
       ? alert("주문이 취소되었습니다.") // 주문취소 버튼 클릭시 => db 요청 삭제.
       : e.target.innerHTML === "배송조회"
@@ -68,7 +67,7 @@ const OrderedItems = (
           <div class=" flex justify-center items-center ">
             <div class="w-[90%] h-[90%] ">
               <div>
-                {orderedItems.map((index) => (
+                {orderList.map((index) => (
                   //items 들이 들어있는 배열
                   <OrderedItem orderedItems={index} />
                 ))}

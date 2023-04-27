@@ -6,16 +6,16 @@ const OrderedItem = (props) => {
       <div class="  justify-items-start  ">
         <div class=" h-[90%] m-[20px] ">
           <div class=" flex  ">
-            <div class="m-[20px] w-[70px] h-[70px] bg-bgc1 flex justify-center items-center  ">
+            <div class="m-[20px] w-[80px] h-[80px] bg-bgc1 flex justify-center items-center  ">
               <img
-                src={orderedItems.imgUrl}
+                src={orderedItems.product.imgUrl}
                 alt={"와인이미지"}
-                class="w-[25px] h-[50px] "
+                class="w-[60px] h-[60px] "
               ></img>
             </div>
 
             <span class="m-[20px] w-[100%] text-2xl">
-              {orderedItems.productName}, {orderedItems.productNums}병
+              {orderedItems.product.name}, {orderedItems.amount}병
               {/* 상품명, 상품개수 */}
             </span>
           </div>

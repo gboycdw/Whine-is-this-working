@@ -1,161 +1,22 @@
 import { useState } from "react";
 import OrderedItems from "./ordered-items";
 import Pagination from "../../product/pagination";
+import { useQuery } from "react-query";
+import { getOrderByOrderBuyerEmail } from "../../../../api/api-order";
 
 const OrderedItemsList = () => {
   const limit = 5; // items의 페이지네이션 단위
   const [page, setPage] = useState(1); //페이지
   const offset = (page - 1) * limit;
-
-  const orderedItemsData = [
-    //더미 데이터
-    {
-      orderedItemsId: "1acascascsac",
-      dateOfOrder: "2023.4.29",
-      shippingState: "배송준비중",
-      orderedItems: [
-        {
-          orderedItemId: "1",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-      ],
-    },
-    {
-      orderedItemsId: "2",
-      dateOfOrder: "2023.4.25",
-      shippingState: "배송중",
-      orderedItems: [
-        {
-          orderedItemId: "1",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-        {
-          orderedItemId: "2",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-      ],
-    },
-    {
-      orderedItemsId: "3",
-      dateOfOrder: "2023.3.3",
-      shippingState: "배송완료",
-      orderedItems: [
-        {
-          orderedItemId: "1",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-        {
-          orderedItemId: "2",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-        {
-          orderedItemId: "3",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-        {
-          orderedItemId: "4",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-        {
-          orderedItemId: "5",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-      ],
-    },
-    {
-      orderedItemsId: "4",
-      dateOfOrder: "2022.12.23",
-      shippingState: "배송완료",
-      orderedItems: [
-        {
-          orderedItemId: "1",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-        {
-          orderedItemId: "2",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-      ],
-    },
-    {
-      orderedItemsId: "5",
-      dateOfOrder: "2022.3.17",
-      shippingState: "배송완료",
-      orderedItems: [
-        {
-          orderedItemId: "1",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-      ],
-    },
-    {
-      orderedItemsId: "6",
-      dateOfOrder: "2023.2.12",
-      shippingState: "배송완료",
-      orderedItems: [
-        {
-          orderedItemId: "1",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-      ],
-    },
-    {
-      orderedItemsId: "7",
-      dateOfOrder: "2022.1.22",
-      shippingState: "배송완료",
-      orderedItems: [
-        {
-          orderedItemId: "1",
-          productName: "17th Rayen Francho Cielf IV 480ml",
-          productNums: 2,
-          imgUrl:
-            "https://cdn.pixabay.com/photo/2013/07/12/16/28/wine-150955_960_720.png",
-        },
-      ],
-    },
-  ];
+  const buyerEmail = "test@gmail.com";
+  const { data, isLoading, isError, error } = useQuery(
+    ["orders", buyerEmail],
+    async () => await getOrderByOrderBuyerEmail(buyerEmail)
+  );
+  const orderedItemsData = data;
+  console.log("order", orderedItemsData);
+  console.log("shippingStatus", orderedItemsData[0].shippingStatus);
+  console.log("orderList", orderedItemsData[0].orderList);
   return (
     <>
       <div class=" flex justify-center items-center ">
@@ -166,9 +27,9 @@ const OrderedItemsList = () => {
           <div>
             {orderedItemsData.slice(offset, offset + limit).map((index) => (
               <OrderedItems
-                dateOfOrder={index.dateOfOrder}
-                shippingState={index.shippingState}
-                orderedItems={index.orderedItems}
+                dateOfOrder={index.createdAt}
+                shippingState={index.shippingStatus}
+                orderList={index.orderList}
               />
             ))}
           </div>
