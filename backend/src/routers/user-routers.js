@@ -155,15 +155,15 @@ userRouter.get("/allUser", async (req, res, next) => {
   }
 });
 
-// 토큰 검증 후 유저 정보 조회
+// 토큰 검증 후 로그인 유저 정보 조회
 userRouter.get("/auth/verifyToken", async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
     return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
   }
   try {
-    console.log("🔎 모든 유저 리스트를 조회합니다...");
-    const allUser = await userService.getAllUser();
+    console.log("🔎 유저 정보를 조회합니다...");
+    const allUser = await userService.verifyToken();
     console.log("🖥️ 유저 정보 출력 중..");
     return res.status(200).json(allUser);
   } catch (err) {
