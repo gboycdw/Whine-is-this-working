@@ -194,7 +194,7 @@ const Header = (props) => {
           src="up-arrow.png"
           alt="스크롤"
           onClick={MoveToTop}
-          className="h-[60px] w-[60px] fixed right-[5%] bottom-[10%] z-[100]"
+          className="h-[60px] w-[60px] fixed right-[5%] bottom-[10%] z-[100] hover:cursor-pointer"
         />
       </div>
     </div>
