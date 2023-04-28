@@ -15,7 +15,7 @@ const OurPick = (props) => {
             {pickedProducts?.slice(0, 3).map((item) => {
               return (
                 <Link key={item._id} to={`/product/${item._id}`}>
-                  <li className="bg-color2 w-80 h-96 flex flex-col justify-between items-center rounded-3xl py-5 px-6">
+                  <li className="bg-[#F9EFEF] w-80 h-96 flex flex-col justify-between items-center rounded-3xl py-5 px-6">
                     <img
                       className="h-[220px]"
                       src={item.imgUrl}
