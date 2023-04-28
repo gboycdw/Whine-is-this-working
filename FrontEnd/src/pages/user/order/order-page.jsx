@@ -23,8 +23,6 @@ const OrderPage = () => {
     localStorage.setItem("cartData", JSON.stringify(cartData));
   }, [cartData]);
 
-  console.log(authData);
-
   useEffect(() => {
     setBuyer(authData?.name);
     setBuyerEmail(authData?.email);
@@ -62,7 +60,6 @@ const OrderPage = () => {
   // cartData를 돌면서 "product":_id, "amount":amount 형식으로 객체 생성
   const orderList = [];
   for (let i = 0; i <= cartData?.length - 1; i++) {
-    console.log(cartData[i]["_id"]);
     orderList.push({
       product: cartData[i]["_id"],
       amount: cartData[i]["amount"],
@@ -98,6 +95,7 @@ const OrderPage = () => {
       console.log(result);
       alert("주문이 성공적으로 완료되었습니다.");
       localStorage.removeItem("cartData");
+      sessionStorage.removeItem("cartToOrder");
       setCartData([]);
       navigate("/");
       queryClient.invalidateQueries("orders");

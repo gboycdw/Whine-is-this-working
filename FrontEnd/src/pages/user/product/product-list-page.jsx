@@ -40,7 +40,6 @@ const ProductListPage = () => {
   const limit = 20;
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
-  console.log(page);
 
   useEffect(() => {
     setPage(1);
@@ -48,7 +47,6 @@ const ProductListPage = () => {
 
   // grid에 rows를 동적으로 줘서 아이템 개수에 따라
   // pagination 위치가 마지막 아이템 줄 밑에 바로 붙도록 설정
-  console.log(filteredByIsLarvate);
   return (
     <>
       <div className="inline-block relative py-16 min-h-screen w-full">
