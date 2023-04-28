@@ -46,14 +46,18 @@ class OrderModel {
   // [Admin] 모든 유저의 주문내역을 조회하는 기능
   async findAllOrders() {
     try {
-      const allOrder = await Order.find({}).populate({
-        path: "orderList.product",
-        select: "name type country brand price discountPrice imgUrl",
-      });
+      const allOrder = await Order.find({});
+
       if (allOrder.length < 1) {
         throw new Error(
           "[주문 전체조회 실패] 주문내역이 하나도 존재하지 않습니다."
         );
+      }
+      for (let i = 0; i < allOrder.length; i++) {
+        allOrder[i].populate({
+          path: "orderList.product",
+          select: "name type country brand price discountPrice imgUrl",
+        });
       }
       return allOrder;
     } catch (err) {
