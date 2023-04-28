@@ -14,9 +14,9 @@ app.use(cors());
 // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ limit: "10mb", extended: false }));
 //
-app.use("/static", express.static(__dirname + "/src/image-storage"));
+app.use("/imgtest", express.static(__dirname, "src", "image-storage"));
 
 // 라우터 등록
 app.use("/api/users", userRouter);
