@@ -215,6 +215,8 @@ const EditProduct = (props) => {
 
   return (
     <div className="flex flex-col p-6 bg-color3 ">
+      <span className="text-xl mb-3 font-bold px-5">상품 수정</span>
+      <div className="mx-5 border-b"></div>
       {isImageModal ? (
         <div className="fixed border border-color2 w-[430px] h-[600px] bg-[#ffffff] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-50 p-10 rounded-xl flex flex-col items-center gap-5">
           <div className="flex w-full flex-col items-center border border-color2 p-5">

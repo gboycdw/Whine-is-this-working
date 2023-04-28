@@ -17,10 +17,15 @@ const DeliveryInfo = (props) => {
     useState(shippingExtraAddress);
   const [newRecipientPhoneNumber, setNewRecipientPhoneNumber] =
     useState(recipientPhoneNumber);
-  const [billingNum, setBillingNum] = useState("");
+  const [billingNum, setBillingNum] = useState(
+    shippingStatus === "배송중" || shippingStatus === "배송완료"
+      ? 2342442143
+      : ""
+  );
 
   const [isAddressForm, setIsAddressForm] = useState(false);
   const [isBillingNumForm, setIsBillingNumForm] = useState(false);
+  const [isPhoneNumberForm, setIsPhoneNumberForm] = useState(false);
 
   const toggleFormHandler = (e) => {
     if (e.target.id === "addressForm") {
@@ -28,6 +33,9 @@ const DeliveryInfo = (props) => {
     }
     if (e.target.id === "billingNum") {
       setIsBillingNumForm(true);
+    }
+    if (e.target.id === "phoneNumber") {
+      setIsPhoneNumberForm(true);
     }
   };
 
@@ -37,6 +45,10 @@ const DeliveryInfo = (props) => {
 
   const shippingAddressExtraOnChangeHandler = (e) => {
     setNewShippingExtraAddress(e.target.value);
+  };
+
+  const phoneNumberChangeHandler = (e) => {
+    setNewRecipientPhoneNumber(e.target.value);
   };
 
   const billingNumChangeHandler = (e) => {
@@ -53,9 +65,14 @@ const DeliveryInfo = (props) => {
       try {
         const result = await axios.patch(
           "http://34.22.85.44:5000/api/orders/information",
-          { orderIndex, shippingAddress, shippingExtraAddress }
+          {
+            orderIndex,
+            recipientPhoneNumber: newRecipientPhoneNumber,
+          }
         );
         console.log(result);
+        alert("배송주소가 수정되었습니다.");
+        setIsAddressForm(false);
       } catch (error) {
         alert(`${error.message}`);
       }
@@ -69,6 +86,26 @@ const DeliveryInfo = (props) => {
           { orderIndex, wayBill: billingNum }
         );
         console.log(result);
+        setIsBillingNumForm(false);
+        alert("운송장 번호가 입력되었습니다.");
+      } catch (error) {
+        alert(`${error.message}`);
+        return;
+      }
+    }
+
+    if (e.target.id === "phoneNumber") {
+      try {
+        const result = await axios.patch(
+          "http://34.22.85.44:5000/api/orders/information",
+          {
+            orderIndex,
+            recipientPhoneNumber: newRecipientPhoneNumber,
+          }
+        );
+        console.log(result);
+        alert("연락처가 수정되었습니다.");
+        setIsPhoneNumberForm(false);
       } catch (error) {
         alert(`${error.message}`);
       }
@@ -153,10 +190,37 @@ const DeliveryInfo = (props) => {
               <span className="px-4">연락처</span>
             </div>
             <div className="flex w-80 h-full items-center justify-between">
-              <span className="px-4">{recipientPhoneNumber}</span>
-              <button className="px-3 border border-color2 h-8 mr-3 rounded text-sm">
-                변경
-              </button>
+              {isPhoneNumberForm ? (
+                <input
+                  type="text"
+                  value={newRecipientPhoneNumber}
+                  className="mx-4 py-1 w-[220px] border rounded"
+                  id="phoneNumber"
+                  onChange={phoneNumberChangeHandler}
+                />
+              ) : (
+                <span className="px-4">{newRecipientPhoneNumber}</span>
+              )}
+              {shippingStatus !== "결제확인" &&
+              shippingStatus !== "상품준비중" ? (
+                <></>
+              ) : isPhoneNumberForm ? (
+                <button
+                  onClick={formSubmitHandler}
+                  id="phoneNumber"
+                  className="px-3 border border-color2 h-8 mr-3 rounded text-sm"
+                >
+                  확인
+                </button>
+              ) : (
+                <button
+                  onClick={toggleFormHandler}
+                  id="phoneNumber"
+                  className="px-3 border border-color2 h-8 mr-3 rounded text-sm"
+                >
+                  변경
+                </button>
+              )}
             </div>
           </li>
 
@@ -174,7 +238,7 @@ const DeliveryInfo = (props) => {
                   onChange={billingNumChangeHandler}
                 />
               ) : (
-                <span className="px-4"></span>
+                <span className="px-4">{billingNum}</span>
               )}
               {shippingStatus !== "배송중" ? (
                 <></>
@@ -192,7 +256,7 @@ const DeliveryInfo = (props) => {
                   className="px-3 border border-color2 h-8 mr-3 rounded text-sm"
                   id="billingNum"
                 >
-                  변경
+                  입력
                 </button>
               )}
             </div>
