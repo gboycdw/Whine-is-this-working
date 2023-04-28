@@ -23,8 +23,6 @@ const OrderPage = () => {
     localStorage.setItem("cartData", JSON.stringify(cartData));
   }, [cartData]);
 
-  console.log(authData);
-
   useEffect(() => {
     setBuyer(authData?.name);
     setBuyerEmail(authData?.email);
@@ -63,7 +61,6 @@ const OrderPage = () => {
   // cartData를 돌면서 "product":_id, "amount":amount 형식으로 객체 생성
   const orderList = [];
   for (let i = 0; i <= cartData?.length - 1; i++) {
-    console.log(cartData[i]["_id"]);
     orderList.push({
       product: cartData[i]["_id"],
       amount: cartData[i]["amount"],
@@ -79,6 +76,19 @@ const OrderPage = () => {
   // 주문 완료 페이지로 이동시켜주는 핸들러
   const orderCompleteHandler = async (e) => {
     e.preventDefault();
+    if (
+      buyer === "" ||
+      buyerEmail === "" ||
+      buyerPhoneNumber === "" ||
+      recipientName === "" ||
+      recipientPhoneNumber === "" ||
+      shippingAddress === "" ||
+      shippingRequest === "" ||
+      shippingStatus === ""
+    ) {
+      alert("주문정보들을 모두 입력해주세요.");
+      return;
+    }
     try {
       const result = await axios.post("http://34.22.85.44:5000/api/orders", {
         buyer,
@@ -99,6 +109,7 @@ const OrderPage = () => {
       console.log(result);
       alert("주문이 성공적으로 완료되었습니다.");
       localStorage.removeItem("cartData");
+      sessionStorage.removeItem("cartToOrder");
       setCartData([]);
       navigate("/");
       queryClient.invalidateQueries("orders");

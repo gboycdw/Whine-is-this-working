@@ -2,10 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { cartCtx } from "../../store/cart-context";
 import { useNavigate } from "react-router-dom";
 import { authCtx } from "../../store/auth-context";
+import { useQuery } from "react-query";
+import { getUserDataByToken } from "../../../api/api-auth";
 
 const ProductDetail = (props) => {
   // props로 wine 객체를 받아옴
   const {
+    _id,
     name,
     brand,
     tags,
@@ -20,7 +23,7 @@ const ProductDetail = (props) => {
   const { alcoholDegree, body, acidity, sugar, tannic } = features;
 
   const { cartData, setCartData } = useContext(cartCtx);
-  const { auth } = useContext(authCtx);
+  const { data } = useQuery(["auth"], async () => await getUserDataByToken());
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(
     (price - discountPrice) * amount
@@ -81,18 +84,20 @@ const ProductDetail = (props) => {
   // json data를 총가격을 추가하여 만들고 api로 보냄
   const navigate = useNavigate();
   const buyButtonHandler = () => {
-    if (!auth) {
+    if (!data) {
       if (window.confirm("상품을 주문하시기전에 로그인 하시겠습니까?🥕")) {
         navigate("/login");
+        return;
       }
     }
-    let newCartDataArr = [];
+    let newCartData = {};
     const selectedData = props.product;
     selectedData.amount = amount;
     selectedData.isChecked = true;
-    newCartDataArr.push(selectedData);
-    setCartData(newCartDataArr);
-    console.log(newCartDataArr, cartData);
+    newCartData.totalPrice = price * amount;
+    newCartData.totalDiscountPrice = discountPrice * amount;
+    newCartData.totalPayPrice = (price - discountPrice) * amount;
+    sessionStorage.setItem("cartToOrder", JSON.stringify(newCartData));
     setAmount(1); //개수 초기화
     navigate("/order");
   };
