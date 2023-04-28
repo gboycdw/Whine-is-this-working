@@ -106,16 +106,16 @@ const OrderPage = () => {
         wayBill,
       });
       console.log(result);
-      alert("주문이 성공적으로 완료되었습니다.");
       localStorage.removeItem("cartData");
       sessionStorage.removeItem("cartToOrder");
-      setCartData([]);
-      navigate("/");
       queryClient.invalidateQueries("orders");
+      setCartData([]);
+      navigate("/ordercomplete");
+      window.scrollTo(0, 0);
     } catch (error) {
-      console.log(error);
+      alert(`${error.message}`);
+      return;
     }
-    navigate("/ordercomplete");
   };
 
   return (
