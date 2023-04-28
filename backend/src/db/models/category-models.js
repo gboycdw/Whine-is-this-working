@@ -6,22 +6,22 @@ const Category = model("Category", CategorySchema);
 export class CategoryModel {
   //카테고리 조회
   async find() {
-    const categories = await Category.find({});
-    if (categories.length < 1) {
-      throw new Error("[카테고리 조회 실패] 카테고리가 존재하지 않습니다.");
+    try {
+      const categories = await Category.find({});
+      return categories;
+    } catch (err) {
+      console.log(`❌ ${err}`);
     }
-    return categories;
   }
 
   //카테고리 이름으로 조회
   async findByTitle(title) {
-    const category = await Category.findOne({ title: title });
-    if (!category || category.length < 1) {
-      throw new Error(
-        "[카테고리 조회 실패] 해당 이름을 가지는 카테고리가 존재하지 않습니다."
-      );
+    try {
+      const category = await Category.findOne({ title: title });
+      return category;
+    } catch (err) {
+      console.log(`❌ ${err}`);
     }
-    return category;
   }
 
   //카테고리 추가
@@ -30,7 +30,7 @@ export class CategoryModel {
       const newCategory = await Category.create(categoryInfo);
       return newCategory;
     } catch (err) {
-      throw new Error("[카테고리 추가 실패] 입력 양식을 확인해주세요.");
+      console.log(`❌ ${err}`);
     }
   }
 
@@ -40,7 +40,7 @@ export class CategoryModel {
       const updateCategory = await Category.updateOne(id, categoryInfo, option);
       return updateCategory;
     } catch (err) {
-      throw new Error("[카테고리 수정 실패] 입력 양식을 확인해주세요.");
+      console.log(`❌ ${err}`);
     }
   }
 
@@ -50,9 +50,7 @@ export class CategoryModel {
       const deleteCategory = await Category.deleteOne({ _id: id });
       return deleteCategory;
     } catch (err) {
-      throw new Error(
-        "[카테고리 삭제 실패] 해당 id를 가지는 카테고리가 존재하지 않습니다."
-      );
+      console.log(`❌ ${err}`);
     }
   }
 }

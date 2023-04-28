@@ -9,7 +9,7 @@ categoryRouter.get("/", async (req, res, next) => {
   try {
     console.log("🔎 모든 카테고리를 조회합니다...");
     const categories = await categoryService.getCategories();
-    res.status(201).json(categories);
+    res.status(200).json(categories);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -23,7 +23,7 @@ categoryRouter.get("/:title", async (req, res, next) => {
     const c_title = req.params.title;
     console.log("🔎 카테고리 이름으로 카테고리를 조회합니다...");
     const categories = await categoryService.getCategoryByTitle(c_title);
-    res.status(201).json(categories);
+    res.status(200).json(categories);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -60,13 +60,11 @@ categoryRouter.patch(
   async (req, res, next) => {
     try {
       const update_id = req.params.id;
-      //const title = req.body.title;
       const categories = req.body.categories;
       console.log("🔄 카테고리 정보를 수정합니다.");
       const updateCategory = await categoryService.updateCategory(
         { _id: update_id },
         {
-          //title,
           categories: categories,
         },
         { returnOriginal: false }
@@ -85,7 +83,7 @@ categoryRouter.delete("/:id", async (req, res, next) => {
   try {
     const delete_id = req.params.id;
     const result = await categoryService.deleteCategory(delete_id);
-    res.status(201).json(result);
+    res.status(200).json(result);
   } catch (err) {
     console.log(`❌ ${err}`);
     next(err);
