@@ -98,6 +98,17 @@ const Header = (props) => {
     );
   };
 
+  // 버튼 클릭시 최상단으로 이동하는 함수
+  const MoveToTop = (e) => {
+    if (!window.scrollY) return;
+    // 현재 위치가 이미 최상단일 경우 return
+
+    window.scrollTo({
+      top: 0, // 제일 위로
+      behavior: "smooth", // 부드럽게 이동하는 속성
+    });
+  };
+
   return (
     <div className={classes.header}>
       <div className={classes.logo_div}>
@@ -175,6 +186,16 @@ const Header = (props) => {
           </li>
         </ul>
         {/* </ul> */}
+      </div>
+
+      {/* 페이지 최상단으로 이동하는 스크롤 버튼 */}
+      <div>
+        <img
+          src="up-arrow.png"
+          alt="스크롤"
+          onClick={MoveToTop}
+          className="h-[60px] w-[60px] fixed right-[5%] bottom-[10%] z-[100]"
+        />
       </div>
     </div>
   );
