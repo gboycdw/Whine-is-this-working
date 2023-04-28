@@ -18,6 +18,19 @@ const BuyerInfo = (props) => {
 
   // 연락처 입력값 업데이트 핸들러
   const buyerPhoneNumberInputHandler = (e) => {
+    const val = e.target.value;
+    if (val.length > 11) {
+      // tel 길이 11이하로
+      alert(` 11자리 이하로 입력하세요. `);
+      props.setBuyerPhoneNumber(""); //buyerPhoneNumber 초기화
+      return;
+    }
+    if (isNaN(Number(val))) {
+      // 숫자 입력 확인
+      alert(` '-'없이 숫자만 입력해 주세요.`);
+      props.setBuyerPhoneNumber(""); //buyerPhoneNumber 초기화
+      return;
+    }
     props.setBuyerPhoneNumber(e.target.value);
   };
 
@@ -28,6 +41,20 @@ const BuyerInfo = (props) => {
 
   // 수령인 전화번호 입력값 업데이트 핸들러
   const recipientPhoneNumberInputHandler = (e) => {
+    const val = e.target.value;
+    console.log("val", val);
+    if (val.length > 11) {
+      // tel 길이 11이하로
+      alert(` 11자리 이하로 입력하세요. `);
+      props.setRecipientPhoneNumber(""); //RecipientPhoneNumber 초기화
+      return;
+    }
+    if (isNaN(Number(val))) {
+      // 숫자 입력 확인
+      alert(` '-'없이 숫자만 입력해 주세요.`);
+      props.setRecipientPhoneNumber(""); //RecipientPhoneNumber 초기화
+      return;
+    }
     props.setRecipientPhoneNumber(e.target.value);
   };
 

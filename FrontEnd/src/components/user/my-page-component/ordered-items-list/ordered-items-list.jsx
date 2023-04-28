@@ -3,7 +3,6 @@ import OrderedItems from "./ordered-items";
 import Pagination from "../../product/pagination";
 import { useQuery } from "react-query";
 import { getOrdersByBuyerEmail } from "../../../../api/api-order";
-import { getUserDataByToken } from "../../../../api/api-auth";
 import { useContext } from "react";
 import { authCtx } from "../../../store/auth-context";
 

@@ -13,23 +13,20 @@ const OrderedItem = (props) => {
     async () => await getProductById(productId)
   );
 
-  console.log(data);
-
   return (
-    <div class="h-[120px]   flex items-center">
+    <div className="h-[120px]   flex items-center">
       {/* div's orderedItemId: {orderedItemId} */}
-      <div class="  justify-items-start  ">
-        <div class=" h-[90%] m-[20px] ">
-          <div class="flex justify-center items-center gap-5">
-            <div class="w-[80px] h-[80px] bg-bgc1 flex justify-center items-center  ">
+      <div className="  justify-items-start  ">
+        <div className=" h-[90%] m-[20px] ">
+          <div className="flex justify-center items-center gap-5">
+            <div className="w-[80px] h-[80px] bg-bgc1 flex justify-center items-center  ">
               <img
                 src={data?.imgUrl}
                 alt={"와인이미지"}
-                class="h-[60px] "
+                className="h-[60px] "
               ></img>
             </div>
-
-            <span class="w-[100%] text-2xl">
+            <span className="w-[100%] text-2xl">
               {data?.name}, {amount}병{/* 상품명, 상품개수 */}
             </span>
           </div>
