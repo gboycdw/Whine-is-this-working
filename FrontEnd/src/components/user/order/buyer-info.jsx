@@ -7,6 +7,8 @@ import OrderPostCode from "./order-post-code";
 // 주문자 정보, 배송 정보
 const BuyerInfo = (props) => {
   // 주문자 이름 입력값 업데이트 핸들러
+
+  console.log("props.setZonecode", props.setZonecode);
   const buyerInputHandler = (e) => {
     props.setBuyer(e.target.value);
   };
@@ -79,7 +81,6 @@ const BuyerInfo = (props) => {
   const openPostCode = () => {
     setIsPopupOpen(true);
   };
-
   return (
     <>
       <div className="flex flex-col items-center mb-[25px]">
@@ -199,12 +200,27 @@ const BuyerInfo = (props) => {
                     <OrderPostCode
                       onClose={closePostCode} //팝업닫음.
                       setFullAddress={props.setShippingAddress} //받아온 data.address를 address에 setAddress로 설정.
+                      setFullZonecode={props.setZonecode}
                     />
                   </PopupDom>
                 )}
               </div>
             </li>
 
+            <li className="flex flex-col">
+              <span className="text-[16px] mb-[5px]">우편번호</span>
+
+              {/* 우편번호 찾기로 찾은 우편번호가 들어가는 칸 */}
+              <div className="flex">
+                <p
+                  class="p-[10px] border-[#e5d1d1] border-[2px] 
+              w-[150px] h-[45px] mb-[25px] mr-[10px]
+              focus:outline-[#AA7373] focus:outline-[2px]"
+                >
+                  {props.zonecode}
+                </p>
+              </div>
+            </li>
             {/* 상세주소 */}
             <li className="flex flex-col">
               <span className="text-[16px] mb-[5px]">상세주소</span>

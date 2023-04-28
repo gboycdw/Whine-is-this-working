@@ -39,6 +39,7 @@ const OrderPage = () => {
   const [recipientName, setRecipientName] = useState("");
   const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
   const [shippingAddress, setShippingAddress] = useState("");
+  const [zonecode, setZonecode] = useState("");
   const [shippingExtraAddress, setShippingExtraAddress] = useState("");
   const [shippingRequest, setShippingRequest] = useState("");
   const queryClient = useQueryClient();
@@ -130,6 +131,8 @@ const OrderPage = () => {
           setRecipientPhoneNumber={setRecipientPhoneNumber}
           shippingAddress={shippingAddress}
           setShippingAddress={setShippingAddress}
+          zonecode={zonecode}
+          setZonecode={setZonecode}
           shippingExtraAddress={shippingExtraAddress}
           setShippingExtraAddress={setShippingExtraAddress}
           shippingRequest={shippingRequest}
