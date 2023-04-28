@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import OrderSchema from "../schemas/order-schema.js";
 import { nanoid } from "nanoid"; // npm install nanoid 로 라이브러리 설치해야 함
 import dayjs from "dayjs"; // npm install dayjs 로 라이브러리 설치해야 함
+import { Product } from "../schemas/product-schema.js";
+import { ProductJoiSchema } from "../../validators/productJoi.js";
 
 const Order = mongoose.model("orders", OrderSchema);
 
@@ -9,10 +11,7 @@ class OrderModel {
   // 주문자 id(email)로 해당 유저의 주문내역을 검색하는 기능
   async findById(userId) {
     try {
-      const findOrder = await Order.find({ buyerEmail: userId }).populate({
-        path: "orderList.product",
-        select: "name type country brand price discountPrice imgUrl",
-      });
+      const findOrder = await Order.find({ buyerEmail: userId });
       if (findOrder.length < 1) {
         throw new Error(
           `[주문내역 검색 실패] 해당 ID(${userId})의 주문내역이 존재하지 않습니다.`
@@ -23,21 +22,31 @@ class OrderModel {
       throw new Error(err);
     }
   }
-  // 주문번호로 주문내역을 검색하는 기능
+  // 주문번호로 주문내역을 상세 검색하는 기능
   async findByOrderIndex(orderIndex) {
     try {
-      const findOrderByIndex = await Order.findOne({
-        orderIndex: orderIndex,
-      }).populate({
-        path: "orderList.product",
-        select: "name type country brand price discountPrice imgUrl",
-      });
+      const findOrderByIndex = await Order.findOne({ orderIndex: orderIndex });
       if (!findOrderByIndex || findOrderByIndex.length < 1) {
         throw new Error(
           "[주문번호 검색 실패] 해당 주문번호를 찾을 수 없습니다."
         );
       }
-      // const saveMe = await findOrderByIndex.save();
+      //--------------------상세 상품 정보를 가져오는 부분-----------------------//
+      let result = [];
+      const orderListToPopulate = findOrderByIndex.orderList;
+      const orderAmount = orderListToPopulate.length;
+      for (let i = 0; i < orderAmount; i++) {
+        let content = { product: "", amount: 0 };
+        let productId = orderListToPopulate[i].product;
+        content.amount = orderListToPopulate[i].amount;
+        const findProductById = await Product.findOne({
+          _id: productId,
+        }).select("name type country brand price discountPrice imgUrl");
+        content.product = findProductById;
+        result.push(content);
+      }
+      findOrderByIndex.orderList = result;
+      //----------------------------------------------------------------------//
       return findOrderByIndex;
     } catch (err) {
       throw new Error(err);
@@ -47,24 +56,16 @@ class OrderModel {
   async findAllOrders() {
     try {
       const allOrder = await Order.find({});
-
-      if (allOrder.length < 1) {
+      if (!allOrder || allOrder.length < 1) {
         throw new Error(
           "[주문 전체조회 실패] 주문내역이 하나도 존재하지 않습니다."
         );
-      }
-      for (let i = 0; i < allOrder.length; i++) {
-        allOrder[i].populate({
-          path: "orderList.product",
-          select: "name type country brand price discountPrice imgUrl",
-        });
       }
       return allOrder;
     } catch (err) {
       throw new Error(err);
     }
   }
-
   // 유저가 새 주문을 생성하는 기능.
   async createOrder(orderInfo) {
     try {
