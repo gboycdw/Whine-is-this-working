@@ -189,8 +189,8 @@ const SignUpPage = (props) => {
         <li className="flex flex-col">
           <span className="text-[16px] mb-[5px]">핸드폰번호</span>
           <input
-            type="number"
-            name="address"
+            type="tel"
+            name="phoneNumber"
             placeholder="핸드폰 번호를 입력해주세요."
             onChange={PhoneNumberChangeHandler}
             value={phoneNumber}
@@ -205,7 +205,7 @@ const SignUpPage = (props) => {
           <span className="text-[16px] mb-[5px]">주소</span>
           <div className="flex gap-[20px]">
             <input
-              type="number"
+              type="text"
               name="postalCode"
               id="postalCode"
               placeholder="우편번호를 입력해주세요."
