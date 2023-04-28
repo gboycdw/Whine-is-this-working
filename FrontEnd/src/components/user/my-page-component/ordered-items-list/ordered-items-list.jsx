@@ -14,72 +14,52 @@ const OrderedItemsList = () => {
 
   const { auth } = useContext(authCtx);
 
-  const {
-    data: orderList,
-    isLoading,
-    isError,
-    error,
-  } = useQuery(["orders", auth.email], () =>
+  const { data: orderList, isLoading } = useQuery(["orders", auth.email], () =>
     getOrdersByBuyerEmail(auth?.email)
   );
 
   console.log(orderList);
+
   return (
     <>
       <div>
         {isLoading ? (
-          <div className="h-[800px] flex justify-center items-center ">
-            <div className="w-[80%] flex justify-center items-center h-[80%] mb-[10%] rounded-xl border-2 border-c1">
-              <div>Loading...</div>
-            </div>
+          <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2x">
+            Loading...
           </div>
-        ) : !orderList ? (
-          <div className="h-[800px] flex justify-center items-center ">
-            <div className="w-[80%] flex justify-center items-center h-[80%] mb-[10%] rounded-xl border-2 border-c1">
-              <div>
-                <div className="text-3xl text-center">
-                  아직 주문내역이 없습니다.
-                </div>
-                <div className="text-3xl text-center">
-                  <br></br>
-                </div>
-                <div className="text-3xl text-center">
-                  주문 후 이용해 주세요.
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : !isError ? (
-          <div class=" flex justify-center items-center ">
-            <div class="w-[80%] h-[80%] ">
-              <div class="h-[15%]">
-                <h1 class="text-3xl mb-[10%]">주문 내역</h1>
-              </div>
-              <div>
-                {orderList.slice(offset, offset + limit).map((index) => (
-                  <OrderedItems
-                    dateOfOrder={index.createdAt}
-                    shippingState={index.shippingStatus}
-                    orderList={index.orderList}
-                    orderIndex={index.orderIndex}
-                  />
-                ))}
-              </div>
-              <div>
-                <Pagination
-                  // 필터된 데이터 개수에 따라 창 개수로 설정
-                  total={orderList?.length}
-                  limit={limit}
-                  page={page}
-                  setPage={setPage}
-                />
-              </div>
-            </div>
+        ) : orderList.length === 0 ? (
+          <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2x">
+            주문내역이 없습니다.
           </div>
         ) : (
-          <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
-            {error.message}
-          </div>
+          <>
+            <div class=" flex justify-center items-center ">
+              <div class="w-[80%] h-[80%] ">
+                <div class="h-[15%]">
+                  <h1 class="text-3xl mb-[10%]">주문 내역</h1>
+                </div>
+                <div>
+                  {orderList.slice(offset, offset + limit).map((index) => (
+                    <OrderedItems
+                      dateOfOrder={index.createdAt}
+                      shippingState={index.shippingStatus}
+                      orderList={index.orderList}
+                      orderIndex={index.orderIndex}
+                    />
+                  ))}
+                </div>
+                <div>
+                  <Pagination
+                    // 필터된 데이터 개수에 따라 창 개수로 설정
+                    total={orderList?.length}
+                    limit={limit}
+                    page={page}
+                    setPage={setPage}
+                  />
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </>

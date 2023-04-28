@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import CartItem from "../../../components/user/order/cart-item";
 import { cartCtx, storage } from "../../../components/store/cart-context";
 import { Link, useNavigate } from "react-router-dom";
-const CartPage = (props) => {
+const CartPage = () => {
   const { cartData, setCartData } = useContext(cartCtx);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
@@ -50,21 +50,21 @@ const CartPage = (props) => {
 
   // 총 상품금액, 총 할인금액
   // cartData가 변경될 때마다 총 상품금액, 총 할인금액 업데이트됨
-  useEffect(() => {
-    let totalPrice = 0;
+  // useEffect(() => {
+  //   let totalPrice = 0;
 
-    newArr.forEach((item) => {
-      totalPrice += item.price * item.amount;
-    });
+  //   newArr.forEach((item) => {
+  //     totalPrice += item.price * item.amount;
+  //   });
 
-    let totalDiscountPrice = 0;
-    newArr.forEach((item) => {
-      totalDiscountPrice += item.discountPrice * item.amount;
-    });
+  //   let totalDiscountPrice = 0;
+  //   newArr.forEach((item) => {
+  //     totalDiscountPrice += item.discountPrice * item.amount;
+  //   });
 
-    setTotalPrice(totalPrice);
-    setTotalDiscountPrice(totalDiscountPrice);
-  }, [cartData, newArr]);
+  //   setTotalPrice(totalPrice);
+  //   setTotalDiscountPrice(totalDiscountPrice);
+  // }, [cartData, newArr]);
 
   const navigate = useNavigate();
   const orderSubmitHandler = () => {

@@ -48,7 +48,7 @@ const ProductListPage = () => {
 
   // grid에 rows를 동적으로 줘서 아이템 개수에 따라
   // pagination 위치가 마지막 아이템 줄 밑에 바로 붙도록 설정
-
+  console.log(filteredByIsLarvate);
   return (
     <>
       <div className="inline-block relative py-16 min-h-screen w-full">
@@ -64,24 +64,32 @@ const ProductListPage = () => {
           <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
             Loading...
           </div>
-        ) : !isError ? (
+        ) : filteredByIsLarvate ? (
           <>
-            <ul className="grid grid-rows-fr xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-[60px] gap-y-[90px] mb-[90px] place-items-center mx-auto">
-              {filteredByIsLarvate
-                ?.slice(offset, offset + limit)
-                .map((product) => {
-                  return <Product key={product._id} product={product} />;
-                })}
-            </ul>
-            <div>
-              <Pagination
-                // 필터된 데이터 개수에 따라 창 개수로 설정
-                total={data?.length}
-                limit={limit}
-                page={page}
-                setPage={setPage}
-              />
-            </div>
+            {filteredByIsLarvate.length === 0 ? (
+              <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2x">
+                상품이 없습니다.
+              </div>
+            ) : (
+              <>
+                <ul className="grid grid-rows-fr xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-[60px] gap-y-[90px] mb-[90px] place-items-center mx-auto">
+                  {filteredByIsLarvate
+                    ?.slice(offset, offset + limit)
+                    .map((product) => {
+                      return <Product key={product._id} product={product} />;
+                    })}
+                </ul>
+                <div>
+                  <Pagination
+                    // 필터된 데이터 개수에 따라 창 개수로 설정
+                    total={data?.length}
+                    limit={limit}
+                    page={page}
+                    setPage={setPage}
+                  />
+                </div>
+              </>
+            )}
           </>
         ) : (
           <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
