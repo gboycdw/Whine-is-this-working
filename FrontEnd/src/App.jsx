@@ -26,6 +26,7 @@ import PersonalInfoModify from "./components/user/my-page-component/personal-inf
 import CusServiceCenter from "./components/user/my-page-component/cus-service-center";
 import Withdrawl from "./components/user/my-page-component/withdrawal";
 import MyPage from "./pages/user/my-page/my-page";
+import OrderedItemDetail from "./components/user/my-page-component/ordered-items-list/ordered-item-detail";
 
 const queryClient = new QueryClient();
 
@@ -121,6 +122,10 @@ function App() {
                     element={<CusServiceCenter />}
                   />
                   <Route path="withdrawl" element={<Withdrawl />} />
+                  <Route
+                    path="ordered-item-detail"
+                    element={<OrderedItemDetail />}
+                  />
                 </Route>
               </Routes>
             </Layout>

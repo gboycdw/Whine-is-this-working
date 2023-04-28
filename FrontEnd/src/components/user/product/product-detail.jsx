@@ -67,7 +67,12 @@ const ProductDetail = (props) => {
       return;
     }
     copiedCartData.push(selectedData);
-    alert("장바구니에 상품이 추가 되었습니다.");
+    // alert("장바구니에 상품이 추가 되었습니다.");
+    if (
+      window.confirm("장바구니에 추가되었습니다🍷 장바구니로 이동할까요?😃")
+    ) {
+      navigate("/cart");
+    }
     setCartData(copiedCartData);
     setAmount(1); //개수 초기화
   };
@@ -77,7 +82,7 @@ const ProductDetail = (props) => {
   const navigate = useNavigate();
   const buyButtonHandler = () => {
     if (!auth) {
-      if (window.confirm("상품을 주문하시기전에 로그인 하시겠습니까?")) {
+      if (window.confirm("상품을 주문하시기전에 로그인 하시겠습니까?🥕")) {
         navigate("/login");
       }
     }
