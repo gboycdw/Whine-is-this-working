@@ -99,7 +99,6 @@ const Header = (props) => {
   };
 
   // 버튼 클릭시 최상단으로 이동하는 함수
-
   const MoveToTop = (e) => {
     if (!window.scrollY) return;
     // 현재 위치가 이미 최상단일 경우 return
@@ -195,7 +194,7 @@ const Header = (props) => {
           src="up-arrow.png"
           alt="스크롤"
           onClick={MoveToTop}
-          className="h-[70px] w-[70px] fixed right-[5%] bottom-[10%]"
+          className="h-[60px] w-[60px] fixed right-[5%] bottom-[10%] z-[100]"
         />
       </div>
     </div>
