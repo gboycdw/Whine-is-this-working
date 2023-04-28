@@ -6,7 +6,6 @@ import { changeShippingStatusByOrderIndex } from "../../../api/api-order";
 
 const ManageOrderListItem = (props) => {
   const {
-    _id,
     totalPayPrice,
     orderIndex,
     buyer,
@@ -26,17 +25,16 @@ const ManageOrderListItem = (props) => {
   }, [props.isCheckAll]);
 
   const orderStateChangeHandler = async (e) => {
-    setNewShippingStatus(e.target.value);
-    try {
-      const result = await changeShippingStatusByOrderIndex(
-        orderIndex,
-        e.target.value
-      );
-      queryClient.invalidateQueries(["orders"], orderIndex);
-      console.log(result);
-    } catch (error) {
-      console.log(error);
+    if (window.confirm(`주문 상태를 ${e.target.value}로 변경하시겠습니까?`)) {
+      setNewShippingStatus(e.target.value);
+      try {
+        await changeShippingStatusByOrderIndex(orderIndex, e.target.value);
+        queryClient.invalidateQueries(["orders"], orderIndex);
+      } catch (error) {
+        return;
+      }
     }
+    alert(`주문 상태가 ${e.target.value}로 변경되었습니다.`);
   };
 
   const inputCheckHandler = (e) => {

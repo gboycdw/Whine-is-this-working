@@ -106,7 +106,10 @@ const SignUpPage = (props) => {
         >
           <div
             className="flex w-[180px] h-[55px] rounded-[10px] bg-[#7B4848]
-              items-center justify-center text-[#FFFFFF] text-[17px] mb-[20px]"
+              items-center justify-center text-[#FFFFFF] text-[17px] mb-[20px] hover:cursor-pointer hover:bg-color1"
+            onClick={() => {
+              alert("성인 인증이 완료되었습니다.");
+            }}
           >
             성인인증
           </div>
@@ -154,7 +157,7 @@ const SignUpPage = (props) => {
           </li>
 
           {/* 비밀번호 */}
-          <li className="flex flex-col">
+          <li className="flex flex-col mb-[25px]">
             <span className="text-[16px] mb-[5px]">비밀번호</span>
             <input
               type="password"
@@ -164,14 +167,19 @@ const SignUpPage = (props) => {
               onChange={pwdInputHandler}
               onKeyUp={changeButtonHandler}
               className="p-[10px] border-[#e5d1d1] border-[2px] 
-                w-[650px] h-[45px] mb-[25px]
+                w-[650px] h-[45px] 
                 focus:outline-[#AA7373] focus:outline-[2px]"
             ></input>
+            {password.length < 8 ? (
+              <span>비밀번호는 8글자 이상으로 입력해주세요.</span>
+            ) : (
+              ""
+            )}
           </li>
         </ul>
 
         {/* 비밀번호 확인 */}
-        <li className="flex flex-col">
+        <li className="flex flex-col mb-[25px]">
           <span className="text-[16px] mb-[5px]">비밀번호 확인</span>
           <input
             type="password"
@@ -181,9 +189,14 @@ const SignUpPage = (props) => {
             onChange={pwdCheckInputHandler}
             onKeyUp={changeButtonHandler}
             className="p-[10px] border-[#e5d1d1] border-[2px] 
-                w-[650px] h-[45px] mb-[25px]
+                w-[650px] h-[45px] 
                 focus:outline-[#AA7373] focus:outline-[2px]"
           ></input>
+          {password !== passwordCheck ? (
+            <span>비밀번호가 서로 다릅니다.</span>
+          ) : (
+            ""
+          )}
         </li>
         {/* 전화번호 */}
         <li className="flex flex-col">

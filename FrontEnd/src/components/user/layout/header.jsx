@@ -121,13 +121,7 @@ const Header = (props) => {
             onClick={(e) => {
               e.preventDefault();
             }}
-          >
-            <img
-              className={classes.search_icon}
-              src="/search.png"
-              alt="search_icon"
-            />
-          </Link>
+          ></Link>
           <Link to="/cart">
             <img
               className={classes.cart_icon}

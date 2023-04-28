@@ -1,5 +1,15 @@
+import { useQuery } from "react-query";
+import { getOrderByOrderIndex } from "../../../../api/api-order";
+
 const OrderedItem = (props) => {
   const orderedItems = props.orderedItems;
+  const orderIndex = orderedItems.orderIndex;
+
+  const { data, isLoading, isError, error } = useQuery(
+    ["orders", orderIndex],
+    async () => await getOrderByOrderIndex(orderIndex)
+  );
+  console.log("data", data);
   return (
     <div class="h-[120px]   flex items-center">
       {/* div's orderedItemId: {orderedItemId} */}
