@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 async function adminLoginRequired(req, res, next) {
   //req 헤더에 auth-token 토큰 추출
-  const userToken = req.header("auth-token");
+  const userToken = req.headers["Authorization"]?.split(" ")[1];
   //토큰이 없으면 로그인 페이지로
   if (!userToken) {
     return res.status(403).redirect("/");
