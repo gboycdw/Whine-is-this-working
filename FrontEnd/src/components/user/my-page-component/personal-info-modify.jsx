@@ -7,18 +7,17 @@ import { useQuery, useQueryClient } from "react-query";
 import { getUserDataByToken } from "../../../api/api-auth";
 
 const PersonalInfoModify = () => {
+  const { data } = useQuery(["auth"], async () => await getUserDataByToken());
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data, isLoading, isError, error } = useQuery(
-    ["auth"],
-    async () => await getUserDataByToken()
-  );
+
   const [pwd, setPwd] = useState("");
   const [pwdCheck, setPwdCheck] = useState("");
-  const [addressDetail, setAddressDetail] = useState("");
-  const [tel, setTel] = useState("");
+  const [addressDetail, setAddressDetail] = useState(data.address1);
+  const [tel, setTel] = useState(data.phoneNumber);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [fullAddress, setFullAddress] = useState("");
+  const [fullAddress, setFullAddress] = useState(data.address2);
   const pwdChangeHandler = (e) => {
     // 비번 재설정
     const val = e.target.value;
@@ -99,21 +98,7 @@ const PersonalInfoModify = () => {
 
   return (
     <>
-      {isLoading ? (
-        <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
-          Loading...
-        </div>
-      ) : !data ? (
-        <div className="h-[800px] flex justify-center items-center ">
-          <div className="w-[80%] flex justify-center items-center h-[80%] mb-[10%] rounded-xl border-2 border-c1">
-            <div>
-              <div className="text-3xl text-center">
-                로그인 후 이용해주세요.
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : !isError ? (
+      {data ? (
         <div className=" flex justify-center items-center ">
           <div className="w-[80%] h-[80%] ">
             <div className="h-[15%]">
@@ -164,7 +149,6 @@ const PersonalInfoModify = () => {
                   <span className="border-[2px] h-[30px] w-[350px]  border-c1 inline-block">
                     {fullAddress}
                   </span>
-                  {/*받아 온 주소 쓰는 span*/}
                   <button
                     className="text-[white] bg-[#AA7373] rounded-[5px] w-[100px] h-[50px] m-[10px]"
                     type="button"
@@ -216,9 +200,7 @@ const PersonalInfoModify = () => {
           </div>
         </div>
       ) : (
-        <div className="flex absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] z-2">
-          {error.message}
-        </div>
+        <></>
       )}
     </>
   );
