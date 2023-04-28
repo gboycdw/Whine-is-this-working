@@ -6,6 +6,8 @@ import { productRouter } from "./routers/product-routers.js";
 import { viewsRouter } from "./routers/view-routers.js";
 import { categoryRouter } from "./routers/category-routers.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import path from "path";
+const __dirname = path.resolve();
 
 const app = express();
 app.use(cors());
