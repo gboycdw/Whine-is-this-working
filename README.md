@@ -23,14 +23,14 @@
 
 ### 구성원 / 역할
 
-|  이름  |   파트    | 담당 업무                                                                                                    |
-| :----: | :-------: | ------------------------------------------------------------------------------------------------------------ |
-| 최도원 | Back-End  | \***\*👑팀장, 🔊발표, VM 서버 배포**&관리, 주문 파트, 백엔드 소통 담당, 드립, 사운드 채우기, 일정 알림봇\*\* |
-| 연정환 | Back-End  |                                                                                                              |
-| 신민석 | Back-End  | \***\*상품&카테고리 파트**, **GitLab Wiki 및 노션 회의록 작성\*\***                                          |
-| 장윤수 | Front-End |                                                                                                              |
-| 고병욱 | Front-End | **\*\***상품세부정보, 마이페이지** 관련 페이지 제작\*\***                                                    |
-| 이수현 | Front-End | **상품목록, 회원가입, 로그인, 장바구니, 주문/결제, 상품세부정보 페이지 제작, PPT 제작**                      |
+|  이름  |   파트   | 담당 업무                                                                                                                          |
+| :----: | :-------: | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 최도원 | Back-End | **👑팀장, 🔊발표, VM 서버 배포**&관리, 주문 파트, ErrorHandling, Multer, 백엔드 소통 담당, 드립, 사운드 채우기, 일정 알림봇 |
+| 연정환 | Back-End |                                                                                                                                    |
+| 신민석 | Back-End | **상품&카테고리 파트**, **GitLab Wiki 및 노션 회의록 작성**                                                            |
+| 장윤수 | Front-End |                                                                                                                                    |
+| 고병욱 | Front-End | **상품세부정보, 마이페이지** 관련 페이지 제작                                                                                |
+| 이수현 | Front-End | **상품목록, 회원가입, 로그인, 장바구니, 주문/결제, 상품세부정보 페이지 제작, PPT 제작**                                      |
 
 ### 폴더 구조
 
@@ -101,40 +101,44 @@ witw
 
 ### API 명세
 
-|        | API Address                      | Request       | Params    | Description                                 | Response |
-| ------ | -------------------------------- | ------------- | --------- | ------------------------------------------- | -------- |
-|        | —————`<Orders>`—————             |               |           |                                             |          |
-| GET    | /api/orders                      |               |           | `admin` 모든 주문 정보 조회                 |          |
-| GET    | /api/orders/:userid              |               | E-mail ID | 해당 ID를 쓰는 유저의 주문 정보 조회        |          |
-| POST   | /api/orders                      | 주문 정보     |           | 새 주문정보 생성                            |          |
-| DELETE | /api/orders/admin/:number        |               | 주문 번호 | `admin` 주문 삭제                           |          |
-| DELETE | /api/orders/:number              |               | 주문 번호 | 배송 전 건의 주문 취소                      |          |
-| PATCH  | /api/orders/information          | 주문 변경내역 |           | 배송 전 건의 주문 내용 변경                 |          |
-| PATCH  | /api/orders/shippingstatus       | 배송 상태     |           | `admin` 배송 전 건의 배송 상태 변경         |          |
-| PATCH  | /api/orders/waybill              | 운송장 번호   |           | admin 배송 중 건의 운송장 번호 변경         |          |
-|        | —————`<Users>`—————              |               |           |                                             |          |
-| POST   | /api/users/signUp                |               |           | 회원가입                                    |          |
-| POST   | /api/users/login                 |               |           | 로그인                                      |          |
-| PATCH  | /api/users                       |               |           | 유저정보수정                                |          |
-| DELETE | /api/users                       |               |           | 회원 탈퇴                                   |          |
-|        | ————`<Products>`————             |               |           |                                             |          |
-| GET    | /api/products                    |               |           | 상품 목록 전체 조회                         |          |
-| GET    | /api/products/:id                |               |           | 상품 ID로 상품 상세 조회                    |          |
-| GET    | /api/products/types/:type        |               |           | 상품 타입별로 상품 목록 조회                |          |
-| GET    | /api/products/countries/:country |               |           | 상품 나라별로 상품 목록 조회                |          |
-| GET    | /api/products/prices/:min/:max   |               |           | 가격의 최솟값, 최댓값 사이의 상품 목록 조회 |          |
-| GET    | /api/products/lists/picked       |               |           | Picked 상품 조회                            |          |
-| GET    | /api/products/lists/best         |               |           | Best 상품 조회                              |          |
-| POST   | /api/products                    | 새 상품정보   |           | 상품 추가                                   |          |
-| PUT    | /api/products/:id                | 변경할 정보   |           | ID에 맞는 상품 수정                         |          |
-| PATCH  | /api/products/:id/:saleState     | 판매 상태     |           | ID에 맞는 상품의 판매 상태만 수정           |          |
-| DELETE | /api/products/:id                |               |           | ID에 맞는 상품 삭제                         |          |
-|        | ————`<Categories>`————           |               |           |                                             |          |
-| GET    | /api/categories                  |               |           | 카테고리 목록 조회                          |          |
-| GET    | /api/categories/:title           |               |           | 카테고리 이름으로 상품 조회                 |          |
-| POST   | /api/categories                  | 카테고리명    |           | 카테고리 추가                               |          |
-| PUT    | /api/categories/:id              | 카테고리명    |           | ID에 맞는 카테고리 수정                     |          |
-| DELETE | /api/categories/:id              |               |           | ID에 맞는 카테고리 삭제                     |          |
+|        | API Address                      | Request       | Params               | Description                                      |
+| ------ | -------------------------------- | ------------- | -------------------- | ------------------------------------------------ |
+|        | —————`<Orders>`————— |               |                      |                                                  |
+| GET    | /api/orders                      |               |                      | **`admin`** 모든 주문 정보 조회         |
+| GET    | /api/orders/:userid              |               | E-mail ID            | 해당 ID를 쓰는 유저의 주문 정보 조회             |
+| GET    | /api/orders/order/:index         |               | 주문 번호            | 주문번호로 주문정보 조회 (상세검색)              |
+| POST   | /api/orders                      | 주문 정보     |                      | 새 주문정보 생성                                 |
+| DELETE | /api/orders/admin/:number        |               | 주문 번호            | ``admin`` 주문 삭제                              |
+| DELETE | /api/orders/:number              |               | 주문 번호            | 배송 시작 전 주문 건의 주문 취소                 |
+| PATCH  | /api/orders/information          | 주문 변경내역 |                      | 배송 시작 전 주문 건의 주문 내용 변경            |
+| PATCH  | /api/orders/shippingstatus       | 배송 상태     |                      | ``admin`` 배송 시작 전 주문 건의 배송 상태 변경 |
+| PATCH  | /api/orders/waybill              | 운송장 번호   |                      | ``admin`` 배송 중인 주문 건의 운송장 번호 변경   |
+|        | —————`<Users>`—————  |               |                      |                                                  |
+| POST   | /api/users/signup                |               |                      | 회원가입                                         |
+| POST   | /api/users/login                 |               |                      | 로그인                                           |
+| PATCH  | /api/users                       |               |                      | 유저정보수정                                     |
+| DELETE | /api/users                       |               |                      | 회원 탈퇴                                        |
+| PATCH  | /api/users/role-info             |               |                      | ``super-admin`` 사용자 권한 변경                 |
+| GET    | /api/users/alluser               |               |                      | 전체 유저 조회                                   |
+|        | ————`<Products>`————   |               |                      |                                                  |
+| GET    | /api/products                    |               |                      | 상품 목록 전체 조회                              |
+| GET    | /api/products/:id                |               | 상품 ID              | 상품 ID로 상품 상세 조회                         |
+| GET    | /api/products/types/:type        |               | 상품 타입            | 상품 타입별로 상품 목록 조회                     |
+| GET    | /api/products/countries/:country |               | 상품 나라            | 상품 나라별로 상품 목록 조회                     |
+| GET    | /api/products/prices/:min/:max   |               | 상품 가격(최소-최대) | 가격의 최솟값, 최댓값 사이의 상품 목록 조회      |
+| GET    | /api/products/lists/picked       |               |                      | Picked 상품 조회                                 |
+| GET    | /api/products/lists/best         |               |                      | Best 상품 조회                                   |
+| POST   | /api/products                    | 새 상품 정보  |                      | 상품 추가                                        |
+| PUT    | /api/products/:id                | 변경할 정보   | 상품 ID              | ID에 맞는 상품 수정                              |
+| PATCH  | /api/products/images/:id         | 변경할 이미지 | 상품 ID              | ID에 맞는 상품 이미지 수정                       |
+| PATCH  | /api/products/:id/:saleState     | 판매 상태     | 상품 ID, 판매 상태   | ID에 맞는 상품의 판매 상태만 수정                |
+| DELETE | /api/products/:id                |               |                      | ID에 맞는 상품 삭제                              |
+|        | ————`<Categories>`———— |               |                      |                                                  |
+| GET    | /api/categories                  |               |                      | 카테고리 목록 조회                               |
+| GET    | /api/categories/:title           |               |                      | 카테고리 이름으로 카테고리 조회                  |
+| POST   | /api/categories                  | 카테고리 정보 |                      | 카테고리 추가                                    |
+| PATCH  | /api/categories/:id              | 카테고리 정보 | 카테고리 ID          | ID에 맞는 카테고리 수정                          |
+| DELETE | /api/categories/:id              |               | 카테고리 ID          | ID에 맞는 카테고리 삭제                          |
 
 ## 사용 기술 스택
 
