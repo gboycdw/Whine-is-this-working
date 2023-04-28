@@ -28,6 +28,8 @@ const CartPage = (props) => {
     }
   };
 
+  console.log(cartData);
+
   // 전체 삭제 핸들러
   const allDeleteHandler = () => {
     if (window.confirm("전체 상품을 삭제하시겠습니까?")) {

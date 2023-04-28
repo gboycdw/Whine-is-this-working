@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 
 import { deleteOrderByOrderIndex } from "../../../../api/api-order";
 const orderDetailEnter = "주문상세보기>";
-const OrderedItems = (
-  // map 으로 items 뿌리는 컴포넌트.
-  props
-) => {
+const OrderedItems = (props) => {
+  const orderList = props.orderList; //아이템들 정보 담긴 배열
+
+  console.log(orderList);
+
   const f1 = () => {
     alert("주문이 취소되었습니다.");
     deleteOrderByOrderIndex(orderIndex);
   };
   const navigate = useNavigate();
   const orderIndex = props.orderIndex;
-  console.log("orderIndex", orderIndex);
-  const orderList = props.orderList; //아이템들 정보 담긴 배열
+
   const dateOfOrder = props.dateOfOrder.replaceAll("-", ".").slice(0, 10); //주문 날짜 createAt 으로 받아와서 자르고 -는 .로 바꿈.
   const shippingState = props.shippingState; //배송상태
   const shippingOptionHandler = (e) => {
@@ -26,22 +26,25 @@ const OrderedItems = (
       : navigate("/ordered-items-list/exchange"); // 배송완료면 교환/환불 완료 페이지로
   };
   return (
-    <div class="w-[100%]  border-2 border-c3 rounded-xl mb-[20px]">
-      <div class="flex justify-between">
-        <div class="m-[20px] text-xl">{dateOfOrder} 주문</div>
+    <div className="w-[100%]  border-2 border-c3 rounded-xl mb-[20px]">
+      <div className="flex justify-between">
+        <div className="m-[20px] text-xl">{dateOfOrder} 주문</div>
         {/* 한줄변경 */}
-        <Link to="/mypage/ordered-item-detail" class="m-[20px] text-c4 text-xl">
+        <Link
+          to="/mypage/ordered-item-detail"
+          className="m-[20px] text-c4 text-xl"
+        >
           {orderDetailEnter}
           {/* 주문상세보기 버튼 */}
         </Link>
       </div>
-      <div class="m-[20px] border-2 border-c1 rounded-xl mt-[0px]">
-        <div class="flex justify-between">
-          <div class="text-2xl m-[20px]">{shippingState}</div>
+      <div className="m-[20px] border-2 border-c1 rounded-xl mt-[0px]">
+        <div className="flex justify-between">
+          <div className="text-2xl m-[20px]">{shippingState}</div>
           {shippingState === "상품준비중" ? (
             <button
               onClick={shippingOptionHandler}
-              class="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
+              className="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
             >
               주문취소
               {/* 배송준비중이면 주문취소 버튼생성*/}
@@ -50,14 +53,14 @@ const OrderedItems = (
             <div>
               <button
                 onClick={shippingOptionHandler}
-                class="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
+                className="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
               >
                 교환/환불
                 {/* 배송완료면  교환환불, 리뷰작성 버튼생성*/}
               </button>
               <button
                 onClick={shippingOptionHandler}
-                class="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
+                className="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
               >
                 리뷰작성
               </button>
@@ -65,21 +68,25 @@ const OrderedItems = (
           ) : (
             <button
               onClick={shippingOptionHandler}
-              class="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
+              className="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
             >
               {/* 배송중이면 배송조회 버튼생성*/}
               배송조회
             </button>
           )}
         </div>
-        <div class="mb-[20px]">
-          <div class=" flex justify-center items-center ">
-            <div class="w-[90%] h-[90%] ">
+        <div className="mb-[20px]">
+          <div className=" flex justify-center items-center ">
+            <div className="w-[90%] h-[90%] ">
               <div>
-                {orderList.map((index) => (
-                  //items 들이 들어있는 배열
-                  <OrderedItem orderedItems={index} orderIndex={orderIndex} />
-                ))}
+                {orderList.map((index) => {
+                  return (
+                    <OrderedItem
+                      productId={index.product}
+                      amount={index.amount}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
