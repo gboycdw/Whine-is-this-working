@@ -8,6 +8,7 @@ import {
   getProductsByCategoryPrice,
   getProductsByIsBest,
 } from "../../../api/api-product";
+import { useEffect } from "react";
 
 const ProductListPage = () => {
   // App.js에 정의한 라우터를 통해 받아온 url의 category 정보를 받음
@@ -32,14 +33,18 @@ const ProductListPage = () => {
     }
   );
 
-  console.log(data);
-
   const filteredByIsLarvate = data?.filter((item) => item.saleState !== "숨김");
   // 추가기능) 개수 설정에 따라 n개씩 보여주기 기능 구현할 경우 사용
   // const limit, setLimit] = useState(12);
+
   const limit = 20;
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
+  console.log(page);
+
+  useEffect(() => {
+    setPage(1);
+  }, [data]);
 
   // grid에 rows를 동적으로 줘서 아이템 개수에 따라
   // pagination 위치가 마지막 아이템 줄 밑에 바로 붙도록 설정
@@ -49,7 +54,9 @@ const ProductListPage = () => {
       <div className="inline-block relative py-16 min-h-screen w-full">
         <div>
           <h1 className="ml-[30px] mb-[50px] text-2xl">
-            {categoryName}(
+            {categoryName && categoryName}
+            {categoryPrice2 && `${categoryPrice1} ~ ${categoryPrice2}`}
+            {categoryBest && categoryBest}(
             {filteredByIsLarvate ? filteredByIsLarvate?.length : 0})
           </h1>
         </div>

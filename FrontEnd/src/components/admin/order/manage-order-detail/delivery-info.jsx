@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const DeliveryInfo = (props) => {
   const {
     shippingAddress,
@@ -5,6 +7,10 @@ const DeliveryInfo = (props) => {
     recipientName,
     recipientPhoneNumber,
   } = props.order;
+
+  // const [isAddressForm, setIsAddressForm] = useState(shippingAddress);
+
+  const toggleFormHandler = () => {};
 
   return (
     <div className="flex flex-col">
@@ -17,7 +23,10 @@ const DeliveryInfo = (props) => {
             </div>
             <div className="flex w-80 h-full items-center justify-between">
               <span className="px-4 max-w-[240px]">{shippingAddress}</span>
-              <button className="px-3 border border-color2 h-8 mr-3 rounded text-sm">
+              <button
+                onClick={toggleFormHandler}
+                className="px-3 border border-color2 h-8 mr-3 rounded text-sm"
+              >
                 변경
               </button>
             </div>

@@ -54,7 +54,7 @@ const OrderPage = () => {
 
   // cartData를 돌면서 "product":_id, "amount":amount 형식으로 객체 생성
   const orderList = [];
-  for (let i = 0; i <= cartData.length - 1; i++) {
+  for (let i = 0; i <= cartData?.length - 1; i++) {
     console.log(cartData[i]["_id"]);
     orderList.push({
       product: cartData[i]["_id"],

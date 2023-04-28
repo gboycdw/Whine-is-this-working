@@ -32,8 +32,6 @@ const ManageCategory = (props) => {
         : bundle
     );
 
-    console.log(newBundle);
-
     setCategoryBundle(newBundle);
   };
 
@@ -136,20 +134,6 @@ const ManageCategory = (props) => {
                   <div className="flex items-center font-bold text-lg px-1">
                     {bundle.title}
                   </div>
-                  {/* <div className="flex gap-2 px-1">
-                    <button
-                      className="py-1 px-3 "
-                      // onClick={categoryEditHandler}
-                    >
-                      수정
-                    </button>
-                    <button
-                      className="py-1 px-3 "
-                      // onClick={categoryDeleteHandler}
-                    >
-                      삭제
-                    </button>
-                  </div> */}
                 </div>
 
                 <ul>
