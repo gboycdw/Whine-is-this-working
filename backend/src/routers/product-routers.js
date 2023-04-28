@@ -194,32 +194,6 @@ productRouter.put(
   }
 );
 
-//상품 이미지 수정
-productRouter.patch(
-  "/images/:id",
-  imageUploadHelper.single("img"),
-  async (req, res, next) => {
-    const update_id = req.params.id;
-    try {
-      if (!req.file) {
-        throw new Error("변경할 이미지가 없습니다.");
-      }
-      const imgpath = req.file.path.replace(/\\/g, "/");
-      console.log("🔄 새로운 이미지를 등록하는 중...");
-      // ImageBox 모델로 이미지 경로를 저장
-      const changeImage = await productService.updateProduct(
-        { _id: update_id },
-        { imgUrl: imgpath },
-        { returnOriginal: false }
-      );
-      res.status(201).json(changeImage);
-      console.log(`수정된 이미지가 ${imgpath}에 저장되었습니다.`);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 //상품 판매상태 수정
 productRouter.patch(
   "/:id/:saleState",
