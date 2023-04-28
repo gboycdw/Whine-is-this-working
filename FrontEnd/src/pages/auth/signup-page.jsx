@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import PopupDom from "../../components/user/my-page-component/post-popup/popup-dom";
+import OrderPostCode from "../../components/user/order/order-post-code";
 
 const SignUpPage = (props) => {
   const [name, setName] = useState("");
@@ -104,6 +106,20 @@ const SignUpPage = (props) => {
       console.log(error);
     }
   };
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  // 팝업창 닫기
+  const closePostCode = () => {
+    setIsPopupOpen(false);
+  };
+
+  // 팝업창 열기
+  const openPostCode = () => {
+    setIsPopupOpen(true);
+  };
+
+  const [shippingAddress, setShippingAddress] = useState("");
 
   return (
     <>
@@ -228,30 +244,39 @@ const SignUpPage = (props) => {
 
         {/* 주소 */}
         <li className="flex flex-col">
-          <span className="text-[16px] mb-[5px]">주소</span>
           <div className="flex gap-[20px]">
-            <input
-              type="text"
-              name="postalCode"
-              id="postalCode"
-              placeholder="우편번호를 입력해주세요."
-              onChange={addressInputHandler}
-              value={postalCode}
-              className="p-[10px] border-[#e5d1d1] border-[2px] 
-              w-[180px] h-[45px] mb-[25px]
+            {/* 주소 (우편번호 찾기) */}
+            <li className="flex flex-col">
+              <span className="text-[16px] mb-[5px]">주소</span>
+
+              {/* 우편번호 찾기로 찾은 주소가 들어가는 칸 */}
+              <div className="flex">
+                <p
+                  class="p-[10px] border-[#e5d1d1] border-[2px] 
+              w-[540px] h-[45px] mb-[25px] mr-[10px]
               focus:outline-[#AA7373] focus:outline-[2px]"
-            ></input>
-            <input
-              type="text"
-              name="address1"
-              id="address1"
-              placeholder="주소를 입력해주세요"
-              onChange={addressInputHandler}
-              value={address1}
-              className="p-[10px] border-[#e5d1d1] border-[2px] 
-              w-[450px] h-[45px] mb-[25px]
-              focus:outline-[#AA7373] focus:outline-[2px]"
-            ></input>
+                >
+                  {shippingAddress}
+                </p>
+                <button
+                  class="bg-[#7B4848] rounded-[10px] w-[100px] h-[45px] text-[#FFFFFF]"
+                  type="button"
+                  onClick={openPostCode}
+                >
+                  우편번호 찾기
+                </button>
+              </div>
+              <div id="popupDom">
+                {isPopupOpen && ( // 클릭해서 true면 팝업 띄움.
+                  <PopupDom>
+                    <OrderPostCode
+                      onClose={closePostCode} //팝업닫음.
+                      setFullAddress={setShippingAddress}
+                    />
+                  </PopupDom>
+                )}
+              </div>
+            </li>
           </div>
           <input
             type="text"
