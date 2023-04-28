@@ -117,15 +117,15 @@ const SignUpPage = (props) => {
           className="flex flex-col items-center justify-center
           w-[650px] h-[200px] border-[#E5D1D1] border-[3.5px] rounded-[20px] mb-[60px]"
         >
-          <div
-            className="flex w-[180px] h-[55px] rounded-[10px] bg-[#7B4848]
-              items-center justify-center text-[#FFFFFF] text-[17px] mb-[20px] hover:cursor-pointer hover:bg-color1"
+          <img
+            src="19.png"
+            alt="19icon"
+            className="flex h-[80px] 
+              items-center justify-center  mb-[20px] hover:cursor-pointer"
             onClick={() => {
-              alert("WARNING: 19세 미만의 청소년은 이용할 수 없습니다.");
+              alert("💥19세 미만의 청소년은 이용할 수 없습니다❗");
             }}
-          >
-            경고!
-          </div>
+          />
 
           <div className="flex flex-col items-center text-[15.5px]">
             <p>
