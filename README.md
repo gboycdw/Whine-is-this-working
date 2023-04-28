@@ -23,14 +23,14 @@
 
 ### 구성원 / 역할
 
-|  이름  |   파트   | 담당 업무                                                                                                                          |
-| :----: | :-------: | ---------------------------------------------------------------------------------------------------------------------------------- |
-| 최도원 | Back-End | **👑팀장, 🔊발표, VM 서버 배포**&관리, 주문 파트, ErrorHandling, Multer, 백엔드 소통 담당, 드립, 사운드 채우기, 일정 알림봇 |
-| 연정환 | Back-End |                                                                                                                                    |
-| 신민석 | Back-End | **상품&카테고리 파트**, **GitLab Wiki 및 노션 회의록 작성**                                                            |
-| 장윤수 | Front-End |                                                                                                                                    |
-| 고병욱 | Front-End | **상품세부정보, 마이페이지** 관련 페이지 제작                                                                                |
-| 이수현 | Front-End | **상품목록, 회원가입, 로그인, 장바구니, 주문/결제, 상품세부정보 페이지 제작, PPT 제작**                                      |
+|  이름  |   파트   | 담당 업무                                                                                                                                                            |
+| :----: | :-------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 최도원 | Back-End | 👑팀장, 🔊발표, VM 서버 배포&관리, 주문 파트  API 구현, 에러핸들러 제작,<br />이미지 업로드용 Multer 제작, 백엔드 소통 담당, ~~드립, 사운드 채우기, 일정 알림봇~~ |
+| 연정환 | Back-End | 회원파트, 로그인, 회원가입, 수정, 탈퇴, 토큰 발급 및 검증, 관리자&사용자 구분                                                                                        |
+| 신민석 | Back-End | 상품&카테고리 파트 API 구현, JOI 구현, GitLab Wiki 및 노션 회의록 작성, 서비스 개요 작성                                                                            |
+| 장윤수 | Front-End | 전체적인 레이아웃, 관리자페이지 구현 및 공용 API, context 설계, 디테일한 디자인작업                                                                                  |
+| 고병욱 | Front-End | 상품세부정보, 마이페이지 관련 페이지 제작                                                                                                                            |
+| 이수현 | Front-End | 상품목록, 회원가입, 로그인, 장바구니, 주문/결제, 상품세부정보 페이지 제작, PPT 제작                                                                                  |
 
 ### 폴더 구조
 
@@ -108,17 +108,17 @@ witw
 | GET    | /api/orders/:userid              |               | E-mail ID            | 해당 ID를 쓰는 유저의 주문 정보 조회             |
 | GET    | /api/orders/order/:index         |               | 주문 번호            | 주문번호로 주문정보 조회 (상세검색)              |
 | POST   | /api/orders                      | 주문 정보     |                      | 새 주문정보 생성                                 |
-| DELETE | /api/orders/admin/:number        |               | 주문 번호            | ``admin`` 주문 삭제                              |
+| DELETE | /api/orders/admin/:number        |               | 주문 번호            | `admin` 주문 삭제                              |
 | DELETE | /api/orders/:number              |               | 주문 번호            | 배송 시작 전 주문 건의 주문 취소                 |
 | PATCH  | /api/orders/information          | 주문 변경내역 |                      | 배송 시작 전 주문 건의 주문 내용 변경            |
-| PATCH  | /api/orders/shippingstatus       | 배송 상태     |                      | ``admin`` 배송 시작 전 주문 건의 배송 상태 변경 |
-| PATCH  | /api/orders/waybill              | 운송장 번호   |                      | ``admin`` 배송 중인 주문 건의 운송장 번호 변경   |
+| PATCH  | /api/orders/shippingstatus       | 배송 상태     |                      | `admin` 배송 시작 전 주문 건의 배송 상태 변경 |
+| PATCH  | /api/orders/waybill              | 운송장 번호   |                      | `admin` 배송 중인 주문 건의 운송장 번호 변경   |
 |        | —————`<Users>`—————  |               |                      |                                                  |
 | POST   | /api/users/signup                |               |                      | 회원가입                                         |
 | POST   | /api/users/login                 |               |                      | 로그인                                           |
 | PATCH  | /api/users                       |               |                      | 유저정보수정                                     |
 | DELETE | /api/users                       |               |                      | 회원 탈퇴                                        |
-| PATCH  | /api/users/role-info             |               |                      | ``super-admin`` 사용자 권한 변경                 |
+| PATCH  | /api/users/role-info             |               |                      | `super-admin` 사용자 권한 변경                 |
 | GET    | /api/users/alluser               |               |                      | 전체 유저 조회                                   |
 |        | ————`<Products>`————   |               |                      |                                                  |
 | GET    | /api/products                    |               |                      | 상품 목록 전체 조회                              |
