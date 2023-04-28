@@ -81,6 +81,9 @@ userRouter.delete("/", loginRequired, async (req, res, next) => {
 userRouter.patch("/", loginRequired, async (req, res, next) => {
   //req 헤더의 autho token
   const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
+  }
   console.log("🔄 유저 정보를 업데이트합니다...");
   const { password, address1, address2, postalCode, phoneNumber } = req.body;
 

@@ -52,10 +52,17 @@ export class ProductModel {
 
   //와인 가격별로 조회
   async findByPrice(lowerPrice, higherPrice) {
-    const products = await Product.find({
-      $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: higherPrice } }],
-    });
-    return products;
+    try {
+      const products = await Product.find({
+        $and: [
+          { price: { $gte: lowerPrice } },
+          { price: { $lt: higherPrice } },
+        ],
+      });
+      return products;
+    } catch (err) {
+      console.log(`❌ ${err}`);
+    }
   }
 
   //Pick 와인 조회
