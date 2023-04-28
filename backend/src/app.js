@@ -16,8 +16,11 @@ app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
 app.use(express.urlencoded({ limit: "10mb", extended: false }));
 //
-app.use("/imgtest", express.static(__dirname, "src", "image-storage"));
-
+// app.use("/imgtest", express.static(__dirname + "/src/image-storage"));
+app.use(
+  "/imgtest",
+  express.static(path.join(__dirname, "src", "image-storage"))
+);
 // 라우터 등록
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
