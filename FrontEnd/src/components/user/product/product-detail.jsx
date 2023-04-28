@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { authCtx } from "../../store/auth-context";
 import { useQuery } from "react-query";
 import { getUserDataByToken } from "../../../api/api-auth";
+import { useRef } from "react";
 
 const ProductDetail = (props) => {
   // props로 wine 객체를 받아옴
@@ -21,6 +22,7 @@ const ProductDetail = (props) => {
     saleState,
   } = props.product;
   const { alcoholDegree, body, acidity, sugar, tannic } = features;
+  const amountRef = useRef();
 
   const { cartData, setCartData } = useContext(cartCtx);
   const { data } = useQuery(["auth"], async () => await getUserDataByToken());
@@ -40,10 +42,14 @@ const ProductDetail = (props) => {
 
   // 마이너스 버튼 핸들러
   const wineCountMinus = () => {
-    if (!amount < 1) {
-      let a = amount;
-      setAmount(--a);
+    if (amountRef.current.value < 2) {
+      return;
     }
+    // if (e.target.value < 2) {
+    //   return;
+    // }
+    let a = amount;
+    setAmount(--a);
   };
 
   // 플러스 버튼 핸들러
@@ -54,6 +60,9 @@ const ProductDetail = (props) => {
 
   // input에 숫자를 입력시 제품 개수 업데이트 해주는 핸들러
   const inputChangeHandler = (e) => {
+    if (e.target.value < 1 || e.target.value > 99) {
+      return;
+    }
     setAmount(e.target.value);
   };
 
@@ -271,7 +280,7 @@ const ProductDetail = (props) => {
                     {/* 수량 1개 감소 버튼 */}
                     <button
                       onClick={wineCountMinus}
-                      className="w-7 h-7 text-[#FFFFFF] mr-[20px] bg-[#B36767] rounded-[5px]"
+                      className="w-7 h-7 text-[#FFFFFF] bg-[#B36767] rounded-[5px]"
                     >
                       -
                     </button>
@@ -280,7 +289,8 @@ const ProductDetail = (props) => {
                     <input
                       type="number"
                       onChange={inputChangeHandler}
-                      className="w-[35px] bg-[#F6EEEE]"
+                      className="w-[35px] text-center bg-[#F6EEEE] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      ref={amountRef}
                       value={amount}
                     />
 
