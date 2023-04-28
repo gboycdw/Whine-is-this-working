@@ -67,7 +67,8 @@ const ManageProductList = (props) => {
 
   return (
     <div className="flex flex-col p-6">
-      <div className="border-b ">
+      <span className="text-xl mb-3 font-bold px-5">상품 관리</span>
+      <div className="mx-5 border-b">
         <span>전체 {products.length}</span>
         <span> | </span>
         <span>
@@ -82,8 +83,8 @@ const ManageProductList = (props) => {
           숨김 {products.filter((item) => item.saleState === "숨김").length}
         </span>
       </div>
-      <div className="py-4 flex gap-4 text-sm">
-        <div className="w-32 h-11 flex justify-center px-3 border border-color2 rounded">
+      <div className="py-1 flex gap-4 text-sm">
+        {/* <div className="w-32 h-11 flex justify-center px-3 border border-color2 rounded">
           <select
             className="w-full"
             onChange={categorySelectHandler}
@@ -106,7 +107,7 @@ const ManageProductList = (props) => {
         />
         <div className="w-32 h-11 flex justify-center bg-[#ffffff] px-2 border border-color2 rounded items-center">
           엑셀 다운로드 | v
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-col py-2 px-5 bg-[#ffffff]">
         <ul>

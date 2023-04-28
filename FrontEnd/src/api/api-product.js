@@ -23,7 +23,6 @@ export const getProductsByCategory = async (
 };
 
 export const getProductsByCategoryPrice = async (price1, price2) => {
-  console.log(price1, price2);
   const data = await axios.get(
     `http://34.22.85.44:5000/api/products/prices/${price1}/${price2}`
   );
@@ -71,7 +70,6 @@ export const editProductById = async (productId, data) => {
 };
 
 export const changeSaleStateById = async (productId, saleState) => {
-  console.log(productId, saleState);
   const result = await axios.patch(
     `http://34.22.85.44:5000/api/products/${productId}/${saleState}`,
     {

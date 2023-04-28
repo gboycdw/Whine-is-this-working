@@ -25,7 +25,6 @@ export const deleteUserDataByToken = async () => {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
       },
     });
-    console.log(data.data);
     return data.data;
   } else {
     return;

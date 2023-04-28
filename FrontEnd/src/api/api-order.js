@@ -6,7 +6,6 @@ export const getAllOrders = async () => {
 };
 
 export const getOrdersByBuyerEmail = async (buyerEmail) => {
-  console.log(buyerEmail);
   const data = await axios.get(
     `http://34.22.85.44:5000/api/orders/${buyerEmail}`
   );
@@ -38,7 +37,6 @@ export const changeShippingStatusByOrderIndex = async (
   orderIndex,
   shippingStatus
 ) => {
-  console.log(shippingStatus);
   const result = await axios.patch(
     `http://34.22.85.44:5000/api/orders/shippingstatus`,
     {

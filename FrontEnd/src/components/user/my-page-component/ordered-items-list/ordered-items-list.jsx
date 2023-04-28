@@ -17,8 +17,6 @@ const OrderedItemsList = () => {
     getOrdersByBuyerEmail(auth?.email)
   );
 
-  console.log(orderList);
-
   return (
     <>
       <div>

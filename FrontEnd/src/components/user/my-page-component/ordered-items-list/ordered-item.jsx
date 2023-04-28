@@ -6,8 +6,6 @@ const OrderedItem = (props) => {
   const productId = props.productId;
   const amount = props.amount;
 
-  console.log(productId);
-
   const { data, isLoading, isError, error } = useQuery(
     ["product", productId],
     async () => await getProductById(productId)
