@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { productService } from "../services/index.js";
 import { productChecker } from "../middlewares/productValidation.js";
-// import { imageUploadHelper } from "../middlewares/multer.js";
+import { imageUploadHelper } from "../middlewares/multer.js";
 
 const productRouter = Router();
 
@@ -110,6 +110,7 @@ productRouter.get("/lists/best", async (req, res, next) => {
 productRouter.post(
   "/",
   productChecker.createProductJoi,
+  imageUploadHelper.single("img"),
   async (req, res, next) => {
     try {
       const {
@@ -121,7 +122,6 @@ productRouter.post(
         country,
         info,
         inventory,
-        imgUrl,
         price,
         discountPrice,
         saleCount,
@@ -130,8 +130,11 @@ productRouter.post(
         isBest,
         tags,
         features,
-      } = req.body;
-      console.log("🔄 새로운 상품을 등록하는 중...");
+      } = JSON.parse(req.body.data);
+      if (!req.file) {
+        throw new Error("파일을 업로드해주세요.");
+      }
+      const imgpath = req.file.path.replace(/\\/g, "/");
       const newProduct = await productService.createProduct({
         seq,
         name,
@@ -141,7 +144,7 @@ productRouter.post(
         country,
         info,
         inventory,
-        imgUrl,
+        imgUrl: imgpath,
         price,
         discountPrice,
         saleCount,
@@ -230,9 +233,13 @@ productRouter.patch(
       const update_id = req.params.id;
       const update_state = req.params.saleState;
       console.log("🔄 상품 판매상태를 수정합니다.");
-      const updateProduct = await productService.updateProduct(update_id, {
-        saleState: update_state,
-      });
+      const updateProduct = await productService.updateProduct(
+        { _id: update_id },
+        {
+          saleState: update_state,
+        },
+        { returnOriginal: false }
+      );
       res.status(201).json(updateProduct);
       console.log("✔️ 상품 판매상태 변경 완료.");
     } catch (err) {

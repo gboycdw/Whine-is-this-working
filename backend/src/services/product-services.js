@@ -7,47 +7,7 @@ class ProductService {
 
   //상품 생성
   async createProduct(productInfo) {
-    var {
-      seq,
-      name,
-      brand,
-      region,
-      type,
-      country,
-      info,
-      inventory,
-      imgUrl,
-      price,
-      discountPrice,
-      saleCount,
-      saleState,
-      isPicked,
-      isBest,
-      tags,
-      features,
-    } = productInfo;
-
-    var newInfo = {
-      seq,
-      name,
-      brand,
-      region,
-      type,
-      country,
-      info,
-      inventory,
-      imgUrl,
-      price,
-      discountPrice,
-      saleCount,
-      saleState,
-      isPicked,
-      isBest,
-      tags,
-      features,
-    };
-
-    const newProduct = await productModel.createProduct(newInfo);
+    const newProduct = await productModel.createProduct(productInfo);
     return newProduct;
   }
 
