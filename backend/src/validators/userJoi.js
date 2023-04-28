@@ -9,7 +9,7 @@ const UserJoiSchema = {
     password: Joi.string().required(),
     address1: Joi.string().required(),
     address2: Joi.string().required(),
-    postalCode: Joi.string().required(),
+    // postalCode: Joi.string().required(),
     phoneNumber: Joi.string().required(),
     role: Joi.string(),
     status: Joi.number(),

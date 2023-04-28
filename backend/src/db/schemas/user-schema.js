@@ -28,10 +28,10 @@ const UserSchema = new Schema(
       required: true,
     },
     //우편번호
-    postalCode: {
-      type: String,
-      required: true,
-    },
+    // postalCode: {
+    //   type: String,
+    //   required: true,
+    // },
     //전화번호
     phoneNumber: {
       type: String,

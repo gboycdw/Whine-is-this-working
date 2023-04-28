@@ -18,7 +18,7 @@ userRouter.post("/signup", userChecker.signUpJoi, async (req, res, next) => {
       password,
       address1,
       address2,
-      postalCode,
+      // postalCode,
       phoneNumber,
       role,
     } = req.body;
@@ -29,7 +29,7 @@ userRouter.post("/signup", userChecker.signUpJoi, async (req, res, next) => {
       password,
       address1,
       address2,
-      postalCode,
+      // postalCode,
       phoneNumber,
       role,
     });
@@ -85,7 +85,7 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
     return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
   }
   console.log("🔄 유저 정보를 업데이트합니다...");
-  const { password, address1, address2, postalCode, phoneNumber } = req.body;
+  const { password, address1, address2, phoneNumber } = req.body;
 
   const toUpdateInfo = {
     //password값이 있을 경우(true), password 속성: req.body에서 받은 password 변수 값 --> ex) {password : "myPassword1234"}
@@ -93,7 +93,7 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
     ...(password && { password }),
     ...(address1 && { address1 }),
     ...(address2 && { address2 }),
-    ...(postalCode && { postalCode }),
+    // ...(postalCode && { postalCode }),
     ...(phoneNumber && { phoneNumber }),
   };
 
