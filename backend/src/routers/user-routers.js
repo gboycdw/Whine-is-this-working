@@ -60,7 +60,7 @@ userRouter.post("/login", userChecker.loginJoi, async (req, res, next) => {
 //탈퇴
 userRouter.delete("/", loginRequired, async (req, res, next) => {
   console.log("💧 회원 탈퇴를 진행합니다.");
-  const token = req.headers["Authorization"]?.split(" ")[1];
+  const token = req.headers["authorization"]?.split(" ")[1];
   // 토큰의 secret key와 발급할때의 secre_key 값 비교
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
   console.log("✔️ 토큰 검증 완료. 계속해서 회원 탈퇴를 진행합니다.");
@@ -80,7 +80,7 @@ userRouter.delete("/", loginRequired, async (req, res, next) => {
 //업데이트
 userRouter.patch("/", loginRequired, async (req, res, next) => {
   //req 헤더의 autho token
-  const token = req.headers["Authorization"]?.split(" ")[1];
+  const token = req.headers["authorization"]?.split(" ")[1];
   console.log("🔄 유저 정보를 업데이트합니다...");
   const { password, address1, address2, postalCode, phoneNumber } = req.body;
 
@@ -115,7 +115,7 @@ userRouter.patch(
   userChecker.roleChangeJoi,
   async (req, res, next) => {
     try {
-      const token = req.headers["Authorization"]?.split(" ")[1];
+      const token = req.headers["authorization"]?.split(" ")[1];
       const { userId, role } = req.body;
       console.log("🔎 총 관리자(super-admin) 권한을 확인합니다...");
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -136,7 +136,7 @@ userRouter.patch(
 
 // 전체 유저 조회
 userRouter.get("/allUser", async (req, res, next) => {
-  const token = req.headers["Authorization"]?.split(" ")[1];
+  const token = req.headers["authorization"]?.split(" ")[1];
   console.log("🔎 토큰 검증 중...");
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
   const currentUserRole = decodedToken.role;
