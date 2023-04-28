@@ -59,7 +59,7 @@ const ManageProductList = (props) => {
       console.log(result);
       alert("선택한 상품이 삭제되었습니다.");
       navigate("/manage/product_list");
-      queryClient.invalidateQueries("products");
+      queryClient.invalidateQueries(["products", page]);
     } catch (error) {
       console.log(error);
     }

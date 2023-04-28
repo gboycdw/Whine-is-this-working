@@ -26,7 +26,7 @@ const OurPick = (props) => {
                       <span className="text-lg font-semibold">{item.name}</span>
                     </div>
                     <span className="text-2xl font-bold">
-                      {item.price.toLocaleString()}원
+                      {(item.price - item.discountPrice).toLocaleString()}원
                     </span>
                   </li>
                 </Link>

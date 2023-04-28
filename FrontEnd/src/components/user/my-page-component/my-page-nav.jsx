@@ -6,8 +6,22 @@ const MyPageNav = () => {
   const linkRef3 = useRef();
   const linkRef4 = useRef();
   const linkRef5 = useRef();
-  const [color, setColor] = useState("text-c1");
+  const [color] = useState("text-c1");
+  let currentUrl = window.location.href;
+  // useEffect(() => {
+  //   handleCurrentPageIconColor();
+  // }, [currentUrl]);
+  // const handleCurrentPageIconColor = () => {
+  //   setCartColor(false);
+  //   setMypageColor(false);
+  //   setCartColor(false);
 
+  //   if (current === "search") setCategoryColor(true);
+  //   if (current === "login") setMypageColor(true);
+  //   if (current === "cart") setCartColor(true);
+  // };
+
+  //console.log("currentUrl", currentUrl);
   const navBarHandler = (e) => {
     linkRef1.current.style.color = "#c9c9c9";
     linkRef2.current.style.color = "#c9c9c9";

@@ -9,6 +9,8 @@ import ManageOrderListItem from "./manage-order-list-item";
 const ManageOrderList = (props) => {
   const orders = props.orders;
 
+  console.log(orders);
+
   const [checkedOrderIndexes, setCheckedOrderIndexes] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
 
@@ -58,7 +60,7 @@ const ManageOrderList = (props) => {
         <span>
           상품준비중&nbsp;
           {
-            orders.filter((order) => order.shippingState === "상품준비중")
+            orders.filter((order) => order.shippingStatus === "상품준비중")
               .length
           }
         </span>
@@ -66,19 +68,19 @@ const ManageOrderList = (props) => {
         <span>
           배송준비중&nbsp;
           {
-            orders.filter((order) => order.shippingState === "배송준비중")
+            orders.filter((order) => order.shippingStatus === "배송준비중")
               .length
           }
         </span>
         <span> | </span>
         <span>
           배송중&nbsp;
-          {orders.filter((order) => order.shippingState === "배송중").length}
+          {orders.filter((order) => order.shippingStatus === "배송중").length}
         </span>
         <span> | </span>
         <span>
           배송완료&nbsp;
-          {orders.filter((order) => order.shippingState === "배송완료").length}
+          {orders.filter((order) => order.shippingStatus === "배송완료").length}
         </span>
       </div>
       <div className="py-4 flex gap-4 text-sm">

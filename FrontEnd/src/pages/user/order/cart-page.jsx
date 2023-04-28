@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import CartItem from "../../../components/user/order/cart-item";
 import { cartCtx, storage } from "../../../components/store/cart-context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const CartPage = (props) => {
   const { cartData, setCartData } = useContext(cartCtx);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
   const totalPayPrice = totalPrice - totalDiscountPrice;
 
-  const newArr = cartData.filter((item) => item.isChecked === true);
+  const newArr = cartData?.filter((item) => item.isChecked === true);
   const [isAllChecked, setIsAllChecked] = useState(true);
 
   // 전체 선택 버튼 토글 핸들러
@@ -183,7 +183,7 @@ const CartPage = (props) => {
               className="w-[280px] h-[60px] rounded-[10px] 
               bg-[#E5D1D1] text-[20px] mb-[50px]"
             >
-              계속 쇼핑하기
+              <Link to="/">계속 쇼핑하기</Link>
             </button>
           </div>
         </div>

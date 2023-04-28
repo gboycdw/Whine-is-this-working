@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import ProductDetailPage from "./pages/user/product/product-detail-page";
 import MainPage from "./pages/main-page";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -31,7 +31,7 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthContex>
         <CartContext>
           <QueryClientProvider client={queryClient}>
@@ -127,7 +127,7 @@ function App() {
           </QueryClientProvider>
         </CartContext>
       </AuthContex>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

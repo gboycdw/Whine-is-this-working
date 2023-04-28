@@ -11,6 +11,22 @@ export const getUserDataByToken = async () => {
         },
       }
     );
+
+    console.log(data.data);
+    return data.data;
+  } else {
+    return;
+  }
+};
+
+export const deleteUserDataByToken = async () => {
+  if (JSON.parse(localStorage.getItem("token"))) {
+    const data = await axios.delete("http://34.22.85.44:5000/api/users/", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+    });
     console.log(data.data);
     return data.data;
   } else {

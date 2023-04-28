@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { cartCtx } from "../../store/cart-context";
 import { useNavigate } from "react-router-dom";
+import { authCtx } from "../../store/auth-context";
 
 const ProductDetail = (props) => {
   // props로 wine 객체를 받아옴
@@ -19,13 +20,12 @@ const ProductDetail = (props) => {
   const { alcoholDegree, body, acidity, sugar, tannic } = features;
 
   const { cartData, setCartData } = useContext(cartCtx);
+  const { auth } = useContext(authCtx);
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(
     (price - discountPrice) * amount
   );
   const [isSoldOut] = useState(saleState === "품절" ? true : false);
-
-  console.log(props.product);
 
   useEffect(() => {
     setTotalPrice((price - discountPrice) * amount);
@@ -67,7 +67,7 @@ const ProductDetail = (props) => {
       return;
     }
     copiedCartData.push(selectedData);
-
+    alert("장바구니에 상품이 추가 되었습니다.");
     setCartData(copiedCartData);
     setAmount(1); //개수 초기화
   };
@@ -76,8 +76,18 @@ const ProductDetail = (props) => {
   // json data를 총가격을 추가하여 만들고 api로 보냄
   const navigate = useNavigate();
   const buyButtonHandler = () => {
-    setAmount(1); //개수 초기화
-    navigate("/order");
+    if (!auth) {
+      if (window.confirm("상품을 주문하시기전에 로그인 하시겠습니까?")) {
+        navigate("/login");
+      } else {
+        const selectedData = props.product;
+        selectedData.amount = amount;
+        selectedData.isChecked = true;
+        setCartData(selectedData);
+        setAmount(1); //개수 초기화
+        navigate("/order");
+      }
+    }
   };
 
   // 바디, 산도, 당도, 탄닌 지수 막대바 시각화 함수

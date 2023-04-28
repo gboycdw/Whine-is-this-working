@@ -17,8 +17,6 @@ const ManageProductListItem = (props) => {
     updatedAt,
   } = props.product;
 
-  console.log(props.product);
-
   const [isChecked, setIsChecked] = useState(props.isCheckAll);
   const [newSaleState, setNewSaleState] = useState(saleState);
 
@@ -51,13 +49,16 @@ const ManageProductListItem = (props) => {
   const saleStateChangeHandler = async (e) => {
     const saleState = e.target.value;
     setNewSaleState(saleState);
-    try {
-      const result = await changeSaleStateById(_id, saleState);
-      console.log(result);
-      queryClient.invalidateQueries(["products", _id, saleState]);
-    } catch (error) {
-      console.log(error);
+    if (window.confirm(`제품의 상태를 ${e.target.value}로 변경하시겠습니까?`)) {
+      try {
+        const result = await changeSaleStateById(_id, saleState);
+        queryClient.invalidateQueries(["products", _id, saleState]);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
     }
+    alert("제품의 상태가 변경되었습니다.");
   };
 
   return (

@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { getUserDataByToken } from "../../api/api-auth";
 
 export const storage = (props) => {
   if (typeof window !== "undefined") {
@@ -14,7 +15,7 @@ export const storage = (props) => {
 export const authCtx = createContext();
 
 const AuthContex = (props) => {
-  const [auth, setAuth] = useState(storage("auth"));
+  const [auth, setAuth] = useState();
   const [token, setToken] = useState(storage("token"));
   const [isLoggedIn, setIsLoggedIn] = useState(storage("auth") ? true : false);
   const [isAdmin, setIsAdmin] = useState(

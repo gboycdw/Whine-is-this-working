@@ -9,7 +9,7 @@ import UserLayout from "../user/layout/user-layout";
 
 const Layout = (props) => {
   const isAdminPage = useLocation().pathname.split("/")[1];
-  const { setIsLoggedIn, setIsAdmin } = useContext(authCtx);
+  const { setIsLoggedIn, setIsAdmin, setAuth } = useContext(authCtx);
 
   const token = JSON.parse(localStorage.getItem("token"));
 
@@ -20,11 +20,12 @@ const Layout = (props) => {
   useEffect(() => {
     if (authData) {
       setIsLoggedIn(true);
+      setAuth(authData);
       if (authData?.role === "admin") {
         setIsAdmin(true);
       }
     }
-  }, [authData, setIsLoggedIn, setIsAdmin]);
+  }, [authData]);
 
   return (
     <>
