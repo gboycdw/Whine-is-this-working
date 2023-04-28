@@ -75,6 +75,19 @@ const OrderPage = () => {
   // 주문 완료 페이지로 이동시켜주는 핸들러
   const orderCompleteHandler = async (e) => {
     e.preventDefault();
+    if (
+      buyer === "" ||
+      buyerEmail === "" ||
+      buyerPhoneNumber === "" ||
+      recipientName === "" ||
+      recipientPhoneNumber === "" ||
+      shippingAddress === "" ||
+      shippingRequest === "" ||
+      shippingStatus === ""
+    ) {
+      alert("주문정보들을 모두 입력해주세요.");
+      return;
+    }
     try {
       const result = await axios.post("http://34.22.85.44:5000/api/orders", {
         buyer,
