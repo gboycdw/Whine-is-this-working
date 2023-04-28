@@ -2,18 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { cartCtx, storage } from "../../store/cart-context";
 const CartItem = (props) => {
-  const {
-    alcoholDegree,
-    amount,
-    country,
-    id,
-    name,
-    price,
-    brand,
-    imgUrl,
-    discountPrice,
-    isChecked,
-  } = props.cart;
+  const { amount, _id, name, price, brand, imgUrl, discountPrice, isChecked } =
+    props.cart;
   const [cartAmount, setCartAmount] = useState(amount);
   const [totalPrice, setTotalPrice] = useState(price * cartAmount);
   const { cartData, setCartData } = useContext(cartCtx);
@@ -49,21 +39,21 @@ const CartItem = (props) => {
   useEffect(() => {
     let arr = [...cartData];
     const tempCart = arr.map((item) =>
-      item.id === id ? { ...item, amount: cartAmount } : item
+      item._id === _id ? { ...item, amount: cartAmount } : item
     );
     settotalDiscountPrice(cartAmount * discountPrice);
     localStorage.setItem("cartData", JSON.stringify(tempCart));
 
     // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
     setCartData(storage("cartData"));
-  }, [cartAmount]);
+  }, [cartAmount, _id, cartData, discountPrice, setCartData]);
 
   // 체크 누르면 토글 역할 하게 해주는 핸들러
   const checkStatusHandler = () => {
     if (isChecked) {
       let arr = [...cartData];
       const tempCart = arr.map((item) =>
-        item.id === id ? { ...item, isChecked: false } : item
+        item._id === _id ? { ...item, isChecked: false } : item
       );
       localStorage.setItem("cartData", JSON.stringify(tempCart));
 
@@ -72,7 +62,7 @@ const CartItem = (props) => {
     } else if (!isChecked) {
       let arr = [...cartData];
       const tempCart = arr.map((item) =>
-        item.id === id ? { ...item, isChecked: true } : item
+        item._id === _id ? { ...item, isChecked: true } : item
       );
       localStorage.setItem("cartData", JSON.stringify(tempCart));
 
@@ -82,7 +72,7 @@ const CartItem = (props) => {
   };
   return (
     <li
-      key={id}
+      key={_id}
       className="flex justify-between w-[1200px] py-[45px] border-b-[#E5D1D1] border-b-[2px]"
     >
       <div className="flex w-[500px]">

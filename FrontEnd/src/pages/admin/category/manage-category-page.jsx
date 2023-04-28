@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import { getAllCategories } from "../../../api/api-category";
 import ManageCategory from "../../../components/admin/category/manage-category";
-import AdminLayout from "../../../components/admin/layout/admin-layout";
 
 const ManageCategoryPage = () => {
   const { data, isLoading, isError, error } = useQuery(

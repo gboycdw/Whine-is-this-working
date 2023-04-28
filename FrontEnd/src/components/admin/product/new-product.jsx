@@ -4,7 +4,8 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from "../../UI/button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
+import { getAllCategories } from "../../../api/api-category";
 
 const NewProduct = () => {
   const navigate = useNavigate();
@@ -12,6 +13,18 @@ const NewProduct = () => {
   const [isImageModal, setIsImageModal] = useState(false);
   const [imgFile, setImgFile] = useState("/defaultImage.jpg");
   const imgRef = useRef();
+
+  const { data: categoryBundle } = useQuery("categories", () =>
+    getAllCategories()
+  );
+
+  const categoriesByType = categoryBundle?.find(
+    (bundle) => bundle.title === "WINE"
+  ).categories;
+
+  const categoriesByCountry = categoryBundle?.find(
+    (bundle) => bundle.title === "COUNTRY"
+  ).categories;
 
   //각 폼데이터들 상태관리
   const [brand, setBrand] = useState("");
@@ -103,6 +116,7 @@ const NewProduct = () => {
   // 폼 제출 핸들러
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+    let arr = [];
     const data = {
       name,
       brand,
@@ -118,7 +132,7 @@ const NewProduct = () => {
       isPicked,
       isBest,
       inventory,
-      tags,
+      tags: arr.concat(tags),
       feature: {
         sugar,
         acidity,
@@ -170,7 +184,7 @@ const NewProduct = () => {
         isBest,
         inventory,
         tags,
-        feature: {
+        features: {
           sugar,
           acidity,
           tannic,
@@ -320,10 +334,9 @@ const NewProduct = () => {
                     value={country}
                   >
                     <option value="카테고리 선택">카테고리 선택</option>
-                    <option value="미국">미국</option>
-                    <option value="스페인">스페인</option>
-                    <option value="프랑스">프랑스</option>
-                    <option value="이탈리아">이탈리아</option>
+                    {categoriesByCountry?.map((category) => (
+                      <option value={category.name}>{category.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div class="flex gap-3 items-center">
@@ -346,10 +359,9 @@ const NewProduct = () => {
                     value={type}
                   >
                     <option value="카테고리 선택">카테고리 선택</option>
-                    <option value="레드">레드와인</option>
-                    <option value="화이트">화이트와인</option>
-                    <option value="로제">로제와인</option>
-                    <option value="논알콜">논알콜</option>
+                    {categoriesByType?.map((category) => (
+                      <option value={category.name}>{category.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div class="flex justify-between">

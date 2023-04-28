@@ -2,12 +2,10 @@ import { useState } from "react";
 import CategoryManageForm from "./manage-category-form";
 import uuid from "react-uuid";
 import Button from "../../UI/button";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ManageCategory = (props) => {
   const [categoryBundle, setCategoryBundle] = useState(props.categoryBundle);
-  const navigate = useNavigate();
   console.log(categoryBundle);
 
   const categoryPushHandler = (categoryBundleId, enteredNewCategory) => {

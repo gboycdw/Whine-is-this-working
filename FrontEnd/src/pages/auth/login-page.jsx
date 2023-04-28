@@ -3,10 +3,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
 import { authCtx } from "../../components/store/auth-context";
+import { useEffect } from "react";
 const LoginPage = (props) => {
   // const [authData, setAuthData] = useRecoilState(authState);
 
-  const { setAuth, setIsLoggedIn, setIsAdmin } = useContext(authCtx);
+  const { isLoggedIn, setIsLoggedIn } = useContext(authCtx);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +20,12 @@ const LoginPage = (props) => {
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   // 비밀번호 입력값 업데이트 핸들러
   const pwdInputHandler = (e) => {
@@ -44,22 +51,24 @@ const LoginPage = (props) => {
           password,
         }
       );
+      const token = response.data.userToken;
 
-      const data = response.data.sendData;
-      setIsLoggedIn(true);
-      if (data.role === "admin") {
-        setIsAdmin(true);
-      }
-      console.log(data);
-      localStorage.setItem("auth", JSON.stringify(data));
+      if (token) {
+        localStorage.setItem("token", JSON.stringify(token));
+        setIsLoggedIn(true);
 
-      if (state) {
-        navigate(state);
+        if (state) {
+          navigate(state);
+        } else {
+          navigate("/");
+        }
       } else {
-        navigate("/");
+        alert("이메일이나 비밀번호가 틀렸습니다.");
+        return;
       }
     } catch (error) {
-      alert(`${error.message}`);
+      alert("이메일이나 비밀번호가 틀렸습니다.");
+      return;
     }
   };
 

@@ -4,12 +4,25 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Button from "../../UI/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { editProductById } from "../../../api/api-product";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
+import { getAllCategories } from "../../../api/api-category";
 
 const EditProduct = (props) => {
   const productId = useParams().product_id;
   const navigate = useNavigate();
   const client = useQueryClient();
+
+  const { data: categoryBundle } = useQuery("categories", () =>
+    getAllCategories()
+  );
+
+  const categoriesByType = categoryBundle?.find(
+    (bundle) => bundle.title === "WINE"
+  ).categories;
+
+  const categoriesByCountry = categoryBundle?.find(
+    (bundle) => bundle.title === "COUNTRY"
+  ).categories;
 
   const data = props.product;
 
@@ -109,6 +122,7 @@ const EditProduct = (props) => {
   // 폼 제출 핸들러
   const formSubmitHandler = async (e) => {
     e.preventDefault();
+    let arr = [];
     const data = {
       name,
       brand,
@@ -124,7 +138,7 @@ const EditProduct = (props) => {
       isPicked,
       isBest,
       inventory,
-      tags,
+      tags: arr.concat(tags),
       features: {
         sugar,
         acidity,
@@ -305,10 +319,9 @@ const EditProduct = (props) => {
                     value={country}
                   >
                     <option value="카테고리 선택">카테고리 선택</option>
-                    <option value="미국">미국</option>
-                    <option value="스페인">스페인</option>
-                    <option value="프랑스">프랑스</option>
-                    <option value="이탈리아">이탈리아</option>
+                    {categoriesByCountry?.map((category) => (
+                      <option value={category.name}>{category.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="flex gap-3 items-center">
@@ -331,10 +344,9 @@ const EditProduct = (props) => {
                     value={type}
                   >
                     <option value="카테고리 선택">카테고리 선택</option>
-                    <option value="레드">레드와인</option>
-                    <option value="화이트">화이트와인</option>
-                    <option value="로제">로제와인</option>
-                    <option value="논알콜">논알콜</option>
+                    {categoriesByType?.map((category) => (
+                      <option value={category.name}>{category.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="flex justify-between">

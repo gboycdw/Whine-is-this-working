@@ -1,23 +1,22 @@
+import axios from "axios";
 import { useEffect } from "react";
 import { useContext } from "react";
+import { useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserDataByToken } from "../../../api/api-auth";
 import { authCtx } from "../../store/auth-context";
 import AdminMainNav from "./admin-main-nav";
 
 const AdminLayout = (props) => {
-  const { isAdmin, setIsLoggedIn, setIsAdmin } = useContext(authCtx);
-  const navigate = useNavigate();
+  const authData = props.authData;
+  const { isAdmin, setIsLoggedIn, setIsAdmin, isLoggedIn, token } =
+    useContext(authCtx);
 
-  useEffect(() => {
-    if (!isAdmin) {
-      alert("접근이 불가능한 페이지입니다.");
-      navigate("/login");
-    }
-  }, [isAdmin, navigate]);
+  const navigate = useNavigate();
 
   const logoutHandler = (e) => {
     e.preventDefault();
-    localStorage.removeItem("auth");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
     setIsAdmin(false);
     navigate("/");
@@ -26,8 +25,11 @@ const AdminLayout = (props) => {
   return (
     <div className="flex w-[1300px] min-h-screen m-auto border-x border-color2">
       {!isAdmin ? (
-        <div className="inline-block absolute top-[50%] left-[50%] tanslate-x-[-50%] tanslate-y-[-50%]">
-          접근이 불가능한 페이지입니다. 로그인해주세요.
+        <div className="inline-block absolute top-[50%] left-[50%] tanslate-x-[-50%] tanslate-y-[-50%] flex flex-col justify-center items-center">
+          <h1 className="font-bold">접근이 불가능한 페이지입니다.</h1>
+          <Link className="underline" to="/">
+            홈으로 이동
+          </Link>
         </div>
       ) : (
         <>
@@ -43,7 +45,7 @@ const AdminLayout = (props) => {
               </div>
             </div>
             {props.children}
-          </div>{" "}
+          </div>
         </>
       )}
     </div>

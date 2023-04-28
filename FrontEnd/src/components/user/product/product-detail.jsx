@@ -4,17 +4,32 @@ import { useNavigate } from "react-router-dom";
 
 const ProductDetail = (props) => {
   // props로 wine 객체를 받아옴
-  const { name, brand, tags, imgUrl, price, features, region, info } =
-    props.product;
+  const {
+    name,
+    brand,
+    tags,
+    imgUrl,
+    price,
+    discountPrice,
+    features,
+    region,
+    info,
+    saleState,
+  } = props.product;
   const { alcoholDegree, body, acidity, sugar, tannic } = features;
 
   const { cartData, setCartData } = useContext(cartCtx);
   const [amount, setAmount] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(price * amount);
+  const [totalPrice, setTotalPrice] = useState(
+    (price - discountPrice) * amount
+  );
+  const [isSoldOut] = useState(saleState === "품절" ? true : false);
+
+  console.log(props.product);
 
   useEffect(() => {
-    setTotalPrice(price * amount);
-  }, [amount, price]);
+    setTotalPrice((price - discountPrice) * amount);
+  }, [amount, price, discountPrice]);
 
   useEffect(() => {
     localStorage.setItem("cartData", JSON.stringify(cartData));
@@ -101,7 +116,7 @@ const ProductDetail = (props) => {
 
   return (
     <>
-      <div className="flex flex-col m-auto w-[800px]">
+      <div className="flex flex-col m-auto w-[800px] py-16">
         {/* 상단) 제품 이미지, 제품 설명, 제품 가격 정보 */}
         <div className="flex justify-center">
           <div
@@ -109,11 +124,11 @@ const ProductDetail = (props) => {
        items-center justify-center content-center w-full"
           >
             {/* 이미지 - 제품 설명 가로 배치를 위한 div flex */}
-            <div className="flex justify-between gap-8 items-center">
+            <div className="flex justify-between gap-12 items-center">
               {/* 와인 이미지 + 배경 */}
-              <div className="flex h-[480px] w-[400px] mr-[10px] bg-[#F6EEEE] items-center justify-center">
+              <div className="flex h-[480px] w-[480px] mr-[10px] bg-[#F6EEEE] items-center justify-center">
                 <img
-                  className="h-[370px]"
+                  className="max-h-[420px] max-w-[420px]"
                   src={imgUrl}
                   alt={"와인이미지"}
                 ></img>
@@ -147,7 +162,6 @@ const ProductDetail = (props) => {
                 {/* 4. 와인 태그 */}
                 <div className="flex space-x-[10px] mb-[10px]">
                   {tags.map((tag) => {
-                    const tagWidth = `${tag.length * 30}px`;
                     return (
                       <div
                         className="flex h-[25px] bg-[#E5D1D1] 
@@ -160,7 +174,7 @@ const ProductDetail = (props) => {
                 </div>
 
                 {/* 6. 바디, 산도, 당도, 탄닌 */}
-                <div class="flex flex-col space-y-[5px]">
+                <div className="flex flex-col space-y-[5px]">
                   {/* 바디 */}
                   <div className="flex items-center">
                     <span className="text-[18px] font-[600] mr-[20px]">
@@ -204,11 +218,25 @@ const ProductDetail = (props) => {
                 </div>
 
                 {/* 5. 가격 */}
-                <div className="flex place-content-end items-center my-[10px]">
-                  <span className="mr-[10px]">정가</span>
-                  <div className="flex">
-                    <span className="text-[21px] font-[600]">{price}원</span>
-                  </div>
+                <div className="flex items-center my-[10px] gap-1">
+                  {discountPrice === price ? (
+                    <div className="flex">
+                      <span className="text-[21px] font-[600]">{price}원</span>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex">
+                        <span className="text-[21px] font-[600]">
+                          {(price - discountPrice).toLocaleString()}원
+                        </span>
+                      </div>
+                      <div className="flex">
+                        <span className="text-[16px] font-[400 line-through">
+                          {price.toLocaleString()}원
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 {/* 수량 조절 버튼 + 총 금액 */}
@@ -252,30 +280,44 @@ const ProductDetail = (props) => {
                 </div>
 
                 {/* 장바구니, 바로구매 버튼 */}
-                <div className="flex mt-[10px] space-x-[10px]">
-                  <button
-                    className="w-[150px] h-[50px] rounded-[10px] 
-                 border-[#922F2F] border-[2px] text-[18px] text-[#922F2F] mb-[20px]"
-                    onClick={basketButtonHandler}
-                  >
-                    장바구니
-                  </button>
-                  <button
-                    className="w-[150px] h-[50px] rounded-[10px] 
-                  bg-[#922F2F] text-[18px] text-[#FFFFFF] mb-[20px]"
-                    onClick={buyButtonHandler}
-                  >
-                    바로구매
-                  </button>
-                </div>
+                {isSoldOut ? (
+                  <div className="flex mt-[10px] space-x-[10px]">
+                    <button
+                      className="w-full h-[50px] rounded-[10px] 
+              border-[#922F2F] border-[2px] text-[18px] text-[#922F2F] mb-[20px]"
+                      onClick={basketButtonHandler}
+                      disabled={isSoldOut}
+                    >
+                      품절
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex mt-[10px] space-x-[10px]">
+                    <button
+                      className="w-[150px] h-[50px] rounded-[10px] 
+              border-[#922F2F] border-[2px] text-[18px] text-[#922F2F] mb-[20px]"
+                      onClick={basketButtonHandler}
+                    >
+                      장바구니
+                    </button>
+                    <button
+                      className="w-[150px] h-[50px] rounded-[10px] 
+               bg-[#922F2F] text-[18px] text-[#FFFFFF] mb-[20px] ${}"
+                      onClick={buyButtonHandler}
+                    >
+                      바로구매
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
         {/* 하단) 제품 설명 이미지 */}
-        <div className="flex m-auto w-full h-[750px] bg-[#F6EEEE] mb-[20px]">
-          {info}
-        </div>
+        <div
+          dangerouslySetInnerHTML={{ __html: info }}
+          className="flex flex-col m-auto w-full min-h-[300px] mb-[20px] mb-40"
+        ></div>
       </div>
     </>
   );

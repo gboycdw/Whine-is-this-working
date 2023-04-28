@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getAllProducts = async () => {
   const data = await axios.get(`http://34.22.85.44:5000/api/products`);
-  return data.data;
+  return data.data.reverse();
 };
 
 export const getProductById = async (productId) => {
@@ -75,7 +75,6 @@ export const changeSaleStateById = async (productId, saleState) => {
   const result = await axios.patch(
     `http://34.22.85.44:5000/api/products/${productId}/${saleState}`,
     {
-      productId,
       saleState: saleState, // 체크된 상품들의 id 배열을 엑시오스로 넘겨줌
     }
   );
