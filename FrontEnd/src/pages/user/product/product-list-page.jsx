@@ -37,7 +37,7 @@ const ProductListPage = () => {
   // 추가기능) 개수 설정에 따라 n개씩 보여주기 기능 구현할 경우 사용
   // const limit, setLimit] = useState(12);
 
-  const limit = 20;
+  const limit = 12;
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
