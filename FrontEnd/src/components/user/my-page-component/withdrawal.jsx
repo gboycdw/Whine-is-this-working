@@ -30,7 +30,6 @@ const Withdrawl = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     setIsAdmin(false);
-    console.log("딜리트 유저 아이디는 : ", deleteUserDataByToken());
     alert(
       `
         탈퇴가 완료 되었습니다.

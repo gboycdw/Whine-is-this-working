@@ -3,13 +3,22 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { deleteOrderByOrderIndex } from "../../../../api/api-order";
+import { useQueryClient } from "react-query";
 const orderDetailEnter = "주문상세보기>";
 const OrderedItems = (props) => {
   const orderList = props.orderList; //아이템들 정보 담긴 배열
-
-  const f1 = () => {
-    alert("주문이 취소되었습니다.");
-    deleteOrderByOrderIndex(orderIndex);
+  const queryClient = useQueryClient();
+  const f1 = async () => {
+    try {
+      const result = await deleteOrderByOrderIndex(orderIndex);
+      console.log(result);
+      queryClient.invalidateQueries(["auth", { orderIndex }]);
+      alert("주문이 취소되었습니다.");
+      navigate("/mypage");
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   };
   const navigate = useNavigate();
   const orderIndex = props.orderIndex;
