@@ -3,7 +3,7 @@ import path from "path";
 // 출처 https://juni-official.tistory.com/195
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./src/image-storage"); // 파일 저장 경로 : 프론트와 협의하여 결정
+    cb(null, "public/images"); // 파일 저장 경로 : 프론트와 협의하여 결정
   },
   // 폴더 안에 저장되는 파일 명을 결정하는 데 사용
   filename: function (req, file, cb) {
