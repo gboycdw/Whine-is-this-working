@@ -1,116 +1,79 @@
 import { Router } from "express";
 import { productService } from "../services/index.js";
 import { productChecker } from "../middlewares/productValidation.js";
-import { imageUploadHelper } from "../middlewares/multer.js";
+//import { imageUploadHelper } from "../middlewares/multer.js";
 
 const productRouter = Router();
 
 //상품 전체 조회
 productRouter.get("/", async (req, res, next) => {
-  try {
-    console.log("🔎 모든 상품을 조회합니다...");
-    const products = await productService.getProducts();
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  console.log("🔎 모든 상품을 조회합니다...");
+  const products = await productService.getProducts();
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //상품 개별 조회
 productRouter.get("/:id", async (req, res, next) => {
-  try {
-    const search_id = req.params.id;
-    console.log("🔎 상품 Id로 상품을 조회합니다...");
-    const product = await productService.getProductById(search_id);
-    res.status(200).json(product);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const search_id = req.params.id;
+  console.log("🔎 상품 Id로 상품을 조회합니다...");
+  const product = await productService.getProductById(search_id);
+  res.status(200).json(product);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 타입별로 조회
 productRouter.get("/types/:type", async (req, res, next) => {
-  try {
-    const search_type = req.params.type;
-    console.log("🔎 타입별 상품 조회 중...");
-    const products = await productService.getProductsByType(search_type);
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const search_type = req.params.type;
+  console.log("🔎 타입별 상품 조회 중...");
+  const products = await productService.getProductsByType(search_type);
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 나라별로 조회
 productRouter.get("/countries/:country", async (req, res, next) => {
-  try {
-    const search_country = req.params.country;
-    console.log("🔎 국가별 상품 조회 중...");
-    const products = await productService.getProductsByCountry(search_country);
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const search_country = req.params.country;
+  console.log("🔎 국가별 상품 조회 중...");
+  const products = await productService.getProductsByCountry(search_country);
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 가격별로 조회
 productRouter.get("/prices/:min/:max", async (req, res, next) => {
-  try {
-    const lowerPrice = req.params.min;
-    const higherPrice = req.params.max;
-    console.log(
-      `🔎 ${lowerPrice}원 이상 ${higherPrice}원 미만 상품 조회 중...`
-    );
-    const products = await productService.getProductsByPrice(
-      lowerPrice,
-      higherPrice
-    );
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const lowerPrice = req.params.min;
+  const higherPrice = req.params.max;
+  console.log(`🔎 ${lowerPrice}원 이상 ${higherPrice}원 미만 상품 조회 중...`);
+  const products = await productService.getProductsByPrice(
+    lowerPrice,
+    higherPrice
+  );
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 Picked 상품 조회
 productRouter.get("/lists/picked", async (req, res, next) => {
-  try {
-    console.log("🔎 Our Pick 상품 조회 중...");
-    const products = await productService.getPickedProducts();
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  console.log("🔎 Our Pick 상품 조회 중...");
+  const products = await productService.getPickedProducts();
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 Best 상품 조회
 productRouter.get("/lists/best", async (req, res, next) => {
-  try {
-    console.log("🔎 Monthly Best 상품 조회 중...");
-    const products = await productService.getBestProducts();
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  console.log("🔎 Monthly Best 상품 조회 중...");
+  const products = await productService.getBestProducts();
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //상품 추가
 productRouter.post(
   "/",
   productChecker.createProductJoi,
-  imageUploadHelper.single("img"),
+  //imageUploadHelper.single("img"),
   async (req, res, next) => {
     try {
       const {
@@ -122,6 +85,7 @@ productRouter.post(
         country,
         info,
         inventory,
+        imgUrl,
         price,
         discountPrice,
         saleCount,
@@ -130,11 +94,14 @@ productRouter.post(
         isBest,
         tags,
         features,
-      } = JSON.parse(req.body.data);
-      if (!req.file) {
-        throw new Error("파일을 업로드해주세요.");
-      }
-      const imgpath = req.file.path.replace(/\\/g, "/");
+      } = req.body;
+      //JSON.parse(req.body.data);
+
+      // if (!req.file) {
+      //   throw new Error("파일을 업로드해주세요.");
+      // }
+      // const imgpath = req.file.path.replace(/\\/g, "/");
+
       const newProduct = await productService.createProduct({
         seq,
         name,
@@ -144,7 +111,7 @@ productRouter.post(
         country,
         info,
         inventory,
-        imgUrl: imgpath,
+        imgUrl,
         price,
         discountPrice,
         saleCount,
@@ -168,7 +135,7 @@ productRouter.post(
 productRouter.put(
   "/:id",
   productChecker.updateProductJoi,
-  imageUploadHelper.single("img"),
+  //imageUploadHelper.single("img"),
   async (req, res, next) => {
     try {
       const update_id = req.params.id;
@@ -190,12 +157,13 @@ productRouter.put(
         isBest,
         tags,
         features,
-      } = JSON.parse(req.body.data);
+      } = req.body;
+      //JSON.parse(req.body.data);
 
-      if(req.file) {
-        const imgpath = req.file.path.replace(/\\/g, "/");
-        imgUrl = imgpath;
-      }
+      // if (req.file) {
+      //   const imgpath = req.file.path.replace(/\\/g, "/");
+      //   imgUrl = imgpath;
+      // }
 
       console.log("🔄 상품 정보를 수정합니다.");
       const updateProduct = await productService.updateProduct(
@@ -227,32 +195,6 @@ productRouter.put(
     } catch (err) {
       console.log(`❌ ${err}`);
       next(err);
-    }
-  }
-);
-
-//상품 이미지 수정
-productRouter.patch(
-  "/images/:id",
-  imageUploadHelper.single("img"),
-  async (req, res, next) => {
-    const update_id = req.params.id;
-    try {
-      if (!req.file) {
-        throw new Error("변경할 이미지가 없습니다.");
-      }
-      const imgpath = req.file.path.replace(/\\/g, "/");
-      console.log("🔄 새로운 이미지를 등록하는 중...");
-      // ImageBox 모델로 이미지 경로를 저장
-      const changeImage = await productService.updateProduct(
-        { _id: update_id },
-        { imgUrl: imgpath },
-        { returnOriginal: false }
-      );
-      res.status(201).json(changeImage);
-      console.log(`수정된 이미지가 ${imgpath}에 저장되었습니다.`);
-    } catch (error) {
-      next(error);
     }
   }
 );

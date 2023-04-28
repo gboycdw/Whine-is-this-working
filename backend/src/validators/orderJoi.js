@@ -22,13 +22,11 @@ const OrderJoiSchema = {
 
   changeOrder: Joi.object().keys({
     orderIndex: Joi.string().required(),
-    buyerEmail: Joi.string(),
-    buyerPhoneNumber: Joi.string(),
-    recipientName: Joi.string(),
-    recipientPhoneNumber: Joi.string(),
-    shippingAddress: Joi.string(),
-    shippingExtraAddress: Joi.string(),
-    shippingRequest: Joi.string(),
+    recipientName: Joi.string().optional(),
+    recipientPhoneNumber: Joi.string().optional(),
+    shippingAddress: Joi.string().optional(),
+    shippingExtraAddress: Joi.string().optional(),
+    shippingRequest: Joi.string().optional(),
   }),
   changeWayBill: Joi.object().keys({
     orderIndex: Joi.string().required(),

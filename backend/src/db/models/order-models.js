@@ -9,61 +9,46 @@ const Order = mongoose.model("orders", OrderSchema);
 class OrderModel {
   // 주문자 id(email)로 해당 유저의 주문내역을 검색하는 기능
   async findById(userId) {
-    try {
-      const findOrder = await Order.find({ buyerEmail: userId });
-      if (findOrder.length < 1) {
-        throw new Error(
-          `[주문내역 검색 실패] 해당 ID(${userId})의 주문내역이 존재하지 않습니다.`
-        );
-      }
-      return findOrder;
-    } catch (err) {
-      throw new Error(err);
+    const findOrder = await Order.find({ buyerEmail: userId });
+    if (findOrder.length < 1) {
+      console.log(
+        `[주문내역 검색 실패] 해당 ID(${userId})의 주문내역이 존재하지 않습니다.`
+      );
     }
+    return findOrder;
   }
+
   // 주문번호로 주문내역을 상세 검색하는 기능
   async findByOrderIndex(orderIndex) {
-    try {
-      const findOrderByIndex = await Order.findOne({ orderIndex: orderIndex });
-      if (!findOrderByIndex || findOrderByIndex.length < 1) {
-        throw new Error(
-          "[주문번호 검색 실패] 해당 주문번호를 찾을 수 없습니다."
-        );
-      }
-      //--------------------상세 상품 정보를 가져오는 부분-----------------------//
-      let result = [];
-      const orderListToPopulate = findOrderByIndex.orderList;
-      const orderAmount = orderListToPopulate.length;
-      for (let i = 0; i < orderAmount; i++) {
-        let content = { product: "", amount: 0 };
-        let productId = orderListToPopulate[i].product;
-        content.amount = orderListToPopulate[i].amount;
-        const findProductById = await Product.findOne({
-          _id: productId,
-        }).select("name type country brand price discountPrice imgUrl");
-        content.product = findProductById;
-        result.push(content);
-      }
-      findOrderByIndex.orderList = result;
-      //----------------------------------------------------------------------//
-      return findOrderByIndex;
-    } catch (err) {
-      throw new Error(err);
+    const findOrderByIndex = await Order.findOne({ orderIndex: orderIndex });
+    if (!findOrderByIndex || findOrderByIndex.length < 1) {
+      console.log("[주문번호 검색 실패] 해당 주문번호를 찾을 수 없습니다.");
     }
+    //--------------------상세 상품 정보를 가져오는 부분-----------------------//
+    let result = [];
+    const orderListToPopulate = findOrderByIndex.orderList;
+    const orderAmount = orderListToPopulate.length;
+    for (let i = 0; i < orderAmount; i++) {
+      let content = { product: "", amount: 0 };
+      let productId = orderListToPopulate[i].product;
+      content.amount = orderListToPopulate[i].amount;
+      const findProductById = await Product.findOne({
+        _id: productId,
+      }).select("name type country brand price discountPrice imgUrl");
+      content.product = findProductById;
+      result.push(content);
+    }
+    findOrderByIndex.orderList = result;
+    //----------------------------------------------------------------------//
+    return findOrderByIndex;
   }
   // [Admin] 모든 유저의 주문내역을 조회하는 기능
   async findAllOrders() {
-    try {
-      const allOrder = await Order.find({});
-      if (!allOrder || allOrder.length < 1) {
-        throw new Error(
-          "[주문 전체조회 실패] 주문내역이 하나도 존재하지 않습니다."
-        );
-      }
-      return allOrder;
-    } catch (err) {
-      throw new Error(err);
+    const allOrder = await Order.find({});
+    if (!allOrder || allOrder.length < 1) {
+      console.log("[주문 전체조회 실패] 주문내역이 하나도 존재하지 않습니다.");
     }
+    return allOrder;
   }
   // 유저가 새 주문을 생성하는 기능.
   async createOrder(orderInfo) {
@@ -97,11 +82,21 @@ class OrderModel {
         );
       }
       //-----변경가능 항목 : 수령인, 수령인연락처, 배송주소, 상세주소, 배송요청사항-----//
-      searchingOrder.shippingAddress = updateInfo.shippingAddress;
-      searchingOrder.shippingExtraAddress = updateInfo.shippingExtraAddress;
-      searchingOrder.shippingRequest = updateInfo.shippingRequest;
-      searchingOrder.recipientName = updateInfo.recipientName;
-      searchingOrder.recipientPhoneNumber = updateInfo.recipientPhoneNumber;
+      if (updateInfo.shippingExtraAddress) {
+        searchingOrder.shippingAddress = updateInfo.shippingAddress;
+      }
+      if (updateInfo.shippingExtraAddress) {
+        searchingOrder.shippingExtraAddress = updateInfo.shippingExtraAddress;
+      }
+      if (updateInfo.shippingRequest) {
+        searchingOrder.shippingRequest = updateInfo.shippingRequest;
+      }
+      if (updateInfo.recipientName) {
+        searchingOrder.recipientName = updateInfo.recipientName;
+      }
+      if (updateInfo.recipientPhoneNumber) {
+        searchingOrder.recipientPhoneNumber = updateInfo.recipientPhoneNumber;
+      }
       const updatedOrderData = await searchingOrder.save();
       return updatedOrderData;
     } catch (err) {

@@ -1,6 +1,6 @@
 # 🍷와인..게 되네? : 와인 쇼핑몰 프로젝트
 
----
+![1682717990883](image/README/1682717990883.png)
 
 ## 프로젝트 주제
 
@@ -157,15 +157,7 @@ witw
 
 ## 서비스 개요
 
-관리자
-
-https://file.notion.so/f/s/3564d163-d108-4620-862a-254e167c128e/Untitled.png?id=c2819333-7292-4504-9ffa-ebb0e4dbd377&table=block&spaceId=55a278f0-5647-4c26-af1e-2433b9293c4f&expirationTimestamp=1682538865413&signature=jntkW20ZwTifYIJnA-W9zRnX6aCm-wijycp9hyVQEtg&downloadName=Untitled.png
-
-사용자
-
-https://file.notion.so/f/s/9bea4e52-7405-48cc-b39e-e40fc02afcc2/Untitled.png?id=086971e4-6710-4399-8736-528a98ab6170&table=block&spaceId=55a278f0-5647-4c26-af1e-2433b9293c4f&expirationTimestamp=1682538861502&signature=5BG3UyrsBur24oOilnGS2xmxQ6fmLvzvHyN6PhxHALk&downloadName=Untitled.png
-
-피그마 링크 : [https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1&amp;t=FLTBiv5qqQpDmWJf-0](https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1&t=FLTBiv5qqQpDmWJf-0)
+피그마 링크 : [https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1t=FLTBiv5qqQpDmWJf-0](https://www.figma.com/file/EM4HvIdJLbfFOG4d9AZCv8/Untitled?node-id=0-1&t=FLTBiv5qqQpDmWJf-0)
 
 ## 코드 컨벤션
 
@@ -186,5 +178,3 @@ master -----dev
 ```
 
 ## 기타 사항
-
-end.

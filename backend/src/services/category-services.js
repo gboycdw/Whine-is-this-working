@@ -6,22 +6,14 @@ class CategoryService {
   }
   //카테고리 전체 조회
   async getCategories() {
-    try {
-      const categories = await categoryModel.find();
-      return categories;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const categories = await categoryModel.find();
+    return categories;
   }
 
   //카테고리 이름으로 조회
   async getCategoryByTitle(title) {
-    try {
-      const category = await categoryModel.findByTitle(title);
-      return category;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const category = await categoryModel.findByTitle(title);
+    return category;
   }
 
   //카테고리 추가
