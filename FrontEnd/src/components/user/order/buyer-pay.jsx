@@ -49,9 +49,7 @@ const BuyerPay = (props) => {
             </div>
             <button
               className="flex justify-center items-center w-[70px] 
-            border-[#E5D1D1] border-[2px] rounded-[5px] h-[35px] mr-[10px]
-            focus:bg-[#7B4848] focus:border-[2px] focus:border-[#7B4848] 
-            focus:text-[#FFFFFF]"
+            border-[#E5D1D1] border-[2px] rounded-[5px] h-[35px] mr-[10px]"
             >
               신용카드
             </button>
@@ -65,9 +63,7 @@ const BuyerPay = (props) => {
             </button>
             <button
               className="flex justify-center items-center w-[90px] 
-            border-[#E5D1D1] border-[2px] rounded-[5px] h-[35px] mr-[10px]
-            focus:bg-[#7B4848] focus:border-[2px] focus:border-[#7B4848] 
-            focus:text-[#FFFFFF]"
+            border-[#E5D1D1] border-[2px] rounded-[5px] h-[35px] mr-[10px]"
             >
               휴대폰결제
             </button>
