@@ -54,7 +54,20 @@ const SignUpPage = (props) => {
   };
 
   const PhoneNumberChangeHandler = (e) => {
-    setPhoneNumber(e.target.value);
+    const val = e.target.value;
+    if (phoneNumber.length > 11) {
+      // tel 길이 11이하로
+      alert(` 11자리 이하로 입력하세요. `);
+      setPhoneNumber(""); //phoneNumber 초기화
+      return;
+    }
+    if (isNaN(Number(val))) {
+      // 숫자 입력 확인
+      alert(` '-'없이 숫자만 입력해 주세요.`);
+      setPhoneNumber(""); //phoneNumber 초기화
+      return;
+    }
+    setPhoneNumber(val);
   };
 
   // 유효성 검사 통과시 회원가입 버튼 활성화
@@ -108,10 +121,10 @@ const SignUpPage = (props) => {
             className="flex w-[180px] h-[55px] rounded-[10px] bg-[#7B4848]
               items-center justify-center text-[#FFFFFF] text-[17px] mb-[20px] hover:cursor-pointer hover:bg-color1"
             onClick={() => {
-              alert("성인 인증이 완료되었습니다.");
+              alert("WARNING: 19세 미만의 청소년은 이용할 수 없습니다.");
             }}
           >
-            성인인증
+            경고!
           </div>
 
           <div className="flex flex-col items-center text-[15.5px]">
