@@ -82,11 +82,21 @@ class OrderModel {
         );
       }
       //-----변경가능 항목 : 수령인, 수령인연락처, 배송주소, 상세주소, 배송요청사항-----//
-      searchingOrder.shippingAddress = updateInfo.shippingAddress;
-      searchingOrder.shippingExtraAddress = updateInfo.shippingExtraAddress;
-      searchingOrder.shippingRequest = updateInfo.shippingRequest;
-      searchingOrder.recipientName = updateInfo.recipientName;
-      searchingOrder.recipientPhoneNumber = updateInfo.recipientPhoneNumber;
+      if (updateInfo.shippingExtraAddress) {
+        searchingOrder.shippingAddress = updateInfo.shippingAddress;
+      }
+      if (updateInfo.shippingExtraAddress) {
+        searchingOrder.shippingExtraAddress = updateInfo.shippingExtraAddress;
+      }
+      if (updateInfo.shippingRequest) {
+        searchingOrder.shippingRequest = updateInfo.shippingRequest;
+      }
+      if (updateInfo.recipientName) {
+        searchingOrder.recipientName = updateInfo.recipientName;
+      }
+      if (updateInfo.recipientPhoneNumber) {
+        searchingOrder.recipientPhoneNumber = updateInfo.recipientPhoneNumber;
+      }
       const updatedOrderData = await searchingOrder.save();
       return updatedOrderData;
     } catch (err) {
