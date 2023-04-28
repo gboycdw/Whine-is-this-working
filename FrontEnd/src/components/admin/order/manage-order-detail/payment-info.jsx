@@ -1,5 +1,5 @@
 const PaymentInfo = (props) => {
-  const { totalPayPrice } = props.order[0];
+  const { totalPayPrice } = props.order;
 
   return (
     <div className="flex flex-col">

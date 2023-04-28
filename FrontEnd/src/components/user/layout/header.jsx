@@ -54,7 +54,7 @@ const Header = (props) => {
           <Link to="/order">주문</Link>
         </li>
         <li>
-          <Link to="/cs">고객센터</Link>
+          <Link to="/mypage/cus-service-center">고객센터</Link>
         </li>
       </>
     );
@@ -76,7 +76,7 @@ const Header = (props) => {
           <Link to="/cart">장바구니</Link>
         </li>
         <li>
-          <Link to="/cs">고객센터</Link>
+          <Link to="/mypage/cus-service-center">고객센터</Link>
         </li>
       </>
     );

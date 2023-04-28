@@ -4,7 +4,7 @@ const DeliveryInfo = (props) => {
     shippingRequest,
     recipientName,
     recipientPhoneNumber,
-  } = props.order[0];
+  } = props.order;
 
   return (
     <div className="flex flex-col">
@@ -16,7 +16,7 @@ const DeliveryInfo = (props) => {
               <span className="px-4">배송주소</span>
             </div>
             <div className="flex w-80 h-full items-center justify-between">
-              <span className="px-4">{shippingAddress}</span>
+              <span className="px-4 max-w-[240px]">{shippingAddress}</span>
               <button className="px-3 border border-color2 h-8 mr-3 rounded text-sm">
                 변경
               </button>

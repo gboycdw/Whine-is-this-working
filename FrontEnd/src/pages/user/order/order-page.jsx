@@ -2,29 +2,40 @@ import { useNavigate } from "react-router-dom";
 import BuyerInfo from "../../../components/user/order/buyer-info";
 import BuyerPay from "../../../components/user/order/buyer-pay";
 import { useState } from "react";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import { useContext } from "react";
 import { cartCtx } from "../../../components/store/cart-context";
+import { getUserDataByToken } from "../../../api/api-auth";
+import { useEffect } from "react";
 
-const OrderPage = (props) => {
+const OrderPage = () => {
+  const { data: authData } = useQuery("auth", () => getUserDataByToken());
   // 주문 취소시 이전 페이지로 이동시켜주는 핸들러
   const navigate = useNavigate();
   const orderCancelHandler = () => {
     navigate("../");
   };
+  console.log(authData);
 
-  const { setCartData } = useContext(cartCtx);
+  useEffect(() => {
+    setBuyer(authData?.name);
+    setBuyerEmail(authData?.email);
+    setBuyerPhoneNumber(authData?.phoneNumber);
+  }, [authData]);
 
-  const [buyer, setBuyer] = useState("");
-  const [buyerEmail, setBuyerEmail] = useState("");
-  const [buyerPhoneNumber, setBuyerPhoneNumber] = useState("");
+  const [buyer, setBuyer] = useState(authData?.name);
+  const [buyerEmail, setBuyerEmail] = useState(authData?.email);
+  const [buyerPhoneNumber, setBuyerPhoneNumber] = useState(
+    authData?.phoneNumber
+  );
   const [recipientName, setRecipientName] = useState("");
   const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
   const [shippingAddress, setShippingAddress] = useState("");
   const [shippingExtraAddress, setShippingExtraAddress] = useState("");
   const [shippingRequest, setShippingRequest] = useState("");
   const queryClient = useQueryClient();
+  const { setCartData } = useContext(cartCtx);
 
   // 장바구니에서 세션스토리지에 저장한 데이터를 불러오는 함수
   const storage = () => {

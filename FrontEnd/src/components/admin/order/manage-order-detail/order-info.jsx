@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { useQueryClient } from "react-query";
+import { changeShippingStatusByOrderIndex } from "../../../../api/api-order";
+
 const OrderInfo = (props) => {
   const {
     orderIndex,
@@ -6,7 +10,24 @@ const OrderInfo = (props) => {
     buyer,
     buyerPhoneNumber,
     buyerEmail,
-  } = props.order[0];
+  } = props.order;
+
+  const queryClient = useQueryClient();
+  const [newShippingStatus, setNewShippingStatus] = useState(shippingStatus);
+
+  const shippingStatusChangeHandler = async (e) => {
+    setNewShippingStatus(e.target.value);
+    try {
+      const result = await changeShippingStatusByOrderIndex(
+        orderIndex,
+        e.target.value
+      );
+      queryClient.invalidateQueries(["orders"], orderIndex);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex flex-col flex-grow">
@@ -36,7 +57,8 @@ const OrderInfo = (props) => {
             <div className="flex w-80 h-full items-center px-4">
               <select
                 className="p-1 border border-color2 rounded"
-                value={shippingStatus}
+                value={newShippingStatus}
+                onChange={shippingStatusChangeHandler}
               >
                 <option value="결제확인">결제확인</option>
                 <option value="상품준비중">상품준비중</option>

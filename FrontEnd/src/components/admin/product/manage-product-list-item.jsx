@@ -17,8 +17,6 @@ const ManageProductListItem = (props) => {
     updatedAt,
   } = props.product;
 
-  console.log(props.product);
-
   const [isChecked, setIsChecked] = useState(props.isCheckAll);
   const [newSaleState, setNewSaleState] = useState(saleState);
 

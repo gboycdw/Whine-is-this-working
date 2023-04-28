@@ -133,7 +133,7 @@ const NewProduct = () => {
       isBest,
       inventory,
       tags: arr.concat(tags),
-      feature: {
+      features: {
         sugar,
         acidity,
         tannic,

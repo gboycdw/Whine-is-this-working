@@ -14,7 +14,9 @@ export const getOrdersByBuyerEmail = async (buyerEmail) => {
 };
 
 export const getOrderByOrderIndex = async (OrderIndex) => {
-  const data = await axios.get(`http://34.22.85.44:5000/api/orders/`);
+  const data = await axios.get(
+    `http://34.22.85.44:5000/api/orders/order/${OrderIndex}`
+  );
   return data.data;
 };
 
@@ -36,8 +38,9 @@ export const changeShippingStatusByOrderIndex = async (
   orderIndex,
   shippingStatus
 ) => {
-  const result = await axios.put(
-    `http://34.22.85.44:5000/api/orders/${orderIndex}/${shippingStatus}`,
+  console.log(shippingStatus);
+  const result = await axios.patch(
+    `http://34.22.85.44:5000/api/orders/shippingstatus`,
     {
       orderIndex,
       shippingStatus,

@@ -76,6 +76,10 @@ const ProductDetail = (props) => {
   // json data를 총가격을 추가하여 만들고 api로 보냄
   const navigate = useNavigate();
   const buyButtonHandler = () => {
+    const selectedData = props.product;
+    selectedData.amount = amount;
+    selectedData.isChecked = true;
+    setCartData(selectedData);
     setAmount(1); //개수 초기화
     navigate("/order");
   };

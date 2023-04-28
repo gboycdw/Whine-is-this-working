@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useQuery } from "react-query";
+import { getUserDataByToken } from "../../../api/api-auth";
 import PopupDom from "../my-page-component/post-popup/popup-dom";
 import OrderPostCode from "./order-post-code";
 
