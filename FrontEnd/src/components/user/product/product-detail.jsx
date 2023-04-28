@@ -154,7 +154,6 @@ const ProductDetail = (props) => {
             className="flex 
        items-center justify-center content-center w-full"
           >
-            <Link to={`/manage/edit_product/${_id}`}>수정용 임시</Link>
             {/* 이미지 - 제품 설명 가로 배치를 위한 div flex */}
             <div className="flex justify-between gap-12 items-center">
               {/* 와인 이미지 + 배경 */}
