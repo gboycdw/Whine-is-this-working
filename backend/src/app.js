@@ -7,6 +7,7 @@ import { viewsRouter } from "./routers/view-routers.js";
 import { categoryRouter } from "./routers/category-routers.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import path from "path";
+import bodyParser from "body-parser";
 const __dirname = path.resolve();
 
 const app = express();
@@ -15,8 +16,7 @@ app.use(cors());
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
 app.use(express.urlencoded({ limit: "10mb", extended: false }));
-//
-// app.use("/imgtest", express.static(__dirname + "/src/image-storage"));
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(
   "/imgtest",
   express.static(path.join(__dirname, "src", "image-storage"))
