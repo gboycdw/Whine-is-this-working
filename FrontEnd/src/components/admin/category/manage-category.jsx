@@ -124,8 +124,10 @@ const ManageCategory = (props) => {
   };
 
   return (
-    <div className="flex w-full p-6">
-      <div className="flex flex-col bg-[#ffffff] px-8 py-4 min-h-[500px] border border-color2">
+    <div className="flex flex-col w-full p-6">
+      <span className="text-xl mb-3 font-bold px-5">카테고리 관리</span>
+      <div className="mx-5 border-b mb-5"></div>
+      <div className="flex flex-col bg-[#ffffff] mx-5 px-8 py-4 min-h-[500px] border border-color2">
         <div className="grid grid-cols-2 gap-10">
           {categoryBundle.map((bundle) => {
             return (
