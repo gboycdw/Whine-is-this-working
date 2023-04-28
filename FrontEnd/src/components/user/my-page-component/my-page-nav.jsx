@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const MyPageNav = () => {
   const linkRef1 = useRef();
   const linkRef2 = useRef();
@@ -7,21 +8,6 @@ const MyPageNav = () => {
   const linkRef4 = useRef();
   const linkRef5 = useRef();
   const [color] = useState("text-c1");
-  let currentUrl = window.location.href;
-  // useEffect(() => {
-  //   handleCurrentPageIconColor();
-  // }, [currentUrl]);
-  // const handleCurrentPageIconColor = () => {
-  //   setCartColor(false);
-  //   setMypageColor(false);
-  //   setCartColor(false);
-
-  //   if (current === "search") setCategoryColor(true);
-  //   if (current === "login") setMypageColor(true);
-  //   if (current === "cart") setCartColor(true);
-  // };
-
-  //console.log("currentUrl", currentUrl);
   const navBarHandler = (e) => {
     linkRef1.current.style.color = "#c9c9c9";
     linkRef2.current.style.color = "#c9c9c9";
