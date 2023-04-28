@@ -7,8 +7,6 @@ const orderDetailEnter = "주문상세보기>";
 const OrderedItems = (props) => {
   const orderList = props.orderList; //아이템들 정보 담긴 배열
 
-  console.log(orderList);
-
   const f1 = () => {
     alert("주문이 취소되었습니다.");
     deleteOrderByOrderIndex(orderIndex);
@@ -29,14 +27,14 @@ const OrderedItems = (props) => {
     <div className="w-[100%]  border-2 border-c3 rounded-xl mb-[20px]">
       <div className="flex justify-between">
         <div className="m-[20px] text-xl">{dateOfOrder} 주문</div>
-        {/* 한줄변경 */}
-        <Link
+        {/* 주문상세보기 버튼 () */}
+        {/* <Link
           to="/mypage/ordered-item-detail"
           className="m-[20px] text-c4 text-xl"
         >
           {orderDetailEnter}
-          {/* 주문상세보기 버튼 */}
-        </Link>
+          
+        </Link> */}
       </div>
       <div className="m-[20px] border-2 border-c1 rounded-xl mt-[0px]">
         <div className="flex justify-between">
@@ -44,7 +42,8 @@ const OrderedItems = (props) => {
           {shippingState === "상품준비중" ? (
             <button
               onClick={shippingOptionHandler}
-              className="text-xl border-[1px] border-c1 w-[100px] h-[40px] m-[20px] "
+              className="w-[150px] h-[50px] rounded-[10px] 
+              bg-[#922F2F] text-[18px] text-[#FFFFFF] m-[20px]  "
             >
               주문취소
               {/* 배송준비중이면 주문취소 버튼생성*/}

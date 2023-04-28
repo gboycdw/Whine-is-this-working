@@ -1,6 +1,5 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 const MyPageNav = () => {
   const linkRef1 = useRef();
   const linkRef2 = useRef();
@@ -18,6 +17,7 @@ const MyPageNav = () => {
       e.target.style.color = "#060606";
     }
   };
+  const current = window.location.href;
 
   return (
     <>
