@@ -4,42 +4,27 @@ import { orderChecker } from "../middlewares/orderValidation.js";
 const orderRouter = Router();
 
 //-----------------userId로 주문내역 검색하기-----------------//
-orderRouter.get("/:userid", async (req, res, next) => {
-  try {
-    const userEmail = req.params.userid;
-    console.log("🔎", userEmail, " 의 주문내역을 조회 중...");
-    const dbdata = await orderService.findUserOrder(userEmail);
-    res.json(dbdata);
-    console.log("✔️", userEmail, " 의 주문내역 출력 완료.");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+orderRouter.get("/:userid", async (req, res) => {
+  const userEmail = req.params.userid;
+  console.log("🔎", userEmail, " 의 주문내역을 조회 중...");
+  const dbdata = await orderService.findUserOrder(userEmail);
+  res.json(dbdata);
+  console.log("✔️", userEmail, " 의 주문내역 출력 완료.");
 });
 //-------------[Admin] 모든 유저의 주문내역 검색하기-------------//
-orderRouter.get("/", async (req, res, next) => {
-  try {
-    const dbdata = await orderService.findAllOrdersByAdmin();
-    console.log("🔎 모든 유저의 주문정보를 조회합니다...");
-    res.json(dbdata);
-    console.log("✔️ 주문정보 출력 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+orderRouter.get("/", async (req, res) => {
+  const dbdata = await orderService.findAllOrdersByAdmin();
+  console.log("🔎 모든 유저의 주문정보를 조회합니다...");
+  res.json(dbdata);
+  console.log("✔️ 주문정보 출력 완료!");
 });
 //-------------주문번호로 주문내역 검색하기-------------//
-orderRouter.get("/order/:index", async (req, res, next) => {
-  try {
-    const orderIndex = req.params.index;
-    const dbdata = await orderService.findOrderIndex(orderIndex);
-    console.log("🔎 해당 주문번호의 주문정보를 조회합니다...");
-    res.json(dbdata);
-    console.log("✔️ 주문정보 출력 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+orderRouter.get("/order/:index", async (req, res) => {
+  const orderIndex = req.params.index;
+  const dbdata = await orderService.findOrderIndex(orderIndex);
+  console.log("🔎 해당 주문번호의 주문정보를 조회합니다...");
+  res.json(dbdata);
+  console.log("✔️ 주문정보 출력 완료!");
 });
 //-----------------유저가 새로운 주문 추가하기-----------------//
 orderRouter.post("/", orderChecker.newOrderJoi, async (req, res, next) => {
