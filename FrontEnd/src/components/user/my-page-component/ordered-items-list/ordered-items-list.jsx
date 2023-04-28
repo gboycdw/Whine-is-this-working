@@ -52,10 +52,10 @@ const OrderedItemsList = () => {
             </div>
           </div>
         ) : !isError ? (
-          <div class=" flex justify-center items-center ">
-            <div class="w-[80%] h-[80%] ">
-              <div class="h-[15%]">
-                <h1 class="text-3xl mb-[10%]">주문 내역</h1>
+          <div className=" flex justify-center items-center ">
+            <div className="w-[80%] h-[80%] ">
+              <div className="h-[15%]">
+                <h1 className="text-3xl mb-[10%]">주문 내역</h1>
               </div>
               <div>
                 {data.slice(offset, offset + limit).map((index) => (

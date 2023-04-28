@@ -60,58 +60,58 @@ const Withdrawl = () => {
           </div>
         </div>
       ) : !isError ? (
-        <div class="h-[800px] flex justify-center items-center ">
-          <div class="w-[80%] h-[100%]  ">
-            <div class="h-[15%]">
-              <h1 class=" text-c3 text-3xl mb-[10%] ">회원 탈퇴</h1>
+        <div className="h-[800px] flex justify-center items-center ">
+          <div className="w-[80%] h-[100%]  ">
+            <div className="h-[15%]">
+              <h1 className=" text-c3 text-3xl mb-[10%] ">회원 탈퇴</h1>
             </div>
-            <div class=" h-[350px] ">
-              <div class="h-[10%] ">
-                <h1 class="text-xl">탈퇴사유</h1>
+            <div className=" h-[350px] ">
+              <div className="h-[10%] ">
+                <h1 className="text-xl">탈퇴사유</h1>
               </div>
-              <div class=" h-[90%]">
+              <div className=" h-[90%]">
                 <textarea
                   // 탈퇴 사유 인풋
                   type="text"
                   value={content}
                   onChange={contentChangeHandler}
-                  class=" w-[100%] h-[300px] border-[2px] border-c1 break-all"
+                  className=" w-[100%] h-[300px] border-[2px] border-c1 break-all"
                 ></textarea>
               </div>
             </div>
-            <div class="w-[100%] h-[20%] ">
-              <div class="p-[10px] m-[10px]">
+            <div className="w-[100%] h-[20%] ">
+              <div className="p-[10px] m-[10px]">
                 {" "}
-                <span class="mr-[10px] w-[30%]">회원 아이디</span>
-                <span class="h-[25px] bg-[white] w-[30%] text-c1">
+                <span className="mr-[10px] w-[30%]">회원 아이디</span>
+                <span className="h-[25px] bg-[white] w-[30%] text-c1">
                   {data.email}
                 </span>
               </div>
               {/* 추가기능 비번확인 */}
-              {/* <div class="p-[10px] m-[10px]">
+              {/* <div className="p-[10px] m-[10px]">
                 {" "}
-                <span class="mr-[10px] w-[30%]">비밀번호 확인</span>
+                <span className="mr-[10px] w-[30%]">비밀번호 확인</span>
                 <input
                   type="password"
                   value={pwd}
                   onChange={pwdCheckHandler}
-                  class="border-[1px] border-c1 h-[25px] w-[30%]"
+                  className="border-[1px] border-c1 h-[25px] w-[30%]"
                 ></input>         
               </div> */}
             </div>
-            <div class="flex justify-center items-center h-[10%]">
-              <span class=" m-[10px] flex justify-center items-center ">
+            <div className="flex justify-center items-center h-[10%]">
+              <span className=" m-[10px] flex justify-center items-center ">
                 <button
-                  class="w-[150px] h-[50px] rounded-[10px] 
+                  className="w-[150px] h-[50px] rounded-[10px] 
                bg-[#922F2F] text-[18px] text-[#FFFFFF] mb-[20px]"
                   onClick={withdrawlButtonHandler}
                 >
                   탈퇴
                 </button>
               </span>
-              <span class=" m-[10px] flex justify-center items-center">
+              <span className=" m-[10px] flex justify-center items-center">
                 <button
-                  class="w-[150px] h-[50px] border-c3 border-2 rounded-[10px] 
+                  className="w-[150px] h-[50px] border-c3 border-2 rounded-[10px] 
                 text-[18px] text-[#922F2F] mb-[20px] "
                   onClick={withdrawlCancelButtonHandler}
                 >

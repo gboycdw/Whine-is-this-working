@@ -115,59 +115,59 @@ const PersonalInfoModify = () => {
           </div>
         </div>
       ) : !isError ? (
-        <div class=" flex justify-center items-center ">
-          <div class="w-[80%] h-[80%] ">
-            <div class="h-[15%]">
-              <h1 class="text-3xl mb-[10%]">개인 정보 수정</h1>
+        <div className=" flex justify-center items-center ">
+          <div className="w-[80%] h-[80%] ">
+            <div className="h-[15%]">
+              <h1 className="text-3xl mb-[10%]">개인 정보 수정</h1>
             </div>
-            <div class=" h-[60%] border-2 border-c1 rounded-xl">
-              <div class="w-[100%] m-[10px]">
-                <span class="inline-block w-[120px] m-[20px] mb-[20px]">
+            <div className=" h-[60%] border-2 border-c1 rounded-xl">
+              <div className="w-[100%] m-[10px]">
+                <span className="inline-block w-[120px] m-[20px] mb-[20px]">
                   이름
                 </span>
-                <span class="inline-block w-[120px] m-[20px] mb-[20px] text-c1">
+                <span className="inline-block w-[120px] m-[20px] mb-[20px] text-c1">
                   {data.name}
                 </span>
               </div>
-              <div class="m-[10px]">
-                <span class="m-[20px] mb-[20px] inline-block w-[120px]">
+              <div className="m-[10px]">
+                <span className="m-[20px] mb-[20px] inline-block w-[120px]">
                   아이디
                 </span>
-                <span class="m-[20px] mb-[20px] text-c1">{data.email}</span>
+                <span className="m-[20px] mb-[20px] text-c1">{data.email}</span>
               </div>
-              <div class="m-[10px]">
-                <span class="m-[20px] mb-[20px] inline-block w-[120px]">
+              <div className="m-[10px]">
+                <span className="m-[20px] mb-[20px] inline-block w-[120px]">
                   비밀번호 재설정
                 </span>
                 <input
                   onChange={pwdChangeHandler}
                   value={pwd}
                   type="password"
-                  class="border-[2px] border-c1 m-[20px] mb-[20px]"
+                  className="border-[2px] border-c1 m-[20px] mb-[20px]"
                 ></input>
               </div>
-              <div class="m-[10px]">
-                <span class="m-[20px] mb-[20px] inline-block w-[120px]">
+              <div className="m-[10px]">
+                <span className="m-[20px] mb-[20px] inline-block w-[120px]">
                   비밀번호 확인
                 </span>
                 <input
                   type="password"
                   onChange={pwdCheckChangeHandler}
                   value={pwdCheck}
-                  class="border-[2px] border-c1 m-[20px] mb-[20px]"
+                  className="border-[2px] border-c1 m-[20px] mb-[20px]"
                 ></input>
               </div>
-              <div class="flex-row  ">
-                <span class="m-[10px] ">
-                  <span class="m-[20px]  inline-block w-[120px]">주소</span>
+              <div className="flex-row  ">
+                <span className="m-[10px] ">
+                  <span className="m-[20px]  inline-block w-[120px]">주소</span>
                 </span>
-                <span class="m-[10px] ">
-                  <span class="border-[2px] h-[30px] w-[350px]  border-c1 inline-block">
+                <span className="m-[10px] ">
+                  <span className="border-[2px] h-[30px] w-[350px]  border-c1 inline-block">
                     {fullAddress}
                   </span>
                   {/*받아 온 주소 쓰는 span*/}
                   <button
-                    class="text-[white] bg-[#AA7373] rounded-[5px] w-[100px] h-[50px] m-[10px]"
+                    className="text-[white] bg-[#AA7373] rounded-[5px] w-[100px] h-[50px] m-[10px]"
                     type="button"
                     onClick={openPostCode}
                   >
@@ -185,30 +185,30 @@ const PersonalInfoModify = () => {
                   </div>
                 </span>
               </div>
-              <div class="m-[10px] mt-[0px]">
-                <span class="m-[20px] mt-[0px] inline-block w-[120px]">
+              <div className="m-[10px] mt-[0px]">
+                <span className="m-[20px] mt-[0px] inline-block w-[120px]">
                   상세주소
                 </span>
                 <input
-                  class="border-[2px] border-c1 m-[10px] ml-[20px]"
+                  className="border-[2px] border-c1 m-[10px] ml-[20px]"
                   onChange={addressDetailChangeHandler}
                   value={addressDetail}
                 ></input>
               </div>
-              <div class="m-[10px]">
-                <span class="m-[20px] inline-block w-[120px] ">연락처</span>
+              <div className="m-[10px]">
+                <span className="m-[20px] inline-block w-[120px] ">연락처</span>
                 <input
                   type="tel"
                   onChange={telInputHandler}
                   value={tel}
-                  class="border-[2px] border-c1 m-[10px] ml-[20px]"
+                  className="border-[2px] border-c1 m-[10px] ml-[20px]"
                 ></input>
               </div>
             </div>
-            <div class="m-[10px] flex justify-center items-center h-[25%] mb-[10%]">
+            <div className="m-[10px] flex justify-center items-center h-[25%] mb-[10%]">
               <button
                 onClick={modifySuccessHandler}
-                class="w-[150px] h-[50px] rounded-[10px] 
+                className="w-[150px] h-[50px] rounded-[10px] 
                 bg-[#922F2F] text-[18px] text-[#FFFFFF] m-[20px] "
               >
                 수정완료
