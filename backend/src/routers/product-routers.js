@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { productService } from "../services/index.js";
 import { productChecker } from "../middlewares/productValidation.js";
-import { imageUploadHelper } from "../middlewares/multer.js";
+//import { imageUploadHelper } from "../middlewares/multer.js";
 
 const productRouter = Router();
 
@@ -73,7 +73,7 @@ productRouter.get("/lists/best", async (req, res, next) => {
 productRouter.post(
   "/",
   productChecker.createProductJoi,
-  imageUploadHelper.single("img"),
+  //imageUploadHelper.single("img"),
   async (req, res, next) => {
     try {
       const {
@@ -85,6 +85,7 @@ productRouter.post(
         country,
         info,
         inventory,
+        imgUrl,
         price,
         discountPrice,
         saleCount,
@@ -93,11 +94,14 @@ productRouter.post(
         isBest,
         tags,
         features,
-      } = JSON.parse(req.body.data);
-      if (!req.file) {
-        throw new Error("파일을 업로드해주세요.");
-      }
-      const imgpath = req.file.path.replace(/\\/g, "/");
+      } = req.body;
+      //JSON.parse(req.body.data);
+
+      // if (!req.file) {
+      //   throw new Error("파일을 업로드해주세요.");
+      // }
+      // const imgpath = req.file.path.replace(/\\/g, "/");
+
       const newProduct = await productService.createProduct({
         seq,
         name,
@@ -107,7 +111,7 @@ productRouter.post(
         country,
         info,
         inventory,
-        imgUrl: imgpath,
+        imgUrl,
         price,
         discountPrice,
         saleCount,
@@ -131,7 +135,7 @@ productRouter.post(
 productRouter.put(
   "/:id",
   productChecker.updateProductJoi,
-  imageUploadHelper.single("img"),
+  //imageUploadHelper.single("img"),
   async (req, res, next) => {
     try {
       const update_id = req.params.id;
@@ -153,12 +157,13 @@ productRouter.put(
         isBest,
         tags,
         features,
-      } = JSON.parse(req.body.data);
+      } = req.body;
+      //JSON.parse(req.body.data);
 
-      if (req.file) {
-        const imgpath = req.file.path.replace(/\\/g, "/");
-        imgUrl = imgpath;
-      }
+      // if (req.file) {
+      //   const imgpath = req.file.path.replace(/\\/g, "/");
+      //   imgUrl = imgpath;
+      // }
 
       console.log("🔄 상품 정보를 수정합니다.");
       const updateProduct = await productService.updateProduct(
@@ -190,32 +195,6 @@ productRouter.put(
     } catch (err) {
       console.log(`❌ ${err}`);
       next(err);
-    }
-  }
-);
-
-//상품 이미지 수정
-productRouter.patch(
-  "/images/:id",
-  imageUploadHelper.single("img"),
-  async (req, res, next) => {
-    const update_id = req.params.id;
-    try {
-      if (!req.file) {
-        throw new Error("변경할 이미지가 없습니다.");
-      }
-      const imgpath = req.file.path.replace(/\\/g, "/");
-      console.log("🔄 새로운 이미지를 등록하는 중...");
-      // ImageBox 모델로 이미지 경로를 저장
-      const changeImage = await productService.updateProduct(
-        { _id: update_id },
-        { imgUrl: imgpath },
-        { returnOriginal: false }
-      );
-      res.status(201).json(changeImage);
-      console.log(`수정된 이미지가 ${imgpath}에 저장되었습니다.`);
-    } catch (error) {
-      next(error);
     }
   }
 );
