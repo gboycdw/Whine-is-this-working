@@ -3,7 +3,6 @@ import OrderSchema from "../schemas/order-schema.js";
 import { nanoid } from "nanoid"; // npm install nanoid 로 라이브러리 설치해야 함
 import dayjs from "dayjs"; // npm install dayjs 로 라이브러리 설치해야 함
 import { Product } from "../schemas/product-schema.js";
-import { ProductJoiSchema } from "../../validators/productJoi.js";
 
 const Order = mongoose.model("orders", OrderSchema);
 
