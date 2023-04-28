@@ -1,4 +1,3 @@
-import AdminLayout from "../../../components/admin/layout/admin-layout";
 import NewProduct from "../../../components/admin/product/new-product";
 
 const NewProductPage = () => {

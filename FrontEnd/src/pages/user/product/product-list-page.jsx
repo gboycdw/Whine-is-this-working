@@ -2,7 +2,7 @@ import Product from "../../../components/user/product/product";
 import Pagination from "../../../components/user/product/pagination";
 import { useState } from "react";
 import { useParams } from "react-router";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import {
   getProductsByCategory,
   getProductsByCategoryPrice,
@@ -18,8 +18,8 @@ const ProductListPage = () => {
   const categoryPrice2 = useParams().price_2;
 
   const { data, isLoading, isError, error } = useQuery(
-    ["products", categoryName],
-    async () => {
+    ["products", categoryName, categoryPrice1, categoryPrice2],
+    () => {
       if (categoryPrice2) {
         return getProductsByCategoryPrice(categoryPrice1, categoryPrice2);
       } else if (categoryName) {
@@ -32,6 +32,8 @@ const ProductListPage = () => {
     }
   );
 
+  console.log(data);
+
   const filteredByIsLarvate = data?.filter((item) => item.saleState !== "숨김");
   // 추가기능) 개수 설정에 따라 n개씩 보여주기 기능 구현할 경우 사용
   // const limit, setLimit] = useState(12);
@@ -42,14 +44,13 @@ const ProductListPage = () => {
   // grid에 rows를 동적으로 줘서 아이템 개수에 따라
   // pagination 위치가 마지막 아이템 줄 밑에 바로 붙도록 설정
 
-  // styled.ul = css가 적용된 ul 태그
-
   return (
     <>
       <div className="inline-block relative py-16 min-h-screen w-full">
         <div>
           <h1 className="ml-[30px] mb-[50px] text-2xl">
-            {categoryName}({data?.length})
+            {categoryName}(
+            {filteredByIsLarvate ? filteredByIsLarvate?.length : 0})
           </h1>
         </div>
         {isLoading ? (

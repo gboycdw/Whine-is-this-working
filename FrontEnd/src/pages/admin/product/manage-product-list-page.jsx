@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
 import { getAllProducts } from "../../../api/api-product";
-import AdminLayout from "../../../components/admin/layout/admin-layout";
 import ManageProductList from "../../../components/admin/product/manage-product-list";
 
 const ManageProductListPage = () => {

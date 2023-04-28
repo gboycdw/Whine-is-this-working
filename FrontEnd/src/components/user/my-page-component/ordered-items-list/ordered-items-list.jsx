@@ -13,10 +13,9 @@ const OrderedItemsList = () => {
     ["orders", buyerEmail],
     async () => await getOrdersByBuyerEmail(buyerEmail)
   );
-  const orderedItemsData = data;
-  console.log("order", orderedItemsData);
-  console.log("shippingStatus", orderedItemsData[0].shippingStatus);
-  console.log("orderList", orderedItemsData[0].orderList);
+
+  console.log(data);
+
   return (
     <>
       <div class=" flex justify-center items-center ">
@@ -25,7 +24,7 @@ const OrderedItemsList = () => {
             <h1 class="text-3xl mb-[10%]">주문 내역</h1>
           </div>
           <div>
-            {orderedItemsData.slice(offset, offset + limit).map((index) => (
+            {data.slice(offset, offset + limit).map((index) => (
               <OrderedItems
                 dateOfOrder={index.createdAt}
                 shippingState={index.shippingStatus}
@@ -36,7 +35,7 @@ const OrderedItemsList = () => {
           <div>
             <Pagination
               // 필터된 데이터 개수에 따라 창 개수로 설정
-              total={orderedItemsData.length}
+              total={data.length}
               limit={limit}
               page={page}
               setPage={setPage}

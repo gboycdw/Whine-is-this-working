@@ -1,14 +1,11 @@
 import { useQuery } from "react-query";
 import { getAllOrders } from "../../../api/api-order";
-import AdminLayout from "../../../components/admin/layout/admin-layout";
 import ManageOrderList from "../../../components/admin/order/manage-order-list";
 
 const ManageOrderListPage = () => {
   const { data, isLoading, isError, error } = useQuery("orders", async () =>
     getAllOrders()
   );
-
-  console.log(data);
 
   return (
     <>

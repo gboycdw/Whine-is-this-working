@@ -6,7 +6,7 @@ import ManageProductListItem from "./manage-product-list-item";
 import { useQueryClient } from "react-query";
 import { deleteCheckedProductsById } from "../../../api/api-product";
 
-const categories = ["레드", "화이트", "로제", "논알콜"];
+const categories = ["레드와인", "화이트와인", "로제와인", "스파클링", "논알콜"];
 
 const ManageProductList = (props) => {
   const products = props.products;
@@ -14,12 +14,26 @@ const ManageProductList = (props) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const [fileteredProducts, setFilteredProducts] = useState();
   const [checkedProductIds, setCheckedProductIds] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
 
   const [page, setPage] = useState(1); // 페이징처리를 위한 현재 페이지
   const limit = 10; // 페이징처리를 위한 한화면 게시글 리밋
   const offset = (page - 1) * limit; // 페이징처리를위한 배열 슬라이스를 위한 오프셋
+
+  const categorySelectHandler = (e) => {
+    if (e.target.value === "전체보기") {
+      setFilteredProducts(products);
+    } else {
+      const filteredProducts = products.filter(
+        (item) =>
+          item.type === e.target.value || item.country === e.target.value
+      );
+
+      setFilteredProducts(filteredProducts);
+    }
+  };
 
   /* 체크박스 전체 선택 핸들러 
   이미 모두 체크가 되어있는경우 클릭하면 모든 체크를 해제하고 상품IDs라는 배열이 담긴 상태를 빈배열로 초기화
@@ -60,14 +74,22 @@ const ManageProductList = (props) => {
           판매중 {products.filter((item) => item.saleState === "판매중").length}
         </span>
         <span> | </span>
-        <span>품절 0</span>
+        <span>
+          품절 {products.filter((item) => item.saleState === "품절").length}
+        </span>
         <span> | </span>
-        <span>숨김 0</span>
+        <span>
+          숨김 {products.filter((item) => item.saleState === "숨김").length}
+        </span>
       </div>
       <div className="py-4 flex gap-4 text-sm">
         <div className="w-32 h-11 flex justify-center px-3 border border-color2 rounded">
-          <select className="w-full">
-            <option value="카테고리선택">카테고리 선택</option>
+          <select
+            className="w-full"
+            onChange={categorySelectHandler}
+            value="전체보기"
+          >
+            <option value="전체보기">전체보기</option>
             {categories.map((category) => {
               return (
                 <option key={category.id} value={category}>
@@ -101,7 +123,7 @@ const ManageProductList = (props) => {
             <span className="w-32 ">수정일</span>
             <button className="w-20">수정하기</button>
           </li>
-          {products.slice(offset, offset + limit).map((item) => {
+          {products?.slice(offset, offset + limit).map((item) => {
             return (
               <ManageProductListItem
                 key={item._id}

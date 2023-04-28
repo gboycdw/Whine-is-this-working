@@ -11,11 +11,6 @@ const ProductDetailPage = () => {
     async () => await getProductById(productId)
   );
 
-  // 백 서버 닫아서 임시
-  // const isLoading = false;
-  // const isError = false;
-  // const data = {};
-  // const error = {};\
   return (
     <>
       {/* <div className="inline-block relative py-16 min-h-screen w-full"> */}

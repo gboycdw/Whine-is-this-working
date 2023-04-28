@@ -8,25 +8,18 @@ import { getAllCategories } from "../../../api/api-category";
 import { useContext } from "react";
 import { authCtx } from "../../store/auth-context";
 
-const Header = () => {
+const Header = (props) => {
+  const authData = props.authData;
   const [categoryIndex, setCategoryIndex] = useState();
 
-  const { isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin, auth } =
-    useContext(authCtx);
+  const { setIsLoggedIn, setIsAdmin, isAdmin } = useContext(authCtx);
 
   const navigate = useNavigate();
 
-  console.log(auth);
-
-  let { data, isLoading, isError, error } = useQuery(
+  let { data, isLoading, isError } = useQuery(
     "categories",
     async () => await getAllCategories()
   );
-  if (isLoading) {
-    data = [];
-  }
-
-  console.log(data);
 
   const categoryOnMouseOverHandler = (e) => {
     setCategoryIndex(e.currentTarget.id);
@@ -38,7 +31,7 @@ const Header = () => {
 
   const logoutHandler = (e) => {
     e.preventDefault();
-    localStorage.removeItem("auth");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
     setIsAdmin(false);
     navigate("/");
@@ -71,7 +64,7 @@ const Header = () => {
     return (
       <>
         <li>
-          <Link to="/mypage">shagrat님</Link>
+          <Link to="/mypage">{authData?.name}</Link>
         </li>
         <li>
           <Link to="/" onClick={logoutHandler}>
@@ -83,9 +76,6 @@ const Header = () => {
           <Link to="/cart">장바구니</Link>
         </li>
         <li>
-          <Link to="/order">주문</Link>
-        </li>
-        <li>
           <Link to="/cs">고객센터</Link>
         </li>
       </>
@@ -95,9 +85,7 @@ const Header = () => {
   const LoginAdminNav = () => {
     return (
       <>
-        <li>
-          <Link to="/">admin님</Link>
-        </li>
+        <li>admin님</li>
         <li>
           <Link to="/manage">관리자페이지</Link>
         </li>
@@ -118,17 +106,22 @@ const Header = () => {
         </Link>
         <div className={classes.nav_top}>
           <ul className={classes.nav_top_ul}>
-            {!isLoggedIn ? (
-              <VisitorNav />
-            ) : !isAdmin ? (
+            {isAdmin ? (
+              <LoginAdminNav />
+            ) : authData ? (
               <LoginUserNav />
             ) : (
-              <LoginAdminNav />
+              <VisitorNav />
             )}
           </ul>
         </div>
         <div className={classes.nav_icon}>
-          <Link to="/search">
+          <Link
+            to="/search"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
             <img
               className={classes.search_icon}
               src="/search.png"
@@ -147,8 +140,20 @@ const Header = () => {
       <div className={classes.main_nav}>
         <ul className="relative w-[800px] h-full grid grid-cols-4">
           {/* 카테고리 타이틀들 배열로로 카테고리바 네비게이션 생성 */}
-          {data ? (
-            data.map((bundle) => {
+          {isLoading || isError ? (
+            <>
+              <li className={classes.main_nav_li}>
+                <span>WINE</span>
+              </li>
+              <li className={classes.main_nav_li}>
+                <span>COUNTRY</span>
+              </li>
+              <li className={classes.main_nav_li}>
+                <span>PRICE</span>
+              </li>
+            </>
+          ) : (
+            data?.map((bundle) => {
               return (
                 <li
                   key={bundle._id}
@@ -167,18 +172,6 @@ const Header = () => {
                 </li>
               );
             })
-          ) : (
-            <ul className="relative w-[800px] h-full grid grid-cols-4">
-              <li className={classes.main_nav_li}>
-                <span>WINE</span>
-              </li>
-              <li className={classes.main_nav_li}>
-                <span>COUNTRY</span>
-              </li>
-              <li className={classes.main_nav_li}>
-                <span>PRICE</span>
-              </li>
-            </ul>
           )}
           {/* isCategoryModal state가 true냐 false냐에따라 모달창 컨트롤하는 부분 */}
           <li className={classes.main_nav_li}>

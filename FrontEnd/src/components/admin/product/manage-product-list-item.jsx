@@ -17,6 +17,8 @@ const ManageProductListItem = (props) => {
     updatedAt,
   } = props.product;
 
+  console.log(props.product);
+
   const [isChecked, setIsChecked] = useState(props.isCheckAll);
   const [newSaleState, setNewSaleState] = useState(saleState);
 
@@ -28,7 +30,6 @@ const ManageProductListItem = (props) => {
   const queryClient = useQueryClient();
   // 상품 체크 핸들러 (부모컴포넌트의 체크된 제품ID들 배열 상태를 업데이트함)
   const inputCheckHandler = (e) => {
-    console.log(_id);
     if (!isChecked) {
       setIsChecked(true);
       let copiedArr = [...props.checkedProductIds];
@@ -46,7 +47,6 @@ const ManageProductListItem = (props) => {
       props.setCheckedProductIds(copiedArr);
     }
   };
-
   // 판매상태 변경 핸들러 (바뀐 판매상태를 백엔드에 상품 id값과 같이 전송)
   const saleStateChangeHandler = async (e) => {
     const saleState = e.target.value;
@@ -54,7 +54,7 @@ const ManageProductListItem = (props) => {
     try {
       const result = await changeSaleStateById(_id, saleState);
       console.log(result);
-      queryClient.invalidateQueries(["products", _id]);
+      queryClient.invalidateQueries(["products", _id, saleState]);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +68,9 @@ const ManageProductListItem = (props) => {
         <img className="h-10" src={imgUrl} alt={name} />
       </span>
       <span className="grow">
-        <Link to={`/product/${_id}`}>{name}</Link>
+        <Link className="underline" to={`/product/${_id}`}>
+          {name}
+        </Link>
       </span>
 
       <span className="w-24 ">{price.toLocaleString()}원</span>
@@ -83,8 +85,8 @@ const ManageProductListItem = (props) => {
         <option value="숨김">숨김</option>
       </select>
       <span className="w-16 ">{inventory}</span>
-      <span className="w-32 ">{createdAt.slice(0, 10)}</span>
-      <span className="w-32 ">{updatedAt.slice(0, 10)}</span>
+      <span className="w-32 ">{createdAt?.slice(0, 10)}</span>
+      <span className="w-32 ">{updatedAt?.slice(0, 10)}</span>
       <Link to={`/manage/edit_product/${_id}`} className="w-20 ">
         수정하기
       </Link>

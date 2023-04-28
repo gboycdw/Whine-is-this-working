@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import Layout from "../../../components/Layout/layout";
 import BuyerInfo from "../../../components/user/order/buyer-info";
 import BuyerPay from "../../../components/user/order/buyer-pay";
 import { useState } from "react";
 import { useQueryClient } from "react-query";
 import axios from "axios";
+import { useContext } from "react";
+import { cartCtx } from "../../../components/store/cart-context";
 
 const OrderPage = (props) => {
   // 주문 취소시 이전 페이지로 이동시켜주는 핸들러
@@ -12,6 +13,8 @@ const OrderPage = (props) => {
   const orderCancelHandler = () => {
     navigate("../");
   };
+
+  const { setCartData } = useContext(cartCtx);
 
   const [buyer, setBuyer] = useState("");
   const [buyerEmail, setBuyerEmail] = useState("");
@@ -48,7 +51,7 @@ const OrderPage = (props) => {
     });
   }
 
-  const shippingStatus = "배송준비중";
+  const shippingStatus = "상품준비중";
   const orderIndex = "0";
   const deliveryFee = 2500;
   const wayBill = "0";
@@ -57,7 +60,6 @@ const OrderPage = (props) => {
   // 주문 완료 페이지로 이동시켜주는 핸들러
   const orderCompleteHandler = async (e) => {
     e.preventDefault();
-
     try {
       const result = await axios.post("http://34.22.85.44:5000/api/orders", {
         buyer,
@@ -77,6 +79,8 @@ const OrderPage = (props) => {
       });
       console.log(result);
       alert("주문이 성공적으로 완료되었습니다.");
+      localStorage.removeItem("cartData");
+      setCartData([]);
       navigate("/");
       queryClient.invalidateQueries("orders");
     } catch (error) {
