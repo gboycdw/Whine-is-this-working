@@ -24,7 +24,7 @@ productRouter.get("/:id", async (req, res, next) => {
     const search_id = req.params.id;
     console.log("🔎 상품 Id로 상품을 조회합니다...");
     const product = await productService.getProductById(search_id);
-    res.status(201).json(product);
+    res.status(200).json(product);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -38,7 +38,7 @@ productRouter.get("/types/:type", async (req, res, next) => {
     const search_type = req.params.type;
     console.log("🔎 타입별 상품 조회 중...");
     const products = await productService.getProductsByType(search_type);
-    res.status(201).json(products);
+    res.status(200).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -52,7 +52,7 @@ productRouter.get("/countries/:country", async (req, res, next) => {
     const search_country = req.params.country;
     console.log("🔎 국가별 상품 조회 중...");
     const products = await productService.getProductsByCountry(search_country);
-    res.status(201).json(products);
+    res.status(200).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -72,7 +72,7 @@ productRouter.get("/prices/:min/:max", async (req, res, next) => {
       lowerPrice,
       higherPrice
     );
-    res.status(201).json(products);
+    res.status(200).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -85,7 +85,7 @@ productRouter.get("/lists/picked", async (req, res, next) => {
   try {
     console.log("🔎 Our Pick 상품 조회 중...");
     const products = await productService.getPickedProducts();
-    res.status(201).json(products);
+    res.status(200).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -98,7 +98,7 @@ productRouter.get("/lists/best", async (req, res, next) => {
   try {
     console.log("🔎 Monthly Best 상품 조회 중...");
     const products = await productService.getBestProducts();
-    res.status(201).json(products);
+    res.status(200).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -281,7 +281,7 @@ productRouter.delete("/:id", async (req, res, next) => {
     const delete_id = req.params.id;
     console.log("🔄 등록된 상품을 삭제합니다.");
     const result = await productService.deleteProduct(delete_id);
-    res.status(201).json(result);
+    res.status(200).json(result);
     console.log("✔️ 상품 삭제 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
