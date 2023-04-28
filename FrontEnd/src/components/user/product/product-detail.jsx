@@ -2,10 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { cartCtx } from "../../store/cart-context";
 import { useNavigate } from "react-router-dom";
 import { authCtx } from "../../store/auth-context";
+import { useQuery } from "react-query";
+import { getUserDataByToken } from "../../../api/api-auth";
+import { useRef } from "react";
 
 const ProductDetail = (props) => {
   // props로 wine 객체를 받아옴
   const {
+    _id,
     name,
     brand,
     tags,
@@ -18,9 +22,10 @@ const ProductDetail = (props) => {
     saleState,
   } = props.product;
   const { alcoholDegree, body, acidity, sugar, tannic } = features;
+  const amountRef = useRef();
 
   const { cartData, setCartData } = useContext(cartCtx);
-  const { auth } = useContext(authCtx);
+  const { data } = useQuery(["auth"], async () => await getUserDataByToken());
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(
     (price - discountPrice) * amount
@@ -37,10 +42,14 @@ const ProductDetail = (props) => {
 
   // 마이너스 버튼 핸들러
   const wineCountMinus = () => {
-    if (!amount < 1) {
-      let a = amount;
-      setAmount(--a);
+    if (amountRef.current.value < 2) {
+      return;
     }
+    // if (e.target.value < 2) {
+    //   return;
+    // }
+    let a = amount;
+    setAmount(--a);
   };
 
   // 플러스 버튼 핸들러
@@ -51,6 +60,9 @@ const ProductDetail = (props) => {
 
   // input에 숫자를 입력시 제품 개수 업데이트 해주는 핸들러
   const inputChangeHandler = (e) => {
+    if (e.target.value < 1 || e.target.value > 99) {
+      return;
+    }
     setAmount(e.target.value);
   };
 
@@ -81,18 +93,20 @@ const ProductDetail = (props) => {
   // json data를 총가격을 추가하여 만들고 api로 보냄
   const navigate = useNavigate();
   const buyButtonHandler = () => {
-    if (!auth) {
+    if (!data) {
       if (window.confirm("상품을 주문하시기전에 로그인 하시겠습니까?🥕")) {
         navigate("/login");
+        return;
       }
     }
-    let newCartDataArr = [];
+    let newCartData = {};
     const selectedData = props.product;
     selectedData.amount = amount;
     selectedData.isChecked = true;
-    newCartDataArr.push(selectedData);
-    setCartData(newCartDataArr);
-    console.log(newCartDataArr, cartData);
+    newCartData.totalPrice = price * amount;
+    newCartData.totalDiscountPrice = discountPrice * amount;
+    newCartData.totalPayPrice = (price - discountPrice) * amount;
+    sessionStorage.setItem("cartToOrder", JSON.stringify(newCartData));
     setAmount(1); //개수 초기화
     navigate("/order");
   };
@@ -266,7 +280,7 @@ const ProductDetail = (props) => {
                     {/* 수량 1개 감소 버튼 */}
                     <button
                       onClick={wineCountMinus}
-                      className="w-7 h-7 text-[#FFFFFF] mr-[20px] bg-[#B36767] rounded-[5px]"
+                      className="w-7 h-7 text-[#FFFFFF] bg-[#B36767] rounded-[5px]"
                     >
                       -
                     </button>
@@ -275,7 +289,8 @@ const ProductDetail = (props) => {
                     <input
                       type="number"
                       onChange={inputChangeHandler}
-                      className="w-[35px] bg-[#F6EEEE]"
+                      className="w-[35px] text-center bg-[#F6EEEE] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      ref={amountRef}
                       value={amount}
                     />
 

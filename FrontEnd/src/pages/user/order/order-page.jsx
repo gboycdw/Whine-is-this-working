@@ -23,8 +23,6 @@ const OrderPage = () => {
     localStorage.setItem("cartData", JSON.stringify(cartData));
   }, [cartData]);
 
-  console.log(authData);
-
   useEffect(() => {
     setBuyer(authData?.name);
     setBuyerEmail(authData?.email);
@@ -39,6 +37,7 @@ const OrderPage = () => {
   const [recipientName, setRecipientName] = useState("");
   const [recipientPhoneNumber, setRecipientPhoneNumber] = useState("");
   const [shippingAddress, setShippingAddress] = useState("");
+  const [zonecode, setZonecode] = useState("");
   const [shippingExtraAddress, setShippingExtraAddress] = useState("");
   const [shippingRequest, setShippingRequest] = useState("");
   const queryClient = useQueryClient();
@@ -62,7 +61,6 @@ const OrderPage = () => {
   // cartData를 돌면서 "product":_id, "amount":amount 형식으로 객체 생성
   const orderList = [];
   for (let i = 0; i <= cartData?.length - 1; i++) {
-    console.log(cartData[i]["_id"]);
     orderList.push({
       product: cartData[i]["_id"],
       amount: cartData[i]["amount"],
@@ -78,6 +76,19 @@ const OrderPage = () => {
   // 주문 완료 페이지로 이동시켜주는 핸들러
   const orderCompleteHandler = async (e) => {
     e.preventDefault();
+    if (
+      buyer === "" ||
+      buyerEmail === "" ||
+      buyerPhoneNumber === "" ||
+      recipientName === "" ||
+      recipientPhoneNumber === "" ||
+      shippingAddress === "" ||
+      shippingRequest === "" ||
+      shippingStatus === ""
+    ) {
+      alert("주문정보들을 모두 입력해주세요.");
+      return;
+    }
     try {
       const result = await axios.post("http://34.22.85.44:5000/api/orders", {
         buyer,
@@ -96,15 +107,16 @@ const OrderPage = () => {
         wayBill,
       });
       console.log(result);
-      alert("주문이 성공적으로 완료되었습니다.");
       localStorage.removeItem("cartData");
-      setCartData([]);
-      navigate("/");
+      sessionStorage.removeItem("cartToOrder");
       queryClient.invalidateQueries("orders");
+      setCartData([]);
+      navigate("/ordercomplete");
+      window.scrollTo(0, 0);
     } catch (error) {
-      console.log(error);
+      alert(`${error.message}`);
+      return;
     }
-    navigate("/ordercomplete");
   };
 
   return (
@@ -130,6 +142,8 @@ const OrderPage = () => {
           setRecipientPhoneNumber={setRecipientPhoneNumber}
           shippingAddress={shippingAddress}
           setShippingAddress={setShippingAddress}
+          zonecode={zonecode}
+          setZonecode={setZonecode}
           shippingExtraAddress={shippingExtraAddress}
           setShippingExtraAddress={setShippingExtraAddress}
           shippingRequest={shippingRequest}

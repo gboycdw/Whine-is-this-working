@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PopupDom from "../../components/user/my-page-component/post-popup/popup-dom";
-import OrderPostCode from "./signup-order-post-code";
+import SignupOrderPostCode from "./signup-order-post-code";
 
 const SignUpPage = (props) => {
   // 초기값 세팅
@@ -299,7 +299,7 @@ const SignUpPage = (props) => {
               <div id="popupDom">
                 {isPopupOpen && ( // 클릭해서 true면 팝업 띄움.
                   <PopupDom>
-                    <OrderPostCode
+                    <SignupOrderPostCode
                       onClose={closePostCode} //팝업닫음.
                       setFullAddress={setAddress1}
                     />

@@ -2,8 +2,18 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { cartCtx, storage } from "../../store/cart-context";
 const CartItem = (props) => {
-  const { amount, _id, name, price, brand, imgUrl, discountPrice, isChecked } =
-    props.cart;
+  const {
+    alcoholDegree,
+    amount,
+    country,
+    _id,
+    name,
+    price,
+    brand,
+    imgUrl,
+    discountPrice,
+    isChecked,
+  } = props.cart;
   const [cartAmount, setCartAmount] = useState(amount);
   const [totalPrice, setTotalPrice] = useState(price * cartAmount);
   const { cartData, setCartData } = useContext(cartCtx);
@@ -46,7 +56,7 @@ const CartItem = (props) => {
 
     // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
     setCartData(storage("cartData"));
-  }, [cartAmount, _id, cartData, discountPrice, setCartData]);
+  }, [cartAmount, cartData, discountPrice, _id, setCartData]);
 
   // 체크 누르면 토글 역할 하게 해주는 핸들러
   const checkStatusHandler = () => {
