@@ -29,7 +29,8 @@ const OrderedItems = (
     <div class="w-[100%]  border-2 border-c3 rounded-xl mb-[20px]">
       <div class="flex justify-between">
         <div class="m-[20px] text-xl">{dateOfOrder} 주문</div>
-        <Link to="/ordered-items-list/detail" class="m-[20px] text-c4 text-xl">
+        {/* 한줄변경 */}
+        <Link to="/mypage/ordered-item-detail" class="m-[20px] text-c4 text-xl">
           {orderDetailEnter}
           {/* 주문상세보기 버튼 */}
         </Link>
