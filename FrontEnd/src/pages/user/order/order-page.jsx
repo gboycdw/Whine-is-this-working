@@ -16,6 +16,13 @@ const OrderPage = () => {
   const orderCancelHandler = () => {
     navigate("../");
   };
+
+  const { cartData } = useContext(cartCtx);
+
+  useEffect(() => {
+    localStorage.setItem("cartData", JSON.stringify(cartData));
+  }, [cartData]);
+
   console.log(authData);
 
   useEffect(() => {
@@ -50,7 +57,7 @@ const OrderPage = () => {
   };
 
   // 장바구니에서 받은 데이터를 buyer-pay에 props를 이용해 넘겨줌
-  const { totalPrice, totalDiscountPrice, totalPayPrice, cartData } = storage();
+  const { totalPrice, totalDiscountPrice, totalPayPrice } = storage();
 
   // cartData를 돌면서 "product":_id, "amount":amount 형식으로 객체 생성
   const orderList = [];

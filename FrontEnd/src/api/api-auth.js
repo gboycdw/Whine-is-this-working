@@ -11,8 +11,6 @@ export const getUserDataByToken = async () => {
         },
       }
     );
-
-    console.log(data.data);
     return data.data;
   } else {
     return;

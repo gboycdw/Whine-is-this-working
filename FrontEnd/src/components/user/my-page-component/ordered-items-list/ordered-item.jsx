@@ -1,32 +1,33 @@
 import { useQuery } from "react-query";
 import { getOrderByOrderIndex } from "../../../../api/api-order";
+import { getProductById } from "../../../../api/api-product";
 
 const OrderedItem = (props) => {
-  const orderedItems = props.orderedItems;
-  const orderIndex = orderedItems.orderIndex;
+  const productId = props.productId;
+  const amount = props.amount;
+
+  console.log(productId);
 
   const { data, isLoading, isError, error } = useQuery(
-    ["orders", orderIndex],
-    async () => await getOrderByOrderIndex(orderIndex)
+    ["product", productId],
+    async () => await getProductById(productId)
   );
-  console.log("data", data);
+
   return (
     <div className="h-[120px]   flex items-center">
       {/* div's orderedItemId: {orderedItemId} */}
       <div className="  justify-items-start  ">
         <div className=" h-[90%] m-[20px] ">
-          <div className=" flex  ">
-            <div className="m-[20px] w-[80px] h-[80px] bg-bgc1 flex justify-center items-center  ">
+          <div className="flex justify-center items-center gap-5">
+            <div className="w-[80px] h-[80px] bg-bgc1 flex justify-center items-center  ">
               <img
-                src={orderedItems.product.imgUrl}
+                src={data?.imgUrl}
                 alt={"와인이미지"}
-                className="w-[60px] h-[60px] "
+                className="h-[60px] "
               ></img>
             </div>
-
-            <span className="m-[20px] w-[100%] text-2xl">
-              {orderedItems.product.name}, {orderedItems.amount}병
-              {/* 상품명, 상품개수 */}
+            <span className="w-[100%] text-2xl">
+              {data?.name}, {amount}병{/* 상품명, 상품개수 */}
             </span>
           </div>
         </div>

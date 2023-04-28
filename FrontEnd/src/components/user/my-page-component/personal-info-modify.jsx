@@ -80,14 +80,13 @@ const PersonalInfoModify = () => {
     if (pwd === pwdCheck) {
       //비밀번호 비교
       try {
-        alert(`수정이 완료 되었습니다.`);
         const result = await patchUserId(pwd, fullAddress, addressDetail, tel);
         console.log(result);
         queryClient.invalidateQueries([
           "auth",
           { pwd, fullAddress, addressDetail, tel },
         ]);
-        // console.log(result);
+        alert(`수정이 완료 되었습니다.`);
         navigate("/");
         return;
       } catch (error) {
