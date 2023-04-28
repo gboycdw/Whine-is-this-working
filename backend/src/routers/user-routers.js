@@ -157,7 +157,14 @@ userRouter.get("/allUser", async (req, res, next) => {
 
 // 토큰 검증 후 로그인 유저 정보 조회
 userRouter.get("/auth/verifyToken", async (req, res, next) => {
+<<<<<<< Updated upstream
   const token = req.headers["authorization"]?.split(" ")[1];
+=======
+  console.log("verifyToken");
+  const token = req.headers["authorization"]?.split(" ")[1];
+  console.log(req.headers);
+  console.log(token + " is here!!");
+>>>>>>> Stashed changes
   if (!token) {
     return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
   }

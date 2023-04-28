@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 async function loginRequired(req, res, next) {
   //req 헤더에 auth-token 토큰 추출
-  const userToken = req.headers["Authorization"]?.split(" ")[1];
+  const userToken = req.headers["authorization"]?.split(" ")[1];
   //토큰이 없으면 로그인 페이지로
   if (!userToken) {
     return res.status(403).redirect("/"); // 일단은 view router상의 root page로 연결함. 추후 프론트 서버 받아서 변경.
