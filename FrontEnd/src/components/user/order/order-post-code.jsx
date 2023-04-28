@@ -1,9 +1,10 @@
 import DaumPostcode from "react-daum-postcode";
 
-const SignupOrderPostCode = (props) => {
+const OrderPostCode = (props) => {
   // 우편번호 검색 후 주소 클릭 시 실행될 함수, data callback 용
   const handlePostCode = (data) => {
     let fullAddress = data.address;
+    let fullZonecode = data.zonecode;
     let extraAddress = "";
 
     if (data.addressType === "R") {
@@ -18,6 +19,7 @@ const SignupOrderPostCode = (props) => {
     }
     console.log("data.zonecode", data.zonecode);
     props.setFullAddress(fullAddress);
+    props.setFullZonecode(fullZonecode);
     props.onClose();
   };
 
@@ -48,4 +50,4 @@ const SignupOrderPostCode = (props) => {
   );
 };
 
-export default SignupOrderPostCode;
+export default OrderPostCode;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { getUserDataByToken } from "../../../api/api-auth";
 import PopupDom from "../my-page-component/post-popup/popup-dom";
-import OrderPostCode from "../../../pages/auth/signup-order-post-code";
+import OrderPostCode from "./order-post-code";
 
 // 주문자 정보, 배송 정보
 const BuyerInfo = (props) => {
