@@ -10,7 +10,7 @@ productRouter.get("/", async (req, res, next) => {
   try {
     console.log("🔎 모든 상품을 조회합니다...");
     const products = await productService.getProducts();
-    res.status(201).json(products);
+    res.status(200).json(products);
     console.log("✔️ 조회 완료!");
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -168,10 +168,11 @@ productRouter.post(
 productRouter.put(
   "/:id",
   productChecker.updateProductJoi,
+  imageUploadHelper.single("img"),
   async (req, res, next) => {
     try {
       const update_id = req.params.id;
-      const {
+      let {
         seq,
         name,
         brand,
@@ -189,7 +190,13 @@ productRouter.put(
         isBest,
         tags,
         features,
-      } = req.body;
+      } = JSON.parse(req.body.data);
+
+      if(req.file) {
+        const imgpath = req.file.path.replace(/\\/g, "/");
+        imgUrl = imgpath;
+      }
+
       console.log("🔄 상품 정보를 수정합니다.");
       const updateProduct = await productService.updateProduct(
         { _id: update_id },

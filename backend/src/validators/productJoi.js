@@ -44,7 +44,9 @@ const ProductJoiSchema = {
   }),
 
   updateSaleState: Joi.object().keys({
-    saleState: Joi.string().required(),
+    data: {
+      saleState: Joi.string().required(),
+    }
   }),
 };
 

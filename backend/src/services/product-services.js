@@ -7,12 +7,8 @@ class ProductService {
 
   //상품 조회
   async getProducts() {
-    try {
-      const products = await productModel.find();
-      return products;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const products = await productModel.find();
+    return products;
   }
 
   //상품 ID로 조회
