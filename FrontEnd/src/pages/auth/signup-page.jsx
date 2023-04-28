@@ -14,7 +14,6 @@ const SignUpPage = (props) => {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [button, setButton] = useState(true);
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   // 오류 전달을 위한 상태값 세팅
@@ -54,8 +53,6 @@ const SignUpPage = (props) => {
       setEmailMessage("사용 가능한 이메일 입니다😊");
       setIsEmail(true);
     }
-
-    // setEmail(e.target.value);
   };
 
   // 비밀번호 입력값 업데이트 핸들러
@@ -114,17 +111,16 @@ const SignUpPage = (props) => {
   // 1) 아이디 형식이 이메일
   // 2) 비밀번호 8자 이상
   // 3) 비밀번호와 비밀번호 확인 입력값 일치
-  const changeButtonHandler = () => {
-    email.includes("@") &&
-    email.includes(".") &&
+  const emailRegExp =
+    /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+  const signupButton = !(
+    emailRegExp.test(email) &&
     password.length >= 8 &&
     passwordRef.current.value === passwordConfirmRef.current.value &&
     address1.trim() !== "" &&
     address2.trim() !== "" &&
     phoneNumber.trim() !== ""
-      ? setButton(false)
-      : setButton(true);
-  };
+  );
 
   // 회원가입 후 회원가입 완료 페이지로 이동 핸들러
   const signupSubmitHandler = async (e) => {
@@ -210,7 +206,6 @@ const SignUpPage = (props) => {
               placeholder="이메일을 입력해주세요"
               value={email}
               onChange={emailInputHandler}
-              onKeyUp={changeButtonHandler}
               className="p-[10px] border-[#e5d1d1] border-[2px] 
                 w-[650px] h-[45px] mb-[5px]
                 focus:outline-[#AA7373] focus:outline-[2px]"
@@ -229,7 +224,6 @@ const SignUpPage = (props) => {
               placeholder="비밀번호 (8자 이상 입력해주세요)"
               value={password}
               onChange={pwdInputHandler}
-              // onKeyUp={changeButtonHandler}
               ref={passwordRef}
               className="p-[10px] border-[#e5d1d1] border-[2px] 
                 w-[650px] h-[45px] mb-[5px]
@@ -250,7 +244,6 @@ const SignUpPage = (props) => {
             placeholder="비밀번호를 한 번 더 입력해주세요"
             value={passwordCheck}
             onChange={pwdCheckInputHandler}
-            // onKeyUp={changeButtonHandler}
             ref={passwordConfirmRef}
             className="p-[10px] border-[#e5d1d1] border-[2px] 
                 w-[650px] h-[45px]  mb-[5px]
@@ -332,7 +325,7 @@ const SignUpPage = (props) => {
         <div className="mb-[100px]">
           <button
             type="button"
-            disabled={button}
+            disabled={signupButton}
             className="w-[650px] h-[60px] mt-[30px] rounded-[10px] 
               bg-[#7B4848] text-[20px] text-[#FFFFFF]
               disabled:bg-[#E5D1D1] disabled:text-[#262626]"

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 const ProductInfo = (props) => {
   const products = props.order.orderList;
-  console.log(products);
 
   return (
     <div className="flex flex-col">
@@ -35,7 +34,6 @@ const ProductInfo = (props) => {
                 </div>
               </li>
               {products.map((item) => {
-                console.log(item);
                 return (
                   <li className="flex h-12 border-b border-color2 items-center">
                     <div className="flex w-32  h-full items-center justify-center">
