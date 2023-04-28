@@ -6,29 +6,19 @@ const categoryRouter = Router();
 
 //카테고리 전체 조회
 categoryRouter.get("/", async (req, res, next) => {
-  try {
-    console.log("🔎 모든 카테고리를 조회합니다...");
-    const categories = await categoryService.getCategories();
-    res.status(200).json(categories);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  console.log("🔎 모든 카테고리를 조회합니다...");
+  const categories = await categoryService.getCategories();
+  res.status(200).json(categories);
+  console.log("✔️ 조회 완료!");
 });
 
 //카테고리 이름별 조회
 categoryRouter.get("/:title", async (req, res, next) => {
-  try {
-    const c_title = req.params.title;
-    console.log("🔎 카테고리 이름으로 카테고리를 조회합니다...");
-    const categories = await categoryService.getCategoryByTitle(c_title);
-    res.status(200).json(categories);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const c_title = req.params.title;
+  console.log("🔎 카테고리 이름으로 카테고리를 조회합니다...");
+  const categories = await categoryService.getCategoryByTitle(c_title);
+  res.status(200).json(categories);
+  console.log("✔️ 조회 완료!");
 });
 
 //카테고리 추가

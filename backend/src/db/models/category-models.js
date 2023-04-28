@@ -6,22 +6,14 @@ const Category = model("Category", CategorySchema);
 export class CategoryModel {
   //카테고리 조회
   async find() {
-    try {
-      const categories = await Category.find({});
-      return categories;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const categories = await Category.find({});
+    return categories;
   }
 
   //카테고리 이름으로 조회
   async findByTitle(title) {
-    try {
-      const category = await Category.findOne({ title: title });
-      return category;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const category = await Category.findOne({ title: title });
+    return category;
   }
 
   //카테고리 추가

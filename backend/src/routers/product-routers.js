@@ -7,103 +7,66 @@ const productRouter = Router();
 
 //상품 전체 조회
 productRouter.get("/", async (req, res, next) => {
-  try {
-    console.log("🔎 모든 상품을 조회합니다...");
-    const products = await productService.getProducts();
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  console.log("🔎 모든 상품을 조회합니다...");
+  const products = await productService.getProducts();
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //상품 개별 조회
 productRouter.get("/:id", async (req, res, next) => {
-  try {
-    const search_id = req.params.id;
-    console.log("🔎 상품 Id로 상품을 조회합니다...");
-    const product = await productService.getProductById(search_id);
-    res.status(200).json(product);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const search_id = req.params.id;
+  console.log("🔎 상품 Id로 상품을 조회합니다...");
+  const product = await productService.getProductById(search_id);
+  res.status(200).json(product);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 타입별로 조회
 productRouter.get("/types/:type", async (req, res, next) => {
-  try {
-    const search_type = req.params.type;
-    console.log("🔎 타입별 상품 조회 중...");
-    const products = await productService.getProductsByType(search_type);
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const search_type = req.params.type;
+  console.log("🔎 타입별 상품 조회 중...");
+  const products = await productService.getProductsByType(search_type);
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 나라별로 조회
 productRouter.get("/countries/:country", async (req, res, next) => {
-  try {
-    const search_country = req.params.country;
-    console.log("🔎 국가별 상품 조회 중...");
-    const products = await productService.getProductsByCountry(search_country);
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const search_country = req.params.country;
+  console.log("🔎 국가별 상품 조회 중...");
+  const products = await productService.getProductsByCountry(search_country);
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 가격별로 조회
 productRouter.get("/prices/:min/:max", async (req, res, next) => {
-  try {
-    const lowerPrice = req.params.min;
-    const higherPrice = req.params.max;
-    console.log(
-      `🔎 ${lowerPrice}원 이상 ${higherPrice}원 미만 상품 조회 중...`
-    );
-    const products = await productService.getProductsByPrice(
-      lowerPrice,
-      higherPrice
-    );
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  const lowerPrice = req.params.min;
+  const higherPrice = req.params.max;
+  console.log(`🔎 ${lowerPrice}원 이상 ${higherPrice}원 미만 상품 조회 중...`);
+  const products = await productService.getProductsByPrice(
+    lowerPrice,
+    higherPrice
+  );
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 Picked 상품 조회
 productRouter.get("/lists/picked", async (req, res, next) => {
-  try {
-    console.log("🔎 Our Pick 상품 조회 중...");
-    const products = await productService.getPickedProducts();
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  console.log("🔎 Our Pick 상품 조회 중...");
+  const products = await productService.getPickedProducts();
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //와인 Best 상품 조회
 productRouter.get("/lists/best", async (req, res, next) => {
-  try {
-    console.log("🔎 Monthly Best 상품 조회 중...");
-    const products = await productService.getBestProducts();
-    res.status(200).json(products);
-    console.log("✔️ 조회 완료!");
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
+  console.log("🔎 Monthly Best 상품 조회 중...");
+  const products = await productService.getBestProducts();
+  res.status(200).json(products);
+  console.log("✔️ 조회 완료!");
 });
 
 //상품 추가
@@ -192,7 +155,7 @@ productRouter.put(
         features,
       } = JSON.parse(req.body.data);
 
-      if(req.file) {
+      if (req.file) {
         const imgpath = req.file.path.replace(/\\/g, "/");
         imgUrl = imgpath;
       }

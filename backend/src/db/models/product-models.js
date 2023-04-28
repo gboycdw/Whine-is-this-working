@@ -2,87 +2,52 @@ import { Product } from "../schemas/product-schema.js";
 
 export class ProductModel {
   async find() {
-    try {
-      const products = await Product.find({});
-      return products;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const products = await Product.find({});
+    return products;
   }
 
   //와인 ID로 상세 정보 조회
   async findById(id) {
-    try {
-      const product = await Product.findOne({ _id: id });
-      return product;
-    } catch (err) {
-      throw new Error(err);
-    }
+    const product = await Product.findOne({ _id: id });
+    return product;
   }
 
   //와인 이름으로 상세 정보 조회 ===> 미사용 기능..?
   async findByName(search_name) {
-    try {
-      const product = await Product.findOne({ name: search_name });
-      return product;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const product = await Product.findOne({ name: search_name });
+    return product;
   }
 
   //와인 타입별로 조회(ex. 레드, 화이트, 스파클링, etc..)
   async findByType(type) {
-    try {
-      const products = await Product.find({ type: type });
-      return products;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const products = await Product.find({ type: type });
+    return products;
   }
 
   //와인 나라별로 조회
   async findByCountry(country) {
-    try {
-      const products = await Product.find({ country: country });
-      return products;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const products = await Product.find({ country: country });
+    return products;
   }
 
   //와인 가격별로 조회
   async findByPrice(lowerPrice, higherPrice) {
-    try {
-      const products = await Product.find({
-        $and: [
-          { price: { $gte: lowerPrice } },
-          { price: { $lt: higherPrice } },
-        ],
-      });
-      return products;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const products = await Product.find({
+      $and: [{ price: { $gte: lowerPrice } }, { price: { $lt: higherPrice } }],
+    });
+    return products;
   }
 
   //Pick 와인 조회
   async findByPicked() {
-    try {
-      const products = await Product.find({ isPicked: true });
-      return products;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const products = await Product.find({ isPicked: true });
+    return products;
   }
 
   //Best 와인 조회
   async findByBest() {
-    try {
-      const products = await Product.find({ isBest: true });
-      return products;
-    } catch (err) {
-      console.log(`❌ ${err}`);
-    }
+    const products = await Product.find({ isBest: true });
+    return products;
   }
 
   //와인 추가하기
