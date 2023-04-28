@@ -1,5 +1,7 @@
 import MyPageNav from "../../../components/user/my-page-component/my-page-nav";
 import { Outlet } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getUserDataByToken } from "../../../api/api-auth";
 const MyPage = () => {
   return (
     <>

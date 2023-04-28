@@ -4,28 +4,26 @@ import Pagination from "../../product/pagination";
 import { useQuery } from "react-query";
 import { getOrdersByBuyerEmail } from "../../../../api/api-order";
 import { getUserDataByToken } from "../../../../api/api-auth";
+import { useContext } from "react";
+import { authCtx } from "../../../store/auth-context";
 
 const OrderedItemsList = () => {
   const limit = 5; // items의 페이지네이션 단위
   const [page, setPage] = useState(1); //페이지
   const offset = (page - 1) * limit;
 
+  const { auth } = useContext(authCtx);
+
   const {
-    data: idData,
-    isLoading: idIsLoading,
-    isError: idIsError,
-    error: idError,
-  } = useQuery(["auth"], async () => await getUserDataByToken());
-  const buyerEmail = idData?.email;
-  const { data, isLoading, isError, error } = useQuery(
-    ["orders", buyerEmail],
-    async () => await getOrdersByBuyerEmail(buyerEmail)
+    data: orderList,
+    isLoading,
+    isError,
+    error,
+  } = useQuery(["orders", auth.email], () =>
+    getOrdersByBuyerEmail(auth?.email)
   );
-  // const currentUrl = window.location.href;
-  // console.log("currentUrl", currentUrl);
-  if (data) {
-    console.log(data);
-  }
+
+  console.log(orderList);
   return (
     <>
       <div>
@@ -35,7 +33,7 @@ const OrderedItemsList = () => {
               <div>Loading...</div>
             </div>
           </div>
-        ) : !data ? (
+        ) : !orderList ? (
           <div className="h-[800px] flex justify-center items-center ">
             <div className="w-[80%] flex justify-center items-center h-[80%] mb-[10%] rounded-xl border-2 border-c1">
               <div>
@@ -58,7 +56,7 @@ const OrderedItemsList = () => {
                 <h1 class="text-3xl mb-[10%]">주문 내역</h1>
               </div>
               <div>
-                {data.slice(offset, offset + limit).map((index) => (
+                {orderList.slice(offset, offset + limit).map((index) => (
                   <OrderedItems
                     dateOfOrder={index.createdAt}
                     shippingState={index.shippingStatus}
@@ -70,7 +68,7 @@ const OrderedItemsList = () => {
               <div>
                 <Pagination
                   // 필터된 데이터 개수에 따라 창 개수로 설정
-                  total={data.length}
+                  total={orderList?.length}
                   limit={limit}
                   page={page}
                   setPage={setPage}

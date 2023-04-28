@@ -13,5 +13,5 @@ export const patchUserId = async (
     address2,
     phoneNumber,
   });
-  return result.result;
+  return result;
 };

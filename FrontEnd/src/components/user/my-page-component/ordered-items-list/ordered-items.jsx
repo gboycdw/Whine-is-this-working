@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 
 import { deleteOrderByOrderIndex } from "../../../../api/api-order";
 const orderDetailEnter = "주문상세보기>";
-const OrderedItems = (
-  // map 으로 items 뿌리는 컴포넌트.
-  props
-) => {
+const OrderedItems = (props) => {
+  const orderList = props.orderList; //아이템들 정보 담긴 배열
+
+  console.log(orderList);
+
   const f1 = () => {
     alert("주문이 취소되었습니다.");
     deleteOrderByOrderIndex(orderIndex);
   };
   const navigate = useNavigate();
   const orderIndex = props.orderIndex;
-  console.log("orderIndex", orderIndex);
-  const orderList = props.orderList; //아이템들 정보 담긴 배열
+
   const dateOfOrder = props.dateOfOrder.replaceAll("-", ".").slice(0, 10); //주문 날짜 createAt 으로 받아와서 자르고 -는 .로 바꿈.
   const shippingState = props.shippingState; //배송상태
   const shippingOptionHandler = (e) => {
@@ -29,7 +29,7 @@ const OrderedItems = (
     <div class="w-[100%]  border-2 border-c3 rounded-xl mb-[20px]">
       <div class="flex justify-between">
         <div class="m-[20px] text-xl">{dateOfOrder} 주문</div>
-        <Link to="/ordered-items-list/detail" class="m-[20px] text-c4 text-xl">
+        <Link to="/ordered-item-detail/" class="m-[20px] text-c4 text-xl">
           {orderDetailEnter}
           {/* 주문상세보기 버튼 */}
         </Link>
@@ -75,10 +75,14 @@ const OrderedItems = (
           <div class=" flex justify-center items-center ">
             <div class="w-[90%] h-[90%] ">
               <div>
-                {orderList.map((index) => (
-                  //items 들이 들어있는 배열
-                  <OrderedItem orderedItems={index} orderIndex={orderIndex} />
-                ))}
+                {orderList.map((index) => {
+                  return (
+                    <OrderedItem
+                      productId={index.product}
+                      amount={index.amount}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>

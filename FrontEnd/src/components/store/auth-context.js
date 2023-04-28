@@ -15,7 +15,7 @@ export const storage = (props) => {
 export const authCtx = createContext();
 
 const AuthContex = (props) => {
-  const [auth, setAuth] = useState();
+  const [auth, setAuth] = useState(async () => await getUserDataByToken());
   const [token, setToken] = useState(storage("token"));
   const [isLoggedIn, setIsLoggedIn] = useState(storage("auth") ? true : false);
   const [isAdmin, setIsAdmin] = useState(
