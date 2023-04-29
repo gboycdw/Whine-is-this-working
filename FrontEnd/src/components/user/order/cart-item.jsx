@@ -1,7 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { QueryClient, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
-import { cartCtx } from "../../store/cart-context";
 const CartItem = (props) => {
   const { amount, _id, name, price, brand, imgUrl, discountPrice } = props.cart;
   const [cartAmount, setCartAmount] = useState(amount);

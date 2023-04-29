@@ -34,6 +34,7 @@ const Header = (props) => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     setIsAdmin(false);
+    alert("로그아웃이 성공적으로 되었습니다😎");
     navigate("/");
   };
 
