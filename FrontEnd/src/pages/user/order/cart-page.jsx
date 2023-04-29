@@ -2,28 +2,36 @@ import { useContext, useEffect, useState } from "react";
 import CartItem from "../../../components/user/order/cart-item";
 import { cartCtx, storage } from "../../../components/store/cart-context";
 import { useNavigate } from "react-router-dom";
+import { useQuery, useQueryClient } from "react-query";
 const CartPage = (props) => {
-  const { cartData, setCartData } = useContext(cartCtx);
+  const { data: cartData } = useQuery("cartData", () =>
+    JSON.parse(localStorage.getItem("cartData"))
+  );
+
+  const client = useQueryClient();
+
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
-  const totalPayPrice = totalPrice - totalDiscountPrice;
 
-  const newArr = cartData.filter((item) => item.isChecked === true);
-  const [isAllChecked, setIsAllChecked] = useState(true);
+  const checkedCartData = cartData?.filter((item) => item.isChecked === true);
+  const [isAllChecked, setIsAllChecked] = useState(
+    cartData?.filter((item) => item.isChecked === false) ? true : false
+  );
+
   // 전체 선택 버튼 토글 핸들러
   const checkAllHandler = () => {
-    if (isAllChecked) {
-      setIsAllChecked(false);
+    if (!isAllChecked) {
+      setIsAllChecked(true);
       let arr = [...cartData];
       const tempCart = arr.map((item) => ({ ...item, isChecked: true }));
       localStorage.setItem("cartData", JSON.stringify(tempCart));
-      setCartData(storage("cartData"));
+      client.invalidateQueries({ queryKey: "cartData" });
     } else {
-      setIsAllChecked(true);
+      setIsAllChecked(false);
       let arr = [...cartData];
       const tempCart = arr.map((item) => ({ ...item, isChecked: false }));
       localStorage.setItem("cartData", JSON.stringify(tempCart));
-      setCartData(storage("cartData"));
+      client.invalidateQueries({ queryKey: "cartData" });
     }
   };
 
@@ -31,7 +39,7 @@ const CartPage = (props) => {
   const allDeleteHandler = () => {
     if (window.confirm("전체 상품을 삭제하시겠습니까?")) {
       localStorage.setItem("cartData", JSON.stringify([]));
-      setCartData(storage("cartData"));
+      client.invalidateQueries({ queryKey: "cartData" });
     }
   };
 
@@ -39,29 +47,29 @@ const CartPage = (props) => {
   const selectDeleteHandler = () => {
     let arr = [...cartData];
     const tempCart = arr.filter((item) => item.isChecked === false);
+    console.log(tempCart);
     if (window.confirm("선택 상품을 삭제하시겠습니까?")) {
       localStorage.setItem("cartData", JSON.stringify(tempCart));
-      setCartData(storage("cartData"));
+      client.invalidateQueries({ queryKey: "cartData" });
     }
   };
 
-  // 총 상품금액, 총 할인금액
-  // cartData가 변경될 때마다 총 상품금액, 총 할인금액 업데이트됨
   useEffect(() => {
-    let totalPrice = 0;
+    let totalDiscountPrice = 0;
 
-    newArr.forEach((item) => {
-      totalPrice += item.price * item.amount;
+    checkedCartData?.forEach((item) => {
+      totalDiscountPrice += item.discountPrice * item.amount;
     });
 
-    let totalDiscountPrice = 0;
-    newArr.forEach((item) => {
-      totalDiscountPrice += item.discountPrice * item.amount;
+    let totalPrice = 0;
+
+    checkedCartData?.forEach((item) => {
+      totalPrice += item.price * item.amount;
     });
 
     setTotalPrice(totalPrice);
     setTotalDiscountPrice(totalDiscountPrice);
-  }, [cartData, newArr]);
+  }, [checkedCartData]);
 
   const navigate = useNavigate();
   const orderSubmitHandler = () => {
@@ -69,8 +77,7 @@ const CartPage = (props) => {
     const data = {
       totalPrice,
       totalDiscountPrice,
-      totalPayPrice,
-      cartData,
+      checkedCartData,
     };
     try {
       const result = sessionStorage.setItem(
@@ -106,6 +113,7 @@ const CartPage = (props) => {
               bg-gray-200 hover:bg-gray-300 cursor-pointer
               w-5 h-5 border-3 border-amber-500 focus:outline-none rounded-lg"
             onClick={checkAllHandler}
+            value={isAllChecked}
           />
           <span>전체선택</span>
         </div>
@@ -134,8 +142,8 @@ const CartPage = (props) => {
       <ul className="flex flex-col">
         {/* <컴포넌트 객체이름={데이터} /> */}
         {/* map 이용해서 배열 수만큼 li 렌더링 되어야 함 */}
-        {cartData.map((item) => {
-          return <CartItem cart={item} />;
+        {cartData?.map((item) => {
+          return <CartItem cart={item} isAllChecked={isAllChecked} />;
         })}
       </ul>
 
@@ -168,7 +176,9 @@ const CartPage = (props) => {
           {/* 총 결제금액 */}
           <div className="flex flex-col items-center">
             <span className="text-[18px]">총 결제금액</span>
-            <span className="text-[24px] font-[600]">{totalPayPrice}원</span>
+            <span className="text-[24px] font-[600]">
+              {totalPrice - totalDiscountPrice}원
+            </span>
           </div>
         </div>
       </div>

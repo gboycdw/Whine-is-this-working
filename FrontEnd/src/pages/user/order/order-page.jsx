@@ -17,12 +17,6 @@ const OrderPage = () => {
     navigate("../");
   };
 
-  const { cartData } = useContext(cartCtx);
-
-  useEffect(() => {
-    localStorage.setItem("cartData", JSON.stringify(cartData));
-  }, [cartData]);
-
   useEffect(() => {
     setBuyer(authData?.name);
     setBuyerEmail(authData?.email);
@@ -41,39 +35,27 @@ const OrderPage = () => {
   const [shippingExtraAddress, setShippingExtraAddress] = useState("");
   const [shippingRequest, setShippingRequest] = useState("");
   const queryClient = useQueryClient();
-  const { setCartData } = useContext(cartCtx);
 
   // 장바구니에서 세션스토리지에 저장한 데이터를 불러오는 함수
-  const storage = () => {
-    if (typeof window !== "undefined") {
-      const data = window.sessionStorage.getItem("cartToOrder");
-      if (data === null) {
-        return [];
-      } else {
-        return JSON.parse(data);
-      }
-    }
-  };
 
-  // 장바구니에서 받은 데이터를 buyer-pay에 props를 이용해 넘겨줌
-  const { totalPrice, totalDiscountPrice, totalPayPrice } = storage();
+  const { data: orderData } = useQuery("orderData", () =>
+    JSON.parse(sessionStorage.getItem("cartToOrder"))
+  );
+
+  console.log(orderData);
+
+  const totalPrice = orderData?.totalPrice;
+  const totalDiscountPrice = orderData?.totalDiscountPrice;
+  const orderList = orderData?.checkedCartData;
+  // const orderList = [];
 
   // cartData를 돌면서 "product":_id, "amount":amount 형식으로 객체 생성
-  const orderList = [];
-  for (let i = 0; i <= cartData?.length - 1; i++) {
-    orderList.push({
-      product: cartData[i]["_id"],
-      amount: cartData[i]["amount"],
-    });
-  }
 
   const shippingStatus = "상품준비중";
   const orderIndex = "0";
   const deliveryFee = 2500;
   const wayBill = "0";
 
-  // 주문 완료시 axios로 데이터 보내고
-  // 주문 완료 페이지로 이동시켜주는 핸들러
   const orderCompleteHandler = async (e) => {
     e.preventDefault();
     if (
@@ -101,7 +83,7 @@ const OrderPage = () => {
         shippingRequest,
         shippingStatus,
         orderList,
-        totalPayPrice,
+        totalPayPrice: totalPrice - totalDiscountPrice,
         orderIndex,
         deliveryFee,
         wayBill,
@@ -110,7 +92,6 @@ const OrderPage = () => {
       localStorage.removeItem("cartData");
       sessionStorage.removeItem("cartToOrder");
       queryClient.invalidateQueries("orders");
-      setCartData([]);
       navigate("/ordercomplete");
       window.scrollTo(0, 0);
     } catch (error) {
@@ -154,7 +135,6 @@ const OrderPage = () => {
         <BuyerPay
           totalPrice={totalPrice}
           totalDiscountPrice={totalDiscountPrice}
-          cartData={cartData}
         />
 
         {/* 취소, 주문하기 버튼 */}

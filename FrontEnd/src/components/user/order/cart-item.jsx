@@ -1,31 +1,18 @@
 import { useContext, useEffect, useState } from "react";
+import { QueryClient, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
-import { cartCtx, storage } from "../../store/cart-context";
+import { cartCtx } from "../../store/cart-context";
 const CartItem = (props) => {
-  const {
-    alcoholDegree,
-    amount,
-    country,
-    _id,
-    name,
-    price,
-    brand,
-    imgUrl,
-    discountPrice,
-    isChecked,
-  } = props.cart;
+  const { amount, _id, name, price, brand, imgUrl, discountPrice } = props.cart;
   const [cartAmount, setCartAmount] = useState(amount);
-  const [totalPrice, setTotalPrice] = useState(price * cartAmount);
-  const { cartData, setCartData } = useContext(cartCtx);
-  const [totalDiscountPrice, settotalDiscountPrice] = useState(
-    cartAmount * discountPrice
+
+  const { data: cartData } = useQuery("cartData", () =>
+    JSON.parse(localStorage.getItem("cartData"))
   );
 
-  // 수량에 변동이 있을 경우 전체 금액 업데이트
-  useEffect(() => {
-    setTotalPrice(price * cartAmount);
-  }, [cartAmount, price]);
+  const isChecked = cartData?.find((item) => item._id === _id).isChecked;
 
+  const client = useQueryClient();
   // 수량 1개 감소 핸들러
   const wineCountMinusHandler = () => {
     if (cartAmount > 1) {
@@ -45,18 +32,43 @@ const CartItem = (props) => {
     setCartAmount(++tempAmount);
   };
 
+  const [totalDiscountPrice, setTotalDiscountPrice] = useState(
+    cartAmount * discountPrice
+  );
+  const [totalPrice, setTotalPrice] = useState(cartAmount * price);
+  const [totalPayPrice, setTotalPayPrice] = useState(
+    cartAmount * (price - discountPrice)
+  );
+
   // 카트에 담긴 수량을 localStorage에 업데이트
   useEffect(() => {
     let arr = [...cartData];
-    const tempCart = arr.map((item) =>
-      item._id === _id ? { ...item, amount: cartAmount } : item
+    setTotalDiscountPrice(cartAmount * discountPrice);
+    setTotalPrice(cartAmount * price);
+    setTotalPayPrice(cartAmount * (price - discountPrice));
+    const tempCart = [];
+    arr.forEach((item) =>
+      item._id === _id
+        ? tempCart.push({
+            ...item,
+            amount: cartAmount,
+            totalDiscountPrice: totalDiscountPrice,
+            totalPrice: totalPrice,
+            totalPayPrice: totalPayPrice,
+          })
+        : tempCart.push(item)
     );
-    settotalDiscountPrice(cartAmount * discountPrice);
     localStorage.setItem("cartData", JSON.stringify(tempCart));
-
-    // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
-    setCartData(storage("cartData"));
-  }, [cartAmount, cartData, discountPrice, _id, setCartData]);
+  }, [
+    cartAmount,
+    cartData,
+    discountPrice,
+    _id,
+    price,
+    totalDiscountPrice,
+    totalPayPrice,
+    totalPrice,
+  ]);
 
   // 체크 누르면 토글 역할 하게 해주는 핸들러
   const checkStatusHandler = () => {
@@ -66,18 +78,14 @@ const CartItem = (props) => {
         item._id === _id ? { ...item, isChecked: false } : item
       );
       localStorage.setItem("cartData", JSON.stringify(tempCart));
-
-      // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
-      setCartData(storage("cartData"));
+      client.invalidateQueries({ queryKey: "cartData", isChecked });
     } else if (!isChecked) {
       let arr = [...cartData];
       const tempCart = arr.map((item) =>
         item._id === _id ? { ...item, isChecked: true } : item
       );
       localStorage.setItem("cartData", JSON.stringify(tempCart));
-
-      // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
-      setCartData(storage("cartData"));
+      client.invalidateQueries({ queryKey: "cartData", isChecked });
     }
   };
   return (
@@ -90,7 +98,7 @@ const CartItem = (props) => {
         <div className="flex items-center">
           <input
             type="checkbox"
-            id="cart"
+            id={_id}
             name="scales"
             className="mr-[20px]
             bg-gray-200 hover:bg-gray-300 cursor-pointer
