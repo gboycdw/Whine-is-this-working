@@ -14,10 +14,10 @@ const PersonalInfoModify = () => {
 
   const [pwd, setPwd] = useState("");
   const [pwdCheck, setPwdCheck] = useState("");
-  const [addressDetail, setAddressDetail] = useState(data.address1);
+  const [addressDetail, setAddressDetail] = useState(data.address2);
   const [tel, setTel] = useState(data.phoneNumber);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [fullAddress, setFullAddress] = useState(data.address2);
+  const [fullAddress, setFullAddress] = useState(data.address1);
   const pwdChangeHandler = (e) => {
     // 비번 재설정
     const val = e.target.value;
