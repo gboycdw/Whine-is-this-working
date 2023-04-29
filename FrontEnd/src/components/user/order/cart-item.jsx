@@ -1,17 +1,31 @@
-import { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { cartCtx, storage } from "../../store/cart-context";
 const CartItem = (props) => {
-  const { amount, _id, name, price, brand, imgUrl, discountPrice } = props.cart;
+  const {
+    alcoholDegree,
+    amount,
+    country,
+    _id,
+    name,
+    price,
+    brand,
+    imgUrl,
+    discountPrice,
+    isChecked,
+  } = props.cart;
   const [cartAmount, setCartAmount] = useState(amount);
-
-  const { data: cartData } = useQuery("cartData", () =>
-    JSON.parse(localStorage.getItem("cartData"))
+  const [totalPrice, setTotalPrice] = useState(price * cartAmount);
+  const { cartData, setCartData } = useContext(cartCtx);
+  const [totalDiscountPrice, settotalDiscountPrice] = useState(
+    cartAmount * discountPrice
   );
 
-  const isChecked = cartData?.find((item) => item._id === _id).isChecked;
+  // 수량에 변동이 있을 경우 전체 금액 업데이트
+  useEffect(() => {
+    setTotalPrice(price * cartAmount);
+  }, [cartAmount, price]);
 
-  const client = useQueryClient();
   // 수량 1개 감소 핸들러
   const wineCountMinusHandler = () => {
     if (cartAmount > 1) {
@@ -31,43 +45,18 @@ const CartItem = (props) => {
     setCartAmount(++tempAmount);
   };
 
-  const [totalDiscountPrice, setTotalDiscountPrice] = useState(
-    cartAmount * discountPrice
-  );
-  const [totalPrice, setTotalPrice] = useState(cartAmount * price);
-  const [totalPayPrice, setTotalPayPrice] = useState(
-    cartAmount * (price - discountPrice)
-  );
-
   // 카트에 담긴 수량을 localStorage에 업데이트
   useEffect(() => {
     let arr = [...cartData];
-    setTotalDiscountPrice(cartAmount * discountPrice);
-    setTotalPrice(cartAmount * price);
-    setTotalPayPrice(cartAmount * (price - discountPrice));
-    const tempCart = [];
-    arr.forEach((item) =>
-      item._id === _id
-        ? tempCart.push({
-            ...item,
-            amount: cartAmount,
-            totalDiscountPrice: totalDiscountPrice,
-            totalPrice: totalPrice,
-            totalPayPrice: totalPayPrice,
-          })
-        : tempCart.push(item)
+    const tempCart = arr.map((item) =>
+      item._id === _id ? { ...item, amount: cartAmount } : item
     );
+    settotalDiscountPrice(cartAmount * discountPrice);
     localStorage.setItem("cartData", JSON.stringify(tempCart));
-  }, [
-    cartAmount,
-    cartData,
-    discountPrice,
-    _id,
-    price,
-    totalDiscountPrice,
-    totalPayPrice,
-    totalPrice,
-  ]);
+
+    // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
+    setCartData(storage("cartData"));
+  }, [cartAmount, cartData, discountPrice, _id, setCartData]);
 
   // 체크 누르면 토글 역할 하게 해주는 핸들러
   const checkStatusHandler = () => {
@@ -77,14 +66,18 @@ const CartItem = (props) => {
         item._id === _id ? { ...item, isChecked: false } : item
       );
       localStorage.setItem("cartData", JSON.stringify(tempCart));
-      client.invalidateQueries({ queryKey: "cartData", isChecked });
+
+      // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
+      setCartData(storage("cartData"));
     } else if (!isChecked) {
       let arr = [...cartData];
       const tempCart = arr.map((item) =>
         item._id === _id ? { ...item, isChecked: true } : item
       );
       localStorage.setItem("cartData", JSON.stringify(tempCart));
-      client.invalidateQueries({ queryKey: "cartData", isChecked });
+
+      // localStorage에 반영된 내용을 가져와서 CartData에 업데이트함
+      setCartData(storage("cartData"));
     }
   };
   return (
@@ -97,7 +90,7 @@ const CartItem = (props) => {
         <div className="flex items-center">
           <input
             type="checkbox"
-            id={_id}
+            id="cart"
             name="scales"
             className="mr-[20px]
             bg-gray-200 hover:bg-gray-300 cursor-pointer
@@ -119,7 +112,10 @@ const CartItem = (props) => {
         {/* 브랜드, 상품명 */}
         <div className="flex flex-col items-center justify-center ml-[50px]">
           <h3>
-            <Link to={`/product/${_id}`} target="_blank">
+            <Link
+              to="/shop/product/product_view?product_cd=03S683"
+              target="_blank"
+            >
               {brand}
             </Link>
           </h3>
