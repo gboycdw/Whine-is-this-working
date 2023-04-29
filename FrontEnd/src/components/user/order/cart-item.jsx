@@ -119,10 +119,7 @@ const CartItem = (props) => {
         {/* 브랜드, 상품명 */}
         <div className="flex flex-col items-center justify-center ml-[50px]">
           <h3>
-            <Link
-              to="/shop/product/product_view?product_cd=03S683"
-              target="_blank"
-            >
+            <Link to={`/product/${_id}`} target="_blank">
               {brand}
             </Link>
           </h3>

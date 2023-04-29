@@ -4,8 +4,6 @@ import BuyerPay from "../../../components/user/order/buyer-pay";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import axios from "axios";
-import { useContext } from "react";
-import { cartCtx } from "../../../components/store/cart-context";
 import { getUserDataByToken } from "../../../api/api-auth";
 import { useEffect } from "react";
 
@@ -46,7 +44,12 @@ const OrderPage = () => {
 
   const totalPrice = orderData?.totalPrice;
   const totalDiscountPrice = orderData?.totalDiscountPrice;
-  const orderList = orderData?.checkedCartData;
+  const orderList = orderData?.checkedCartData?.map((item) => {
+    return { id: item._id, amount: item.amount };
+  });
+
+  console.log(orderList);
+
   // const orderList = [];
 
   // cartData를 돌면서 "product":_id, "amount":amount 형식으로 객체 생성
@@ -56,8 +59,27 @@ const OrderPage = () => {
   const deliveryFee = 2500;
   const wayBill = "0";
 
+  console.log(orderList);
+
   const orderCompleteHandler = async (e) => {
     e.preventDefault();
+    const orderInfo = {
+      buyer,
+      buyerEmail,
+      buyerPhoneNumber,
+      recipientName,
+      recipientPhoneNumber,
+      shippingAddress,
+      shippingExtraAddress,
+      shippingRequest,
+      shippingStatus,
+      orderList,
+      totalPayPrice: totalPrice - totalDiscountPrice,
+      orderIndex,
+      deliveryFee,
+      wayBill,
+    };
+
     if (
       buyer === "" ||
       buyerEmail === "" ||
@@ -71,6 +93,7 @@ const OrderPage = () => {
       alert("주문정보들을 모두 입력해주세요.");
       return;
     }
+    console.log(buyer);
     try {
       const result = await axios.post("http://34.22.85.44:5000/api/orders", {
         buyer,

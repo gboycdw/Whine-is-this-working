@@ -24,7 +24,6 @@ const ProductDetail = (props) => {
   const { alcoholDegree, body, acidity, sugar, tannic } = features;
   const amountRef = useRef();
 
-  const { cartData, setCartData } = useContext(cartCtx);
   const { data } = useQuery(["auth"], async () => await getUserDataByToken());
   const [amount, setAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(
@@ -36,9 +35,9 @@ const ProductDetail = (props) => {
     setTotalPrice((price - discountPrice) * amount);
   }, [amount, price, discountPrice]);
 
-  useEffect(() => {
-    localStorage.setItem("cartData", JSON.stringify(cartData));
-  }, [cartData]);
+  const { data: cartData } = useQuery("cartData", () =>
+    JSON.parse(localStorage.getItem("cartData"))
+  );
 
   // 마이너스 버튼 핸들러
   const wineCountMinus = () => {
@@ -79,13 +78,13 @@ const ProductDetail = (props) => {
       return;
     }
     copiedCartData.push(selectedData);
-    // alert("장바구니에 상품이 추가 되었습니다.");
+    localStorage.setItem("cartData", JSON.stringify(copiedCartData));
     if (
       window.confirm("장바구니에 추가되었습니다🍷 장바구니로 이동할까요?😃")
     ) {
       navigate("/cart");
     }
-    setCartData(copiedCartData);
+
     setAmount(1); //개수 초기화
   };
 
