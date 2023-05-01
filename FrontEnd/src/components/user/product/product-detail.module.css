@@ -1,0 +1,146 @@
+.product_detail_container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: block;
+}
+/* .product_detail_wrap {
+  width: 100%;
+  height: 100%;
+  float: left;
+  position: relative;
+} */
+.product_detail_left {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  float: left;
+  position: relative;
+  margin-bottom: 80px;
+  width: 550px;
+}
+.product_detail_wine_img_container {
+  height: 500px;
+  width: 500px;
+  position: relative;
+  display: flex;
+  background-color: #e0ebf8;
+  align-items: center;
+  justify-content: center;
+}
+.product_detail_wine_img {
+  height: 400px;
+}
+.product_detail_right {
+  float: right;
+  width: 534px;
+  margin-top: 0;
+  padding-bottom: 80px;
+  margin-top: 60px;
+  /* background-color: red; */
+}
+.product_detail_right_name_p {
+  display: block;
+  margin-top: 20px;
+  font-size: xx-large;
+}
+.product_detail_right_coutry_p {
+  display: block;
+  margin-top: 20px;
+  font-size: large;
+}
+.product_detail_right_price_p {
+  display: block;
+  margin-top: 20px;
+  font-size: large;
+}
+.product_detail_right_alcohol_degree_p {
+  display: block;
+  margin-top: 20px;
+  font-size: large;
+}
+.product_detail_right_button_input_container {
+  position: relative;
+  margin-top: 30px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  float: right;
+  width: 534px;
+  margin-top: 0;
+  padding-bottom: 30px;
+  /* background-color: green; */
+}
+.product_detail_right_button_input {
+  width: 20px;
+  height: 20px;
+  line-height: 50px;
+  border: 1px solid #ac8b68;
+  border-radius: 4px;
+  color: #ac8b68;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.product_detail_right_button_minus {
+  width: 20px;
+  height: 20px;
+  margin-top: 20px;
+}
+.product_detail_right_button_plus {
+  width: 20px;
+  height: 20px;
+  margin-top: 20px;
+}
+.product_detail_right_button_total_price {
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: large;
+}
+.product_detail_right_button_container {
+  position: relative;
+  margin-top: 30px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  float: right;
+  width: 534px;
+  margin-top: 0;
+  /*background-color: blue;*/
+}
+.product_detail_right_button_basket {
+  width: 237px;
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid #ac8b68;
+  border-radius: 4px;
+  font-size: large;
+  margin-right: 10px;
+  /* color: #AC8B68; */
+}
+.product_detail_right_button_buy {
+  width: 237px;
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid white;
+  border-radius: 4px;
+  background-color: #ac8b68;
+  color: white;
+  font-size: large;
+  /* color: #AC8B68; */
+}
+.product_detail_explain_h1 {
+  display: flex; /* inline-block일때에만 가운데 정렬 가능 */
+  padding: 0px;
+  border: 1px solid #dcdcdc;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+}
+.product_detail_explain {
+  width: 1200px;
+  height: 100%;
+}
