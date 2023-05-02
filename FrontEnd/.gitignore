@@ -1,12 +1,5 @@
-## backend
-# Dependencies
-node_modules
-yarn.lock
-package-lock.json
-.env
-.DS_Store
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-## frontend
 # dependencies
 /node_modules
 /.pnp
